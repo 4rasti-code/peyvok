@@ -30,16 +30,16 @@ const Key = memo(({ k, status, onKeyPress, isDisabled, isDark = true }) => {
     
     if (isDark) {
       // 🌙 DARK MODE KEY STYLES
-      if (status === STATUS.CORRECT) return 'bg-[#10b981] text-white border-transparent shadow-[0_0_15px_rgba(16,185,129,0.4)]';
-      if (status === STATUS.WRONG_POS) return 'bg-[#f59e0b] text-white border-transparent shadow-[0_0_15px_rgba(245,158,11,0.4)]';
-      if (status === STATUS.INCORRECT) return 'bg-[#1e293b]/40 text-slate-600 border-white/5 opacity-50 backdrop-blur-sm grayscale';
-      return 'bg-white/5 text-white border-white/10 hover:bg-white/10 active:bg-white/15 backdrop-blur-md';
+      if (status === STATUS.CORRECT) return 'bg-[#538d4e] text-white border-transparent';
+      if (status === STATUS.WRONG_POS) return 'bg-[#b59f3b] text-white border-transparent';
+      if (status === STATUS.INCORRECT) return 'bg-[#262626] text-white opacity-50';
+      return 'bg-[#525252] text-white border-transparent';
     } else {
       // ☀️ LIGHT MODE KEY STYLES
-      if (status === STATUS.CORRECT) return 'bg-emerald-500 text-white border-transparent shadow-md';
-      if (status === STATUS.WRONG_POS) return 'bg-amber-500 text-white border-transparent shadow-md';
-      if (status === STATUS.INCORRECT) return 'bg-slate-300 text-slate-500 border-slate-400/20 opacity-60 grayscale';
-      return 'bg-slate-200 text-slate-800 border-slate-300 hover:bg-slate-300 active:bg-slate-400/20';
+      if (status === STATUS.CORRECT) return 'bg-[#6aaa64] text-white border-transparent';
+      if (status === STATUS.WRONG_POS) return 'bg-[#c9b458] text-white border-transparent';
+      if (status === STATUS.INCORRECT) return 'bg-[#D4D4D4] text-white opacity-50';
+      return 'bg-[#E5E5E5] text-black border-transparent';
     }
   };
 
@@ -54,13 +54,16 @@ const Key = memo(({ k, status, onKeyPress, isDisabled, isDark = true }) => {
   };
 
   return (
-    <div className="relative flex-1">
+    <motion.div className="relative flex-1">
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.92 }}
         transition={{ type: "spring", stiffness: 400, damping: 17 }}
         onPointerDown={handlePointerDown}
         className={`w-full h-[clamp(38px,6vh,55px)] rounded-md flex items-center justify-center font-heading font-light transition-[transform,background-color,border-color] border ${getKeyStyle()}`}
+        id={`key-${k}`}
+        name={`key-${k}`}
+        aria-label={`Letter ${k}`}
       >
         <span className="text-[clamp(1.3rem,4.5vw,1.9rem)] -translate-y-px">{k}</span>
       </motion.button>
@@ -71,14 +74,14 @@ const Key = memo(({ k, status, onKeyPress, isDisabled, isDark = true }) => {
             initial={{ opacity: 0, y: 10, scale: 0.8 }}
             animate={{ opacity: 1, y: -70, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.8 }}
-            className={`absolute left-1/2 -translate-x-1/2 w-14 h-16 ${isDark ? 'bg-[#1a202c] text-white border-white/20' : 'bg-white text-slate-900 border-slate-300'} shadow-2xl rounded-2xl flex items-center justify-center border-2 z-50 backdrop-blur-xl pointer-events-none`}
+            className={`absolute left-1/2 -translate-x-1/2 w-14 h-16 ${isDark ? 'bg-[#1a202c] text-white border-white/20' : 'bg-white text-slate-900 border-slate-300'} rounded-2xl flex items-center justify-center border-2 z-50 pointer-events-none`}
           >
             <span className="text-3xl font-light leading-none">{k}</span>
             <div className={`absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 ${isDark ? 'bg-[#1a202c] border-white/20' : 'bg-white border-slate-300'} rotate-45 border-r border-b`}></div>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }, (prev, next) => {
   return prev.status === next.status && 
@@ -150,14 +153,17 @@ const Keyboard = memo(({
       <div className={`w-[40%] h-px ${isDark ? 'bg-white/5' : 'bg-slate-200'} mx-auto mb-3`} />
 
       {ROWS.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex gap-1 w-full justify-center">
+        <motion.div key={`kbd-row-${rowIndex}`} className="flex gap-1 w-full justify-center">
           {rowIndex === 3 && (
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
               onPointerDown={() => handleKeyPress(SPECIAL_KEYS.DELETE, true)}
-              className={`flex-[1.2] h-[clamp(32px,4.5vh,48px)] rounded-md ${isDark ? 'bg-red-500 border-red-500/20 shadow-red-500/10' : 'bg-red-500 border-red-600/20 shadow-md'} text-white border flex items-center justify-center transition-all hover:bg-red-600 active:scale-95 shadow-lg`}
+              className={`flex-[1.2] h-[clamp(32px,4.5vh,48px)] rounded-md ${isDark ? 'bg-[#525252] border-[#525252]/20' : 'bg-[#E5E5E5] border-[#E5E5E5]/20'} text-white border flex items-center justify-center transition-all active:scale-95`}
+              id="key-delete"
+              name="key-delete"
+              aria-label="Delete last character"
             >
               <span className="material-symbols-outlined text-[20px]">backspace</span>
             </motion.button>
@@ -180,13 +186,16 @@ const Keyboard = memo(({
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
               onPointerDown={() => handleKeyPress(SPECIAL_KEYS.ENTER, true)}
-              className={`flex-[1.8] h-[clamp(32px,4.5vh,48px)] rounded-md ${isDark ? 'bg-green-500 border-green-500/20 shadow-green-500/10' : 'bg-green-500 border-green-600/20 shadow-md'} text-white font-bold text-xs uppercase flex items-center justify-center transition-all hover:bg-green-600 active:scale-95`}
+              className={`flex-[1.8] h-[clamp(32px,4.5vh,48px)] rounded-md ${isDark ? 'bg-[#525252] border-[#525252]/20' : 'bg-[#E5E5E5] border-[#E5E5E5]/20'} ${isDark ? 'text-white' : 'text-black'} font-bold text-xs uppercase flex items-center justify-center transition-all active:scale-95`}
+              id="key-enter"
+              name="key-enter"
+              aria-label="Submit guess"
             >
               <span className="font-rabar font-light text-lg">{SPECIAL_KEYS.ENTER}</span>
             </motion.button>
           )}
 
-        </div>
+        </motion.div>
       ))}
     </div>
   );

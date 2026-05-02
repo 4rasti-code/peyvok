@@ -13,10 +13,10 @@ import Keyboard from './components/Keyboard';
 import CategoryModal from './components/CategoryModal';
 import BottomNav from './components/BottomNav';
 import LobbyView from './components/LobbyView';
-import DictionaryView from './components/DictionaryView';
 import { wordList } from './data/wordList';
 import { STATUS } from './data/constants';
 import { getLocalDateString } from './utils/formatters';
+import KurdishSunLoader from './components/KurdishSunLoader';
 
 import useMultiplayer from './hooks/useMultiplayer';
 import { calculateLevelRewards, calculateDefeatPenalty } from './utils/gameStatus';
@@ -49,34 +49,32 @@ const lazyWithRetry = (componentImport) =>
   });
 
 const MultiplayerGameView = lazyWithRetry(() => import('./components/MultiplayerGameView'));
+const LeaderboardView = lazyWithRetry(() => import('./components/LeaderboardView'));
+const SocialHubView = lazyWithRetry(() => import('./components/SocialHubView'));
+const ShopView = lazyWithRetry(() => import('./components/ShopView'));
+const ProfileView = lazyWithRetry(() => import('./components/ProfileView'));
+const AuthView = lazyWithRetry(() => import('./components/AuthView'));
+const DictionaryView = lazyWithRetry(() => import('./components/DictionaryView'));
+const SettingsModal = lazyWithRetry(() => import('./components/SettingsModal'));
+const HowToPlayModal = lazyWithRetry(() => import('./components/HowToPlayModal'));
+const DailyRewardModal = lazyWithRetry(() => import('./components/DailyRewardModal'));
+const MasteryModal = lazyWithRetry(() => import('./components/MasteryModal'));
 
-import { useGame } from './context/GameContext'; 
+import { useGame } from './context/GameContext';
 import { useUser } from './context/AuthContext';
 import { useAudio } from './context/AudioContext';
 import VictoryOverlay from './components/VictoryOverlay';
 import CoinAnimation from './components/CoinAnimation';
-import MasteryModal from './components/MasteryModal';
 import LevelUpOverlay from './components/LevelUpOverlay';
-import SettingsModal from './components/SettingsModal';
 import WordFeverResultOverlay from './components/WordFeverResultOverlay';
 import DefeatOverlay from './components/DefeatOverlay';
-import AuthView from './components/AuthView';
 import { supabase } from './lib/supabase';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import DataDeletion from './components/DataDeletion';
 import TermsOfService from './components/TermsOfService';
-import ProfileView from './components/ProfileView';
-import KurdishSunLoader from './components/KurdishSunLoader';
-import DailyRewardModal from './components/DailyRewardModal';
-import HowToPlayModal from './components/HowToPlayModal';
 
 
 
-
-// Code Splitting for Performance with Guard
-const LeaderboardView = lazyWithRetry(() => import('./components/LeaderboardView'));
-const SocialHubView = lazyWithRetry(() => import('./components/SocialHubView'));
-const ShopView = lazyWithRetry(() => import('./components/ShopView'));
 
 const PEYVCIN_VERSION = '2.0.0';
 
@@ -92,7 +90,7 @@ class GameErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col items-center justify-center h-screen bg-[#0f172a] text-white p-8 text-center" style={{ fontFamily: 'Rabar, sans-serif' }}>
+        <div className="flex flex-col items-center justify-center h-screen bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 p-8 text-center" style={{ fontFamily: 'Rabar, sans-serif' }}>
           <div className="bg-red-500/10 border-2 border-red-500/30 p-10 rounded-3xl shadow-2xl max-w-lg backdrop-blur-xl animate-in zoom-in-95">
             <h2 className="text-4xl font-black mb-6 text-red-500">ئاریشەیەک چێ بوو!</h2>
             <p className="text-white/70 mb-10 text-lg leading-relaxed">ببورە، ھندەک ئاریشەیێن تەکنیکی د دەستپێکرنا یاریێ دا ھەبوون. تکایە دووبارە پەیجێ نوو بکە یان ڤەگەرە لابیێ.</p>
@@ -137,7 +135,7 @@ const ScrollingMatchFinder = ({ opponent }) => {
               ))}
             </Motion.div>
             {/* Vertical Blur & Fade Overlay */}
-            <div className="absolute inset-0 bg-linear-to-b from-[#020617] via-transparent to-[#020617] opacity-60" />
+            <div className="absolute inset-0 bg-linear-to-b from-mono-white dark:from-mono-950 via-transparent to-mono-white dark:to-mono-950 opacity-60" />
           </Motion.div>
         ) : (
           <Motion.div
@@ -159,74 +157,7 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [currentView, setCurrentView] = useState('lobby');
-
-  // --- 1. DEEP LINKING & ROUTING ENGINE ---
-  // Sync URL -> State (Initial Load & Back Button)
-  // Sync URL -> State (Handles Initial Load & Back/Forward Buttons)
-  useEffect(() => {
-    const path = location.pathname.replace('/', '') || 'lobby';
-    if (path !== currentView) {
-      // Direct update is safe here as it's triggered by URL change, not state change
-      setCurrentView(path);
-    }
-  }, [location.pathname]); 
-
-  // Sync State -> URL (Handles internal navigateTo calls)
-  useEffect(() => {
-    const path = location.pathname.replace('/', '') || 'lobby';
-    if (path !== currentView) {
-      navigate('/' + currentView, { replace: true });
-    }
-  }, [currentView, navigate]);
-
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isDailyRewardOpen, setIsDailyRewardOpen] = useState(false);
-  const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
-  const [howToPlayMode, setHowToPlayMode] = useState('classic');
-  const [isHowToPlayShowTabs, setIsHowToPlayShowTabs] = useState(true);
-  const [activeChatPartner, setActiveChatPartner] = useState(null);
-  const [initialSocialTab, setInitialSocialTab] = useState(null);
-
-
-  const [targetWord, setTargetWord] = useState('');
-  const [targetHint, setTargetHint] = useState('');
-  const [category, setCategory] = useState('');
-  const [currentWordCategory, setCurrentWordCategory] = useState('');
-
-  const [isShaking, setIsShaking] = useState(false);
-  const [, setStartTime] = useState(0);
-  const [, setRewardAmount] = useState(0);
-  const [rewardAmountXp, setRewardAmountXp] = useState(0);
-  const [defeatBreakdown, setDefeatBreakdown] = useState({ base: 0, mistakes: 0, total: 0 });
-  const [magnetUsedInRound, setMagnetUsedInRound] = useState(false);
-  const [magnetDisabledKeys, setMagnetDisabledKeys] = useState([]);
-
-  const [gameMode, setGameMode] = useState('classic'); // 'classic', 'word_fever', 'secret_word', 'mamak', 'hard_words'
-  const [timeLeft, setTimeLeft] = useState(30);
-  const [, setIsDailyActive] = useState(false);
-  const [isSuccessSplash, setIsSuccessSplash] = useState(false);
-  const [revealedIndices, setRevealedIndices] = useState([]);
-  const [hintTaps, setHintTaps] = useState(0);
-  const [skipsUsedInRound, setSkipsUsedInRound] = useState(0);
-
-  // Results & UI State
-  const [victoryBreakdown, setVictoryBreakdown] = useState({
-    awardAmount: 0,
-    xpAdded: 0,
-    greenCount: 0,
-    yellowCount: 0,
-    grayCount: 0
-  });
-  const [victoryCustomText, setVictoryCustomText] = useState(null);
-  const [lastSolvedWord, setLastSolvedWord] = useState('');
-  const [isForfeitConfirmOpen, setIsForfeitConfirmOpen] = useState(false);
-  const [isWordFeverResultVisible, setIsWordFeverResultVisible] = useState(false);
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-  const [wordFeverResultType, setWordFeverResultType] = useState('win');
-  const [hintLimitToast, setHintLimitToast] = useState({ visible: false, message: '' });
-  const [isLevelingUp, setIsLevelingUp] = useState(false);
-
+  // 0. CORE CONTEXT HOOKS: Must be at the top to avoid ReferenceErrors
   const {
     user, setUser, hapticEnabled, loadingAuth, authProgress,
     userNickname, userAvatar, city, isInKurdistan, countryCode,
@@ -249,16 +180,166 @@ export default function App() {
     fils, derhem, dinar,
     dailyStreak, lastRewardClaimedAt,
     magnetCount, hintCount, skipCount,
-    winsTowardsSecret, resetSecretWordProgress,
+    winsTowardsSecret, incrementSecretWordProgress, resetSecretWordProgress,
     solvedWords, playerStats,
     syncProgressToDatabase,
     processPurchase,
     getFreshWord,
     userRank, refreshRank,
+    setLastNotifiedLevel,
     claimDailyReward,
     updateInventory,
-    loading: isGameLoading
+    initializeStatsInDB,
+    loading: isGameLoading,
+    resetBoard: resetContextBoard
   } = useGame();
+
+  // 1. INITIALIZE VIEW FROM URL
+  const [currentView, setCurrentView] = useState(() => {
+    const path = window.location.pathname.replace('/', '');
+    return path || 'lobby';
+  });
+  const bgmStatusRef = useRef('stopped');
+
+  // --- THEME SYNC ENGINE (OS PREFERENCE & USER SELECTION) ---
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    const applyTheme = () => {
+      // Priority: 1. User Selected Dark Theme, 2. OS Preference
+      const isDarkTheme = currentTheme === 'zakho_nights' || currentTheme === 'dark';
+      const isOSDark = mediaQuery.matches;
+      
+      if (isDarkTheme || (currentTheme === 'default' && isOSDark)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    };
+
+    // Apply immediately on mount and when currentTheme changes
+    applyTheme();
+
+    const handleOSThemeChange = () => {
+      if (currentTheme === 'default') applyTheme();
+    };
+
+    mediaQuery.addEventListener('change', handleOSThemeChange);
+    
+    // --- GLOBAL AUDIO UNLOCK: Clear browser policy block on first interaction ---
+    const handleFirstInteraction = () => {
+      console.log("🔊 [App] Interaction detected, unlocking AudioContext...");
+      forceResumeAudio();
+      window.removeEventListener('click', handleFirstInteraction);
+      window.removeEventListener('keydown', handleFirstInteraction);
+      window.removeEventListener('touchstart', handleFirstInteraction);
+    };
+
+    window.addEventListener('click', handleFirstInteraction);
+    window.addEventListener('keydown', handleFirstInteraction);
+    window.addEventListener('touchstart', handleFirstInteraction);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleOSThemeChange);
+      window.removeEventListener('click', handleFirstInteraction);
+      window.removeEventListener('keydown', handleFirstInteraction);
+      window.removeEventListener('touchstart', handleFirstInteraction);
+    };
+  }, [currentTheme]);
+
+  // Sync URL -> State (Initial Load & Back Button)
+  // Sync URL -> State (Handles Initial Load & Back/Forward Buttons)
+  useEffect(() => {
+    const path = location.pathname.replace('/', '') || 'lobby';
+    setCurrentView(prev => prev !== path ? path : prev);
+  }, [location.pathname]);
+
+  // Sync State -> URL (Handles internal navigateTo calls)
+  useEffect(() => {
+    const path = location.pathname.replace('/', '') || 'lobby';
+    if (path !== currentView) {
+      navigate('/' + currentView, { replace: true });
+    }
+  }, [currentView, navigate]);
+
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isDailyRewardOpen, setIsDailyRewardOpen] = useState(false);
+  const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
+  const [howToPlayMode, setHowToPlayMode] = useState('classic');
+  const [isHowToPlayShowTabs, setIsHowToPlayShowTabs] = useState(true);
+  const [activeChatPartner, setActiveChatPartner] = useState(null);
+  const [initialSocialTab, setInitialSocialTab] = useState(null);
+  const [isRecoveringPassword, setIsRecoveringPassword] = useState(false);
+  const [isVerifyingSignup, setIsVerifyingSignup] = useState(false);
+  const isRecoveringRef = useRef(false);
+  const isVerifyingRef = useRef(false);
+
+  // Sync refs with state for instant guard access in effects
+  const setVerifyingSignup = (val) => {
+    isVerifyingRef.current = val;
+    setIsVerifyingSignup(val);
+  };
+  const setRecoveringPassword = (val) => {
+    isRecoveringRef.current = val;
+    setIsRecoveringPassword(val);
+  };
+
+
+  const [targetWord, setTargetWord] = useState('');
+  const [targetHint, setTargetHint] = useState('');
+  const [category, setCategory] = useState('');
+  const [currentWordCategory, setCurrentWordCategory] = useState('');
+
+  const [isShaking, setIsShaking] = useState(false);
+  const [, setStartTime] = useState(0);
+  const [, setRewardAmount] = useState(0);
+  const [rewardAmountXp, setRewardAmountXp] = useState(0);
+  const [magnetDisabledKeys, setMagnetDisabledKeys] = useState([]);
+  const [revealedIndices, setRevealedIndices] = useState([]);
+  const [hintTaps, setHintTaps] = useState(0);
+  const [magnetsUsedInRound, setMagnetsUsedInRound] = useState(0);
+  const [skipsUsedInRound, setSkipsUsedInRound] = useState(0);
+
+  const [gameMode, setGameMode] = useState('classic'); // 'classic', 'word_fever', 'secret_word', 'mamak', 'hard_words'
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [, setIsDailyActive] = useState(false);
+  const [isSuccessSplash, setIsSuccessSplash] = useState(false);
+
+  // Results & UI State
+  const [victoryBreakdown, setVictoryBreakdown] = useState({
+    awardAmount: 0,
+    xpAdded: 0,
+    greenCount: 0,
+    yellowCount: 0,
+    grayCount: 0
+  });
+  const [victoryCustomText, setVictoryCustomText] = useState(null);
+  const [lastSolvedWord, setLastSolvedWord] = useState('');
+  const [isForfeitConfirmOpen, setIsForfeitConfirmOpen] = useState(false);
+  const [isWordFeverResultVisible, setIsWordFeverResultVisible] = useState(false);
+  const [showResultOverlay, setShowResultOverlay] = useState(false);
+  const [defeatBreakdown, setDefeatBreakdown] = useState({ base: 0, mistakes: 0, total: 0 });
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [wordFeverResultType, setWordFeverResultType] = useState('win');
+  const [hintLimitToast, setHintLimitToast] = useState({ visible: false, message: '' });
+  const [isLevelingUp, setIsLevelingUp] = useState(false);
+  const [isMasteryOpen, setIsMasteryOpen] = useState(false);
+  const [masteryData, setMasteryData] = useState(null);
+
+
+  // Expose initialization helper to console for the user
+  useEffect(() => {
+    window.initializeStats = async () => {
+      console.log("Initializing dummy stats in DB...");
+      const res = await initializeStatsInDB();
+      if (res?.success) {
+        console.log("Stats initialized successfully! Refreshing UI...");
+        window.location.reload();
+      } else {
+        console.error("Failed to initialize stats:", res?.error);
+      }
+    };
+  }, [initializeStatsInDB]);
 
   const {
     activeMatch,
@@ -277,10 +358,9 @@ export default function App() {
 
   // TRANSITION: Return to Lobby when Match ends (Multiplayer High-Speed Flow)
   useEffect(() => {
-    // Only redirect to lobby if we aren't already in another main view (to prevent infinite loops)
-    const mainViews = ['store', 'social_hub', 'leaderboard', 'stats', 'dictionary', 'profile'];
+    const mainViews = ['lobby', 'store', 'social_hub', 'leaderboard', 'stats', 'dictionary', 'profile'];
     if (multiplayerState === 'game_over' && !mainViews.includes(currentView)) {
-      requestAnimationFrame(() => setCurrentView('lobby'));
+      requestAnimationFrame(() => setCurrentView(prev => prev !== 'lobby' ? 'lobby' : prev));
     }
   }, [multiplayerState, currentView]);
 
@@ -301,8 +381,8 @@ export default function App() {
   // 5. Notification Sound Trigger (Distinguishing between messages and others)
   const prevNotifCount = useRef(0);
   useEffect(() => {
-    if (notificationsList.length > prevNotifCount.current) {
-      // Find the newest notification to check its type
+    const currentCount = notificationsList.length;
+    if (currentCount > prevNotifCount.current) {
       const latest = notificationsList[0];
       if (latest && latest.type === 'message') {
         playMessageSound();
@@ -310,11 +390,13 @@ export default function App() {
         playNotifSound();
       }
     }
-    prevNotifCount.current = notificationsList.length;
-  }, [notificationsList, playNotifSound, playMessageSound]);
+    prevNotifCount.current = currentCount;
+  }, [notificationsList.length, notificationsList[0]?.id, playNotifSound, playMessageSound]);
 
 
   // --- CORE GAME ENGINE (Unified) ---
+  const [feverStreak, setFeverStreak] = useState(0);
+
   const handleGameCompletion = useCallback(async (finalGuesses, isWin, forcedMode = null, forcedTarget = null, precalcBreakdown = null, precalcPenalty = null) => {
     const { targetWord: refTWord, gameMode: refGMode, winsTowardsSecret: wts, fils: currFils } = gameRefs.current;
 
@@ -330,29 +412,40 @@ export default function App() {
       setRewardAmount(breakdown.awardAmount);
       setRewardAmountXp(breakdown.xpAdded);
 
-      // Synced database call
-      let nextWinsTowardsSecret = wts;
-      let resetSecretProgress = false;
-      if (gMode !== 'secret_word') {
-        nextWinsTowardsSecret = Math.min(3, wts + 1);
+      // --- CALCULATE SCORE FOR STATS ---
+      let score = 0;
+      const maxRows = gMode === 'secret_word' ? 1 : (gMode === 'word_fever' ? 3 : 6);
+      
+      if (gMode === 'word_fever') {
+        score = feverStreak + 1; // Current word count in the streak
+      } else if (gMode === 'battle') {
+        score = 100;
       } else {
-        resetSecretProgress = true;
+        // Wordle-style score: higher is better for stats dashboard
+        score = Math.max(10, (maxRows - finalGuesses.length + 1) * 10);
+      }
+
+      // Synced database call
+      if (gMode === 'classic') {
+        incrementSecretWordProgress();
+      } else if (gMode === 'secret_word') {
+        resetSecretWordProgress();
       }
 
       const syncData = await syncProgressToDatabase(
         tWord.length,
         gMode,
         {
-          solvedWords: [tWord], // Send only newly solved word, server-side RPC handles appending
-          winsTowardsSecret: nextWinsTowardsSecret,
-          resetSecretProgress,
+          sessionId: `${gMode}_${Date.now()}`, // 1 Attempt Only logic guard
+          score: score,
+          solvedWords: [tWord], 
           filsBonus: breakdown.awardAmount,
-          magnetsUsed: 0, // Now deducted immediately in handleMagnet
-          hintsUsed: 0,   // Now deducted immediately in handleHint
-          skipsUsed: 0    // Now deducted immediately in handleSkip
+          magnetsUsed: magnetsUsedInRound, 
+          hintsUsed: hintTaps,   
+          skipsUsed: skipsUsedInRound    
         }
       );
-      // Extra verification from server if needed (Optional: syncData.xpAdded can overwrite if different)
+      // Extra verification from server if needed
       if (syncData?.xpAdded !== undefined) {
         setRewardAmountXp(syncData.xpAdded);
       }
@@ -361,8 +454,13 @@ export default function App() {
       setDefeatBreakdown(penaltyBreakdown);
       const nextFils = Math.max(0, Math.ceil(currFils - penaltyBreakdown.total));
       updateInventory({ fils: nextFils }, false);
+
+      // Sync loss to update 'score' (0) for stats
+      if (gMode !== 'multiplayer') { // Battle handled by multiplayer logic
+        syncProgressToDatabase(tWord.length, gMode, { score: 0, solvedWords: [] });
+      }
     }
-  }, [syncProgressToDatabase, updateInventory]); // Stable dependencies
+  }, [syncProgressToDatabase, updateInventory, incrementSecretWordProgress, resetSecretWordProgress, feverStreak]); // Stable dependencies
 
   const onWinHandler = useCallback((finalGuesses, winWord, winMode) => {
     const { hapticEnabled: hEnabled } = gameRefs.current;
@@ -377,6 +475,7 @@ export default function App() {
     setLastSolvedWord(winWord);
 
     if (winMode === 'word_fever') {
+      setFeverStreak(prev => prev + 1);
       setIsWordFeverResultVisible(true);
       setWordFeverResultType('win');
       playRewardSound();
@@ -387,6 +486,7 @@ export default function App() {
     }
 
     // 3. Trigger completion (Async DB sync)
+    setRevealedIndices([]); // Clear immediately to prevent ghost tiles in next row during delay
     handleGameCompletion(finalGuesses, true, winMode, winWord, breakdown);
   }, [handleGameCompletion, playRewardSound]);
 
@@ -394,6 +494,8 @@ export default function App() {
     const { multiplayerState: mState } = gameRefs.current;
 
     setLastSolvedWord(lossWord);
+    setRevealedIndices([]); // Clear immediately
+    setFeverStreak(0); // Reset fever streak on loss
 
     // Calculate penalty snap
     const penalty = calculateDefeatPenalty(lossWord, finalGuesses, lossMode);
@@ -410,9 +512,18 @@ export default function App() {
       setIsWordFeverResultVisible(true);
     } else {
       handleGameCompletion(finalGuesses, false, lossMode, lossWord, null, penalty);
-      if (lossMode === 'secret_word') resetSecretWordProgress();
+      if (lossMode === 'secret_word' || lossMode === 'classic') resetSecretWordProgress();
     }
   }, [handleGameCompletion, resetSecretWordProgress, submitFailure]);
+
+  // --- SAFETY: PHANTOM HANDLER GUARD ---
+  // Some legacy components or keyboard listeners may attempt to call this function.
+  // We define it here to prevent 'ReferenceError: handleGameplayUpdate is not defined' crashes.
+  const handleGameplayUpdate = useCallback((data) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('[App] Phantom handleGameplayUpdate called with:', data);
+    }
+  }, []);
 
   const {
     guesses,
@@ -431,16 +542,18 @@ export default function App() {
     isLevelingUp,
     onWin: onWinHandler,
     onLoss: onLossHandler,
-    isActive: currentView === 'game'
+    isActive: currentView === 'game',
+    handleGameplayUpdate // Passing it down in case the hook needs it
   });
 
   // --- UNIFIED AUTOMATIC BACKGROUND MUSIC (BGM) CONTROLLER ---
   // Ensures BGM is only active in main menu views and stops in all gameplay/matchmaking/auth states.
+  const lastBgmActionRef = useRef(null);
   useEffect(() => {
     if (!startBGM || !stopBGM || currentView === undefined) return;
 
     // Define where BGM SHOULD be active (Menu/Static Views)
-    const menuViews = ['lobby', 'social_hub', 'store', 'leaderboard', 'stats', 'dictionary'];
+    const menuViews = ['lobby', 'social_hub', 'store', 'leaderboard', 'stats', 'dictionary', 'profile'];
 
     // Define where BGM SHOULD be suppressed (Gameplay/Transition/Auth)
     const isGameplayActive = currentView === 'game' ||
@@ -454,18 +567,40 @@ export default function App() {
     const isAuth = currentView === 'auth';
 
     // Policy: Play music ONLY in menu views, and ONLY if gameplay is not active
-    const shouldPlay = menuViews.includes(currentView) && !isGameplayActive && !isAuth && bgMusicVolume > 0;
+    const shouldPlay = menuViews.includes(currentView) && !isGameplayActive && !isAuth;
+    const intendedAction = (shouldPlay && bgMusicVolume > 0) ? 'PLAY' : 'STOP';
 
-    if (shouldPlay) {
-      // Small safety delay for engine context initialization on first load
+    // GUARD: Prevent infinite loop by checking if the action is already processed
+    if (lastBgmActionRef.current === intendedAction) return;
+    lastBgmActionRef.current = intendedAction;
+
+    if (intendedAction === 'PLAY') {
       const timer = setTimeout(() => {
+        if (lastBgmActionRef.current !== 'PLAY') return; // Safety check if state changed during delay
+        console.log("🎵 [App] Starting BGM for view:", currentView);
+        bgmStatusRef.current = 'playing';
         startBGM();
-      }, 300);
+      }, 800);
       return () => clearTimeout(timer);
     } else {
-      stopBGM();
+      // Only stop if we are actually entering a game or auth or volume is 0
+      if (isGameplayActive || isAuth || bgMusicVolume <= 0) {
+        console.log("🎵 [App] Stopping BGM due to gameplay or auth state");
+        bgmStatusRef.current = 'stopped';
+        stopBGM();
+      }
     }
   }, [currentView, multiplayerState, isVictory, isDefeat, isWordFeverResultVisible, bgMusicVolume, startBGM, stopBGM]);
+
+  // --- GLOBAL CLICK LISTENER: Nuclear Audio Unlock ---
+  useEffect(() => {
+    const nuclearUnlock = () => {
+      forceResumeAudio();
+      window.removeEventListener('click', nuclearUnlock);
+    };
+    window.addEventListener('click', nuclearUnlock);
+    return () => window.removeEventListener('click', nuclearUnlock);
+  }, []);
 
 
   // Centralized Navigation (Fixes Ghost Overlays)
@@ -485,6 +620,7 @@ export default function App() {
     setIsDailyActive(false);
     setCategory('');
     setTargetWord('');
+    setRevealedIndices([]); // RESET
     // Ensure full multiplayer reset when returning from any result screen
     if (cancelMatch) cancelMatch();
     setCurrentView('lobby');
@@ -615,7 +751,7 @@ export default function App() {
     const toDisable = incorrect.sort(() => 0.5 - Math.random()).slice(0, 5);
 
     setMagnetDisabledKeys(prev => [...prev, ...toDisable]);
-    setMagnetUsedInRound(true);
+    setMagnetsUsedInRound(prev => prev + 1);
     updateInventory({
       magnetCount: -1
     }, true, true); // Sync to DB immediately
@@ -650,14 +786,20 @@ export default function App() {
 
   // MANDATORY AUTHENTICATION ENFORCEMENT & HEARTBEAT (Online Status)
   useEffect(() => {
-    if (!isGameLoading) {
+    if (!isGameLoading && !loadingAuth) {
       if (!user) {
         requestAnimationFrame(() => setCurrentView('auth'));
       } else if (currentView === 'auth') {
+        // Guard: Prevent redirecting to lobby if user is in the middle of password recovery or signup verification
+        // Using Ref here for instant detection during the signup/recovery race conditions
+        if (isRecoveringRef.current || isVerifyingRef.current) {
+          console.log("[App] Redirect blocked: Verification/Recovery in progress");
+          return;
+        }
         requestAnimationFrame(() => setCurrentView('lobby'));
       }
     }
-  }, [user, isGameLoading, currentView]);
+  }, [user, isGameLoading, loadingAuth, currentView, isRecoveringPassword, isVerifyingSignup]);
 
   // REAL-TIME NOTIFICATIONS (Messages & Friend Requests)
   useEffect(() => {
@@ -748,7 +890,7 @@ export default function App() {
         if (errCode === '23505') {
           alert('ئەڤ ناڤە یێ ھاتییە بکارئینان، تاقی بکە ناڤەکێ دی بنڤیسی');
         } else {
-          alert(`خەلەتی: ${errMsg}`);
+          alert(`شاشی: ${errMsg}`);
         }
       }
     } catch (err) {
@@ -783,6 +925,18 @@ export default function App() {
     }
   }, [currentView, playStartGameSound]);
 
+  // Delay Result Overlay by 7 seconds as requested
+  useEffect(() => {
+    if (isVictory || isDefeat || isWordFeverResultVisible) {
+      const timer = setTimeout(() => {
+        setShowResultOverlay(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowResultOverlay(false);
+    }
+  }, [isVictory, isDefeat, isWordFeverResultVisible]);
+
 
   // Handlers now provided by useGameLogic
 
@@ -791,7 +945,7 @@ export default function App() {
     setHintTaps(0);
     setSkipsUsedInRound(0);
     setRevealedIndices([]);
-    setMagnetUsedInRound(false);
+    setMagnetsUsedInRound(0);
     setMagnetDisabledKeys([]);
     setVictoryBreakdown({ awardAmount: 0, xpAdded: 0, greenCount: 0, yellowCount: 0, grayCount: 0 });
     setVictoryCustomText(null);
@@ -811,7 +965,7 @@ export default function App() {
     setRevealedIndices([]);
     setStartTime(Date.now());
     setHintTaps(0);
-    setMagnetUsedInRound(false);
+    setMagnetsUsedInRound(0);
     setMagnetDisabledKeys([]);
 
     if (gMode === 'word_fever') setTimeLeft(30);
@@ -822,7 +976,7 @@ export default function App() {
   const selectCategory = useCallback(async (cat, forcedMode = null) => {
     const { gameMode: gMode } = gameRefs.current;
     const modeToUse = forcedMode || gMode;
-    
+
     const wordObj = await getFreshWord(modeToUse, cat);
 
     if (wordObj) {
@@ -862,6 +1016,7 @@ export default function App() {
     setCurrentView('lobby');
     setCategory('');
     setTargetWord('');
+    setRevealedIndices([]);
   }, []);
 
   // --- WORD FEVER MODE TIMER ENGINE ---
@@ -875,6 +1030,7 @@ export default function App() {
       } else {
         // Time has expired
         requestAnimationFrame(() => {
+          setIsDefeat(true); // Lock the board
           setWordFeverResultType('fail');
           setIsWordFeverResultVisible(true);
         });
@@ -1081,15 +1237,23 @@ export default function App() {
     setIsHowToPlayOpen(true);
   };
 
-  if (loadingAuth || isGameLoading) return (
-    <div className="h-[100dvh] flex items-center justify-center bg-slate-950">
+  const handleCloseHowToPlay = () => {
+    playBubblePopSound();
+    setIsHowToPlayOpen(false);
+  };
+
+  // --- CRITICAL AUTH GUARD (Flicker Fix) ---
+  // Shows loader if auth is initializing, game assets are loading,
+  // or if we have no user but haven't yet redirected to the auth screen.
+  if (loadingAuth || isGameLoading || (!user && currentView !== 'auth')) return (
+    <div className="h-[100dvh] flex items-center justify-center bg-mono-white dark:bg-mono-950 transition-colors duration-500">
       <KurdishSunLoader progress={authProgress} />
     </div>
   );
 
   return (
-    <div className={`flex flex-col h-[100dvh] max-h-[100dvh] w-full items-center ${(currentView === 'game' && !isSystemDark) ? 'bg-[#f5f5f4]' : 'bg-[#000000] bg-[radial-gradient(circle_at_center,_#111827_0%,_#000000_100%)]'} font-noto-sans-arabic ${currentTheme === 'zakho_nights' ? 'zakho-theme' : ''}`} dir="rtl">
-      <div className={`flex-1 flex flex-col w-full max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto ${(currentView === 'game' && !isSystemDark) ? 'bg-[#f5f5f4] text-slate-900' : 'bg-[#020617] text-white'} relative overflow-hidden shadow-2xl transition-colors duration-500`}>
+    <div className={`flex flex-col h-[100dvh] max-h-[100dvh] w-full items-center bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 transition-colors duration-500 font-noto-sans-arabic ${currentTheme === 'zakho_nights' ? 'zakho-theme' : ''}`} dir="rtl">
+      <div className={`flex-1 flex flex-col w-full max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto relative overflow-hidden transition-colors duration-500`}>
         {/* Panic Overlay for Word Fever Mode Critical Time */}
         {gameMode === 'word_fever' && currentView === 'game' && timeLeft <= 10 && !isVictory && (
           <div className="panic-overlay" />
@@ -1109,7 +1273,7 @@ export default function App() {
               playBubblePopSound();
               setCurrentView('social_hub');
             }}
-            onForfeit={handleForfeit}
+            onForfeit={executeForfeitConfirmed}
             category={category}
             equippedAvatar={equippedAvatar}
             gameMode={gameMode}
@@ -1123,9 +1287,14 @@ export default function App() {
             isDailyAvailable={
               (() => {
                 if (!lastRewardClaimedAt) return true;
-                const lastDate = new Date(lastRewardClaimedAt).toLocaleDateString('en-CA');
-                const todayDate = new Date().toLocaleDateString('en-CA');
-                return lastDate !== todayDate;
+                const now = new Date();
+                const lastClaim = new Date(lastRewardClaimedAt);
+
+                // Compare UTC dates (YYYY-MM-DD) to match server 00:00 UTC reset
+                const lastClaimStr = lastClaim.toISOString().split('T')[0];
+                const todayStr = now.toISOString().split('T')[0];
+
+                return lastClaimStr !== todayStr;
               })()
             }
             isDark={isSystemDark}
@@ -1135,18 +1304,31 @@ export default function App() {
 
         {/* 2. MAIN CONTENT AREA (STATE DRIVEN) */}
         <main className={`flex-1 ${(currentView === 'game' || currentView === 'social_hub' || multiplayerState === 'playing') ? 'overflow-hidden' : 'overflow-y-auto overflow-x-hidden'} w-full relative ${(currentView === 'game' || currentView === 'auth' || currentView === 'social_hub' || multiplayerState === 'playing') ? 'p-0' : 'px-4 pt-4 pb-0'}`}>
-          {currentView === 'auth' && <AuthView onAuthSuccess={async (u, nicknameHint) => {
-            setUser(u);
-            if (nicknameHint) {
-              await updateProfile({ nickname: nicknameHint });
-            }
-            // Small delay to allow state sync before navigating to lobby
-            setTimeout(() => setCurrentView('lobby'), 300);
-          }} />}
+          {currentView === 'auth' && (
+            <AuthView
+              onAuthSuccess={async (u, nicknameHint) => {
+                setUser(u);
+                if (nicknameHint) {
+                  await updateProfile({ nickname: nicknameHint });
+                }
+                setIsRecoveringPassword(false);
+                setIsVerifyingSignup(false);
+                // Small delay to allow state sync before navigating to lobby
+                setTimeout(() => setCurrentView('lobby'), 300);
+              }}
+              onRecoveringChange={setRecoveringPassword}
+              onVerifyingSignupChange={setVerifyingSignup}
+            />
+          )}
 
-          {(multiplayerState === 'playing' || multiplayerState === 'game_over') && (
+          {(multiplayerState === 'playing' || multiplayerState === 'game_over' || multiplayerState === 'syncing') && (
             <Suspense fallback={<KurdishSunLoader />}>
-              <MultiplayerGameView opponent={opponent} isDark={isSystemDark} />
+              <MultiplayerGameView 
+                opponent={opponent} 
+                isDark={isSystemDark} 
+                onOpenHowToPlay={() => handleOpenHowToPlay('multiplayer', false)}
+                handleGameplayUpdate={handleGameplayUpdate} // Safety prop passing
+              />
             </Suspense>
           )}
 
@@ -1237,6 +1419,7 @@ export default function App() {
                 <div className="grid-protection-wrapper flex-1 flex flex-col justify-center overflow-hidden">
                   <div className="game-grid-core">
                     <Grid
+                      key={targetWord}
                       guesses={guesses}
                       currentGuess={currentGuess}
                       wordLength={targetWord.length}
@@ -1255,14 +1438,14 @@ export default function App() {
               </div>
 
               {/* Tier 3: Keyboard (Pinned to bottom) */}
-              <div className={`shrink-0 w-full z-50 p-3 ${isSystemDark ? 'bg-[#020617]/80 backdrop-blur-md border-t border-white/5' : 'bg-[#f5f5f4] border-t border-slate-200'} pb-[max(env(safe-area-inset-bottom),16px)] m-0 transition-colors duration-500`}>
+              <div className={`shrink-0 w-full z-50 p-3 ${isSystemDark ? 'bg-[#171717] border-t border-white/5' : 'bg-[#FFFFFF] border-t border-slate-200'} pb-[max(env(safe-area-inset-bottom),16px)] m-0 transition-colors duration-500`}>
                 <Keyboard
                   onKey={onKey}
                   onDelete={onDelete}
                   onEnter={handleOnEnter}
                   usedKeys={usedKeys}
                   isDark={isSystemDark}
-                  gameState={isVictory ? 'won' : isDefeat ? 'lost' : 'playing'}
+                  gameState={isVictory ? 'won' : isDefeat ? 'lost' : isLevelingUp ? 'leveling-up' : 'playing'}
                   magnetDisabledKeys={magnetDisabledKeys}
                   onHint={handleHint}
                   onMagnet={handleMagnet}
@@ -1272,7 +1455,7 @@ export default function App() {
                   skipCount={skipCount}
                   hintTaps={hintTaps}
                   hintLimit={getMaxHintsForWord(targetWord.length)}
-                  magnetUsedInRound={magnetUsedInRound}
+                  magnetUsedInRound={magnetsUsedInRound > 0}
                   skipsUsedInRound={skipsUsedInRound}
                   skipLimit={1}
                   keyboardSoundEnabled={appSoundsEnabled}
@@ -1315,31 +1498,23 @@ export default function App() {
                 skipCount={skipCount}
                 onPurchase={async (item) => {
                   // Security Hardening: Use the atomic RPC-based processPurchase
-                  const result = await processPurchase(item);
-                  if (result.success) {
-                    playPurchaseSound();
-                  } else {
-                    // Show error toast or similar? 
-                    // For now, the RPC failure is logged in GameContext
-                  }
+                  await processPurchase(item);
                 }}
                 onEquipTheme={(id) => updateProfile({ currentTheme: id })}
                 onPurchaseAvatar={async (id, price, currency) => {
                   // Security Hardening: Treat avatar purchase as a standard item purchase
                   const result = await processPurchase({ id, price, currency, type: 'avatar' });
                   if (result.success) {
-                    playPurchaseSound();
                     updateProfile({ ownedAvatars: [...ownedAvatars, id] });
                   }
                 }}
                 onEquipAvatar={(id) => updateProfile({ avatar_url: id })}
                 onPurchaseTheme={async (theme) => {
-                   // Security Hardening: Treat theme purchase as a standard item purchase
-                   const result = await processPurchase({ ...theme, type: 'theme' });
-                   if (result.success) {
-                     playPurchaseSound();
-                     updateProfile({ unlockedThemes: [...unlockedThemes, theme.id] });
-                   }
+                  // Security Hardening: Treat theme purchase as a standard item purchase
+                  const result = await processPurchase({ ...theme, type: 'theme' });
+                  if (result.success) {
+                    updateProfile({ unlockedThemes: [...unlockedThemes, theme.id] });
+                  }
                 }}
                 playPurchaseSound={playPurchaseSound}
                 ownedAvatars={ownedAvatars}
@@ -1397,7 +1572,7 @@ export default function App() {
           <>
             {/* Single Player Victory */}
             <VictoryOverlay
-              isVisible={isVictory && currentView === 'game' && gameMode !== 'word_fever'}
+              isVisible={isVictory && showResultOverlay && currentView === 'game' && gameMode !== 'word_fever'}
               breakdown={victoryBreakdown}
               solvedWord={lastSolvedWord}
               xp={rewardAmountXp}
@@ -1413,7 +1588,7 @@ export default function App() {
 
             {/* Single Player Defeat */}
             <DefeatOverlay
-              isVisible={isDefeat && currentView === 'game' && gameMode !== 'word_fever'}
+              isVisible={isDefeat && showResultOverlay && currentView === 'game' && gameMode !== 'word_fever'}
               solvedWord={lastSolvedWord}
               breakdown={defeatBreakdown}
               gameMode={gameMode}
@@ -1424,6 +1599,24 @@ export default function App() {
                 if (wordObj) resetBoard(wordObj);
               }}
               onHome={handleGoHome}
+            />
+            {/* Word Fever Result */}
+            <WordFeverResultOverlay
+              isVisible={isWordFeverResultVisible && showResultOverlay && currentView === 'game'}
+              type={wordFeverResultType}
+              solvedWord={lastSolvedWord}
+              breakdown={wordFeverResultType === 'win' ? victoryBreakdown : defeatBreakdown}
+              xp={rewardAmountXp}
+              onContinue={() => {
+                setIsWordFeverResultVisible(false);
+                handleNextGame();
+              }}
+              onRepeat={() => {
+                setIsWordFeverResultVisible(false);
+                handleNextGame();
+              }}
+              onHome={handleGoHome}
+              playStartSound={playStartGameSound}
             />
           </>
         )}
@@ -1436,8 +1629,16 @@ export default function App() {
           opponent={opponent}
           user={{ nickname: userNickname, avatar_url: userAvatar, level: level }}
           isPlayer1={activeMatch?.player1_id === user?.id}
-          breakdown={LastMatchResult === 'victory' ? (MatchReward?.awards ? { awardAmount: MatchReward.awards.amount, awardType: MatchReward.awards.type, xpAdded: MatchReward.xpAdded } : { awardAmount: 1, awardType: 'derhem', xpAdded: 100 }) : { awardAmount: 0, xpAdded: 20 }}
-          xp={LastMatchResult === 'victory' ? 100 : 20}
+          breakdown={MatchReward?.awards ? { 
+            awardAmount: MatchReward.awards.amount, 
+            awardType: MatchReward.awards.type, 
+            xpAdded: MatchReward.xpAdded 
+          } : { 
+            awardAmount: LastMatchResult === 'victory' ? 1 : (LastMatchResult === 'draw' ? 20 : 0), 
+            awardType: LastMatchResult === 'victory' ? 'derhem' : 'fils', 
+            xpAdded: LastMatchResult === 'victory' ? 30 : (LastMatchResult === 'draw' ? 5 : 0) 
+          }}
+          xp={MatchReward?.xpAdded || (LastMatchResult === 'victory' ? 30 : (LastMatchResult === 'draw' ? 5 : 0))}
           onNext={() => {
             ResetMatchResultTrigger();
             handleGoHome();
@@ -1449,99 +1650,46 @@ export default function App() {
           playStartSound={playStartGameSound}
         />
 
-        <SettingsModal
-          isOpen={isSettingsOpen}
-          onClose={() => { playSettingsCloseSound(); setIsSettingsOpen(false); }}
-          currentTheme={currentTheme}
-          onThemeChange={(id) => updateProfile({ currentTheme: id })}
-          appSfxVolume={appSfxVolume}
-          onAppSfxVolumeChange={updateSfxVolume}
-          bgMusicVolume={bgMusicVolume}
-          onBgMusicVolumeChange={updateMusicVolume}
-          hapticEnabled={hapticEnabled}
-          onHapticToggle={() => {
-            updateProfile({ haptic_enabled: !hapticEnabled });
-          }}
-          user={user}
-          onLogout={handleLogout}
-          onPlaySound={playBubblePopSound}
-        />
-
-        <AnimatePresence>
-          {isForfeitConfirmOpen && (
-            <Motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-100 flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm">
-              <div className="w-full max-w-sm bg-slate-900 border border-white/10 rounded-[40px] p-10 text-center">
-                <h2 className="text-2xl font-black mb-4">پشتراستی؟</h2>
-                <div className="flex flex-col gap-3">
-                  <button onClick={executeForfeitConfirmed} className="h-16 bg-red-500 rounded-2xl font-black">بەلێ، دەستژێبەردان</button>
-                  <button onClick={() => setIsForfeitConfirmOpen(false)} className="h-16 bg-white/5 rounded-2xl font-bold">نەخێر</button>
-                </div>
-              </div>
-            </Motion.div>
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {hintLimitToast.visible && (
-            <Motion.div
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.9 }}
-              className="fixed bottom-32 left-1/2 -track-x-1/2 z-1000 -translate-x-1/2"
-            >
-              <div className="bg-[#0f172a]/90 backdrop-blur-2xl border border-red-500/30 px-8 py-4 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center text-red-500">
-                  <span className="material-symbols-outlined text-[24px]">info</span>
-                </div>
-                <span className="text-white font-black text-lg font-rabar">{hintLimitToast.message}</span>
-              </div>
-            </Motion.div>
-          )}
-        </AnimatePresence>
-        <WordFeverResultOverlay
-          isVisible={isWordFeverResultVisible}
-          type={wordFeverResultType}
-          solvedWord={lastSolvedWord}
-          breakdown={wordFeverResultType === 'win' ? victoryBreakdown : defeatBreakdown}
-          xp={rewardAmountXp}
-          playStartSound={playStartGameSound}
-          onContinue={() => {
-            setIsWordFeverResultVisible(false);
-            handleNextGame();
-          }}
-          onRepeat={() => {
-            setIsWordFeverResultVisible(false);
-            // For Word Fever mode retry, we pick a new word but keep the mode
-            handleNextGame();
-          }}
-          onHome={handleGoHome}
-        />
-
-        {user && currentView !== 'auth' && isLevelingUp && level > lastNotifiedLevel && (
-          <LevelUpOverlay
-            isVisible={isLevelingUp}
-            newLevel={level}
-            onClose={async () => {
-              // 1. Update Database FIRST (Ensure persistence before UI close)
-              await updateProfile({ lastNotifiedLevel: level });
-              // 2. Then Close Modal Locally
-              setIsLevelingUp(false);
+        <Suspense fallback={null}>
+          <SettingsModal
+            isOpen={isSettingsOpen}
+            onClose={() => { playSettingsCloseSound(); setIsSettingsOpen(false); }}
+            currentTheme={currentTheme}
+            onThemeChange={(id) => updateProfile({ currentTheme: id })}
+            appSfxVolume={appSfxVolume}
+            onAppSfxVolumeChange={updateSfxVolume}
+            bgMusicVolume={bgMusicVolume}
+            onBgMusicVolumeChange={updateMusicVolume}
+            hapticEnabled={hapticEnabled}
+            onHapticToggle={() => {
+              updateProfile({ haptic_enabled: !hapticEnabled });
             }}
+            user={user}
+            onLogout={handleLogout}
+            onPlaySound={playBubblePopSound}
           />
-        )}
 
-        <DailyRewardModal
-          isOpen={isDailyRewardOpen}
-          onClose={() => setIsDailyRewardOpen(false)}
-        />
+          <DailyRewardModal
+            isOpen={isDailyRewardOpen}
+            onClose={() => setIsDailyRewardOpen(false)}
+          />
 
-        <HowToPlayModal 
-          isOpen={isHowToPlayOpen}
-          onClose={() => setIsHowToPlayOpen(false)}
-          initialMode={howToPlayMode}
-          isDark={isSystemDark}
-          showTabs={isHowToPlayShowTabs}
-        />
+          <HowToPlayModal
+            isOpen={isHowToPlayOpen}
+            onClose={handleCloseHowToPlay}
+            initialMode={howToPlayMode}
+            isDark={isSystemDark}
+            showTabs={isHowToPlayShowTabs}
+          />
+
+          <MasteryModal
+            isOpen={isMasteryOpen}
+            onClose={() => setIsMasteryOpen(false)}
+            masteryData={masteryData}
+          />
+        </Suspense>
+
+
 
         {/* 5. MULTIPLAYER MATCHMAKING OVERLAY */}
         <AnimatePresence>
@@ -1550,7 +1698,7 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-200 flex flex-col items-center justify-center bg-[#020617]/95 backdrop-blur-xl p-8 text-center"
+              className="fixed inset-0 z-200 flex flex-col items-center justify-center bg-mono-white/95 dark:bg-mono-950/95 backdrop-blur-xl p-8 text-center"
             >
               {/* Pulsing Background Glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/20 rounded-full blur-[80px] animate-pulse" />
@@ -1603,7 +1751,18 @@ export default function App() {
             </Motion.div>
           )}
         </AnimatePresence>
-
+        
+        {/* 6. LEVEL UP OVERLAY */}
+        <LevelUpOverlay 
+          isVisible={isLevelingUp} 
+          newLevel={level} 
+          onClose={() => {
+            setIsLevelingUp(false);
+            setLastNotifiedLevel(level); // Sync notified level locally
+            localStorage.setItem('peyvchin_last_notified_level', level.toString());
+            updateInventory({ fils: 500 }); // Bonus reward
+          }} 
+        />
 
       </div>
     </div>

@@ -49,20 +49,16 @@ export default function MultiplayerResultOverlay({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[1000] flex items-center justify-center p-6 bg-slate-950/90 backdrop-blur-2xl"
+        className="fixed inset-0 z-[1000] flex items-center justify-center p-6 bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md"
       >
         {/* Cinematic Backdrop Glow */}
-        <div 
-          className={`absolute inset-0 opacity-20 blur-[120px] rounded-full transition-colors duration-1000 ${
-            isVictory ? 'bg-emerald-500' : isDraw ? 'bg-indigo-400' : 'bg-red-500'
-          }`} 
-        />
+        {/* Removed Glow */}
 
         <motion.div
           initial={{ scale: 0.9, y: 20, opacity: 0 }}
           animate={{ scale: 1, y: 0, opacity: 1 }}
           exit={{ scale: 0.9, y: 20, opacity: 0 }}
-          className="relative w-full max-w-sm bg-white/5 border border-white/10 rounded-[48px] p-8 shadow-2xl overflow-hidden"
+          className="relative w-full max-w-sm bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-white/10 rounded-[48px] p-8 overflow-hidden transition-colors duration-500 shadow-2xl"
         >
           {/* Close/Exit Button */}
           <button
@@ -70,7 +66,7 @@ export default function MultiplayerResultOverlay({
               triggerHaptic(10);
               onClose();
             }}
-            className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/40 hover:bg-white/20 hover:text-white active:scale-95 transition-all z-50 group"
+            className="absolute top-6 right-6 w-10 h-10 rounded-full bg-mono-100 dark:bg-white/10 flex items-center justify-center text-mono-400 dark:text-white/40 hover:bg-mono-200 dark:hover:bg-white/20 hover:text-mono-900 dark:hover:text-white active:scale-95 transition-all z-50 group border border-mono-200 dark:border-white/10"
           >
             <span className="material-symbols-outlined text-2xl group-hover:rotate-90 transition-transform duration-300">close</span>
           </button>
@@ -106,15 +102,15 @@ export default function MultiplayerResultOverlay({
               </motion.div>
             )}
 
-            <p className="text-white/40 font-medium">ئەنجامێ یاریێ</p>
+            <p className="text-mono-400 dark:text-white/40 font-medium">ئەنجامێ یاریێ</p>
           </div>
 
           {/* Scores Comparison */}
-          <div className="flex items-center justify-between gap-4 mb-4 bg-white/5 rounded-3xl p-6 border border-white/5">
+          <div className="flex items-center justify-between gap-4 mb-4 bg-mono-100 dark:bg-white/5 rounded-3xl p-6 border border-mono-200 dark:border-white/5">
             <div className="flex flex-col items-center gap-2 flex-1">
               <Avatar src={userAvatar} size="sm" />
-              <span className="text-[10px] font-black text-white/30 uppercase truncate w-full text-center">{userNickname}</span>
-              <span className="text-3xl font-black text-white">{scores.p1}</span>
+              <span className="text-[10px] font-black text-mono-400 dark:text-white/30 uppercase truncate w-full text-center">{userNickname}</span>
+              <span className="text-3xl font-black text-mono-900 dark:text-white">{scores.p1}</span>
             </div>
 
             <div className="flex flex-col items-center">
@@ -125,8 +121,8 @@ export default function MultiplayerResultOverlay({
 
             <div className="flex flex-col items-center gap-2 flex-1">
               <Avatar src={opponent?.avatar_url} size="sm" />
-              <span className="text-[10px] font-black text-white/30 uppercase truncate w-full text-center">{opponent?.nickname || 'Hévrk'}</span>
-              <span className="text-3xl font-black text-white">{scores.p2}</span>
+              <span className="text-[10px] font-black text-mono-400 dark:text-white/30 uppercase truncate w-full text-center">{opponent?.nickname || 'Hévrk'}</span>
+              <span className="text-3xl font-black text-mono-900 dark:text-white">{scores.p2}</span>
             </div>
           </div>
 
@@ -136,10 +132,10 @@ export default function MultiplayerResultOverlay({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="w-full space-y-2 mb-8 bg-black/40 p-5 rounded-[2rem] border border-emerald-500/10 shadow-inner"
+              className="w-full space-y-2 mb-8 bg-mono-50 dark:bg-black/40 p-5 rounded-[2rem] border border-emerald-500/10"
             >
               <div className="flex justify-between items-center text-md font-black">
-                <span className="text-white/60">خەلاتێ تە</span>
+                <span className="text-mono-600 dark:text-white/60">خەلاتێ تە</span>
                 <div className="flex items-center gap-2 text-emerald-400">
                   <div className="flex flex-col items-end leading-none">
                     <AnimatedNumber value={rewards?.awards?.amount || 1} prefix="+" />
@@ -154,7 +150,7 @@ export default function MultiplayerResultOverlay({
               <div className="h-px bg-white/5 my-0.5" />
 
               <div className="flex justify-between items-center text-sm font-black mt-1">
-                <span className="text-white/60">خەلاتێ ئێکس پی</span>
+                <span className="text-mono-600 dark:text-white/60">خەلاتێ ئێکس پی</span>
                 <div className="flex items-center gap-2 text-yellow-500">
                   <div className="flex flex-col items-end leading-none">
                     <AnimatedNumber value={rewards?.xpAdded || 100} prefix="+" />

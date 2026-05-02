@@ -19,13 +19,13 @@ export const AuthProvider = ({ children }) => {
       setVisualProgress(prev => {
         if (prev >= 100) return 100;
         const diff = authProgress - prev;
+        let next;
         if (diff > 0) {
-          // If we are far from the target, move faster.
-          return prev + Math.max(0.5, diff * 0.1);
+          next = prev + Math.max(0.5, diff * 0.1);
         } else {
-          // Slow passive creep if we haven't reached target yet
-          return prev + (prev < 90 ? 0.2 : 0.05);
+          next = prev + (prev < 90 ? 0.2 : 0.05);
         }
+        return next > 100 ? 100 : next;
       });
     }, 50);
     
@@ -60,6 +60,7 @@ export const AuthProvider = ({ children }) => {
 
   const isProfileLoaded = useRef(false);
   const syncPromiseRef = useRef(null);
+  const hasInitializedRef = useRef(false);
 
   // Cross-context state ref for stable callbacks
   const authStateRef = useRef({ user, userNickname, userAvatar, countryCode, isInKurdistan });
@@ -67,86 +68,120 @@ export const AuthProvider = ({ children }) => {
     authStateRef.current = { user, userNickname, userAvatar, countryCode, isInKurdistan };
   }, [user, userNickname, userAvatar, countryCode, isInKurdistan]);
 
+  const isSyncingRef = useRef(false);
+  const lastSyncTimeRef = useRef(0);
+
   const syncProfile = useCallback(async (userId, onProfileLoaded) => {
     const activeUserId = userId || authStateRef.current.user?.id;
     if (!activeUserId || activeUserId === 'undefined' || typeof activeUserId !== 'string' || activeUserId.length < 5) return;
     
-    if (syncPromiseRef.current) {
-      await syncPromiseRef.current;
+    // 1. LOBBYING GUARD: Prevent rapid fire calls
+    const now = Date.now();
+    if (now - lastSyncTimeRef.current < 2000) {
       return;
     }
 
-    const doSync = async () => {
-      try {
-        console.log("[AuthContext] Fetching profile for:", activeUserId);
-        
-        // Add a 15-second timeout to the Supabase request
-        const timeoutPromise = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error("Sync timed out")), 10000)
-        );
+    // 2. CONCURRENCY GUARD: Prevent overlapping requests
+    if (isSyncingRef.current) {
+      return;
+    }
 
-        const fetchPromise = supabase.from('profiles').select('*').eq('id', activeUserId).single();
-        
-        const { data, error } = await Promise.race([fetchPromise, timeoutPromise]);
-
-        if (error && error.code === 'PGRST116') {
-          console.log("[AuthContext] No profile found, initializing new record...");
-          const initialRecord = {
-            id: userId, level: 1, xp: 0, last_notified_level: 1,
-            fils: 1000, derhem: 50, dinar: 5, magnets: 3, hints: 5, skips: 2,
-            inventory: { badges: [], owned_avatars: ['default'], unlocked_themes: ['default'], equipped_theme: 'default', solved_words: [], stats: { classic: { bestStreak: 0, totalCorrect: 0 } } },
-            daily_streak: 0, reward_streak: 0, last_reward_claimed_at: null, updated_at: new Date().toISOString()
-          };
-          const { error: insertError } = await supabase.from('profiles').insert([initialRecord]);
-          if (insertError) {
-             console.warn("[AuthContext] Profile initialization error:", insertError);
-          }
-        } else if (data && !error) {
-          console.log("[AuthContext] Profile data received.");
-          const userInventoryData = data.inventory || {};
-          
-          setUserNickname(data.nickname || 'یاریزان');
-          setUserAvatar(data.avatar_url || 'default');
-          setCity(data.city || '');
-          setIsInKurdistan(data.is_kurdistan ?? true);
-          setCountryCode(data.country_code || 'IQ');
-
-          if (userInventoryData.owned_avatars) setOwnedAvatars(userInventoryData.owned_avatars);
-          if (userInventoryData.unlocked_themes) setUnlockedThemes(userInventoryData.unlocked_themes);
-          
-          const haptic = data.haptic_enabled ?? true;
-          setHapticEnabled(haptic);
-          localStorage.setItem('peyvchin_haptic_enabled', haptic.toString());
-
-          const theme = data.preferred_theme ?? userInventoryData.equipped_theme ?? 'default';
-          setCurrentTheme(theme);
-          localStorage.setItem('peyvchin_current_theme', theme);
-
-          // Update Cache
-          localStorage.setItem('peyvchin_cached_profile', JSON.stringify(data));
-          localStorage.setItem('peyvchin_cached_avatar', data.avatar_url || 'default');
-
-          isProfileLoaded.current = true;
-          setProfileData(data);
-          if (onProfileLoaded) onProfileLoaded(data);
-        }
-      } catch (err) {
-        console.log("[AuthContext] [Sync] Connection slow, retrying in background...");
-      } finally {
-        syncPromiseRef.current = null;
-      }
-    };
-
-    syncPromiseRef.current = doSync();
     try {
-      await syncPromiseRef.current;
+      isSyncingRef.current = true;
+      lastSyncTimeRef.current = now;
+      
+      // Lock immediately
+      isProfileLoaded.current = true;
+
+      console.log("[AuthContext] Fetching profile for:", activeUserId);
+      
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', activeUserId)
+        .single();
+
+      if (error) {
+        if (error.code === 'PGRST116') {
+          console.log("[AuthContext] No profile found.");
+        }
+        throw error;
+      }
+
+      if (data) {
+        // 3. ATOMIC STATE UPDATES: Batch updates to minimize re-renders
+        // We only set state if the values actually changed to prevent propagation
+        
+        setUserNickname(prev => prev !== data.nickname ? (data.nickname || 'یاریزان') : prev);
+        setUserAvatar(prev => prev !== data.avatar_url ? (data.avatar_url || 'default') : prev);
+        setCity(prev => prev !== data.city ? (data.city || '') : prev);
+        setIsInKurdistan(prev => prev !== data.is_kurdistan ? (data.is_kurdistan ?? true) : prev);
+        setCountryCode(prev => prev !== data.country_code ? (data.country_code || 'IQ') : prev);
+
+        // 3.1 NEW SCHEMA SYNC: Avatars and Themes are now top-level columns
+        setOwnedAvatars(prev => {
+          const next = Array.isArray(data.owned_avatars) ? data.owned_avatars : ['default'];
+          return JSON.stringify(prev) !== JSON.stringify(next) ? next : prev;
+        });
+        
+        setUnlockedThemes(prev => {
+          const next = Array.isArray(data.unlocked_themes) ? data.unlocked_themes : ['default'];
+          return JSON.stringify(prev) !== JSON.stringify(next) ? next : prev;
+        });
+        
+        const haptic = data.haptic_enabled ?? true;
+        setHapticEnabled(prev => {
+          if (prev !== haptic) {
+            localStorage.setItem('peyvchin_haptic_enabled', haptic.toString());
+            return haptic;
+          }
+          return prev;
+        });
+
+        const theme = data.equipped_theme || 'default';
+        setCurrentTheme(prev => {
+          if (prev !== theme) {
+            localStorage.setItem('peyvchin_current_theme', theme);
+            return theme;
+          }
+          return prev;
+        });
+
+        // 3.2 INVENTORY SELF-HEAL: REMOVED direct update due to potential trigger mismatch.
+        // The user should run the database repair script instead.
+        if (Array.isArray(data.inventory)) {
+          console.warn("[AuthContext] Corrupt inventory detected (Array instead of Object). Please run the DB repair script.");
+        }
+
+        // Update Cache
+        localStorage.setItem('peyvchin_cached_profile', JSON.stringify(data));
+        
+        // CRITICAL: Deep comparison to prevent Context Value thrashing
+        setProfileData(prev => {
+           if (!prev && !data) return null;
+           if (prev && data && prev.xp === data.xp && prev.fils === data.fils && prev.updated_at === data.updated_at) {
+             return prev;
+           }
+           return data;
+        });
+
+        if (onProfileLoaded) onProfileLoaded(data);
+      }
     } catch (err) {
-      // Silent catch, handled inside doSync
+      console.warn("[AuthContext] Sync Note:", err.message);
+      if (err.message !== "Sync timed out") isProfileLoaded.current = false;
+    } finally {
+      isSyncingRef.current = false;
+      setLoadingAuth(false);
+      setLoading(false);
     }
   }, []);
 
   // MANDATORY SESSION RECOVERY & AUTH LISTENER
   useEffect(() => {
+    if (hasInitializedRef.current) return;
+    hasInitializedRef.current = true;
+
     console.log("[AuthContext] Initializing...");
     const initializeAuth = async () => {
       // Global safety timeout to prevent getting stuck on the sun loader forever
@@ -154,31 +189,37 @@ export const AuthProvider = ({ children }) => {
         if (loadingAuth) {
           console.warn("[AuthContext] Safety timeout reached! Forcing ready state.");
           setAuthProgress(100);
-          setTimeout(() => {
-            setLoadingAuth(false);
-            setLoading(false);
-          }, 300);
+          setLoadingAuth(false);
+          setLoading(false);
         }
-      }, 5000); // Reduced to 5s for better UX
+      }, 4000); // Reduced to 4s for even faster fallback
 
       try {
         setAuthProgress(15);
+        
+        // OPTIMIZATION: Check for cached profile BEFORE session if possible
+        // This allows us to show the UI even faster if we have a valid cache
+        const cachedProfile = localStorage.getItem('peyvchin_cached_profile');
+        if (cachedProfile) {
+          console.log("[AuthContext] Found cached profile, pre-loading...");
+          const data = JSON.parse(cachedProfile);
+          setProfileData(data);
+          setUserNickname(data.nickname || 'یاریزان');
+          setUserAvatar(data.avatar_url || 'default');
+          // Don't unlock fully yet, we still need to verify session
+        }
+
         console.log("[AuthContext] Checking session...");
+        setAuthProgress(30);
         
-        // Use a more relaxed timeout for the initial session check
-        const sessionTimeout = new Promise((_, reject) => 
-          setTimeout(() => reject(new Error("Initial session check deferred")), 10000)
-        );
-        const sessionFetch = supabase.auth.getSession();
-        
-        const { data: { session } } = await Promise.race([sessionFetch, sessionTimeout]);
+        // Fast session check
+        const { data: { session } } = await supabase.auth.getSession();
         
         if (session?.user) {
-          setAuthProgress(45);
+          setAuthProgress(60);
           console.log("[AuthContext] Active session recovered:", session.user.id);
           setUser(session.user);
-          // If we have cached profile data, we can unlock the UI immediately
-          const cachedProfile = localStorage.getItem('peyvchin_cached_profile');
+          
           if (cachedProfile) {
             console.log("[AuthContext] Instant unlock via cached profile.");
             setAuthProgress(100);
@@ -186,59 +227,79 @@ export const AuthProvider = ({ children }) => {
             setLoading(false);
           }
           
-          // Sync in background to ensure data is fresh
-          if (!isProfileLoaded.current) {
-            setAuthProgress(75);
-            syncProfile(session.user.id);
-          }
+          // Sync in background
+          syncProfile(session.user.id);
         } else {
           setAuthProgress(100);
           console.log("[AuthContext] No active session found, proceeding as guest.");
         }
       } catch (err) {
-        // Log as a standard info message instead of a red error
-        console.log("[AuthContext] [Notice]", err.message);
+        console.log("[AuthContext] [Notice] Auth check deferred:", err.message);
       } finally {
         clearTimeout(safetyTimeout);
-        if (loadingAuth) {
-          setAuthProgress(100);
-          console.log("[AuthContext] Auth system ready.");
-          // Wait for visual progress to catch up before hiding
-          const checkDone = setInterval(() => {
-             setVisualProgress(prev => {
-                if (prev >= 99) {
-                   clearInterval(checkDone);
-                   setTimeout(() => {
-                      setLoadingAuth(false);
-                      setLoading(false);
-                   }, 300);
-                   return 100;
-                }
-                return prev + 2;
-             });
-          }, 50);
-        }
+        // Force completion if not already done
+        setAuthProgress(100);
+        setTimeout(() => {
+          setLoadingAuth(false);
+          setLoading(false);
+        }, 100);
       }
     };
 
     initializeAuth();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      console.log("[AuthContext] Auth state change:", _event, session?.user?.id);
-      if (session?.user) {
-        setUser(session.user);
+      const newUser = session?.user || null;
+      setUser(prev => {
+        if (!prev && !newUser) return null;
+        if (prev?.id === newUser?.id && prev?.email === newUser?.email) return prev;
+        return newUser;
+      });
+
+      if (newUser) {
         if (!isProfileLoaded.current) {
-          setAuthProgress(60);
-          await syncProfile(session.user.id);
-          setAuthProgress(100);
+          syncProfile(newUser.id);
         }
       } else {
-        setUser(null);
+        isProfileLoaded.current = false;
+        setProfileData(null);
       }
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, [syncProfile]);
+
+  // NEW: Real-time Profile Listener to keep profileData synced everywhere
+  useEffect(() => {
+    if (!user?.id) return;
+
+    const channel = supabase
+      .channel(`profile-auth-sync-${user.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'profiles',
+          filter: `id=eq.${user.id}`
+        },
+        (payload) => {
+          console.log("🔄 [AuthContext] Profile Sync Update:", payload.new);
+          setProfileData(payload.new);
+          
+          // Update derived identity states if they changed
+          if (payload.new.nickname) setUserNickname(payload.new.nickname);
+          if (payload.new.avatar_url) setUserAvatar(payload.new.avatar_url);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user?.id]);
 
   const updateProfile = useCallback(async (profileData) => {
     const { user: currentUser, userNickname, userAvatar, countryCode, isInKurdistan } = authStateRef.current;
@@ -305,7 +366,7 @@ export const AuthProvider = ({ children }) => {
     syncProfile, refreshProfile: syncProfile, updateProfile, handleToggleBlock, checkBlockStatus,
     isProfileLoaded
   }), [
-    user, loadingAuth, loading, authProgress, userNickname, userAvatar, city, isInKurdistan, 
+    user, loadingAuth, loading, visualProgress, userNickname, userAvatar, city, isInKurdistan, 
     countryCode, ownedAvatars, unlockedThemes, currentTheme, hapticEnabled, syncProfile, 
     updateProfile, handleToggleBlock, checkBlockStatus, profileData, lastProfileUpdate
   ]);

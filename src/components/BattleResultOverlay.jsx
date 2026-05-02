@@ -78,23 +78,21 @@ const BattleResultOverlay = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[2000] flex items-center justify-center bg-[#020617]/95 backdrop-blur-2xl p-6"
+          className="fixed inset-0 z-[2000] flex items-center justify-center bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md p-6"
         >
-          {/* Background Glow */}
-          <div className={`absolute inset-0 blur-[120px] opacity-20 ${isVictory ? 'bg-emerald-500' : isDefeat ? 'bg-red-500' : 'bg-blue-500'}`} />
 
           <motion.div
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className={`w-full max-w-md bg-[#1a1a1a]/80 border-2 ${isVictory ? 'border-emerald-500/30' : isDefeat ? 'border-red-500/30' : 'border-blue-500/30'} rounded-[3.5rem] p-8 shadow-[0_50px_100px_rgba(0,0,0,0.8)] flex flex-col items-center gap-6 relative overflow-hidden`}
+            className={`w-full max-w-md bg-mono-white dark:bg-mono-950 border-2 ${isVictory ? 'border-emerald-500/30' : isDefeat ? 'border-red-500/30' : 'border-blue-500/30'} rounded-[3.5rem] p-8 flex flex-col items-center gap-6 relative overflow-hidden transition-colors duration-500 shadow-2xl`}
           >
             {/* Status Icon */}
             <div className="relative">
               <motion.div
                 initial={{ scale: 0.5 }}
                 animate={{ scale: 1 }}
-                className={`w-24 h-24 rounded-full flex items-center justify-center shadow-2xl relative z-10 ${isVictory ? 'bg-emerald-500/20 text-emerald-400' : isDefeat ? 'bg-red-500/20 text-red-500' : 'bg-blue-500/20 text-blue-400'}`}
+                className={`w-24 h-24 rounded-full flex items-center justify-center relative z-10 ${isVictory ? 'bg-emerald-500/20 text-emerald-400' : isDefeat ? 'bg-red-500/20 text-red-500' : 'bg-blue-500/20 text-blue-400'}`}
               >
                 <span className="material-symbols-outlined text-[56px]">
                   {isVictory ? 'workspace_premium' : isDefeat ? 'sentiment_very_dissatisfied' : 'balance'}
@@ -107,20 +105,20 @@ const BattleResultOverlay = ({
               <h2 className={`text-4xl font-black font-heading ${isVictory ? 'text-emerald-400' : isDefeat ? 'text-red-500' : 'text-blue-400'}`}>
                 {isVictory ? 'سەرکەفتن!' : isDefeat ? 'خوسارەتی!' : 'یەکسانبوون!'}
               </h2>
-              <p className="text-white/40 font-bold mt-1">ئەنجامێ یاریێ</p>
+              <p className="text-mono-400 dark:text-white/40 font-bold mt-1">ئەنجامێ یاریێ</p>
             </div>
 
             {/* VS SECTION (Premium Look) */}
-            <div className="w-full bg-white/5 rounded-2xl border border-white/10 p-6 flex items-center justify-between relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent h-[1px] top-1/2 -translate-y-1/2 w-full" />
+            <div className="w-full bg-mono-100 dark:bg-[#141414] rounded-2xl border border-mono-200 dark:border-white/10 p-6 flex items-center justify-between relative">
+              <div className="absolute inset-0 bg-mono-200 dark:bg-white/5 h-[1px] top-1/2 -translate-y-1/2 w-full" />
 
               {/* Player 1 (YOU) */}
               <div className="flex flex-col items-center gap-2 flex-1 z-10">
-                <div className="p-1 rounded-full ring-2 ring-sky-500/50 shadow-[0_0_15px_rgba(14,165,233,0.15)]">
+                <div className="p-1 rounded-full border border-sky-500/30">
                   <Avatar src={user?.avatar_url} size="xl" />
                 </div>
-                <span className="text-[10px] font-black text-white/40 uppercase truncate w-24 text-center">{user?.nickname || 'تۆ'}</span>
-                <span className={`text-4xl font-black ${isVictory ? 'text-sky-400' : 'text-white'}`}>{toKuDigits(myScore)}</span>
+                <span className="text-[10px] font-black text-mono-400 dark:text-white/40 uppercase truncate w-24 text-center">{user?.nickname || 'تۆ'}</span>
+                <span className={`text-4xl font-black ${isVictory ? 'text-sky-400' : 'text-mono-900 dark:text-white'}`}>{toKuDigits(myScore)}</span>
               </div>
 
               <div className="flex flex-col items-center z-10">
@@ -129,18 +127,18 @@ const BattleResultOverlay = ({
 
               {/* Player 2 (FOE) */}
               <div className="flex flex-col items-center gap-2 flex-1 z-10">
-                <div className="p-1 rounded-full ring-2 ring-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.15)]">
+                <div className="p-1 rounded-full border border-red-500/30">
                   <Avatar src={opponent?.avatar_url} size="xl" />
                 </div>
-                <span className="text-[10px] font-black text-white/40 uppercase truncate w-24 text-center">{opponent?.nickname || 'ھەڤڕک'}</span>
-                <span className={`text-4xl font-black ${isDefeat ? 'text-red-500' : 'text-white'}`}>{toKuDigits(oppScore)}</span>
+                <span className="text-[10px] font-black text-mono-400 dark:text-white/40 uppercase truncate w-24 text-center">{opponent?.nickname || 'ھەڤڕک'}</span>
+                <span className={`text-4xl font-black ${isDefeat ? 'text-red-500' : 'text-mono-900 dark:text-white'}`}>{toKuDigits(oppScore)}</span>
               </div>
             </div>
 
             {/* REWARDS SECTION */}
-            <div className="w-full space-y-3 bg-black/40 p-5 rounded-2xl border border-white/5 shadow-inner">
+            <div className="w-full space-y-3 bg-mono-50 dark:bg-[#141414] p-5 rounded-2xl border border-mono-100 dark:border-white/5">
               <div className="flex justify-between items-center text-md font-black">
-                <span className="text-white/60">خەلاتێ تە</span>
+                <span className="text-mono-600 dark:text-white/60">خەلاتێ تە</span>
                 <div className={`flex items-center gap-2 ${isVictory ? 'text-emerald-400' : 'text-white/20'}`}>
                   <div className="flex flex-col items-end leading-none">
                     <AnimatedNumber value={breakdown?.awardAmount || 0} prefix={isVictory ? "+" : ""} />
@@ -154,11 +152,11 @@ const BattleResultOverlay = ({
                 </div>
               </div>
 
-              <div className="h-px bg-white/5" />
+              <div className="h-px bg-mono-200 dark:bg-white/5" />
 
               <div className="flex justify-between items-center text-md font-black">
-                <span className="text-white/60">خەلاتێ ئێکس پی</span>
-                <div className={`flex items-center gap-2 ${isVictory ? 'text-yellow-500' : 'text-white/20'}`}>
+                <span className="text-mono-600 dark:text-white/60">خەلاتێ ئێکس پی</span>
+                <div className={`flex items-center gap-2 ${isVictory ? 'text-yellow-500' : 'text-mono-400 dark:text-white/20'}`}>
                   <div className="flex flex-col items-end leading-none">
                     <AnimatedNumber value={breakdown?.xpAdded || xp || (isVictory ? 100 : 20)} prefix="+" />
                     <span className="text-[8px] font-black opacity-60">XP</span>
@@ -171,8 +169,8 @@ const BattleResultOverlay = ({
                 <div className="flex items-center gap-3">
                   {[...Array(5)].map((_, i) => {
                     let colorClass = "bg-white/10";
-                    if (i < myScore) colorClass = "bg-sky-500 shadow-[0_0_8px_rgba(14,165,233,0.5)]";
-                    else if (i < myScore + oppScore) colorClass = "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]";
+                    if (i < myScore) colorClass = "bg-sky-500";
+                    else if (i < myScore + oppScore) colorClass = "bg-red-500";
 
                     return (
                       <motion.div
@@ -185,7 +183,7 @@ const BattleResultOverlay = ({
                     );
                   })}
                 </div>
-                <span className="text-[8px] font-black text-white/20 uppercase tracking-[0.2em]">ئەنجامێ گەڕان</span>
+                <span className="text-[8px] font-black text-mono-400 dark:text-white/20 uppercase tracking-[0.2em]">ئەنجامێ گەڕان</span>
               </div>
             </div>
 
@@ -193,7 +191,7 @@ const BattleResultOverlay = ({
             <div className="w-full">
               <button
                 onClick={() => { triggerHaptic(10); playStartSound?.(); onNext(); }}
-                className={`w-full ${isVictory ? 'bg-linear-to-r from-emerald-500 to-teal-600' : 'bg-linear-to-r from-sky-500 to-indigo-600'} hover:brightness-110 text-white py-5 rounded-3xl font-black text-xl shadow-2xl active:scale-95 transition-all flex items-center justify-center gap-3 group`}
+                className={`w-full ${isVictory ? 'bg-emerald-600' : 'bg-sky-600'} hover:brightness-110 text-white py-5 rounded-3xl font-black text-xl active:scale-95 transition-all flex items-center justify-center gap-3 group`}
               >
                 ڤەگەڕە
                 <span className="material-symbols-outlined group-hover:translate-x-[-4px] transition-transform">arrow_back</span>

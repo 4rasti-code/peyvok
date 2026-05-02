@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useRef, forwardRef, useImperativeHandle, memo } from 'react';
+﻿import React, { useMemo, useEffect, useRef, forwardRef, useImperativeHandle, memo } from 'react';
 import { motion, useSpring, useMotionValue, useTransform, animate, useMotionValueEvent } from 'framer-motion';
 
 const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
@@ -36,7 +36,7 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
       x.set(fleeX);
       y.set(fleeY);
       rotate.set(targetAngle + 90);
-      opacity.set(0.3);
+      opacity.set(0.08);
 
       // Smoothly return
       setTimeout(() => {
@@ -50,11 +50,11 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
 
   // Unique animation delay for organic feel
   const delay = useMemo(() => `${Math.random() * -20}s`, []);
-  const duration = useMemo(() => `${15 + Math.random() * 10}s`, []);
+  const duration = useMemo(() => `${45 + Math.random() * 30}s`, []);
 
   return (
     <motion.div
-      className="absolute text-white font-black text-[14px] select-none font-rabar pointer-events-none transition-opacity duration-700"
+      className="absolute text-mono-900/10 dark:text-mono-100/10 font-bold text-[16px] select-none font-rabar pointer-events-none transition-opacity duration-1000"
       style={{
         left: `${initialX}%`,
         top: `${initialY}%`,
@@ -72,7 +72,7 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
 
 const FloatingLetterBackground = forwardRef((props, ref) => {
   const pulseMV = useMotionValue(null);
-  const chars = ['ئا', 'ب', 'پ', 'ت', 'ج', 'د', 'ڕ', 'ز', 'ڤ', 'ڵ', 'ۆ', 'ێ', 'گ', 'چ', 'ژ', 'هـ'];
+  const chars = ['ط¦ط§', 'ط¨', 'ظ¾', 'طھ', 'ط¬', 'ط¯', 'ع•', 'ط²', 'ع¤', 'عµ', 'غ†', 'غژ', 'ع¯', 'ع†', 'عک', 'ظ‡ظ€'];
 
   // Reduce count to 20 for better performance on mobile/low-end devices
   const letters = useMemo(() => {
@@ -91,7 +91,7 @@ const FloatingLetterBackground = forwardRef((props, ref) => {
   }));
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 bg-[#020617]">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-[5] bg-white dark:bg-black transition-colors duration-500">
       <style>
         {`
           @keyframes drift {
@@ -102,7 +102,7 @@ const FloatingLetterBackground = forwardRef((props, ref) => {
           }
         `}
       </style>
-      <div className="absolute inset-0 bg-linear-to-b from-transparent via-blue-500/5 to-transparent pointer-none" />
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-mono-500/5 dark:via-white/5 to-transparent pointer-none" />
 
       {letters.map((letter) => (
         <FloatingLetter

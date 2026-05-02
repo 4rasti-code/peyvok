@@ -196,6 +196,9 @@ export default function useGameLogic({
       const freshGuess = new Array(target.length).fill('');
       revealedIndicesRef.current.forEach(idx => freshGuess[idx] = target[idx]);
       setCurrentGuess(freshGuess);
+    } else {
+      // CLEAR for next game/state even if winning
+      setCurrentGuess(new Array(target.length).fill(''));
     }
 
     setTimeout(() => { isSubmittingRef.current = false; }, 300);

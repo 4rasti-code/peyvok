@@ -14,15 +14,15 @@ const InventoryBar = ({
   skipsUsedInRound = 0,
   skipLimit = 1,
   isShop = false,
-  className = "",
-  isDark = true
+  className = ""
 }) => {
-  const countColor = isDark ? 'text-white' : 'text-slate-900';
-  const sepColor = isDark ? 'bg-white/10' : 'bg-slate-300';
+  const countColor = "text-mono-950 dark:text-mono-100";
+  const sepColor = "bg-mono-200 dark:bg-white/10";
+  const disabledIconColor = "text-mono-300 dark:text-mono-700";
 
   return (
-    <div className={`flex items-center justify-center ${className}`}>
-      <div className="flex items-center gap-10 py-1 px-4">
+    <div className={`flex items-center justify-center h-[52px] ${className}`}>
+      <div className="flex items-center gap-10 py-1 px-4 h-full">
         
         {/* Hint Item */}
         <div className="flex items-center gap-3">
@@ -30,10 +30,13 @@ const InventoryBar = ({
             onClick={onHint}
             disabled={!isShop && (hintTaps >= hintLimit || hintLimit === 0 || (hintCount || 0) <= 0)}
             className="flex items-center gap-2 group transition-all active:scale-90"
+            id="btn-hint"
+            name="btn-hint"
+            aria-label="Use Hint"
           >
             <span 
               className={`material-symbols-outlined text-[24px] 
-                ${(!isShop && (hintTaps >= hintLimit || (hintCount || 0) <= 0)) ? "text-slate-600" : "text-amber-500"}`} 
+                ${(!isShop && (hintTaps >= hintLimit || (hintCount || 0) <= 0)) ? disabledIconColor : "text-amber-500"}`} 
               style={{ fontVariationSettings: "'FILL' 1" }}
             >
               lightbulb
@@ -62,10 +65,13 @@ const InventoryBar = ({
             onClick={onMagnet}
             disabled={!isShop && (magnetUsedInRound || (magnetCount || 0) <= 0)}
             className="flex items-center gap-2 group transition-all active:scale-90"
+            id="btn-magnet"
+            name="btn-magnet"
+            aria-label="Use Magnet"
           >
             <span 
               className={`material-symbols-outlined text-[24px] 
-                ${(!isShop && (magnetUsedInRound || (magnetCount || 0) <= 0)) ? "text-slate-600" : "text-purple-400"}`} 
+                ${(!isShop && (magnetUsedInRound || (magnetCount || 0) <= 0)) ? disabledIconColor : "text-purple-400"}`} 
               style={{ fontVariationSettings: "'FILL' 1" }}
             >
               auto_fix_high
@@ -94,10 +100,13 @@ const InventoryBar = ({
             onClick={onSkip}
             disabled={!isShop && (skipsUsedInRound >= skipLimit || (skipCount || 0) <= 0)}
             className="flex items-center gap-2 group transition-all active:scale-90"
+            id="btn-skip"
+            name="btn-skip"
+            aria-label="Use Skip"
           >
             <span 
               className={`material-symbols-outlined text-[24px] 
-                ${(!isShop && (skipsUsedInRound >= skipLimit || (skipCount || 0) <= 0)) ? "text-slate-600" : "text-blue-400"}`} 
+                ${(!isShop && (skipsUsedInRound >= skipLimit || (skipCount || 0) <= 0)) ? disabledIconColor : "text-blue-400"}`} 
               style={{ fontVariationSettings: "'FILL' 1" }}
             >
               fast_forward

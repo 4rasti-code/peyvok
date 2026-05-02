@@ -5,7 +5,6 @@ import { THEMES } from '../data/themes';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
 import PaymentGatewayModal from './PaymentGatewayModal';
 import { toKuDigits } from '../utils/formatters';
-import CurrencyDecrementEffect from './CurrencyDecrementEffect';
 import InventoryBar from './InventoryBar';
 import { useUser } from '../context/AuthContext';
 import { useAudio } from '../context/AudioContext';
@@ -30,78 +29,18 @@ const SHOP_ITEMS = {
   ]
 };
 
-// Old HeaderStatusBar removed in favor of shared InventoryBar
-const ConfirmPurchaseModal = ({ itemConfig, onConfirm, onCancel }) => {
-  if (!itemConfig) return null;
-  const { data, type } = itemConfig;
-  const currency = type === 'theme' ? data.currency : (type === 'avatar' ? data.currency : 'fils');
-  const price = data.price;
-  const CurrencyIcon = currency === 'derhem' ? DerhemIcon : (currency === 'dinar' ? DinarIcon : FilsIcon);
-  const title = type === 'powerup' ? data.name : (type === 'avatar' ? data.name : data.name);
-  const categoryLabel = type === 'powerup' ? 'ھاریکار' : (type === 'avatar' ? 'ئێمۆجی' : 'نیشان');
-
-  return (
-    <div className="fixed inset-0 z-[500] flex items-center justify-center p-6 bg-slate-950/60 backdrop-blur-md animate-in fade-in duration-300">
-      <motion.div 
-        initial={{ scale: 0.95, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.95, opacity: 0, y: 10 }}
-        className="relative w-full max-w-sm bg-linear-to-b from-slate-900 to-[#020617] border border-white/10 rounded-3xl shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)] overflow-hidden"
-      >
-        {/* Glowing Background Accent */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-primary/20 blur-[60px] pointer-events-none" />
-        
-        <div className="relative z-10 p-8 flex flex-col items-center gap-6">
-          {/* Header Icon Section */}
-          <div className="relative">
-            <div className="w-24 h-24 rounded-3xl bg-slate-800/50 border border-white/5 flex items-center justify-center shadow-inner group overflow-hidden">
-               {type === 'avatar' || type === 'theme' ? (
-                 <img src={data.image || data.preview} alt="" className="w-full h-full object-cover rounded-2xl animate-pulse-subtle" />
-               ) : (
-                 <span className="material-symbols-outlined text-5xl text-primary drop-shadow-[0_0_15px_rgba(var(--color-primary),0.5)]">{data.icon || 'shopping_cart'}</span>
-               )}
-            </div>
-            <div className="absolute -bottom-2 -right-2 bg-slate-950 border border-white/10 rounded-lg px-2 py-0.5 shadow-xl">
-              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{categoryLabel}</span>
-            </div>
-          </div>
-
-          {/* Text Content */}
-          <div className="text-center">
-            <h3 className="text-2xl font-black text-white mb-2 tracking-tight">{title}</h3>
-            <p className="text-sm font-rabar text-slate-400 leading-relaxed px-4">ئایا تو یێ پشتڕاستی دێ ڤی کەرەستەیی ب ڤی کۆژمەی کڕی؟</p>
-          </div>
-
-          {/* Price Tag Display */}
-          <div className="bg-white/5 border border-white/5 rounded-2xl px-6 py-3 flex items-center gap-3 shadow-inner">
-             <span className="text-2xl font-black text-white">{toKuDigits(price)}</span>
-             <div className="w-6 h-6 flex items-center justify-center">
-                <CurrencyIcon />
-             </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex gap-4 w-full pt-2">
-            <button 
-              onClick={onCancel}
-              className="flex-1 py-4 bg-white/5 hover:bg-white/10 text-white/50 hover:text-white font-black rounded-2xl border border-white/5 transition-all text-sm uppercase tracking-widest active:scale-95"
-            >
-              پەشیمانم
-            </button>
-            <button 
-              onClick={() => onConfirm(data)}
-              className="flex-1 py-4 bg-emerald-500 hover:bg-emerald-400 text-white font-black rounded-2xl shadow-[0_8px_20px_rgba(16,185,129,0.3)] transition-all text-sm uppercase tracking-widest active:scale-95"
-            >
-              بەردەوام بە
-            </button>
-          </div>
-        </div>
-      </motion.div>
-    </div>
-  );
-};
-
 const PowerUpCard = ({ item, onRequestPurchase, canAfford }) => {
+  const getDynamicStyles = (id) => {
+    switch (id) {
+      case 'hint_pack': return 'bg-[#FF9F1C] dark:bg-[#FF9F1C]/80 border-[#E68A00] dark:border-[#FF9F1C]/20';
+      case 'attractor_field': return 'bg-[#98A3F8] dark:bg-[#98A3F8]/80 border-[#7A85D9] dark:border-[#98A3F8]/20';
+      case 'full_skip': return 'bg-[#A2E263] dark:bg-[#A2E263]/80 border-[#85C14B] dark:border-[#A2E263]/20';
+      default: return 'bg-mono-white dark:bg-mono-900 border-mono-200 dark:border-mono-800';
+    }
+  };
+
+  const dynamicClass = getDynamicStyles(item.id);
+
   return (
     <motion.button
       layout
@@ -115,21 +54,23 @@ const PowerUpCard = ({ item, onRequestPurchase, canAfford }) => {
           triggerHaptic([50, 30, 50]);
         }
       }}
-      className="group relative w-full px-2 py-1 bg-white/95 rounded-md border border-slate-200/60 hover:bg-white flex items-center gap-2 overflow-visible transition-all shadow-sm"
+      className={`group relative w-full px-5 py-4 ${dynamicClass} rounded-md border-b-4 flex items-center gap-4 overflow-visible transition-all shadow-md active:border-b-0 active:translate-y-[2px]`}
     >
-      <div className={`w-[40px] h-[40px] rounded-md bg-linear-to-br ${item.color} flex items-center justify-center text-white shrink-0 relative z-10 transition-transform group-hover:scale-105 duration-300 shadow-sm`}>
-        <span className="material-symbols-outlined text-[18px] drop-shadow-sm">{item.icon}</span>
+      <div className="w-[48px] h-[48px] rounded-md bg-white/20 dark:bg-black/20 flex items-center justify-center text-white shrink-0 relative z-10 transition-transform group-hover:scale-110 duration-300 border border-white/30">
+        <span className="material-symbols-outlined text-[24px] drop-shadow-md text-white">{item.icon}</span>
       </div>
+      
       <div className="flex-1 text-right min-w-0 relative z-10 pr-1">
-        <h3 className="text-[14px] font-black text-slate-900 mb-0 tracking-tight leading-tight truncate">{item.name}</h3>
-        <p className="text-[9px] font-bold text-slate-500 leading-tight truncate">{item.description}</p>
+        <h3 className="text-[17px] font-black text-white dark:text-mono-50 mb-0.5 tracking-tight leading-tight truncate drop-shadow-sm">{item.name}</h3>
+        <p className="text-[12px] font-bold text-white/90 dark:text-mono-200 leading-tight truncate">{item.description}</p>
       </div>
+
       <div className="flex flex-col items-center justify-center shrink-0 z-10 relative">
-        <div className={`flex items-center gap-1.5 px-2 py-1 rounded-md transition-all shadow-sm ${!canAfford ? 'bg-slate-100/80 border border-slate-200 opacity-40' : 'bg-emerald-500 text-white group-hover:scale-105'}`}>
+        <div className={`flex items-center gap-2 px-4 py-1.5 rounded-md transition-all shadow-inner duration-300 ${!canAfford ? 'bg-black/20 text-white/50' : 'bg-white/20 dark:bg-black/30 text-white border border-white/20 group-hover:scale-105'}`}>
           <div className="flex flex-col items-center leading-none">
-            <span className={`text-[13px] font-black ${!canAfford ? 'text-slate-400' : 'text-white'}`}>{toKuDigits(item.price || 0)}</span>
+            <span className="text-[14px] font-black">{toKuDigits(item.price || 0)}</span>
           </div>
-          <div className={`w-3.5 h-3.5 flex items-center justify-center ${!canAfford ? 'opacity-40 grayscale' : ''}`}>
+          <div className={`w-4 h-4 flex items-center justify-center ${!canAfford ? 'grayscale opacity-60' : ''}`}>
             {item.currency === 'derhem' ? <DerhemIcon /> : item.currency === 'dinar' ? <DinarIcon /> : <FilsIcon />}
           </div>
         </div>
@@ -174,23 +115,13 @@ const SpecialOfferCard = ({ item, onOpenGateway, playPurchaseSound }) => (
 
 export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, skipCount, currentTheme, onPurchase, onPurchaseAvatar, onEquipAvatar, onEquipTheme, unlockedThemes = [], ownedAvatars = ['default'], equippedAvatar = 'default', playPurchaseSound }) {
   const { playTabSound } = useAudio();
-  const { refreshProfile, user, loadingAuth } = useUser();
+  const { user, loadingAuth } = useUser();
   const [activeTab, setActiveTab] = useState('powerups');
   const [gatewayOpen, setGatewayOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState(null);
-  const [itemToConfirm, setItemToConfirm] = useState(null);
   const bgRef = useRef(null);
 
-  // FORCE SYNC: Ensure state is parity with DB when opening the shop
-  // Guarded to prevent "id=eq.undefined" 400 errors.
-  useEffect(() => {
-    if (!loadingAuth && user?.id && user.id !== 'undefined') {
-      refreshProfile?.();
-    }
-  }, [refreshProfile, user?.id, loadingAuth]);
-
   const handleBackgroundClick = (e) => {
-    // Pulse on background void clicks
     if (e.target === e.currentTarget || e.target.classList.contains('bg-trigger-zone')) {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width;
@@ -213,7 +144,7 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
   const executePurchase = (payload) => {
     const { type, data } = payload;
     
-    // Successful transaction haptic
+    // Haptic immediately for instant feedback
     triggerHaptic(20); 
 
     if (type === 'powerup') {
@@ -223,14 +154,12 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
     } else if (type === 'theme') {
        onPurchase({ ...data, type: 'theme' });
     }
-    playPurchaseSound?.();
-    setItemToConfirm(null);
   };
 
   if (loadingAuth) {
     return (
-      <div className="flex-1 w-full flex items-center justify-center bg-[#020617]">
-        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      <div className="flex-1 w-full flex items-center justify-center bg-mono-white dark:bg-mono-950 transition-colors duration-500">
+        <div className="w-12 h-12 border-4 border-mono-200 dark:border-white/10 border-t-primary rounded-full animate-spin" />
       </div>
     );
   }
@@ -238,16 +167,13 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
   return (
     <div 
       onClick={handleBackgroundClick}
-      className="flex-1 w-full bg-[#020617] px-4 pt-6 pb-[120px] max-w-full flex flex-col gap-6 animate-in fade-in duration-700 overflow-x-hidden relative bg-trigger-zone"
+      className="flex-1 w-full bg-mono-white dark:bg-mono-950 px-4 pt-6 pb-[120px] max-w-full flex flex-col gap-6 animate-in fade-in duration-700 overflow-x-hidden relative bg-trigger-zone transition-colors duration-500"
     >
       <FloatingLetterBackground ref={bgRef} />
       
-      {/* Status Card: Inventory ONLY - Enhanced Visibility */}
-      <div className="relative z-20 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl overflow-hidden group">
+      <div className="relative z-20 bg-mono-50 dark:bg-mono-900 border border-mono-200 dark:border-mono-800 rounded-md p-6 shadow-sm overflow-hidden group transition-colors duration-300">
         <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-50" />
-        
         <div className="relative z-10 flex flex-col items-center">
-          {/* Inventory Section */}
           <InventoryBar 
             magnetCount={magnetCount} 
             hintCount={hintCount} 
@@ -258,7 +184,8 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
         </div>
       </div>
 
-      <div className="flex p-1 bg-slate-100/95 backdrop-blur-2xl rounded border-2 border-slate-200/50 shadow-[0_8px_30px_rgb(0,0,0,0.12)] relative">
+      <div className="relative z-20 bg-mono-white/5 dark:bg-mono-900/40 border border-mono-200/50 dark:border-mono-800/50 rounded-md p-3 shadow-sm flex flex-col gap-4 transition-colors duration-300">
+        <div className="flex p-1 bg-mono-100 dark:bg-mono-950 backdrop-blur-2xl rounded-md border border-mono-200 dark:border-mono-800 shadow-sm relative transition-colors duration-300">
         {['powerups', 'avatars', 'themes'].map((tab) => (
           <button 
             key={tab}
@@ -267,16 +194,16 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
                 playTabSound();
                 setActiveTab(tab); 
             }} 
-            className={`flex-1 flex items-center justify-center py-2 px-2 transition-all duration-500 relative z-10 font-rabar font-black text-[14px] tracking-normal ${
+            className={`flex-1 flex items-center justify-center py-2 px-2 transition-all duration-300 relative z-10 font-rabar font-black text-[14px] tracking-normal ${
               activeTab === tab 
-                ? 'text-white' 
-                : 'text-slate-400 hover:text-slate-600'
+                ? 'text-mono-950 dark:text-mono-50' 
+                : 'text-mono-600 hover:text-mono-900 dark:text-mono-400 dark:hover:text-mono-100'
             }`}
           >
             {activeTab === tab && (
               <motion.div
                 layoutId="shopActiveTab"
-                className="absolute inset-0 bg-[#1e293b] rounded-sm shadow-[0_4px_12px_rgba(30,41,59,0.3)] z-[-1]"
+                className="absolute inset-0 bg-mono-white dark:bg-mono-800 rounded-sm shadow-sm z-[-1] transition-all duration-300"
                 transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
               />
             )}
@@ -291,7 +218,7 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
             <motion.div key="powerups" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} className="flex flex-col gap-5">
               <div className="grid grid-cols-1 gap-4">
                 {SHOP_ITEMS.POWERUPS.map(item => (
-                  <PowerUpCard key={item.id} item={item} onRequestPurchase={(i) => setItemToConfirm({ data: i, type: 'powerup' })} canAfford={fils >= item.price} />
+                  <PowerUpCard key={item.id} item={item} onRequestPurchase={(i) => executePurchase({ data: i, type: 'powerup' })} canAfford={fils >= item.price} />
                 ))}
               </div>
               <SpecialOfferCard item={SHOP_ITEMS.SPECIALS.find(s => s.id === 'premium_bundle')} onOpenGateway={openGateway} playPurchaseSound={playPurchaseSound} />
@@ -302,20 +229,20 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
               {SHOP_ITEMS.AVATARS.map(avatar => (
                 <motion.div
                   key={avatar.id}
-                  className={`bg-white/95 backdrop-blur-xl py-1 px-3 rounded-md border border-slate-200 flex items-center gap-3 transition-all shadow-sm ${ownedAvatars.includes(avatar.id) && equippedAvatar === avatar.id ? 'border-primary/50 ring-1 ring-primary/10' : ''}`}
+                  className={`bg-mono-white dark:bg-mono-900 py-3 px-4 rounded-md border border-mono-200 dark:border-mono-800 flex items-center gap-3 transition-all shadow-sm ${ownedAvatars.includes(avatar.id) && equippedAvatar === avatar.id ? 'border-primary/50 ring-1 ring-primary/10' : ''}`}
                 >
-                  <div className="w-12 h-12 rounded-md bg-slate-100 border border-slate-200 p-0.5 shrink-0 overflow-hidden relative group shadow-sm">
+                  <div className="w-12 h-12 rounded-md bg-mono-100 dark:bg-white/10 border border-mono-200 dark:border-white/5 p-0.5 shrink-0 overflow-hidden relative group shadow-sm">
                     <img src={avatar.image} alt={avatar.name} className="w-full h-full object-cover rounded-[8px] animate-character-idle" />
                   </div>
                   <div className="flex-1 text-right min-w-0">
-                    <h3 className="text-md font-bold text-slate-900 mb-0 truncate">{avatar.name}</h3>
-                    <p className="text-[9px] font-bold text-slate-500 leading-tight truncate">{avatar.description}</p>
+                    <h3 className="text-md font-bold text-mono-900 dark:text-mono-50 mb-0 truncate">{avatar.name}</h3>
+                    <p className="text-[9px] font-bold text-mono-500 dark:text-mono-400 leading-tight truncate">{avatar.description}</p>
                   </div>
                   <div className="shrink-0 flex items-center">
                     {ownedAvatars.includes(avatar.id) ? (
                       <button
                         onClick={() => { triggerHaptic(10); onEquipAvatar(avatar.id); }}
-                        className={`px-3 py-1 rounded-md font-bold text-[11px] transition-all ${equippedAvatar === avatar.id ? 'bg-primary text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                        className={`px-3 py-1 rounded-md font-bold text-[11px] transition-all ${equippedAvatar === avatar.id ? 'bg-primary text-white shadow-md' : 'bg-mono-100 dark:bg-white/10 text-mono-600 dark:text-mono-300 hover:bg-mono-200'}`}
                       >
                         {equippedAvatar === avatar.id ? 'چالاکە' : 'بکاربینە'}
                       </button>
@@ -325,15 +252,15 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
                           onClick={() => { 
                             if ((avatar.currency === 'derhem' ? derhem : fils) >= avatar.price) {
                               triggerHaptic(10); 
-                              setItemToConfirm({ data: avatar, type: 'avatar' });
+                              executePurchase({ data: avatar, type: 'avatar' });
                             } else {
                               triggerHaptic([50, 30, 50]);
                             }
                           }}
-                          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-white hover:brightness-110 transition-all shadow-md ${((avatar.currency === 'derhem' ? derhem : fils) >= avatar.price) ? 'bg-emerald-500' : 'bg-slate-300 opacity-50 cursor-not-allowed'}`}
+                          className={`flex items-center gap-1.5 px-3.5 py-1 rounded-md transition-all shadow-sm ${((avatar.currency === 'derhem' ? derhem : fils) >= avatar.price) ? 'bg-mono-100 dark:bg-mono-800 text-mono-700 dark:text-mono-200 border border-mono-200 dark:border-mono-700' : 'bg-mono-100 dark:bg-mono-900 text-mono-400 dark:text-mono-500 border border-mono-200/50 dark:border-mono-800/50 cursor-not-allowed'}`}
                         >
                           <div className="flex flex-col items-center leading-none">
-                            <span className="text-[13px] font-black">{toKuDigits(avatar.price || 0)}</span>
+                            <span className="text-[11px] font-bold">{toKuDigits(avatar.price || 0)}</span>
                           </div>
                           <div className="w-3.5 h-3.5 flex items-center justify-center shrink-0">
                              {avatar.currency === 'derhem' ? <DerhemIcon /> : <FilsIcon />}
@@ -351,10 +278,10 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
               {Object.values(THEMES).map(theme => (
                 <motion.div
                   key={theme.id}
-                  className={`py-1 px-3 bg-white/95 backdrop-blur-xl rounded-md border border-slate-200 transition-all flex items-center gap-3 group shadow-sm ${currentTheme === theme.id ? 'border-primary/50 ring-1 ring-primary/10' : ''}`}
+                  className={`py-3 px-4 bg-mono-white dark:bg-mono-900 rounded-md border border-mono-200 dark:border-mono-800 transition-all flex items-center gap-3 group shadow-sm ${currentTheme === theme.id ? 'border-primary/50 ring-1 ring-primary/10' : ''}`}
                 >
                   <div 
-                    className="w-10 h-10 rounded-[8px] border border-white/10 shrink-0 overflow-hidden relative shadow-sm"
+                    className="w-10 h-10 rounded-[8px] border border-mono-200 dark:border-white/10 shrink-0 overflow-hidden relative shadow-sm"
                     style={{ background: theme.colors.background }}
                   >
                     <div className="absolute inset-0 flex items-center justify-center opacity-30">
@@ -364,9 +291,9 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
                   <div className="flex-1 text-right min-w-0">
                     <div className="flex items-center justify-end gap-1 mb-0">
                        {theme.price === 0 && <span className="px-1 py-0.5 rounded-md bg-green-500/10 text-[7px] font-bold text-green-600 uppercase tracking-tighter shadow-xs">Free</span>}
-                       <h3 className="text-[14px] font-black text-slate-900 truncate">{theme.name}</h3>
+                       <h3 className="text-[14px] font-black text-mono-900 dark:text-mono-50 truncate">{theme.name}</h3>
                     </div>
-                    <p className="text-[9px] font-bold text-slate-500 tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">
+                    <p className="text-[9px] font-bold text-mono-500 dark:text-mono-400 tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">
                       {theme.id === 'default' ? 'ستایلێ ئەسلیێ یاریێ' : theme.isHeritage ? 'ھونەرێ رەسەن یێ کوردی' : 'ستایلەکێ نوی بۆ یارێ'}
                     </p>
                   </div>
@@ -375,7 +302,7 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
                       {unlockedThemes.includes(theme.id) ? (
                         <button
                           onClick={() => { triggerHaptic(10); onEquipTheme(theme.id); }}
-                          className={`px-3 py-1 rounded-md font-bold text-[11px] transition-all ${currentTheme === theme.id ? 'bg-primary text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                          className={`px-3 py-1 rounded-md font-bold text-[11px] transition-all ${currentTheme === theme.id ? 'bg-primary text-white shadow-md' : 'bg-mono-100 dark:bg-white/10 text-mono-600 dark:text-mono-300 hover:bg-mono-200'}`}
                         >
                           {currentTheme === theme.id ? 'چالاکە' : 'بکاربینە'}
                         </button>
@@ -386,15 +313,15 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
                               const currentBalance = theme.currency === 'dinar' ? dinar : (theme.currency === 'derhem' ? derhem : fils);
                               if (currentBalance >= theme.price) {
                                 triggerHaptic(10); 
-                                setItemToConfirm({ data: theme, type: 'theme' });
+                                executePurchase({ data: theme, type: 'theme' });
                               } else {
                                 triggerHaptic([50, 30, 50]);
                               }
                             }}
-                            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-white hover:brightness-110 transition-all shadow-md ${( (theme.currency === 'dinar' ? dinar : (theme.currency === 'derhem' ? derhem : fils)) >= theme.price) ? 'bg-emerald-500' : 'bg-slate-300 opacity-50 cursor-not-allowed'}`}
+                            className={`flex items-center gap-1.5 px-3.5 py-1 rounded-md transition-all shadow-sm ${unlockedThemes.includes(theme.id) ? 'bg-mono-100 dark:bg-mono-800 text-mono-700 dark:text-mono-200' : ( (theme.currency === 'dinar' ? dinar : (theme.currency === 'derhem' ? derhem : fils)) >= theme.price) ? 'bg-mono-100 dark:bg-mono-800 text-mono-700 dark:text-mono-200 border border-mono-200 dark:border-mono-700' : 'bg-mono-100 dark:bg-mono-900 text-mono-400 dark:text-mono-500 border border-mono-200/50 dark:border-mono-800/50 cursor-not-allowed'}`}
                           >
                             <div className="flex flex-col items-center leading-none">
-                              <span className="text-[13px] font-black">
+                              <span className="text-[11px] font-bold">
                                 {theme.price === 0 ? 'خۆڕایی' : toKuDigits(theme.price || 0)}
                               </span>
                             </div>
@@ -414,6 +341,7 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
           )}
         </AnimatePresence>
       </motion.div>
+    </div>
 
       <PaymentGatewayModal 
         isOpen={gatewayOpen} 
@@ -421,16 +349,6 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
         item={selectedOffer}
         onComplete={handleGatewayComplete}
       />
-
-      <AnimatePresence>
-        {itemToConfirm && (
-           <ConfirmPurchaseModal 
-             itemConfig={itemToConfirm}
-             onCancel={() => setItemToConfirm(null)}
-             onConfirm={() => executePurchase(itemToConfirm)}
-           />
-        )}
-      </AnimatePresence>
     </div>
   );
 }

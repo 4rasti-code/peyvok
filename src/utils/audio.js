@@ -30,10 +30,14 @@ const SFX_PATHS = {
 const MUSIC_PATH = '/geoffharvey-solve-the-riddle-140001.mp3';
 
 // --- AUDIO ENGINE CLASS ---
+// --- SFX CATEGORIZATION FOR PERFORMANCE ---
+const CRITICAL_SFX = ['CLICK', 'POP', 'TAB', 'START_GAME', 'BACK', 'SETTINGS_OPEN'];
+
 class SoundEngine {
   constructor() {
     this.context = null;
     this.buffers = {};
+    this.loadingBuffers = {}; // Track in-progress loads to avoid duplicates
     this.initialized = false;
     this.masterVolume = 0.20; // 20% Default as requested
     this.musicVolume = 0.10;
@@ -59,10 +63,7 @@ class SoundEngine {
       this.context = new (window.AudioContext || window.webkitAudioContext)();
       this.initialized = true;
       
-      // 1. Setup global gain nodes (Now only for SFX)
-      this.initialized = true;
-
-      // 2. Setup Streaming Music (HTML5 Audio) - Bypassing AudioContext for maximum stability
+      // 1. Setup Streaming Music (HTML5 Audio) - Bypassing AudioContext for maximum stability
       if (!this.musicAudioElement) {
         this.musicAudioElement = new Audio(MUSIC_PATH);
         this.musicAudioElement.loop = true;
@@ -70,15 +71,17 @@ class SoundEngine {
         this.musicAudioElement.volume = this.musicVolume;
       }
 
-      // 3. Pre-fetch ONLY short SFX (Fast Parallel Load)
-      const loadPromises = Object.entries(SFX_PATHS).map(async ([key, path]) => {
-        const buffer = await this.loadBuffer(path);
-        if (buffer) this.buffers[key] = buffer;
+      // 2. Pre-fetch ONLY CRITICAL SFX (Ultra Fast Initial Load)
+      const loadPromises = CRITICAL_SFX.map(async (key) => {
+        const path = SFX_PATHS[key];
+        if (path) {
+          const buffer = await this.loadBuffer(path);
+          if (buffer) this.buffers[key] = buffer;
+        }
       });
       
-      // Don't wait for sounds to finish loading before allowing music to start
       Promise.all(loadPromises).then(() => {
-        console.log("🔊 [AudioEngine] All SFX Loaded");
+        console.log("🔊 [AudioEngine] Critical SFX Loaded");
       });
 
       // 4. Start Streaming Music Immediately
@@ -92,16 +95,24 @@ class SoundEngine {
    * Load and decode audio file into a buffer (For SFX)
    */
   async loadBuffer(url) {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const arrayBuffer = await response.arrayBuffer();
-      const decodedData = await this.context.decodeAudioData(arrayBuffer);
-      return decodedData;
-    } catch (e) {
-      console.error(`❌ [AudioEngine] Failed to load SFX: ${url}`, e);
-      return null;
-    }
+    if (this.loadingBuffers[url]) return this.loadingBuffers[url];
+    
+    this.loadingBuffers[url] = (async () => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const arrayBuffer = await response.arrayBuffer();
+        const decodedData = await this.context.decodeAudioData(arrayBuffer);
+        return decodedData;
+      } catch (e) {
+        console.error(`❌ [AudioEngine] Failed to load SFX: ${url}`, e);
+        return null;
+      } finally {
+        delete this.loadingBuffers[url];
+      }
+    })();
+    
+    return this.loadingBuffers[url];
   }
 
   /**
@@ -113,8 +124,9 @@ class SoundEngine {
     this.musicAudioElement.play().then(() => {
       console.log("🎵 [AudioEngine] Music Streaming Started (Stable Mode)");
     }).catch(e => {
-      // Silently catch the autoplay block. The global unlock listener will restart it later.
-      if (e.name !== 'NotAllowedError') {
+      if (e.name === 'NotAllowedError') {
+        console.warn("🎵 [AudioEngine] Autoplay blocked, waiting for interaction.");
+      } else {
         console.warn("🎵 [AudioEngine] Music playback error:", e);
       }
     });
@@ -166,13 +178,27 @@ class SoundEngine {
   }
 
   /**
-   * Play a sound with polyphony
+   * Play a sound with polyphony (Supports Lazy Loading)
    */
-  play(key, options = {}) {
-    if (!this.initialized || !this.buffers[key]) return;
+  async play(key, options = {}) {
+    if (!this.initialized) return;
+
+    // LAZY LOADING: If buffer is missing, load it now
+    if (!this.buffers[key]) {
+      const path = SFX_PATHS[key];
+      if (!path) return;
+      
+      console.log(`🔊 [AudioEngine] Lazy loading SFX: ${key}`);
+      const buffer = await this.loadBuffer(path);
+      if (buffer) {
+        this.buffers[key] = buffer;
+      } else {
+        return;
+      }
+    }
 
     if (this.context.state === 'suspended') {
-      this.context.resume().catch(() => {});
+      try { await this.context.resume(); } catch (e) {}
     }
 
     const { volume = 1.0, pitchRandomization = 0, detune = 0 } = options;
@@ -241,7 +267,9 @@ class SoundEngine {
     this.searchingAudioElement.play().then(() => {
       console.log("🔊 [AudioEngine] Searching SFX Started (Looping)");
     }).catch(e => {
-      if (e.name !== 'NotAllowedError') {
+      if (e.name === 'NotAllowedError') {
+        console.warn("🔊 [AudioEngine] Autoplay blocked, waiting for interaction.");
+      } else {
         console.warn("🔊 [AudioEngine] Searching SFX error:", e);
       }
     });

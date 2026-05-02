@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { triggerHaptic } from '../utils/haptics';
 import { useAudio } from '../context/AudioContext';
+import { normalizeKurdishInput } from '../utils/textUtils';
 
 export default function DictionaryView({ solvedWords, wordList, highlightWord, onBack }) {
   const { playTabSound } = useAudio();
@@ -21,20 +22,33 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
   // Normalization helper for Kurdish text
   const normalizeKurdish = (text) => {
     if (!text) return '';
-    return text
-      .toLowerCase()
-      .replace(/ك/g, 'ک')
-      .replace(/ي/g, 'ی')
+    return normalizeKurdishInput(text)
       .replace(/_/g, ' ')
-      .trim();
+      .trim()
+      .toLowerCase();
   };
 
   // Filter discovered (solved) words based on search and category
   const discoveredWords = useMemo(() => {
     const cleanedSearch = normalizeKurdish(searchTerm);
-    return allWordsWithCategories
-      .filter(item => solvedWords.includes(item.word.replace(/_/g, ' ')))
-      .filter(item => activeCategory === 'All' || item.category === activeCategory)
+    
+    // 1. Start with words from our master list that are solved
+    const wordsFromList = allWordsWithCategories
+      .filter(item => {
+        const normItemWord = normalizeKurdish(item.word);
+        return solvedWords.some(sw => normalizeKurdish(sw) === normItemWord);
+      });
+
+    // 2. Add words that are solved but NOT in our master list (e.g. newly discovered words from server)
+    const listWordsSet = new Set(allWordsWithCategories.map(w => normalizeKurdish(w.word)));
+    const externalSolvedWords = solvedWords
+      .filter(sw => !listWordsSet.has(normalizeKurdish(sw)))
+      .map(sw => ({ word: sw, hint: 'پەیڤەکا نوى یا هاتییە دیتن', category: 'پەیڤێن من' }));
+
+    const combined = [...wordsFromList, ...externalSolvedWords];
+
+    return combined
+      .filter(item => activeCategory === 'All' || item.category === activeCategory || (activeCategory === 'پەیڤێن من' && item.category === 'پەیڤێن من'))
       .filter(item => {
         const cleanedWord = normalizeKurdish(item.word);
         const cleanedHint = normalizeKurdish(item.hint);
@@ -42,7 +56,7 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
       });
   }, [allWordsWithCategories, solvedWords, activeCategory, searchTerm]);
 
-  const categories = ['All', ...Object.keys(wordList)];
+  const categories = ['All', ...Object.keys(wordList), 'پەیڤێن من'];
 
   // Highlight the word that was just solved
   useEffect(() => {
@@ -62,29 +76,29 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
   }, [highlightWord]);
 
   return (
-    <div className="flex-1 w-full max-w-4xl mx-auto flex flex-col h-full animate-in fade-in slide-in-from-bottom-5 duration-700 relative z-10">
+    <div className="flex-1 w-full max-w-4xl mx-auto flex flex-col h-full animate-in fade-in slide-in-from-bottom-5 duration-700 relative z-10 bg-mono-white dark:bg-mono-950 transition-colors duration-500">
       {/* Header & Search */}
       <div className="px-6 py-6 flex flex-col gap-6">
         <div className="flex items-center gap-6">
           {/* Back Button */}
           <button 
             onClick={() => { triggerHaptic(10); onBack && onBack(); }}
-            className="w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-xl flex items-center justify-center border border-white/10 shadow-lg hover:bg-white/10 active:scale-95 transition-all group"
+            className="w-12 h-12 rounded-2xl bg-mono-50 dark:bg-white/5 backdrop-blur-xl flex items-center justify-center border border-mono-200 dark:border-white/10 shadow-lg hover:bg-mono-100 dark:hover:bg-white/10 active:scale-95 transition-all group"
           >
-            <span className="material-symbols-outlined text-white/50 group-hover:text-primary transition-colors">chevron_right</span>
+            <span className="material-symbols-outlined text-mono-400 dark:text-white/50 group-hover:text-primary transition-colors">chevron_right</span>
           </button>
 
-          <div className="w-16 h-16 rounded-2xl bg-white/5 backdrop-blur-xl flex items-center justify-center border border-white/10 shadow-xl">
+          <div className="w-16 h-16 rounded-2xl bg-mono-50 dark:bg-white/5 backdrop-blur-xl flex items-center justify-center border border-mono-200 dark:border-white/10 shadow-xl">
              <span className="material-symbols-outlined text-3xl text-primary">auto_stories</span>
           </div>
           <div className="flex-1">
-            <h2 className="text-2xl font-bold font-heading text-white tracking-tight">فەرھەنگا من</h2>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">
+            <h2 className="text-2xl font-bold font-heading text-mono-900 dark:text-white tracking-tight">فەرھەنگا من</h2>
+            <p className="text-[10px] text-mono-500 dark:text-slate-400 font-bold uppercase tracking-widest mt-0.5">
                پەرتووکخانا من
             </p>
           </div>
-          <div className="bg-white/5 backdrop-blur-xl px-4 py-2 rounded-2xl flex items-center gap-2.5 border border-white/10 shadow-lg  sm:flex">
-            <span className="text-xl font-bold text-white">{solvedWords.length}</span>
+          <div className="bg-mono-50 dark:bg-white/5 backdrop-blur-xl px-4 py-2 rounded-2xl flex items-center gap-2.5 border border-mono-200 dark:border-white/10 shadow-lg  sm:flex">
+            <span className="text-xl font-bold text-mono-900 dark:text-white">{solvedWords.length}</span>
           </div>
         </div>
 
@@ -92,10 +106,13 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
         <div className="relative group">
           <input
             type="text"
+            id="dictionary-search"
+            name="dictionary-search"
+            aria-label="Search solved words"
             placeholder="ل پەیڤەکێ بگەڕێ..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
-            className="w-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl py-4 pl-12 pr-14 font-bold font-rabar text-lg text-white placeholder:text-white/20 focus:bg-white/10 transition-all shadow-xl"
+            className="w-full bg-mono-50 dark:bg-white/5 backdrop-blur-xl border border-mono-200 dark:border-white/10 rounded-2xl py-4 pl-12 pr-14 font-bold font-rabar text-lg text-mono-900 dark:text-white placeholder:text-mono-300 dark:placeholder:text-white/20 focus:bg-mono-100 dark:focus:bg-white/10 transition-all shadow-xl"
           />
           <span className="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary transition-all">
             search
@@ -139,11 +156,11 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
             {discoveredWords.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-white/5 backdrop-blur-xl p-6 rounded-3xl border border-white/10 flex flex-col gap-3 relative overflow-hidden highlight-target shadow-xl hover:bg-white/10 transition-all"
+                className="bg-mono-50 dark:bg-white/5 backdrop-blur-xl p-6 rounded-3xl border border-mono-200 dark:border-white/10 flex flex-col gap-3 relative overflow-hidden highlight-target shadow-xl hover:bg-mono-100 dark:hover:bg-white/10 transition-all"
                 data-word={item.word.replace('_', ' ')}
               >
                 <div className="flex justify-between items-center relative z-10">
-                  <h3 className="text-2xl font-bold font-heading text-white">
+                  <h3 className="text-2xl font-bold font-heading text-mono-900 dark:text-white">
                     {item.word.replace('_', ' ')}
                   </h3>
                   <span className="bg-primary/10 text-primary text-[10px] font-bold uppercase px-3 py-1 rounded-full border border-primary/20">

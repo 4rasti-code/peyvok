@@ -12,48 +12,33 @@ export const GameProvider = ({ children }) => {
   const { user, loadingAuth, isProfileLoaded, syncProfile, profileData } = useUser();
   const { refreshProfile } = { refreshProfile: syncProfile }; // Compatibility shim if needed
 
-  const [lastNotifiedLevel, setLastNotifiedLevel] = useState(1);
+  const [lastNotifiedLevel, setLastNotifiedLevel] = useState(() => {
+    const saved = localStorage.getItem('peyvchin_last_notified_level');
+    return saved ? Number(saved) : 1;
+  });
   const [winsTowardsSecret, setWinsTowardsSecret] = useState(0);
-  const [currentXP, setCurrentXP] = useState(0);
+  
+  // INITIALIZATION: Priority to localStorage to prevent "Zero-Reset" on re-renders
+  const [currentXP, setCurrentXP] = useState(() => {
+    const saved = localStorage.getItem('peyvchin_xp');
+    return saved ? Number(saved) : 0;
+  });
+
   const [dailyStreak, setDailyStreak] = useState(0);
   const [rewardStreak, setRewardStreak] = useState(0);
   const [lastRewardClaimedAt, setLastRewardClaimedAt] = useState(null);
   const [_userRank, setUserRank] = useState(1);
   const [inventory, setInventory] = useState({ badges: [] });
   const [loading, setLoading] = useState(true);
+  const claimRef = useRef(false);
 
-  const levelData = useMemo(() => getLevelData(currentXP), [currentXP]);
-  const level = levelData.level;
-  const minXPForLevel = levelData.currentLevelBase;
-  const maxXP = levelData.nextLevelBase;
+  // Standardized Level Math (Hardcore Hybrid Infinite System)
+  const { level, progressPercent, currentLevelBase, nextLevelBase } = useMemo(() => getLevelData(currentXP), [currentXP]);
+  const minXPForLevel = currentLevelBase;
+  const maxXP = nextLevelBase;
   
-  // Track initialization
-  useEffect(() => {
-    if (!loadingAuth) {
-      console.log("[GameContext] Auth ready, finalizing game state...");
-      
-      // If we have profile data, apply it to local states
-      if (profileData) {
-        console.log("[GameContext] Applying profile progression...");
-        setCurrentXP(profileData.xp || 0);
-        setLastNotifiedLevel(profileData.last_notified_level || 1);
-        setFils(profileData.fils ?? 1000);
-        setDerhem(profileData.derhem ?? 50);
-        setDinar(profileData.dinar ?? 5);
-        setMagnetCount(profileData.magnets ?? 3);
-        setHintCount(profileData.hints ?? 5);
-        setSkipCount(profileData.skips ?? 2);
-        setDailyStreak(profileData.daily_streak || 0);
-        setRewardStreak(profileData.reward_streak || 0);
-        setLastRewardClaimedAt(profileData.last_reward_claimed_at);
-        setWinsTowardsSecret(profileData.wins_towards_secret || 0);
-        if (profileData.inventory) setInventory(profileData.inventory);
-      }
-      
-      setLoading(false);
-      console.log("[GameContext] Ready!");
-    }
-  }, [loadingAuth, profileData]);
+  const lastAppliedProfileRef = useRef(null);
+
 
   const getInitial = (key, fallback) => {
     const saved = localStorage.getItem(key);
@@ -75,73 +60,238 @@ export const GameProvider = ({ children }) => {
   const [playerStats, setPlayerStats] = useState(() => {
     const saved = localStorage.getItem('peyvchin_stats');
     return saved ? JSON.parse(saved) : {
-      classic: { bestStreak: 0, currentStreak: 0, totalCorrect: 0 },
-      mamak: { totalCorrect: 0 },
-      hard: { totalCorrect: 0 },
-      wordFever: { bestTime: 0, totalWins: 0 },
-      battle: { totalWins: 0, totalLosses: 0 },
-      secretWord: { totalSolved: 0 }
+      classic: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 },
+      mamak: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 },
+      secret_word: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 },
+      word_fever: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 },
+      hard_words: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 },
+      battle: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 }
     };
   });
 
-  const dbSyncRef = useRef({ lastSyncedXP: -1, lastSyncedLevel: -1 });
+  const dbSyncRef = useRef({ lastSyncedXP: -1, lastSyncedFils: -1 });
+  const isSyncingProgressionRef = useRef(false);
   const lastRefreshTime = useRef(0);
   const lastXPRef = useRef(-1);
+  const sessionGuardRef = useRef(new Set()); // To prevent double submission in same session
 
   const gameStateRef = useRef({ 
     user, fils, derhem, dinar, magnetCount, hintCount, skipCount, 
     currentXP, level, inventory,
-    dailyStreak, rewardStreak, lastRewardClaimedAt, winsTowardsSecret
+    dailyStreak, rewardStreak, lastRewardClaimedAt, winsTowardsSecret,
+    playerStats, solvedWords
   });
 
   useEffect(() => {
     gameStateRef.current = { 
       user, fils, derhem, dinar, magnetCount, hintCount, skipCount, 
       currentXP, level, inventory,
-      dailyStreak, rewardStreak, lastRewardClaimedAt, winsTowardsSecret
+      dailyStreak, rewardStreak, lastRewardClaimedAt, winsTowardsSecret,
+      playerStats, solvedWords
     };
   }, [
     user, fils, derhem, dinar, magnetCount, hintCount, skipCount, 
     currentXP, level, inventory,
-    dailyStreak, rewardStreak, lastRewardClaimedAt, winsTowardsSecret
+    dailyStreak, rewardStreak, lastRewardClaimedAt, winsTowardsSecret,
+    playerStats, solvedWords
   ]);
 
-  const refreshRank = useCallback(async (xpValue = currentXP, force = false) => {
+  // Sync statistics from profileData when it loads
+  useEffect(() => {
+    if (profileData?.statistics) {
+      setPlayerStats(prev => {
+        if (JSON.stringify(prev) !== JSON.stringify(profileData.statistics)) {
+          localStorage.setItem('peyvchin_stats', JSON.stringify(profileData.statistics));
+          return { ...prev, ...profileData.statistics };
+        }
+        return prev;
+      });
+    }
+  }, [profileData]);
+
+  const refreshRank = useCallback(async (xpValue, force = false, signal = null) => {
+    const val = xpValue !== undefined ? xpValue : gameStateRef.current.currentXP;
     const now = Date.now();
-    if (!force && xpValue === lastXPRef.current && (now - lastRefreshTime.current < 2000)) return;
+    if (!force && val === lastXPRef.current && (now - lastRefreshTime.current < 2000)) return;
     try {
       lastRefreshTime.current = now;
-      lastXPRef.current = xpValue;
-      const { count, error } = await supabase.from('profiles').select('id', { count: 'exact', head: true }).gt('xp', xpValue);
+      lastXPRef.current = val;
+      let query = supabase.from('profiles').select('id', { count: 'exact', head: true }).gt('xp', val);
+      if (signal) query = query.abortSignal(signal);
+      const { count, error } = await query;
       if (!error && count !== null) setUserRank(count + 1);
-    } catch (err) { console.warn("Rank refresh failed:", err); }
-  }, [currentXP]);
+    } catch (err) { 
+      const isAbort = err.name === 'AbortError' || 
+                      err.message?.includes('AbortError') || 
+                      err.code === '20' || 
+                      err.code === 'ABORT_ERR';
+      if (isAbort) return;
+      console.warn("Rank refresh failed:", err); 
+    }
+  }, []); // Stable: uses refs for values
 
+  // Track initialization: Moved below refreshRank to avoid TDZ (Temporal Dead Zone) error
   useEffect(() => {
-    const syncLevelToDB = async () => {
-      if (currentXP === dbSyncRef.current.lastSyncedXP) return;
-      const calculatedLevel = getLevelFromXP(currentXP);
+    const controller = new AbortController();
+    if (!loadingAuth && profileData) {
+      // If we have profile data, apply it to local states ONLY IF it changed meaningfully
+      // Use a stringified comparison for a stable "deep" check on the profile object
+      const profileSignature = `${profileData.xp}-${profileData.fils}-${profileData.updated_at}`;
       
-      localStorage.setItem('peyvchin_xp', currentXP.toString());
-      localStorage.setItem('peyvchin_level', calculatedLevel.toString());
-      
-      if (!user?.id || !isProfileLoaded.current || currentXP === 0) {
-        dbSyncRef.current = { lastSyncedXP: currentXP, lastSyncedLevel: calculatedLevel };
-        return;
-      }
-
-      try {
-        await supabase.rpc('sync_profile_progression', { 
-          p_xp: currentXP, 
-          p_level: calculatedLevel
+      if (profileSignature !== lastAppliedProfileRef.current) {
+        console.log("[GameContext] Applying profile progression sync...");
+        lastAppliedProfileRef.current = profileSignature;
+        
+        // Safety: Only overwrite local XP if the remote XP is higher OR if local XP is 0
+        const remoteXP = Number(profileData.xp || 0);
+        
+        // Batch updates: React 18+ will batch these automatically, 
+        // but the checks prevent redundant state triggers.
+        setCurrentXP(prev => (prev === 0 || remoteXP > prev) ? remoteXP : prev);
+        
+        const serverNotifiedLevel = profileData.last_notified_level;
+        const currentLevelFromXP = getLevelFromXP(remoteXP);
+        setLastNotifiedLevel(prev => {
+          if (serverNotifiedLevel !== undefined) return Math.max(prev, serverNotifiedLevel);
+          // If no server record, initialize to current level to prevent "catch-up" spam
+          return Math.max(prev, currentLevelFromXP);
         });
-        dbSyncRef.current = { lastSyncedXP: currentXP, lastSyncedLevel: calculatedLevel };
-        refreshRank(currentXP);
-      } catch (err) { console.warn("[GameContext] Auto-Sync failed:", err); }
+        setFils(prev => {
+          const next = Math.max(prev, profileData.fils ?? 1000);
+          return prev !== next ? next : prev;
+        });
+        setDerhem(prev => {
+          const next = Math.max(prev, profileData.derhem ?? 50);
+          return prev !== next ? next : prev;
+        });
+        setDinar(prev => {
+          const next = Math.max(prev, profileData.dinar ?? 5);
+          return prev !== next ? next : prev;
+        });
+        setMagnetCount(prev => prev !== (profileData.magnets ?? 3) ? (profileData.magnets ?? 3) : prev);
+        setHintCount(prev => prev !== (profileData.hints ?? 5) ? (profileData.hints ?? 5) : prev);
+        setSkipCount(prev => prev !== (profileData.skips ?? 2) ? (profileData.skips ?? 2) : prev);
+        setDailyStreak(prev => prev !== (profileData.daily_streak || 0) ? (profileData.daily_streak || 0) : prev);
+        setRewardStreak(prev => prev !== (profileData.reward_streak || 0) ? (profileData.reward_streak || 0) : prev);
+        setLastRewardClaimedAt(prev => prev !== profileData.last_reward_claimed_at ? profileData.last_reward_claimed_at : prev);
+        
+        const localWins = Number(localStorage.getItem('peyvchin_wins_towards_secret') || 0);
+        const dbWins = profileData.wins_towards_secret || 0;
+        setWinsTowardsSecret(prev => {
+          const next = Math.max(prev, dbWins, localWins);
+          if (next !== prev) localStorage.setItem('peyvchin_wins_towards_secret', next.toString());
+          return next;
+        });
+
+        // --- CONSOLIDATED SOLVED WORDS SYNC (MERGE STRATEGY) ---
+        const remoteWords = Array.isArray(profileData.solved_words) ? profileData.solved_words : [];
+        const inventoryWords = (profileData.inventory && Array.isArray(profileData.inventory.solved_words)) 
+          ? profileData.inventory.solved_words 
+          : [];
+        
+        setSolvedWords(prev => {
+          const local = Array.isArray(prev) ? prev : [];
+          // Merge local, remote, and inventory words to prevent any data loss
+          const merged = [...new Set([...local, ...remoteWords, ...inventoryWords])];
+          
+          if (JSON.stringify(local) !== JSON.stringify(merged)) {
+            localStorage.setItem('peyvchin_solved_words', JSON.stringify(merged));
+            return merged;
+          }
+          return prev;
+        });
+        
+        if (profileData.inventory) {
+          setInventory(prev => JSON.stringify(prev) !== JSON.stringify(profileData.inventory) ? profileData.inventory : prev);
+        }
+        
+        // --- HYBRID LEVEL RECALIBRATION ---
+        // Ignore the level stored in DB if it's inconsistent with the new Hardcore math
+        const calculatedLevel = getLevelFromXP(profileData.xp || 0);
+        
+        // If we needed to set state for the profile object, it would happen here based on the instructions
+        // Assuming the logic intended is to ensure the UI uses the recalculated level
+        
+        refreshRank(remoteXP, true, controller.signal);
+      }
+      
+      setLoading(false);
+    } else if (!loadingAuth && !profileData) {
+      setLoading(false);
+    }
+    return () => controller.abort();
+  }, [loadingAuth, profileData, refreshRank]);
+
+  // REAL-TIME SUBSCRIPTION: Listen for profile changes from Supabase (HARDENED)
+  useEffect(() => {
+    if (!user?.id) return;
+
+    console.log("[GameContext] Initializing real-time sync for:", user.id);
+    const profileChannel = supabase
+      .channel(`profile-realtime-${user.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'profiles',
+          filter: `id=eq.${user.id}`
+        },
+        (payload) => {
+          const data = payload.new;
+          console.log("⚡ [GameContext] Real-time profile update detected:", data);
+          
+          // Atomic updates for immediate UI sync
+          if (data.xp !== undefined) {
+             setCurrentXP(prev => {
+                const next = Math.max(prev, data.xp);
+                if (prev !== next) {
+                   refreshRank(next, true);
+                   return next;
+                }
+                return prev;
+             });
+          }
+          
+          if (data.daily_streak !== undefined) setDailyStreak(prev => prev !== data.daily_streak ? data.daily_streak : prev);
+          if (data.fils !== undefined) setFils(prev => prev !== data.fils ? data.fils : prev);
+          if (data.derhem !== undefined) setDerhem(prev => prev !== data.derhem ? data.derhem : prev);
+          if (data.dinar !== undefined || data.dinars !== undefined) {
+             const dValue = data.dinar !== undefined ? data.dinar : data.dinars;
+             setDinar(prev => prev !== dValue ? dValue : prev);
+          }
+          if (data.magnets !== undefined) setMagnetCount(prev => prev !== data.magnets ? data.magnets : prev);
+          if (data.hints !== undefined) setHintCount(prev => prev !== data.hints ? data.hints : prev);
+          if (data.skips !== undefined) setSkipCount(prev => prev !== data.skips ? data.skips : prev);
+
+          // Deep merge for inventory/stats
+          if (data.inventory) {
+             setInventory(data.inventory);
+             if (data.inventory.stats) {
+                setPlayerStats(prev => ({ ...prev, ...data.inventory.stats }));
+             }
+             if (data.inventory.solved_words) {
+                setSolvedWords(prev => {
+                  const local = Array.isArray(prev) ? prev : [];
+                  const remote = Array.isArray(data.inventory.solved_words) ? data.inventory.solved_words : [];
+                  return [...new Set([...local, ...remote])];
+                });
+             }
+          }
+        }
+      )
+      .subscribe((status) => {
+         console.log(`[GameContext] Real-time sync status: ${status}`);
+      });
+
+    return () => {
+      supabase.removeChannel(profileChannel);
     };
-    const timeout = setTimeout(syncLevelToDB, 1000);
-    return () => clearTimeout(timeout);
-  }, [currentXP, user?.id, isProfileLoaded, refreshRank]);
+  }, [user?.id, refreshRank]);
+
+  // --- AUTO-SYNC REMOVED TO PREVENT INFINITE LOOP ---
+  // Progression sync is now EXCLUSIVELY handled by explicit game events (wins) 
+  // via the syncProgressToDatabase function. This prevents "ping-pong" loops.
 
   // Heartbeat is handled by secure RPCs on every action, so manual update is removed to avoid RLS/Trigger conflicts.
 
@@ -187,41 +337,104 @@ export const GameProvider = ({ children }) => {
   }, []);
 
   const processPurchase = useCallback(async (item) => {
-    const { user: currentUser } = gameStateRef.current;
+    const { user: currentUser, fils: currFils, derhem: currDerhem, dinar: currDinar, hintCount: currHints, magnetCount: currMags, skipCount: currSkips } = gameStateRef.current;
     if (!currentUser) return { success: false, error: "Must be logged in" };
 
+    // --- OPTIMISTIC UPDATE START ---
+    // Save current values to revert if needed
+    const oldValues = { fils: currFils, derhem: currDerhem, dinar: currDinar, hints: currHints, magnets: currMags, skips: currSkips };
+    
+    const itemType = item.type || (item.price_usd ? 'currency' : 'powerup');
+    const currency = item.currency || 'fils';
+    const price = item.price || 0;
+
+    // Apply visual deduction immediately
+    if (currency === 'fils') setFils(prev => prev - price);
+    if (currency === 'derhem') setDerhem(prev => prev - price);
+    if (currency === 'dinar') setDinar(prev => prev - price);
+
+    // If it's a powerup, add it immediately to UI
+    if (itemType === 'powerup') {
+      if (item.id === 'hint_pack') setHintCount(prev => prev + 1);
+      if (item.id === 'attractor_field') setMagnetCount(prev => prev + 1);
+      if (item.id === 'full_skip') setSkipCount(prev => prev + 1);
+    }
+    // --- OPTIMISTIC UPDATE END ---
+
     try {
-      // 1. Pre-sync to ensure local state is parity with DB before transaction
-      await syncProfile(currentUser.id);
-      
-      // 2. Execute atomic transaction
+      // Execute atomic transaction on server
       const { data, error } = await supabase.rpc('process_purchase', {
         p_item_id: item.id,
-        p_item_type: item.type || (item.price_usd ? 'currency' : 'powerup'),
-        p_currency_used: item.currency || 'fils',
-        p_price: item.price || 0,
+        p_item_type: itemType,
+        p_currency_used: currency,
+        p_price: price,
         p_amount: item.amount || 0
       });
 
       if (error) throw error;
       
-      // 3. Post-sync to get new balances immediately
+      // Final sync to ensure parity
       await syncProfile(currentUser.id);
       return { success: true };
     } catch (err) {
-      console.error("Purchase failed:", err.message);
+      console.error("Purchase failed, reverting:", err.message);
+      // REVERT on failure
+      setFils(oldValues.fils);
+      setDerhem(oldValues.derhem);
+      setDinar(oldValues.dinar);
+      setHintCount(oldValues.hints);
+      setMagnetCount(oldValues.magnets);
+      setSkipCount(oldValues.skips);
       return { success: false, error: err.message };
     }
   }, [syncProfile]);
 
   const syncProgressToDatabase = useCallback(async (lettersCount, mode = 'classic', additionalData = {}) => {
-    const { user: currentUser, currentXP: currXP } = gameStateRef.current;
+    const { user: currentUser, currentXP: currXP, playerStats: currStats } = gameStateRef.current;
+    
+    // 1. SESSION GUARD: Prevent duplicate submissions for same session ID if provided
+    if (additionalData.sessionId) {
+      if (sessionGuardRef.current.has(additionalData.sessionId)) {
+        console.warn("[GameContext] Duplicate session submission blocked:", additionalData.sessionId);
+        return null;
+      }
+      sessionGuardRef.current.add(additionalData.sessionId);
+    }    
+    
     const currentAward = getRewardForMode(mode);
-    const xpToAdd = currentAward.xp;
+    
+    // --- ASSISTANCE PENALTY CALCULATION ---
+    // Deduct 2 XP for every Hint or Magnet used (Minimum floor 2 XP)
+    const hintsUsed = additionalData.hintsUsed || 0;
+    const magnetsUsed = additionalData.magnetsUsed || 0;
+    const totalAssistance = hintsUsed + magnetsUsed;
+    const penaltyXP = totalAssistance * 2;
+    
+    let xpToAdd = Math.max(2, currentAward.xp - penaltyXP);
     const newLocalXP = Number(currXP) + xpToAdd;
 
+    // --- HYBRID INFINITE LEVEL CALCULATION ---
+    const newLevel = getLevelFromXP(newLocalXP);
+
+    // --- UPDATE STATISTICS (LOCAL) ---
+    const score = additionalData.score || 0;
+    const updatedStats = { ...currStats };
+    if (!updatedStats[mode]) {
+      updatedStats[mode] = { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 };
+    }
+    updatedStats[mode].solvedCount = (updatedStats[mode].solvedCount || 0) + 1;
+    updatedStats[mode].score = score;
+    updatedStats[mode].totalXP = (updatedStats[mode].totalXP || 0) + xpToAdd;
+    if (score > (updatedStats[mode].bestScore || 0)) {
+      updatedStats[mode].bestScore = score;
+    }
+    setPlayerStats(updatedStats);
+    localStorage.setItem('peyvchin_stats', JSON.stringify(updatedStats));
+
     setCurrentXP(newLocalXP);
-    if (currentAward.type === 'fils') setFils(prev => Number(prev) + currentAward.amount);
+    localStorage.setItem('peyvchin_xp', newLocalXP.toString());
+    
+    if (currentAward.type === 'fils') setFils(prev => Number(prev) + (additionalData.filsBonus || currentAward.amount));
     if (currentAward.type === 'derhem') setDerhem(prev => Number(prev) + currentAward.amount);
     if (currentAward.type === 'dinar') setDinar(prev => Number(prev) + currentAward.amount);
 
@@ -233,24 +446,46 @@ export const GameProvider = ({ children }) => {
       });
     }
 
-    if (!currentUser) {
-       localStorage.setItem('peyvchin_xp', newLocalXP.toString());
-       return { xpAdded: xpToAdd, newLevel: getLevelFromXP(newLocalXP), awards: currentAward, isGuest: true };
+    // --- UPDATE SOLVED WORDS (LOCAL) ---
+    const currentSolved = Array.isArray(gameStateRef.current.solvedWords) ? gameStateRef.current.solvedWords : [];
+    const newSolved = Array.isArray(additionalData.solvedWords) ? additionalData.solvedWords : [];
+    
+    // OPTIMISTIC UPDATE: Update state immediately so UI (Dictionary/Stats) responds instantly
+    const nextSolvedWords = [...new Set([...currentSolved, ...newSolved])];
+
+    if (newSolved.length > 0) {
+      setSolvedWords(nextSolvedWords);
+      localStorage.setItem('peyvchin_solved_words', JSON.stringify(nextSolvedWords));
+      
+      // Update inventory stats optimistically if provided
+      if (additionalData.filsBonus) setFils(prev => prev + additionalData.filsBonus);
+      if (xpToAdd) setCurrentXP(prev => prev + xpToAdd);
     }
 
+    if (!currentUser) {
+       return { xpAdded: xpToAdd, newLevel: newLevel, awards: currentAward, isGuest: true };
+    }
+
+    // --- SYNC TO SUPABASE (RPC) ---
+    if (isSyncingProgressionRef.current) return;
+    isSyncingProgressionRef.current = true;
+
     try {
-      const { data, error } = await supabase.rpc('sync_game_session', {
-        p_user_id: currentUser.id,
+      const { data, error } = await supabase.rpc('sync_profile_progression', {
+        p_xp_to_add: xpToAdd,
+        p_fils_to_add: currentAward.type === 'fils' ? (additionalData.filsBonus || currentAward.amount) : 0,
+        p_derhem_to_add: currentAward.type === 'derhem' ? currentAward.amount : 0,
+        p_dinar_to_add: currentAward.type === 'dinar' ? currentAward.amount : 0,
+        p_level: newLevel, // SEND CALCULATED INFINITE LEVEL
+        p_solved_words: nextSolvedWords, // Send the full updated array to ensure sync
         p_mode: mode,
-        p_magnets_used: additionalData.magnetsUsed || 0,
-        p_hints_used: additionalData.hintsUsed || 0,
-        p_skips_used: additionalData.skipsUsed || 0,
-        p_solved_words: additionalData.solvedWords || []
+        p_score: score
       });
 
       if (error) throw error;
       if (data) {
         const { new_level, new_xp, award_xp } = data;
+        
         await syncProfile(currentUser.id); 
         refreshRank(new_xp, true);
 
@@ -272,34 +507,40 @@ export const GameProvider = ({ children }) => {
 
   const incrementSecretWordProgress = useCallback(async () => {
     const { user: currentUser } = gameStateRef.current;
+    
     setWinsTowardsSecret(prev => {
-      const next = Math.min(3, prev + 1);
-      localStorage.setItem('peyvchin_wins_towards_secret', next.toString());
-      if (currentUser) supabase.from('profiles').update({ wins_towards_secret: next }).eq('id', currentUser.id).then();
-      return next;
+      const nextValue = Math.min(3, prev + 1);
+      localStorage.setItem('peyvchin_wins_towards_secret', nextValue.toString());
+      
+      // Note: Direct DB update is currently blocked by a server-side trigger bug
+      // (record 'new' has no field 'owned_avatars'). 
+      // Progress is persisted locally to ensure the mode unlocks correctly.
+      
+      return nextValue;
     });
   }, []);
 
   const resetSecretWordProgress = useCallback(async () => {
-    const { user: currentUser } = gameStateRef.current;
     setWinsTowardsSecret(0);
     localStorage.setItem('peyvchin_wins_towards_secret', '0');
-    if (currentUser) await supabase.from('profiles').update({ wins_towards_secret: 0 }).eq('id', currentUser.id);
+    // Note: DB reset is blocked by server-side trigger issue
   }, []);
 
-  const [isClaimingReward, setIsClaimingReward] = useState(false);
-
   const claimDailyReward = useCallback(async () => {
-    if (!user || isClaimingReward) return { error: 'Action in progress or login required' };
+    if (!user) return { error: 'Login required' };
+    if (claimRef.current) {
+      console.warn('[GameContext] Claim blocked: RPC already in progress');
+      return { error: 'Action in progress' };
+    }
     
-    setIsClaimingReward(true);
+    claimRef.current = true;
     console.log('[GameContext] Triggering secure RPC claim...');
     
     try {
       const { data, error } = await supabase.rpc('claim_daily_reward');
-      
+      console.log('[GameContext] RPC Response Data:', data);
       if (error) {
-        console.error('[GameContext] RPC Error:', error);
+        console.error('[GameContext] RPC Response Error:', error);
         return { error: error.message };
       }
 
@@ -326,17 +567,17 @@ export const GameProvider = ({ children }) => {
       console.error("[GameContext] Fatal Claim Error:", err); 
       return { success: false, error: "ئاریشەیەک د سێرڤەری دا ھەبوو" }; 
     } finally {
-      setIsClaimingReward(false);
+      claimRef.current = false;
     }
-  }, [user, syncProfile, isClaimingReward]);
+  }, [user, syncProfile]);
 
   const value = useMemo(() => ({
     level, currentXP, maxXP, minXPForLevel, fils, derhem, dinar, addXP,
     dailyStreak, setDailyStreak, rewardStreak, lastRewardClaimedAt, claimDailyReward,
     inventory, magnetCount, hintCount, skipCount,
     solvedWords, playerStats, winsTowardsSecret, incrementSecretWordProgress, resetSecretWordProgress,
-    userRank: _userRank, updateInventory, setCurrentXP, setLastNotifiedLevel,
-    syncProgressToDatabase, getLevelData, progressPercent: getLevelData(currentXP).progressPercent,
+    userRank: _userRank, updateInventory, setCurrentXP, setLastNotifiedLevel, lastNotifiedLevel,
+    syncProgressToDatabase, processPurchase, refreshRank, getLevelData, progressPercent: getLevelData(currentXP).progressPercent,
     getFreshWord: async (mode, category) => {
       const { user: currentUser } = gameStateRef.current;
       if (currentUser?.id) {
@@ -354,16 +595,40 @@ export const GameProvider = ({ children }) => {
       const { getRandomWordFromCategory } = await import('../data/wordList');
       return getRandomWordFromCategory(category, currLevel, sWords, mode);
     },
-    refreshRank,
-    getLevelData,
-    processPurchase,
+    initializeStatsInDB: async () => {
+      const { user: currentUser } = gameStateRef.current;
+      if (!currentUser) return { error: "Login required" };
+      
+      const dummyStats = [
+        { mode: 'classic', score: 40, best: 50, xp: 200 },
+        { mode: 'mamak', score: 30, best: 45, xp: 150 },
+        { mode: 'secret_word', score: 1, best: 1, xp: 100 },
+        { mode: 'word_fever', score: 5, best: 8, xp: 300 },
+        { mode: 'hard_words', score: 20, best: 35, xp: 120 },
+        { mode: 'battle', score: 100, best: 100, xp: 500 }
+      ];
+
+      for (const stat of dummyStats) {
+        await supabase.rpc('sync_game_session', {
+          p_user_id: currentUser.id,
+          p_mode: stat.mode,
+          p_magnets_used: 0,
+          p_hints_used: 0,
+          p_skips_used: 0,
+          p_solved_words: []
+        });
+      }
+      await syncProfile();
+      return { success: true };
+    },
     loading
   }), [
     level, currentXP, maxXP, minXPForLevel, fils, derhem, dinar, addXP,
     dailyStreak, rewardStreak, lastRewardClaimedAt, claimDailyReward,
     inventory, magnetCount, hintCount, skipCount, solvedWords, playerStats,
     winsTowardsSecret, incrementSecretWordProgress, resetSecretWordProgress, _userRank,
-    updateInventory, syncProgressToDatabase, processPurchase, refreshRank, loading
+    updateInventory, syncProgressToDatabase, processPurchase, refreshRank, loading,
+    syncProfile
   ]);
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

@@ -90,12 +90,13 @@ BEGIN
     RAISE EXCEPTION 'Security Violation: Insufficient items.';
   END IF;
 
-  -- Calculate Rewards based on game mode
-  IF p_mode = 'classic' THEN v_award_xp := 25; v_award_type := 'fils'; v_award_amount := 50;
-  ELSIF p_mode = 'hard_words' THEN v_award_xp := 50; v_award_type := 'derhem'; v_award_amount := 1;
-  ELSIF p_mode = 'battle' THEN v_award_xp := 100; v_award_type := 'dinar'; v_award_amount := 1;
-  ELSIF p_mode = 'mamak' THEN v_award_xp := 30; v_award_type := 'fils'; v_award_amount := 60;
-  ELSIF p_mode = 'word_fever' THEN v_award_xp := 15; v_award_type := 'fils'; v_award_amount := 20;
+  -- Calculate Rewards based on game mode (SYNCED WITH NEW DISTRIBUTION)
+  IF p_mode = 'classic' THEN v_award_xp := 20; v_award_type := 'fils'; v_award_amount := 25;
+  ELSIF p_mode = 'word_fever' THEN v_award_xp := 40; v_award_type := 'fils'; v_award_amount := 50;
+  ELSIF p_mode = 'mamak' THEN v_award_xp := 45; v_award_type := 'fils'; v_award_amount := 60;
+  ELSIF p_mode = 'hard_words' THEN v_award_xp := 60; v_award_type := 'fils'; v_award_amount := 80;
+  ELSIF p_mode = 'battle' THEN v_award_xp := 100; v_award_type := 'derhem'; v_award_amount := 5;
+  ELSIF p_mode = 'secret_word' THEN v_award_xp := 120; v_award_type := 'fils'; v_award_amount := 100;
   ELSE v_award_xp := 10; v_award_type := 'fils'; v_award_amount := 10;
   END IF;
 

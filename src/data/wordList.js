@@ -1,5 +1,162 @@
+// 5. Human Names (Classic & Hard)
+const humanNamesRaw = [
+  { word: "نارین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھێڤی", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "مێرخاس", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئالان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕۆژین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئەڤین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شێرکۆ", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئارام", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڤیان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "کاروان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھەڤاڵ", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "پەیمان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕێباز", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ژین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "سامان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕۆناھی", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھەژار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئازاد", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "نەورۆز", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "لاڤا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "زانا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕۆژدا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "پێشەوا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "چنار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھەلگورد", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دلڤین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھێمن", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "سۆزدار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "کانی", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕێبین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "جوان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "سیپان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئارین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دلمان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "خەبات", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕێناس", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شڤان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "تارا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "کۆڤان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "مزگین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دیار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "بێریڤان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھۆگر", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دلێر", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ساکار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئاواز", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "بارزان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕووبار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "سیروان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ناز", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئاری", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "نیاز", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شەڤگەڕ", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "سەردار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "پەری", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھەژین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "کارزان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕۆژان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئاسۆ", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "بەناز", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "فەرھاد", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "میدیا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "کاوە", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شەپۆل", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "زۆزان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھەکار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "نەوزاد", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕۆژھات", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دلۆڤان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "نالیا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "کاردۆ", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "بەیان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئاراس", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئامەد", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئاریا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئالا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئەڤراز", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئارڤین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ئەرسەلان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "برۆسک", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "سۆز", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "باران", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "بەشدار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "بەرھەم", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "بەختیار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "بەڕێز", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "چیا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دلشاد", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دەرباز", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دەروون", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دارا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دێرین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دلگەش", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "داستان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "دەریا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "فەرھەنگ", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "گەیلان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "گەشبین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "گولان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھێژا", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھەڵمەت", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھەندرین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھەردی", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھۆشمەند", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھێلین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھێرش", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "جوامێر", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "کامیران", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "کەیوان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "کیڤی", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "لۆران", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "لاوک", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "مەریوان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "مەتین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "میران", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "مازن", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "مەم", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شێروان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "نشتیمان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "نازک", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "پەیام", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "پشتیوان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "پەروین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕێبەر", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕێدیر", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕێنجبەر", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕاستی", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "سەرکەفت", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "سەفین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "سوار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "تێکۆشەر", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڤان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڤینۆس", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "وەزیر", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ھشیار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "یادگار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "زەردەشت", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "زاگرۆس", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "زین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شاد", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شادمان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شەنگێ", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شیلان", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "پەیڤین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "کۆچەر", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕەڤەند", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "ڕۆژگار", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شاھۆ", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" },
+  { word: "شرین", hint: "ناڤێ مرۆڤان", category: "ناڤێن مرۆڤان" }
+];
+
+const classicHumanNames = humanNamesRaw.filter(n => n.word.length <= 5);
+const hardHumanNames = humanNamesRaw.filter(n => n.word.length > 5);
+
 // 1. Classic Mode Pool (2-5 letters)
 const classicWords = [
+  ...classicHumanNames,
   { word: "کورد", hint: "نەتەوەیەکێ ئاریە و ل میزۆپۆتامیا دژیت", category: "نەتەوە" },
   { word: "ئاشتی", hint: "دەمێ د ناڤبەرا مرۆڤاندا تەناھی ھەبیت", category: "هەست" },
   { word: "وەڵات", hint: "ئەو ئەردێ ئەم لێ ژدایک بووین", category: "جهـ" },
@@ -78,7 +235,7 @@ const classicWords = [
   { word: "تەخت", hint: "جھێ نڤستنێ", category: "کەلوپەل" },
   { word: "مێز", hint: "جھێ دانانا خوارنێ", category: "کەلوپەل" },
   { word: "پەردە", hint: "قوماشێ ھەلاویستی یێ پێشیا پەنجەرێ", category: "کەلوپەل" },
-  { word: "چەتاڵ", hint: "کەرەستەیێ ب ددان بۆ گرتنا خوارنێ", category: "کەلوپەل" },
+  { word: "چەتەڵ", hint: "کەرەستەیێ ب ددان بۆ گرتنا خوارنێ", category: "کەلوپەل" },
   { word: "کێرک", hint: "کەرەستەیێ تیژ یێ پارچەکرن و قەتکرنا تشتان", category: "کەلوپەل" },
   { word: "قۆری", hint: "ئامانێ تایبەت یێ چێکرنا چایێ", category: "کەلوپەل" },
   { word: "سینیک", hint: "ئامانێ پەحن بۆ ھەلگرتنا ئامان و پەرداخان", category: "کەلوپەل" },
@@ -281,6 +438,7 @@ const mamakWords = [
 
 // 3. Hard Words Pool (6-15 letters)
 const hardWords = [
+  ...hardHumanNames,
   { word: "ڕەوشەنبیر", hint: "کەسێ خودان زانست و تێگەھشتن و ڕەوشت", category: "زانست و مرۆڤ" },
   { word: "حەزژێکرن", hint: "ھەستەکێ جوان دناڤبەرا مرۆڤان دا", category: "هەست" },
   { word: "سپیندار", hint: "دارەکا بلند و نازک ل دەڤەرێن چیا و ئاڤێ", category: "سرۆشت" },
@@ -478,6 +636,7 @@ const hardWords = [
 
 // 4. Word Fever Mode Pool (Exactly 5 letters)
 const wordFeverWords = [
+  ...humanNamesRaw.filter(n => n.word.length === 5),
   { word: "ئاشتی", hint: "دەمێ د ناڤبەرا مرۆڤاندا تەناھی ھەبیت", category: "هەست" },
   { word: "وەڵات", hint: "ئەو ئەردێ ئەم لێ ژدایک بووین", category: "جهـ" },
   { word: "ئەزمان", hint: "ئۆڕگانەکێ نەرمە و بەشەکە ژ لەشێ مرۆڤ و گیانەوەران", category: "لەش" },
@@ -504,7 +663,7 @@ const wordFeverWords = [
   // Household Items (Word Fever - 5 letters)
   { word: "سپلێت", hint: "ئامیرێ ھەلاویستی یێ سارکرن و گەرمکرنێ", category: "کەلوپەل" },
   { word: "پەردە", hint: "قوماشێ ھەلاویستی یێ پێشیا پەنجەرێ", category: "کەلوپەل" },
-  { word: "چەتاڵ", hint: "کەرەستەیێ ب ددان بۆ گرتنا خوارنێ", category: "کەلوپەل" },
+  { word: "چەتەڵ", hint: "کەرەستەیێ ب ددان بۆ گرتنا خوارنێ", category: "کەلوپەل" },
   { word: "سینیک", hint: "ئامانێ پەحن بۆ ھەلگرتنا ئامان و پەرداخان", category: "کەلوپەل" },
   { word: "تەباخ", hint: "کەرەستەیێ ئاگرکرنێ بۆ چێکرنا خوارنێ", category: "کەلوپەل" },
   { word: "سابین", hint: "کەفێ دروست دکەت و پیساتیێ پاقژ دکەت", category: "کەلوپەل" },
@@ -596,6 +755,7 @@ export const wordList = {
   "هونەر": classicWords.filter(w => w.category === "هونەر"),
   "باژێر": classicWords.filter(w => w.category === "باژێر"),
   "مۆزیک": classicWords.filter(w => w.category === "مۆزیک"),
+  "ناڤێن مرۆڤان": humanNamesRaw,
   "مامک": mamakWords
 };
 
@@ -621,6 +781,19 @@ export function getRandomWordFromCategory(category, level = 1, solvedWords = [],
 
   let pool = gameWordLists[modeKey] || gameWordLists["پەیڤچن کلاسیک"];
 
+  // --- ENFORCE MODE RULES (Word Lengths) ---
+  if (gameMode === 'classic') {
+    pool = pool.filter(w => w.word.length >= 2 && w.word.length <= 5);
+  } else if (gameMode === 'hard_words') {
+    pool = pool.filter(w => w.word.length >= 6);
+  } else if (gameMode === 'word_fever' || gameMode === 'multiplayer') {
+    // Both Word Fever and Multiplayer are exactly 5 letters
+    pool = pool.filter(w => w.word.length === 5);
+  } else if (gameMode === 'secret_word') {
+    // Secret word is 2+ letters
+    pool = pool.filter(w => w.word.length >= 2);
+  }
+
   if (category && category !== 'ھەموو' && category !== 'generalWordPool') {
     const filtered = pool.filter(w => w.category === category);
     if (filtered.length > 0) pool = filtered;
@@ -628,12 +801,23 @@ export function getRandomWordFromCategory(category, level = 1, solvedWords = [],
 
   if (!pool || pool.length === 0) return null;
 
-  let availableWords = pool.filter(item => !solvedWords.includes(item.word));
-  if (availableWords.length === 0) availableWords = pool;
+  // Robust filtering to prevent repetition across character variants
+  const normSolved = solvedWords.map(sw => sw.toLowerCase().replace(/[ك]/g, 'ک').replace(/[يى]/g, 'ی').replace(/ه/g, 'ھ').replace(/_/g, ' ').trim());
+  
+  let availableWords = pool.filter(item => {
+    const normWord = item.word.toLowerCase().replace(/[ك]/g, 'ک').replace(/[يى]/g, 'ی').replace(/ه/g, 'ھ').replace(/_/g, ' ').trim();
+    return !normSolved.includes(normWord);
+  });
+  
+  if (availableWords.length === 0) {
+    console.warn("[wordList] All words in pool solved, recycling...");
+    availableWords = pool;
+  }
 
   if (gameMode === 'mamak') {
-    const index = (level - 1) % availableWords.length;
-    return availableWords[index];
+    // Sequential fallback if randomization isn't desired, but user specifically asked for no repetition.
+    // Random is better for variety.
+    return availableWords[Math.floor(Math.random() * availableWords.length)];
   }
 
   return availableWords[Math.floor(Math.random() * availableWords.length)];

@@ -67,7 +67,7 @@ function MessageContextMenu({ m, x, y, isMe, onReact, onReply, onCopy, onClose }
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm"
+        className="absolute inset-0 bg-mono-950/80"
       />
       
       <motion.div 
@@ -83,7 +83,7 @@ function MessageContextMenu({ m, x, y, isMe, onReact, onReply, onCopy, onClose }
         }}
       >
         {/* Reactions Header */}
-        <div className="bg-[#1e293b] border border-white/10 rounded-2xl shadow-2xl mb-2 p-1.5 flex items-center justify-between gap-1 overflow-x-auto no-scrollbar">
+        <div className="bg-mono-50 dark:bg-mono-900 border border-mono-200 dark:border-white/10 rounded-2xl mb-2 p-1.5 flex items-center justify-between gap-1 overflow-x-auto no-scrollbar shadow-xl">
           {['❤️', '😂', '👍', '🔥', '😮', '🙏'].map((emoji, idx) => (
             <motion.button 
               key={emoji}
@@ -100,21 +100,21 @@ function MessageContextMenu({ m, x, y, isMe, onReact, onReply, onCopy, onClose }
         </div>
 
         {/* Action List */}
-        <div className="bg-[#1e293b] border border-white/10 rounded-2xl shadow-2xl p-1 flex flex-col divide-y divide-white/5">
+        <div className="bg-mono-50 dark:bg-mono-900 border border-mono-200 dark:border-white/10 rounded-2xl p-1 flex flex-col divide-y divide-mono-100 dark:divide-white/5 shadow-xl">
           <button 
             onClick={() => { onReply(m); onClose(); }}
-            className="flex items-center justify-between w-full p-3.5 hover:bg-white/5 text-slate-200 transition-colors first:rounded-t-xl"
+            className="flex items-center justify-between w-full p-3.5 hover:bg-mono-100 dark:hover:bg-white/5 text-mono-900 dark:text-mono-200 transition-colors first:rounded-t-xl"
           >
             <span className="font-bold text-sm">بەرسڤدان</span>
-            <span className="material-symbols-outlined text-[20px] text-slate-500">reply</span>
+            <span className="material-symbols-outlined text-[20px] text-mono-500">reply</span>
           </button>
           
           <button 
             onClick={() => { onCopy(m.content || m.text); onClose(); }}
-            className="flex items-center justify-between w-full p-3.5 hover:bg-white/5 text-slate-200 transition-colors last:rounded-b-xl"
+            className="flex items-center justify-between w-full p-3.5 hover:bg-mono-100 dark:hover:bg-white/5 text-mono-900 dark:text-mono-200 transition-colors last:rounded-b-xl"
           >
             <span className="font-bold text-sm">ژبەرتنکرن</span>
-            <span className="material-symbols-outlined text-[20px] text-slate-500">content_copy</span>
+            <span className="material-symbols-outlined text-[20px] text-mono-500">content_copy</span>
           </button>
         </div>
       </motion.div>
@@ -149,13 +149,13 @@ function MessageItem({ m, isMe, onSeen, onLongPress, currentUserId, showNickname
     >
       {showNickname && (
         <div className="flex items-center gap-2 mb-1 px-1">
-          <span className="text-[9px] font-black text-slate-500 uppercase tracking-tighter">{m.user_nickname || 'یاریکەر'}</span>
+          <span className="text-[9px] font-black text-mono-500 uppercase tracking-tighter">{m.user_nickname || 'یاریکەر'}</span>
         </div>
       )}
 
       {/* Quoted Message (Reply) */}
       {m.reply_to_text && (
-        <div className={`mb-1 max-w-[70%] text-[10px] p-2 rounded-xl bg-white/5 border-r-4 border-primary/40 text-white/50 italic line-clamp-1 truncate ${isMe ? 'mr-2' : 'ml-2'}`}>
+        <div className={`mb-1 max-w-[70%] text-[10px] p-2 rounded-xl bg-mono-100/50 dark:bg-white/5 border-r-4 border-primary/40 text-mono-600 dark:text-white/50 italic line-clamp-1 truncate ${isMe ? 'mr-2' : 'ml-2'}`}>
           {m.reply_to_text}
         </div>
       )}
@@ -164,23 +164,26 @@ function MessageItem({ m, isMe, onSeen, onLongPress, currentUserId, showNickname
         <div className="relative group/bubble flex flex-col items-end">
           <div
             {...bind}
-            className={`message-bubble px-4 py-2.5 rounded-md text-sm font-bold font-rabar break-all whitespace-pre-wrap transition-all relative cursor-pointer active:scale-[0.98] select-none shadow-sm ${isMe ? 'rounded-tr-none text-white' : 'bg-[#1e293b]/95 text-slate-100 rounded-tl-none border border-white/5'}`}
-            style={isMe ? { backgroundColor: '#0284c7', boxShadow: '0 2px 8px rgba(2, 132, 199, 0.2)' } : {}}
+            className={`message-bubble px-4 py-2.5 rounded-lg text-sm font-bold font-rabar break-all whitespace-pre-wrap transition-all relative cursor-pointer active:scale-[0.98] select-none shadow-sm ${
+              isMe 
+                ? 'bg-mono-900 text-mono-50 dark:bg-mono-700 dark:text-mono-50 rounded-tr-none' 
+                : 'bg-mono-200 text-mono-900 dark:bg-mono-800 dark:text-mono-50 rounded-tl-none border border-mono-300 dark:border-white/5'
+            }`}
           >
             {m.content || m.text}
             
             <div className="flex items-center justify-end gap-1 mt-1">
-              <div className={`text-[8px] font-black opacity-60 ${isMe ? 'text-blue-100' : 'text-slate-400'}`}>
+              <div className={`text-[10px] font-bold opacity-70 ${isMe ? 'text-mono-200' : 'text-mono-500 dark:text-mono-400'}`}>
                 {new Date(m.created_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
               </div>
               {isMe && (
                 <div className="flex items-center">
                   {m.is_read ? (
-                    <span className="material-symbols-outlined text-[14px] text-blue-500 font-bold" style={{ fontSize: '14px' }}>done_all</span>
+                    <span className="material-symbols-outlined text-[14px] text-primary font-bold" style={{ fontSize: '14px' }}>done_all</span>
                   ) : m.id?.startsWith?.('temp-') ? (
-                    <span className="material-symbols-outlined text-[14px] text-slate-500 font-bold opacity-40" style={{ fontSize: '14px' }}>done</span>
+                    <span className="material-symbols-outlined text-[14px] text-mono-300 font-bold opacity-40" style={{ fontSize: '14px' }}>done</span>
                   ) : (
-                    <span className="material-symbols-outlined text-[14px] text-slate-500 font-bold" style={{ fontSize: '14px' }}>done_all</span>
+                    <span className="material-symbols-outlined text-[14px] text-mono-300 font-bold" style={{ fontSize: '14px' }}>done_all</span>
                   )}
                 </div>
               )}
@@ -193,7 +196,7 @@ function MessageItem({ m, isMe, onSeen, onLongPress, currentUserId, showNickname
               {Object.entries(m.reactions).map(([emoji, users]) => (
                 <div
                   key={emoji}
-                  className={`flex items-center gap-1 text-[11px] font-black transition-all ${users.includes(currentUserId) ? 'text-primary drop-shadow-[0_0_5px_rgba(var(--primary-rgb),0.5)]' : 'text-slate-400/80'}`}
+                  className={`flex items-center gap-1 text-[11px] font-black transition-all ${users.includes(currentUserId) ? 'text-primary' : 'text-mono-500/80'}`}
                 >
                   <span>{emoji}</span>
                   <span className={users.includes(currentUserId) ? 'opacity-100' : 'opacity-60'}>{users.length}</span>
@@ -248,41 +251,59 @@ export default function SocialHubView({
   const [newGlobalCount, setNewGlobalCount] = useState(0);
   const typingTimeoutRef = useRef(null);
   const typingChannelRef = useRef(null);
+  const searchTimeoutRef = useRef(null);
+  const isSearchingRef = useRef(false);
   const scrollRef = useRef(null);
   const textareaRef = useRef(null);
 
-  const fetchGlobalMessages = useCallback(async () => {
+  const fetchGlobalMessages = useCallback(async (signal = null) => {
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('messages')
         .select('id, content, user_id, user_nickname, created_at, reply_to_id, reply_to_text, reactions')
         .is('receiver_id', null)
         .order('created_at', { ascending: true })
         .limit(500);
+      
+      if (signal) query = query.abortSignal(signal);
+      
+      const { data, error } = await query;
       if (error) throw error;
       setMessages(data || []);
     } catch (err) {
+      if (err.name === 'AbortError') return;
       console.warn("Global fetch error:", err);
     } finally {
       if (activeTab === 'global') setLoading(false);
     }
   }, [activeTab]);
 
-  const fetchFriendsData = useCallback(async () => {
+  const fetchFriendsData = useCallback(async (signal = null) => {
     if (!user?.id) return;
     try {
-      const { data: friendships, error: fError } = await supabase
+      let fQuery = supabase
         .from('friendships')
         .select('*')
         .or(`user_id.eq.${user?.id},friend_id.eq.${user?.id}`);
+      
+      if (signal) fQuery = fQuery.abortSignal(signal);
+      
+      const { data: friendships, error: fError } = await fQuery;
       if (fError) throw fError;
+
       const profileIds = new Set();
       friendships.forEach(f => { profileIds.add(f.user_id); profileIds.add(f.friend_id); });
-      const { data: profiles, error: pError } = await supabase
+      
+      let pQuery = supabase
         .from('profiles')
         .select('id, nickname, avatar_url, updated_at')
         .in('id', Array.from(profileIds));
+
+      if (signal) pQuery = pQuery.abortSignal(signal);
+      
+      const { data: profiles, error: pError } = await pQuery;
       if (pError) throw pError;
+
       const profileMap = profiles.reduce((acc, p) => ({ ...acc, [p.id]: p }), {});
       const uniqueRelationships = new Map();
       friendships.forEach(f => {
@@ -309,21 +330,26 @@ export default function SocialHubView({
       setFriends(accepted);
       setPendingSentIds(sentPendingList);
     } catch (err) {
+      if (err.name === 'AbortError') return;
       console.warn("Friendships fetch error:", err);
     } finally {
       setLoading(false);
     }
   }, [user?.id]);
 
-  const fetchPrivateConversations = useCallback(async () => {
+  const fetchPrivateConversations = useCallback(async (signal = null) => {
     if (loadingAuth || !user?.id || user.id === 'undefined') return;
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('messages')
         .select('*')
         .or(`user_id.eq.${user?.id},receiver_id.eq.${user?.id}`)
         .not('receiver_id', 'is', null)
         .order('created_at', { ascending: false });
+      
+      if (signal) query = query.abortSignal(signal);
+      
+      const { data, error } = await query;
       if (error) throw error;
       const unread = data.filter(m => m.receiver_id === user?.id && !m.is_read).length;
       setUnreadMessageCount(unread);
@@ -336,15 +362,20 @@ export default function SocialHubView({
       });
       const partnerIds = Array.from(convosMap.keys());
       if (partnerIds.length === 0) { setPrivateChats([]); return; }
-      const { data: profiles } = await supabase.from('profiles').select('id, nickname, avatar_url, updated_at').in('id', partnerIds);
+      
+      let pQuery = supabase.from('profiles').select('id, nickname, avatar_url, updated_at').in('id', partnerIds);
+      if (signal) pQuery = pQuery.abortSignal(signal);
+      
+      const { data: profiles } = await pQuery;
       const enriched = (profiles || []).map(p => ({ ...p, ...convosMap.get(p.id) })).sort((a, b) => new Date(b.time) - new Date(a.time));
       setPrivateChats(enriched);
     } catch (err) {
+      if (err.name === 'AbortError') return;
       console.warn("Private convo fetch failed:", err);
     } finally {
       setLoading(false);
     }
-  }, [user?.id]);
+  }, [user?.id, loadingAuth]);
 
   const fetchPrivateChatHistory = useCallback(async (partnerId) => {
     if (loadingAuth || !user?.id || user.id === 'undefined' || !partnerId) return;
@@ -397,17 +428,23 @@ export default function SocialHubView({
   }, [user?.id, selectedChat, activeTab, fetchGlobalMessages, fetchFriendsData, fetchPrivateConversations, fetchPrivateChatHistory, playNotifSound]);
 
   useEffect(() => {
-    fetchGlobalMessages();
-    fetchFriendsData();
-    fetchPrivateConversations();
-    const statusInterval = setInterval(fetchFriendsData, 60000);
-    return () => clearInterval(statusInterval);
+    const controller = new AbortController();
+    fetchGlobalMessages(controller.signal);
+    fetchFriendsData(controller.signal);
+    fetchPrivateConversations(controller.signal);
+    const statusInterval = setInterval(() => fetchFriendsData(controller.signal), 60000);
+    return () => {
+      controller.abort();
+      clearInterval(statusInterval);
+    };
   }, [user?.id, fetchGlobalMessages, fetchFriendsData, fetchPrivateConversations]);
 
   useEffect(() => {
-    if (activeTab === 'global') { fetchGlobalMessages(); setNewGlobalCount(0); }
-    if (activeTab === 'friends') fetchFriendsData();
-    if (activeTab === 'private') fetchPrivateConversations();
+    const controller = new AbortController();
+    if (activeTab === 'global') { fetchGlobalMessages(controller.signal); setNewGlobalCount(0); }
+    if (activeTab === 'friends') fetchFriendsData(controller.signal);
+    if (activeTab === 'private') fetchPrivateConversations(controller.signal);
+    return () => controller.abort();
   }, [activeTab, fetchGlobalMessages, fetchFriendsData, fetchPrivateConversations]);
 
   useEffect(() => {
@@ -427,19 +464,32 @@ export default function SocialHubView({
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
 
-  const handleSearchPlayers = async (query) => {
+  const handleSearchPlayers = useCallback(async (query) => {
     setSearchQuery(query);
     if (query.length < 2) { setSearchResults([]); return; }
-    if (loadingAuth || !user?.id || user.id === 'undefined') return;
-    setSearching(true);
-    try {
-      let queryBuilder = supabase.from('profiles').select('id, nickname, avatar_url, updated_at').ilike('nickname', `%${query}%`);
-      queryBuilder = queryBuilder.neq('id', user.id);
-      const { data, error } = await queryBuilder.limit(10);
-      if (error) throw error;
-      setSearchResults(data || []);
-    } catch (err) { console.error("Search error:", err); } finally { setSearching(false); }
-  };
+    if (loadingAuth || !user?.id || user.id === 'undefined' || isSearchingRef.current) return;
+    
+    // 1. Debounce Logic: Wait 500ms before firing request
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+    
+    searchTimeoutRef.current = setTimeout(async () => {
+      setSearching(true);
+      isSearchingRef.current = true;
+      try {
+        let queryBuilder = supabase.from('profiles').select('id, nickname, avatar_url, updated_at').ilike('nickname', `%${query}%`);
+        queryBuilder = queryBuilder.neq('id', user.id);
+        const { data, error } = await queryBuilder.limit(10);
+        if (error) throw error;
+        setSearchResults(data || []);
+      } catch (err) { 
+        console.error("Search error:", err); 
+      } finally { 
+        setSearching(false); 
+        isSearchingRef.current = false;
+        searchTimeoutRef.current = null;
+      }
+    }, 500);
+  }, [user?.id, loadingAuth]);
 
   const handleAddFriend = async (friendId) => {
     try {
@@ -676,18 +726,18 @@ export default function SocialHubView({
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#0f172a] text-white overflow-hidden" dir="rtl">
+    <div className="flex flex-col h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-50 overflow-hidden transition-colors duration-500" dir="rtl">
       {/* Header - Social Center Branding */}
       <div
-        className="px-4 pb-4 flex items-center justify-center border-b border-white/5 bg-[#1e293b]"
+        className="px-4 pb-4 flex items-center justify-center border-b border-mono-200 dark:border-mono-800 bg-mono-white dark:bg-mono-900 transition-colors duration-500"
         style={{ paddingTop: 'calc(env(safe-area-inset-top) + 1rem)' }}
       >
-        <h2 className="text-xl font-black font-rabar text-slate-300">ناڤەندا جڤاکی</h2>
+        <h2 className="text-xl font-black font-rabar text-mono-900 dark:text-mono-100">ناڤەندا جڤاکی</h2>
       </div>
 
       {/* Tabs - Sharp Segmented Style with Shadow */}
       <div className="px-4 py-3">
-        <div className="flex p-1 bg-slate-300 rounded-sm relative shadow-2xl shadow-black/60">
+        <div className="flex p-1 bg-mono-100 dark:bg-mono-900 rounded-md relative shadow-sm border border-mono-200 dark:border-mono-800 transition-colors duration-300">
           {[
             { id: 'global', label: 'جیھانی', icon: 'public', badge: newGlobalCount },
             { id: 'private', label: 'نامە', icon: 'chat', badge: unreadMessageCount },
@@ -701,12 +751,12 @@ export default function SocialHubView({
                 setActiveTab(tab.id); 
                 setSelectedChat(null); 
               }}
-              className={`flex-1 py-2.5 rounded-sm flex items-center justify-center gap-2 transition-all relative z-10 ${activeTab === tab.id ? 'text-white font-black' : 'text-slate-600 hover:text-slate-800'}`}
+              className={`flex-1 py-2.5 rounded-sm flex items-center justify-center gap-2 transition-all relative z-10 ${activeTab === tab.id ? 'text-mono-50 font-black dark:text-mono-50' : 'text-mono-600 hover:text-mono-900 dark:text-mono-400 dark:hover:text-mono-100'}`}
             >
               <span className="material-symbols-outlined text-[18px]">{tab.icon}</span>
               <span className="text-xs font-black">{tab.label}</span>
               {tab.badge > 0 && (
-                <span className="absolute -top-1 right-2 min-w-[16px] h-4 bg-red-500 rounded-full border border-white/20 flex items-center justify-center px-1 shadow-lg ring-2 ring-slate-300">
+                <span className="absolute -top-1 right-2 min-w-[16px] h-4 bg-red-500 rounded-full border border-white/20 flex items-center justify-center px-1 ring-2 ring-mono-200 dark:ring-mono-800">
                   <span className="text-[10px] text-white font-black leading-none">
                     {toKuDigits(tab.badge > 99 ? '99+' : tab.badge)}
                   </span>
@@ -716,7 +766,7 @@ export default function SocialHubView({
           ))}
           {/* Sliding Active Background - Sharp Edges */}
           <div
-            className="absolute top-1 bottom-1 transition-all duration-300 ease-out bg-[#1e293b] rounded-sm z-0"
+            className="absolute top-1 bottom-1 transition-all duration-300 ease-out bg-mono-950 dark:bg-mono-800 rounded-sm z-0 shadow-md"
             style={{
               width: 'calc(33.33% - 4px)',
               right: activeTab === 'global' ? '4px' : activeTab === 'private' ? '33.33%' : '66.66%'
@@ -728,35 +778,41 @@ export default function SocialHubView({
       {/* Main Content Area - Layout Engine */}
       <div className="flex-1 overflow-hidden relative flex flex-col">
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-[#0f172a] z-10">
-            <div className="w-10 h-10 border-4 border-slate-800 border-t-slate-500 rounded-full animate-spin" />
+          <div className="absolute inset-0 flex items-center justify-center bg-mono-white dark:bg-mono-950 z-10 transition-colors duration-500">
+            <div className="w-10 h-10 border-4 border-mono-200 dark:border-mono-800 border-t-primary rounded-full animate-spin" />
           </div>
         )}
 
         {/* Global Chat View */}
         {activeTab === 'global' && (
-          <div 
-            className="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar"
-            style={{ 
-              backgroundImage: "linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('/chat_wallpaper.png')",
-              backgroundRepeat: 'repeat',
-              backgroundSize: '400px',
-              backgroundAttachment: 'local'
-            }}
-          >
-            <AnimatePresence initial={false}>
-              {messages.map((m, idx) => (
-                <MessageItem
-                  key={m.id || idx}
-                  m={m}
-                  isMe={m.user_id === user?.id}
-                  currentUserId={user?.id}
-                  showNickname={true}
-                  onLongPress={(msg, x, y) => setActiveContextMenu({ message: msg, x, y, isPrivate: false })}
-                />
-              ))}
-            </AnimatePresence>
-            <div ref={scrollRef} className="h-4" />
+          <div className="flex-1 relative overflow-hidden bg-mono-50 dark:bg-mono-950/50 transition-colors duration-500">
+            {/* Delicate Texture Overlay */}
+            <div 
+              className="absolute inset-0 opacity-[0.06] dark:opacity-[0.1] pointer-events-none grayscale"
+              style={{ 
+                backgroundImage: "url('/chat_wallpaper.png')",
+                backgroundRepeat: 'repeat',
+                backgroundSize: '450px'
+              }}
+            />
+            
+            <div 
+              className="relative z-10 flex-1 h-full overflow-y-auto p-4 space-y-4 no-scrollbar"
+            >
+              <AnimatePresence initial={false}>
+                {messages.map((m, idx) => (
+                  <MessageItem
+                    key={m.id || idx}
+                    m={m}
+                    isMe={m.user_id === user?.id}
+                    currentUserId={user?.id}
+                    showNickname={true}
+                    onLongPress={(msg, x, y) => setActiveContextMenu({ message: msg, x, y, isPrivate: false })}
+                  />
+                ))}
+              </AnimatePresence>
+              <div ref={scrollRef} className="h-4" />
+            </div>
           </div>
         )}
 
@@ -764,47 +820,50 @@ export default function SocialHubView({
         {activeTab === 'friends' && (
           <div className="flex-1 overflow-y-auto p-4 space-y-6 no-scrollbar">
             <div className="relative group">
-              <span className="material-symbols-outlined absolute right-3 top-3.5 text-slate-500">search</span>
+              <span className="material-symbols-outlined absolute right-3 top-3.5 text-mono-500">search</span>
               <input
                 type="text"
+                id="player-search"
+                name="player-search"
+                aria-label="Search for players"
                 placeholder="گەڕیان ل ھەڤالێن نوو..."
                 value={searchQuery}
                 onChange={(e) => handleSearchPlayers(e.target.value)}
-                className="w-full bg-[#1e294b]/20 border border-white/5 rounded-2xl py-3.5 pr-11 pl-4 text-sm font-bold font-rabar focus:border-slate-500 outline-none transition-none"
+                className="w-full bg-mono-100 dark:bg-mono-900 border border-mono-200 dark:border-mono-800 rounded-md py-3.5 pr-11 pl-4 text-sm font-bold font-rabar focus:ring-1 focus:ring-primary/20 outline-none transition-all duration-300 text-mono-900 dark:text-mono-50"
               />
-              {searching && <div className="absolute left-4 top-4 w-4 h-4 border-2 border-slate-700 border-t-slate-300 rounded-full animate-spin" />}
+              {searching && <div className="absolute left-4 top-4 w-4 h-4 border-2 border-mono-300 dark:border-mono-700 border-t-primary rounded-full animate-spin" />}
             </div>
 
             {searchResults.length > 0 && (
-              <div className="space-y-3 p-3 bg-[#1e293b]/50 rounded-2xl border border-white/5">
-                <h3 className="text-[10px] font-black uppercase text-slate-500 tracking-widest px-1">ئەنجامێن ئەڤێ ھاتینە دیتن</h3>
+              <div className="space-y-3 p-3 bg-mono-50 dark:bg-mono-900/50 rounded-md border border-mono-200 dark:border-mono-800">
+                <h3 className="text-[10px] font-black uppercase text-mono-500 tracking-widest px-1">ئەنجامێن ئەڤێ ھاتینە دیتن</h3>
                 {searchResults.map(res => {
                   const isFriend = friends.some(f => f.friend?.id === res.id);
                   const isPending = pendingRequests.some(r => r.sender?.id === res.id || r.friend_id === res.id);
                   
                   return (
-                    <div key={res.id} className="flex items-center gap-3 p-2 hover:bg-white/5 rounded-xl transition-none group cursor-pointer">
+                    <div key={res.id} className="flex items-center gap-3 p-2 hover:bg-mono-100 dark:hover:bg-white/5 rounded-md transition-all group cursor-pointer">
                       <div className="flex items-center gap-3 flex-1" onClick={() => { triggerHaptic(10); setSelectedPlayer(res); }}>
                         <Avatar src={res.avatar_url} lastActive={res.updated_at} showStatus={true} size="sm" />
                         <div className="flex-1 text-right">
-                          <div className="font-black text-sm group-hover:text-primary transition-colors">{res.nickname}</div>
+                          <div className="font-black text-sm group-hover:text-primary transition-colors text-mono-900 dark:text-mono-100">{res.nickname}</div>
                         </div>
                       </div>
                       
                       {isFriend ? (
-                        <div className="px-3 py-1.5 bg-emerald-500/20 text-emerald-400 rounded-lg font-black text-[10px] flex items-center gap-1">
+                        <div className="px-3 py-1.5 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 rounded-md font-black text-[10px] flex items-center gap-1">
                           <span className="material-symbols-outlined text-[14px]">check</span>
                           ھوین ھەڤالن
                         </div>
                       ) : (isPending || pendingSentIds.has(res.id)) ? (
-                        <div className="px-3 py-1.5 bg-slate-800 text-slate-400 border border-white/5 rounded-full font-black text-[10px] opacity-50 flex items-center gap-1">
+                        <div className="px-3 py-1.5 bg-mono-100 dark:bg-mono-800 text-mono-400 dark:text-mono-500 border border-mono-200 dark:border-mono-700 rounded-md font-black text-[10px] flex items-center gap-1">
                           <span className="material-symbols-outlined text-[14px]">hourglass_top</span>
                           چاڤەڕێبە
                         </div>
                       ) : (
                         <button 
                           onClick={(e) => { e.stopPropagation(); handleAddFriend(res.id); }} 
-                          className="px-3 py-1.5 bg-emerald-500 text-slate-950 rounded-full font-black text-[10px] flex items-center gap-1 hover:bg-emerald-400 active:scale-95 transition-all"
+                          className="px-3 py-1.5 bg-emerald-500 text-white rounded-md font-black text-[10px] flex items-center gap-1 hover:bg-emerald-600 active:scale-95 transition-all"
                         >
                           <span className="material-symbols-outlined text-[14px]">add</span>
                           ببە ھەڤاڵ
@@ -818,21 +877,21 @@ export default function SocialHubView({
 
             {pendingRequests.length > 0 && (
               <div className="space-y-3">
-                <h3 className="text-[10px] font-black uppercase text-slate-400 tracking-widest px-2">داخوازێن ھەڤالینیێ</h3>
+                <h3 className="text-[10px] font-black uppercase text-mono-500 tracking-widest px-2">داخوازێن ھەڤالینیێ</h3>
                 {pendingRequests.map(req => (
-                  <div key={req.id} className="flex items-center gap-3 p-3 bg-white/95 backdrop-blur-xl rounded-md border border-slate-200 shadow-sm">
+                  <div key={req.id} className="flex items-center gap-3 p-3 bg-mono-white dark:bg-mono-900 rounded-md border border-mono-200 dark:border-mono-800 shadow-sm transition-colors duration-300">
                     <Avatar src={req.sender?.avatar_url} lastActive={req.sender?.updated_at} showStatus={true} size="sm" />
                     <div className="flex-1 text-right">
-                      <div className="font-black text-sm text-slate-900">{req.sender?.nickname}</div>
+                      <div className="font-black text-sm text-mono-900 dark:text-mono-100">{req.sender?.nickname}</div>
                     </div>
-                    <button onClick={() => handleAcceptRequest(req.id)} className="px-4 py-2 bg-emerald-500 text-white rounded-md font-black text-[10px] uppercase shadow-md hover:brightness-110 active:scale-95 transition-all">پەژراندن</button>
+                    <button onClick={() => handleAcceptRequest(req.id)} className="px-4 py-2 bg-emerald-500 text-white rounded-md font-black text-[10px] uppercase hover:bg-emerald-600 active:scale-95 transition-all">پەژراندن</button>
                   </div>
                 ))}
               </div>
             )}
 
             <div className="space-y-3">
-              <h3 className="text-[10px] font-black uppercase text-slate-600 tracking-widest px-2">ھەڤالێن تە</h3>
+              <h3 className="text-[10px] font-black uppercase text-mono-600 dark:text-mono-400 tracking-widest px-2">ھەڤالێن تە</h3>
               {friends
                 .sort((a, b) => {
                   const activeA = new Date(a.friend?.updated_at || 0);
@@ -844,14 +903,14 @@ export default function SocialHubView({
                   return activeB - activeA; // Secondary sort by last active
                 })
                 .map(f => (
-                <div key={f.id} className="flex items-center gap-3 p-2 bg-white/95 backdrop-blur-xl rounded-md border border-slate-200 shadow-sm group hover:border-emerald-500/30 transition-all">
+                <div key={f.id} className="flex items-center gap-3 p-2 bg-mono-white dark:bg-mono-900 rounded-md border border-mono-200 dark:border-mono-800 group hover:border-primary/30 transition-all shadow-sm">
                   <div className="flex items-center gap-3 flex-1 cursor-pointer" onClick={() => { triggerHaptic(10); playBubblePopSound(); setSelectedPlayer(f.friend); }}>
                     <Avatar src={f.friend?.avatar_url} lastActive={f.friend?.updated_at} showStatus={true} size="sm" />
                     <div className="flex-1 text-right">
-                      <div className="font-black text-sm text-slate-900 group-hover:text-emerald-600 transition-colors">{f.friend?.nickname}</div>
+                      <div className="font-black text-sm text-mono-900 dark:text-mono-100 group-hover:text-primary transition-colors">{f.friend?.nickname}</div>
                     </div>
                   </div>
-                  <button onClick={() => { triggerHaptic(10); playBubblePopSound(); setActiveTab('private'); setSelectedChat(f.friend); }} className="w-10 h-10 flex items-center justify-center rounded-md bg-slate-100 text-slate-600 hover:bg-emerald-500 hover:text-white hover:shadow-md transition-all">
+                  <button onClick={() => { triggerHaptic(10); playBubblePopSound(); setActiveTab('private'); setSelectedChat(f.friend); }} className="w-10 h-10 flex items-center justify-center rounded-md bg-mono-100 dark:bg-mono-800 text-mono-600 dark:text-mono-300 hover:bg-primary hover:text-white transition-all">
                     <span className="material-symbols-outlined text-[20px] font-bold">chat</span>
                   </button>
                 </div>
@@ -864,73 +923,79 @@ export default function SocialHubView({
         {activeTab === 'private' && (
           <div className="flex-1 flex flex-col overflow-hidden">
             {selectedChat ? (
-              <div className="flex-1 flex flex-col overflow-hidden bg-[#0f172a]">
-                <div className="shrink-0 p-3 bg-[#1e293b] border-b border-white/5 flex items-center gap-3 shadow-lg z-10">
-                  <button onClick={() => { playBubblePopSound(); setSelectedChat(null); }} className="material-symbols-outlined text-white/40">arrow_back</button>
+              <div className="flex-1 flex flex-col overflow-hidden bg-mono-50 dark:bg-mono-950">
+                <div className="shrink-0 p-3 bg-mono-white dark:bg-mono-900 border-b border-mono-200 dark:border-mono-800 flex items-center gap-3 z-10 shadow-sm transition-colors duration-300">
+                  <button onClick={() => { playBubblePopSound(); setSelectedChat(null); }} className="material-symbols-outlined text-mono-400 hover:text-mono-900 dark:text-mono-500 dark:hover:text-mono-100">arrow_back</button>
                   <div className="flex items-center gap-3 cursor-pointer" onClick={() => { triggerHaptic(10); playBubblePopSound(); setSelectedPlayer(selectedChat); }}>
                     <Avatar src={selectedChat.avatar_url} lastActive={selectedChat.updated_at} showStatus={true} size="sm" />
-                    <span className="font-black text-sm hover:text-primary transition-colors">{selectedChat.nickname}</span>
+                    <span className="font-black text-sm hover:text-primary transition-colors text-mono-900 dark:text-mono-100">{selectedChat.nickname}</span>
                   </div>
                 </div>
-                <div 
-                  className="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar"
-                  style={{ 
-                    backgroundImage: "linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8)), url('/chat_wallpaper.png')",
-                    backgroundRepeat: 'repeat',
-                    backgroundSize: '400px',
-                    backgroundAttachment: 'local'
-                  }}
-                >
-                  {chatMessages.map((m, idx) => (
-                    <MessageItem 
-                      key={m.id || idx}
-                      m={m}
-                      isMe={m.user_id === user?.id}
-                      currentUserId={user?.id}
-                      onSeen={async (id) => {
-                        if (m.user_id !== user?.id && !m.is_read) {
-                          await supabase
-                            .from('messages')
-                            .update({ is_read: true })
-                            .eq('id', id);
-                        }
-                      }}
-                      onLongPress={(msg, x, y) => setActiveContextMenu({ message: msg, x, y, isPrivate: true })}
-                    />
-                  ))}
+                <div className="flex-1 relative overflow-hidden bg-mono-50 dark:bg-mono-900 transition-colors duration-500">
+                  {/* Delicate Texture Overlay */}
+                  <div 
+                    className="absolute inset-0 opacity-[0.06] dark:opacity-[0.12] pointer-events-none grayscale invert dark:invert-0"
+                    style={{ 
+                      backgroundImage: "url('/chat_wallpaper.png')",
+                      backgroundRepeat: 'repeat',
+                      backgroundSize: '450px'
+                    }}
+                  />
                   
-                  {partnerIsTyping && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.8, x: -10 }}
-                      animate={{ opacity: 1, scale: 1, x: 0 }}
-                      className="flex items-center gap-2 mb-4"
-                    >
-                      <div className="bg-slate-800/80 px-4 py-2 rounded-2xl border border-white/5 flex items-center gap-2">
-                        <div className="flex gap-1">
-                          <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                          <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                          <span className="w-1.5 h-1.5 bg-primary rounded-full animate-bounce"></span>
+                  <div 
+                    className="relative z-10 flex-1 h-full overflow-y-auto p-4 space-y-4 no-scrollbar"
+                  >
+                    {chatMessages.map((m, idx) => (
+                      <MessageItem 
+                        key={m.id || idx}
+                        m={m}
+                        isMe={m.user_id === user?.id}
+                        currentUserId={user?.id}
+                        onSeen={async (id) => {
+                          if (m.user_id !== user?.id && !m.is_read) {
+                            await supabase
+                              .from('messages')
+                              .update({ is_read: true })
+                              .eq('id', id);
+                          }
+                        }}
+                        onLongPress={(msg, x, y) => setActiveContextMenu({ message: msg, x, y, isPrivate: true })}
+                      />
+                    ))}
+                    
+                    {partnerIsTyping && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.8, x: -10 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        className="flex items-center gap-2 mb-4"
+                      >
+                        <div className="bg-mono-100/80 dark:bg-mono-800/80 px-4 py-2 rounded-md border border-mono-200 dark:border-mono-700 flex items-center gap-2 shadow-sm">
+                           <div className="flex gap-1">
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                            <span className="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                          </div>
+                          <span className="text-[10px] font-black text-mono-500 dark:text-mono-400">دنڤیسیت...</span>
                         </div>
-                        <span className="text-[10px] font-black text-slate-400">دنڤیسیت...</span>
-                      </div>
-                    </motion.div>
-                  )}
-                  
-                  <div ref={scrollRef} className="h-4" />
+                      </motion.div>
+                    )}
+                    
+                    <div ref={scrollRef} className="h-4" />
+                  </div>
                 </div>
               </div>
             ) : (
               <div className="flex-1 overflow-y-auto p-4 space-y-3 no-scrollbar">
                 {privateChats.length === 0 && !loading ? (
                   <div className="flex-1 flex flex-col items-center justify-center opacity-40 space-y-4">
-                    <span className="material-symbols-outlined text-6xl">forum</span>
+                    <span className="material-symbols-outlined text-6xl text-mono-400">forum</span>
                     <div className="text-center">
-                      <div className="font-black text-lg">ھیچ نامەیەک نینە</div>
-                      <div className="text-xs font-bold font-rabar">دەستپێبکە ب نڤێسینا نامەیەکێ بۆ ھەڤالێن خۆ</div>
+                      <div className="font-black text-lg text-mono-900 dark:text-mono-50">ھیچ نامەیەک نینە</div>
+                      <div className="text-xs font-bold font-rabar text-mono-500">دەستپێبکە ب نڤێسینا نامەیەکێ بۆ ھەڤالێن خۆ</div>
                     </div>
                     <button
                       onClick={() => setActiveTab('friends')}
-                      className="px-6 py-2 bg-[#0a192f] rounded-xl text-xs font-black border border-white/5"
+                      className="px-6 py-2 bg-mono-100 dark:bg-mono-900 rounded-md text-xs font-black border border-mono-200 dark:border-mono-800 shadow-sm"
                     >
                       دیتنا ھەڤالان
                     </button>
@@ -940,7 +1005,7 @@ export default function SocialHubView({
                     <div
                       key={chat.id}
                       onClick={() => setSelectedChat(chat)}
-                      className="flex items-center justify-between gap-4 p-3 bg-slate-200 rounded-[12px] border border-white/10 hover:bg-slate-300 cursor-pointer transition-all group relative active:scale-[0.98]"
+                      className="flex items-center justify-between gap-4 p-3 bg-mono-white dark:bg-mono-900 rounded-md border border-mono-200 dark:border-mono-800 hover:bg-mono-50 dark:hover:bg-mono-800/50 cursor-pointer transition-all group relative active:scale-[0.98] shadow-sm"
                     >
                       {/* Left Group: Avatar + Content */}
                       <div className="flex flex-1 items-center justify-start gap-3 min-w-0">
@@ -958,10 +1023,10 @@ export default function SocialHubView({
 
                         {/* Name and Message */}
                         <div className="flex flex-col items-start min-w-0">
-                          <span className="font-black text-sm text-slate-900 group-hover:text-primary transition-colors truncate w-full text-left">
+                          <span className="font-black text-sm text-mono-900 dark:text-mono-100 group-hover:text-primary transition-colors truncate w-full text-left">
                             {chat.nickname}
                           </span>
-                          <div className="flex items-center gap-1.5 text-xs font-bold font-rabar text-slate-600 opacity-80 w-full justify-start">
+                          <div className="flex items-center gap-1.5 text-xs font-bold font-rabar text-mono-500 dark:text-mono-400 w-full justify-start">
                             <span className="material-symbols-outlined text-[14px]">chat</span>
                             <span className="truncate">{chat.lastMsg || 'نامەک ل ڤێرێیە'}</span>
                           </div>
@@ -970,11 +1035,11 @@ export default function SocialHubView({
 
                       {/* Right Side: Time and Indicator */}
                       <div className="flex flex-col items-end justify-center min-w-[50px] pr-1">
-                        <span className="text-[10px] font-bold text-slate-500 opacity-80 mb-1">
+                        <span className="text-[10px] font-bold text-mono-400 dark:text-mono-500 mb-1">
                           {new Date(chat.time).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}
                         </span>
                         {chat.unreadCount > 0 && (
-                          <div className="w-5 h-5 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center shadow-md animate-pulse">
+                          <div className="w-5 h-5 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center">
                             {toKuDigits(chat.unreadCount)}
                           </div>
                         )}
@@ -1038,7 +1103,7 @@ export default function SocialHubView({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-32 left-1/2 -translate-x-1/2 z-200 bg-emerald-500 text-white px-4 py-2 rounded-full text-xs font-black shadow-xl flex items-center gap-2"
+            className="fixed bottom-32 left-1/2 -translate-x-1/2 z-200 bg-emerald-500 text-white px-4 py-2 rounded-full text-xs font-black flex items-center gap-2"
           >
             <span className="material-symbols-outlined text-sm">check_circle</span>
             ھاتە ژبەرتنکرن
@@ -1048,7 +1113,7 @@ export default function SocialHubView({
 
       {/* Input Area - WhatsApp Pill Style Swapped */}
       {(activeTab === 'global' || selectedChat) && (
-        <div className="bg-slate-950 border-t border-white/5 relative z-[45]">
+        <div className="bg-mono-white dark:bg-mono-950 border-t border-mono-200 dark:border-mono-800 relative z-[45] transition-colors duration-300">
           {/* Reply Preview Box */}
           <AnimatePresence>
             {replyingTo && (
@@ -1056,15 +1121,15 @@ export default function SocialHubView({
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                className="px-4 py-2 bg-slate-900/80 border-b border-white/5 flex items-center justify-between gap-3 overflow-"
+                className="px-4 py-2 bg-mono-100/80 dark:bg-mono-900/80 border-b border-mono-200 dark:border-mono-800 flex items-center justify-between gap-3 overflow-hidden"
               >
                 <div className="flex-1 min-w-0 border-r-4 border-primary/50 pr-3 py-1">
                   <p className="text-[10px] font-black text-primary uppercase tracking-widest mb-0.5">بەرسڤدانا نامەیێ</p>
-                  <p className="text-xs text-slate-400 truncate">{replyingTo.content || replyingTo.text}</p>
+                  <p className="text-xs text-mono-600 dark:text-mono-400 truncate">{replyingTo.content || replyingTo.text}</p>
                 </div>
                 <button
                   onClick={() => { playBubblePopSound(); setReplyingTo(null); }}
-                  className="w-8 h-8 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10 text-slate-500 transition-colors"
+                  className="w-8 h-8 rounded-full flex items-center justify-center bg-mono-200 dark:bg-mono-800 hover:bg-mono-300 dark:hover:bg-mono-700 text-mono-600 dark:text-mono-400 transition-colors"
                 >
                   <span className="material-symbols-outlined text-[18px]">close</span>
                 </button>
@@ -1076,7 +1141,7 @@ export default function SocialHubView({
             <button
               onClick={handleSendMessage}
               disabled={!newMessage.trim()}
-              className={`w-11 h-11 flex items-center justify-center rounded-md transition-all shadow-lg shrink-0 ${newMessage.trim() ? 'bg-[#00a884] text-white scale-100' : 'bg-slate-800 text-slate-500 opacity-50 scale-95'}`}
+              className={`w-11 h-11 flex items-center justify-center rounded-md transition-all shrink-0 ${newMessage.trim() ? 'bg-[#00a884] text-white scale-100' : 'bg-mono-100 dark:bg-mono-800 text-mono-400 dark:text-mono-600 opacity-50 scale-95'}`}
               title="ھنارتن"
             >
               <span className="material-symbols-outlined font-black text-xl">send</span>
@@ -1099,7 +1164,7 @@ export default function SocialHubView({
               placeholder={selectedChat ? `نامەکێ بۆ ${selectedChat.nickname} بنڤێسە...` : "نامەکێ بنڤێسە..."}
               onFocus={() => onKeyboardToggle?.(true)}
               onBlur={() => onKeyboardToggle?.(false)}
-              className="flex-1 bg-slate-800/80 border-none rounded-md px-5 py-3 text-sm font-bold font-rabar focus:ring-1 focus:ring-white/10 transition-none outline-none resize-none overflow-y-auto no-scrollbar text-slate-200"
+              className="flex-1 bg-mono-100 dark:bg-mono-900 text-mono-900 dark:text-mono-50 placeholder-mono-500 border border-mono-200 dark:border-mono-800 rounded-md px-5 py-3 text-sm font-bold font-rabar focus:ring-1 focus:ring-primary/20 transition-colors duration-300 outline-none resize-none overflow-y-auto no-scrollbar"
             />
           </div>
           {/* Minimalist iOS-Style Home Indicator */}
@@ -1117,7 +1182,7 @@ export default function SocialHubView({
                   opacity: [0.3, 0.5, 0.3]
                 }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="h-1.5 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                className="h-1.5 rounded-full bg-mono-900 dark:bg-mono-200"
                 style={{ width: '45px' }}
               />
             </button>

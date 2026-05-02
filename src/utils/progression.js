@@ -1,83 +1,136 @@
 /**
  * RPG PROGRESSION SYSTEM CONSTANTS
  * 
- * Unified RPG Leveling Path with Infinite Scaling factor.
+ * Standardized Leveling: 100 XP per level as requested.
  */
-
-// Manual thresholds for the first 5 levels
-export const RPG_THRESHOLDS = {
-  1: 0,
-  2: 500,
-  3: 1500,
-  4: 3000,
-  5: 5500
-};
-
-// Growth factor for infinite scaling (20% compound increase in XP requirement gap)
-const GROWTH_FACTOR = 1.2;
 
 /**
  * Calculates the exact Total XP required to REACH a specific level.
- * Uses manual mapping for L1-5 and a geometric progression formula for L6+.
  */
 export const getTotalXPForLevel = (level) => {
   if (level <= 1) return 0;
-  if (level <= 5) return RPG_THRESHOLDS[level];
-  
-  // For n > 5: TotalXP(n) = 5500 + 15000 * (1.2^(n-5) - 1)
-  // Derived from sum of geometric series of gaps: Gap(n) = 2500 * (1.2 ^ (n-5))
-  return Math.floor(5500 + 15000 * (Math.pow(GROWTH_FACTOR, level - 5) - 1));
+  return (level - 1) * 100;
+};
+
+// 🏆 HARDCORE XP REWARDS (Nerfed for maximum challenge)
+export const XP_REWARDS = {
+  classic: 10,
+  battle: 30,       // Multiplayer Win
+  battle_draw: 5,   // Multiplayer Draw
+  mamak: 15,        // Riddles Mode
+  hard_words: 20,
+  word_fever: 40,
+  secret_word: 100
 };
 
 /**
- * Derives the current Level from a Total XP value.
+ * 📈 HYBRID INFINITE LEVELING MATH
+ * Phase 1: Levels 1-100 (Tiered Increments)
+ * Phase 2: Levels 101+ (Infinite Exponential)
  */
-export const getLevelFromXP = (xp) => {
-  if (!xp || xp < 500) return 1;
-  if (xp < 1500) return 2;
-  if (xp < 3000) return 3;
-  if (xp < 5500) return 4;
-  
-  // Inverse of the TotalXP formula:
-  // level = 5 + log1.2((XP - 5500) / 15000 + 1)
-  const levelFloat = 5 + Math.log((xp - 5500) / 15000 + 1) / Math.log(GROWTH_FACTOR);
-  return Math.floor(levelFloat);
+export const getLevelFromXP = (totalXP) => {
+  if (totalXP <= 0) return 1;
+
+  let currentXP = totalXP;
+  let level = 1;
+
+  // Level 1-10: 500 XP per level
+  for (let i = 1; i <= 10; i++) {
+    if (currentXP >= 500) {
+      currentXP -= 500;
+      level++;
+    } else return level;
+  }
+
+  // Level 11-25: 1000 XP per level
+  for (let i = 11; i <= 25; i++) {
+    if (currentXP >= 1000) {
+      currentXP -= 1000;
+      level++;
+    } else return level;
+  }
+
+  // Level 26-50: 2500 XP per level
+  for (let i = 26; i <= 50; i++) {
+    if (currentXP >= 2500) {
+      currentXP -= 2500;
+      level++;
+    } else return level;
+  }
+
+  // Level 51-100: 5000 XP per level
+  for (let i = 51; i <= 100; i++) {
+    if (currentXP >= 5000) {
+      currentXP -= 5000;
+      level++;
+    } else return level;
+  }
+
+  // Level 101+: Exponential growth
+  while (true) {
+    const xpRequired = Math.floor(5000 * Math.pow(1.05, (level - 100)));
+    if (currentXP >= xpRequired) {
+      currentXP -= xpRequired;
+      level++;
+    } else break;
+  }
+
+  return level;
 };
 
 /**
- * Returns detailed progression data for a given XP.
+ * Calculates detailed level data including progress percentage
  */
-export const getLevelData = (xp) => {
-  const level = getLevelFromXP(xp);
-  const currentFloor = getTotalXPForLevel(level);
-  const nextCeiling = getTotalXPForLevel(level + 1);
+export const getLevelData = (totalXP) => {
+  const level = getLevelFromXP(totalXP);
   
-  const levelWidth = nextCeiling - currentFloor;
-  const progressInLevel = xp - currentFloor;
+  // Calculate boundaries for the current level
+  let currentLevelBaseXP = 0;
   
+  // Sum up all previous levels
+  for (let l = 1; l < level; l++) {
+    if (l <= 10) currentLevelBaseXP += 500;
+    else if (l <= 25) currentLevelBaseXP += 1000;
+    else if (l <= 50) currentLevelBaseXP += 2500;
+    else if (l <= 100) currentLevelBaseXP += 5000;
+    else currentLevelBaseXP += Math.floor(5000 * Math.pow(1.05, (l - 100)));
+  }
+
+  // Calculate requirement for the NEXT level
+  let nextLevelReq = 0;
+  if (level <= 10) nextLevelReq = 500;
+  else if (level <= 25) nextLevelReq = 1000;
+  else if (level <= 50) nextLevelReq = 2500;
+  else if (level <= 100) nextLevelReq = 5000;
+  else nextLevelReq = Math.floor(5000 * Math.pow(1.05, (level - 100)));
+
+  const xpInCurrentLevel = totalXP - currentLevelBaseXP;
+  const progressPercent = Math.min(100, Math.max(0, (xpInCurrentLevel / nextLevelReq) * 100));
+
   return {
     level,
-    currentLevelBase: currentFloor,
-    nextLevelBase: nextCeiling,
-    progressInLevel,
-    levelWidth,
-    progressPercent: Math.min(100, Math.max(0, (progressInLevel / levelWidth) * 100))
+    progressPercent,
+    currentLevelBase: currentLevelBaseXP,
+    nextLevelBase: currentLevelBaseXP + nextLevelReq,
+    xpRequiredForNext: nextLevelReq,
+    xpInCurrentLevel
   };
 };
 
-/**
- * Centralized Reward Matrix for all game modes.
- * Maps mode ID to { type, amount, xp }
- */
 export const getRewardForMode = (mode) => {
-  const matrix = {
-    'classic': { type: 'fils', amount: 50, xp: 25 },
-    'word_fever': { type: 'fils', amount: 75, xp: 60 },
-    'mamak': { type: 'derhem', amount: 5, xp: 50 },
-    'hard_words': { type: 'fils', amount: 100, xp: 80 },
-    'battle': { type: 'derhem', amount: 1, xp: 100 },
-    'secret_word': { type: 'dinar', amount: 1, xp: 120 } // Unified to Dinar per final request
-  };
+  const xp = XP_REWARDS[mode] || 10;
   
-  return matrix[mode] || matrix['classic'];
+  // Monetary rewards stay proportional to mode difficulty
+  const monetary = {
+    classic: { type: 'fils', amount: 50 },
+    battle: { type: 'derhem', amount: 1 },
+    battle_draw: { type: 'fils', amount: 20 },
+    mamak: { type: 'fils', amount: 75 },
+    hard_words: { type: 'fils', amount: 100 },
+    word_fever: { type: 'fils', amount: 150 },
+    secret_word: { type: 'derhem', amount: 5 }
+  };
+
+  const reward = monetary[mode] || { type: 'fils', amount: 50 };
+  return { ...reward, xp };
 };

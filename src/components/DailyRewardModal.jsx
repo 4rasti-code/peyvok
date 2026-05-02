@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { useGame } from '../context/GameContext';
@@ -52,9 +52,15 @@ export default function DailyRewardModal({ isOpen, onClose }) {
   // --- LOGIC HELPERS ---
   const hasClaimedToday = () => {
     if (!lastRewardClaimedAt) return false;
-    const lastClaim = new Date(lastRewardClaimedAt).toLocaleDateString('en-CA');
-    const today = new Date().toLocaleDateString('en-CA');
-    return lastClaim === today;
+    
+    const now = new Date();
+    const lastClaim = new Date(lastRewardClaimedAt);
+    
+    // Compare UTC dates (YYYY-MM-DD) to match server 00:00 UTC reset
+    const lastClaimStr = lastClaim.toISOString().split('T')[0];
+    const todayStr = now.toISOString().split('T')[0];
+    
+    return lastClaimStr === todayStr;
   };
   
   const claimedToday = hasClaimedToday();
@@ -63,6 +69,7 @@ export default function DailyRewardModal({ isOpen, onClose }) {
 
   const handleClaim = async () => {
     if (claiming || claimedToday) return;
+    console.log('[DailyRewardModal] handleClaim triggered');
     setClaiming(true);
 
     try {
@@ -86,6 +93,9 @@ export default function DailyRewardModal({ isOpen, onClose }) {
           onClose();
           setShowSuccess(false);
         }, 3500);
+      } else {
+        const errorMsg = result?.error || "خەلات ناهێتە وەرگرتن، دبیت تو یێ ل هیڤیا دەمێ نوو بی.";
+        alert(errorMsg);
       }
     } catch (err) {
       console.error('[DailyRewardModal] Claim error:', err);

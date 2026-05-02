@@ -42,6 +42,14 @@ export const AudioProvider = ({ children }) => {
     return saved !== null ? Number(saved) : 10;
   });
 
+  const setAppSfxVolumeGuarded = useCallback((val) => {
+    setAppSfxVolume(prev => prev !== val ? val : prev);
+  }, []);
+
+  const setBgMusicVolumeGuarded = useCallback((val) => {
+    setBgMusicVolume(prev => prev !== val ? val : prev);
+  }, []);
+
   const appSoundsEnabled = appSfxVolume > 0;
   const audioStateRef = useRef({ user, appSfxVolume, bgMusicVolume });
 
@@ -71,16 +79,16 @@ export const AudioProvider = ({ children }) => {
   const stopBGM = useCallback(() => stopBackgroundMusic(), []);
 
   const updateMusicVolume = useCallback((val) => {
-    setBgMusicVolume(val);
+    setBgMusicVolumeGuarded(val);
     localStorage.setItem('peyvchin_bg_music_volume', val.toString());
     setBackgroundMusicVolume(val / 100);
-  }, []);
+  }, [setBgMusicVolumeGuarded]);
 
   const updateSfxVolume = useCallback((val) => {
-    setAppSfxVolume(val);
+    setAppSfxVolumeGuarded(val);
     localStorage.setItem('peyvchin_sfx_volume', val.toString());
     import('../utils/audio').then(m => m.setSfxVolume(val / 100));
-  }, []);
+  }, [setAppSfxVolumeGuarded]);
 
   useEffect(() => { setBackgroundMusicVolume(bgMusicVolume / 100); }, [bgMusicVolume]);
 

@@ -13,7 +13,7 @@ import RoundIntro from './RoundIntro';
 import { triggerHaptic } from '../utils/haptics';
 import { toKuDigits } from '../utils/formatters';
 
-export default function MultiplayerGameView({ opponent: propOpponent, isDark = true }) {
+export default function MultiplayerGameView({ opponent: propOpponent, isDark = true, onOpenHowToPlay }) {
   const { 
     activeMatch, 
     opponent: contextOpponent, 
@@ -84,6 +84,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
     gameMode: 'multiplayer',
     onGuessSubmitted,
     onLoss: async () => {
+      if (multiplayerState !== 'playing') return;
       console.log('[Multiplayer] Round Loss detected locally. Submitting failure.');
       await submitFailure();
     },
@@ -140,7 +141,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
     );
   }
 
-  if (multiplayerState === 'waiting') {
+  if (multiplayerState !== 'playing' || !opponent) {
     return (
       <div className="h-full w-full flex flex-col items-center justify-center bg-[#020617] text-white">
         <KurdishSunLoader />
@@ -191,52 +192,58 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
         </div>
 
         {/* TOP HALF: YOUR GRID */}
-        <div className="flex-1 min-h-0 flex flex-col items-center justify-center gap-1 w-full bg-white/[0.01]">
-          <div className="flex items-center gap-2 opacity-60 scale-90">
+        <div className="flex-[1.2] min-h-0 flex flex-col items-center justify-center p-1 bg-white/[0.02]">
+          <div className="flex items-center gap-2 opacity-60 scale-75 mb-1">
              <Avatar src={userAvatar} size="xs" />
              <span className="text-[10px] font-black text-blue-400 uppercase">{userNickname}</span>
           </div>
-          <div className="w-full flex justify-center overflow-hidden" dir="rtl">
+          <div className="w-full flex justify-center items-center overflow-hidden" dir="rtl">
             <Grid 
-              guesses={guesses}
-              currentGuess={currentGuess}
+              gridId="player"
+              guesses={guesses} 
+              currentGuess={currentGuess} 
+              targetWord={targetWord}
               wordLength={targetWord.length}
               getLetterStatus={getLetterStatus}
-              maxRows={3}
-              targetWord={targetWord}
-              compact={true}
               isDark={isDark}
+              compact={true}
+              maxRows={3}
             />
           </div>
         </div>
 
         {/* CENTER VS BAR: THE SCORES & ROUND */}
-        <div className="shrink-0 flex items-center justify-center gap-4 py-2 z-20 relative">
+        <div className="shrink-0 flex items-center justify-center gap-4 py-1 z-20 relative">
            <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${isDark ? 'white/5' : 'slate-200'} to-transparent h-[1px] top-1/2 -translate-y-1/2 w-full`} />
            
-           <div className={`flex items-center gap-3 ${isDark ? 'bg-[#020617] border-white/10' : 'bg-white border-slate-200 shadow-md'} px-4 py-1 rounded-full border relative z-10`}>
+           <div className={`flex items-center gap-3 ${isDark ? 'bg-[#020617] border-white/10' : 'bg-white border-slate-200 shadow-md'} px-3 py-1 rounded-full border relative z-10`}>
               <div className="flex items-center gap-2">
-                 <span className={`text-[14px] font-black ${isDark ? 'text-blue-400' : 'text-blue-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p1 : scores.p2)}</span>
+                 <span className={`text-[12px] font-black ${isDark ? 'text-blue-400' : 'text-blue-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p1 : scores.p2)}</span>
               </div>
-              <div className={`w-[1px] h-3 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
-              <div className={`text-[10px] font-black ${isDark ? 'text-white/40' : 'text-slate-500'} uppercase tracking-tighter`}>گەڕ {toKuDigits(currentRound + 1)}</div>
-              <div className={`w-[1px] h-3 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
+              <div className={`w-[1px] h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
+              <div className={`text-[9px] font-black ${isDark ? 'text-white/40' : 'text-slate-500'} uppercase tracking-tighter`}>گەڕ {toKuDigits(currentRound + 1)}</div>
+              <div className={`w-[1px] h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
               <div className="flex items-center gap-2">
-                 <span className={`text-[14px] font-black ${isDark ? 'text-red-400' : 'text-red-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p2 : scores.p1)}</span>
+                 <span className={`text-[12px] font-black ${isDark ? 'text-red-400' : 'text-red-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p2 : scores.p1)}</span>
               </div>
            </div>
         </div>
 
         {/* BOTTOM HALF: OPPONENT GRID */}
-        <div className="flex-1 min-h-0 flex flex-col items-center justify-center gap-1 w-full bg-black/10">
-          <div className="w-full flex justify-center overflow-hidden" dir="rtl">
+        <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-1 bg-black/10">
+          <div className="w-full flex justify-center items-center overflow-hidden" dir="rtl">
             <Grid 
+              gridId="opponent"
               opponentStatuses={opponentGuesses}
               wordLength={targetWord.length}
               maxRows={3}
               hideLetters={true}
               targetWord={targetWord}
-              getLetterStatus={() => ''}
+              getLetterStatus={(guess, i) => {
+                // For opponent's completed rows, we use the pre-calculated colors
+                if (Array.isArray(guess)) return guess[i] || '';
+                return '';
+              }}
               compact={true}
               activeRowIndex={opponentGuesses.length}
               opponentLiveStatuses={opponentLiveStatuses}
@@ -244,7 +251,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
               isDark={isDark}
             />
           </div>
-          <div className="flex items-center gap-2 opacity-60 scale-90">
+          <div className="flex items-center gap-2 opacity-60 scale-75 mt-1">
              <span className="text-[10px] font-black text-red-400 uppercase">{opponent?.nickname || 'چاڤەڕێ'}</span>
              <Avatar src={activeMatch?.opp_avatar_url || opponent?.avatar_url} size="xs" />
           </div>
@@ -274,13 +281,26 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
         roundMessage={roundMessage}
       />
 
-      {/* FIXED BACK BUTTON */}
-      <div className="fixed top-[calc(env(safe-area-inset-top)+8px)] left-4 z-[400]">
+      {/* FIXED TOP-LEFT ACTIONS */}
+      <div className="fixed top-[calc(env(safe-area-inset-top)+12px)] left-4 z-[400] flex items-center gap-3">
         <button 
-          onClick={() => { triggerHaptic(10); setIsConfirmingExit(true); }}
-          className="w-8 h-8 rounded-lg bg-white/5 backdrop-blur-xl border border-white/10 flex items-center justify-center text-[#ff4444] shadow-2xl transition-colors hover:bg-white/10"
+          onClick={() => { triggerHaptic(15); setIsConfirmingExit(true); }}
+          className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center text-[#ff4444] shadow-2xl transition-all hover:bg-white/20 active:scale-90"
+          title="Exit Match"
         >
-          <span className="material-symbols-outlined text-base font-black rotate-180">logout</span>
+          <span className="material-symbols-outlined text-[24px] font-black rotate-180 leading-none">logout</span>
+        </button>
+
+        <button 
+          onClick={() => { 
+            triggerHaptic(10); 
+            console.log('[Multiplayer] Help button clicked, calling onOpenHowToPlay');
+            onOpenHowToPlay?.(); 
+          }}
+          className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center text-[#10b981] shadow-2xl transition-all hover:bg-white/20 active:scale-90"
+          title="How to Play"
+        >
+          <span className="material-symbols-outlined text-[24px] font-black leading-none">help</span>
         </button>
       </div>
 
