@@ -257,6 +257,7 @@ export default function SocialHubView({
   const textareaRef = useRef(null);
 
   const fetchGlobalMessages = useCallback(async (signal = null) => {
+    if (loading && messages.length > 0) return;
     try {
       let query = supabase
         .from('messages')
@@ -271,7 +272,7 @@ export default function SocialHubView({
       if (error) throw error;
       setMessages(data || []);
     } catch (err) {
-      if (err.name === 'AbortError') return;
+      if (err.name === 'AbortError' || err.message?.includes('aborted')) return;
       console.warn("Global fetch error:", err);
     } finally {
       if (activeTab === 'global') setLoading(false);
@@ -330,7 +331,7 @@ export default function SocialHubView({
       setFriends(accepted);
       setPendingSentIds(sentPendingList);
     } catch (err) {
-      if (err.name === 'AbortError') return;
+      if (err.name === 'AbortError' || err.message?.includes('aborted')) return;
       console.warn("Friendships fetch error:", err);
     } finally {
       setLoading(false);
@@ -370,7 +371,7 @@ export default function SocialHubView({
       const enriched = (profiles || []).map(p => ({ ...p, ...convosMap.get(p.id) })).sort((a, b) => new Date(b.time) - new Date(a.time));
       setPrivateChats(enriched);
     } catch (err) {
-      if (err.name === 'AbortError') return;
+      if (err.name === 'AbortError' || err.message?.includes('aborted')) return;
       console.warn("Private convo fetch failed:", err);
     } finally {
       setLoading(false);

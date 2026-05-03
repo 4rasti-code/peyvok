@@ -4,7 +4,7 @@ import { triggerHaptic } from '../utils/haptics';
 
 export default function BottomNav({ currentView, setCurrentView, onSettingsToggle, onTabClickSound }) {
   const tabs = [
-    { id: 'stats', icon: 'person', label: 'بەرپەڕ' },
+    { id: 'profile', icon: 'person', label: 'بەرپەڕ' },
     { id: 'leaderboard', icon: 'workspace_premium', label: 'ڕێزبەندی' },
     { id: 'lobby', icon: 'grid_view', label: 'سەرەکی' },
     { id: 'store', icon: 'shopping_bag', label: 'بازاڕ' },
@@ -46,12 +46,12 @@ export default function BottomNav({ currentView, setCurrentView, onSettingsToggl
               <motion.div 
                  layoutId="active-nav-line"
                  transition={{ type: "spring", stiffness: 450, damping: 35 }}
-                 className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-[#10b981] shadow-[0_0_12px_rgba(16,185,129,0.8)] rounded-none z-10" 
+                 className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-[2px] bg-black dark:bg-white shadow-[0_0_12px_rgba(255,255,255,0.4)] rounded-none z-10" 
               />
             )}
 
             {/* Icon Wrapper */}
-            <div className={`relative z-10 transition-colors duration-300 ${isActive ? 'text-[#10b981]' : 'text-mono-500 dark:text-mono-500 group-hover:text-mono-900 dark:group-hover:text-white/80'}`}>
+            <div className={`relative z-10 transition-colors duration-300 ${isActive ? 'text-black dark:text-white' : 'text-mono-500 dark:text-mono-500 group-hover:text-mono-900 dark:group-hover:text-white/80'}`}>
                 {tab.id === 'store' && (
                   <motion.div 
                     animate={{ 

@@ -40,7 +40,8 @@ const BattleResultOverlay = ({
   breakdown = null,
   xp = 0,
   onNext,
-  playStartSound
+  playStartSound,
+  isDark
 }) => {
   const hasTriggeredRef = useRef(false);
   const isVictory = result === 'victory';
@@ -53,7 +54,7 @@ const BattleResultOverlay = ({
 
       if (isVictory) {
         playSuccessSfx();
-        const colors = ['#10b981', '#facc15', '#3b82f6', '#ffffff'];
+        const colors = [isDark ? '#ffffff' : '#171717', '#facc15', '#3b82f6', '#ffffff'];
         confetti({
           particleCount: 150,
           spread: 100,

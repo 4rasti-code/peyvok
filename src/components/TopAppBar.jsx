@@ -74,50 +74,12 @@ export default function TopAppBar({
         <div className="flex items-center justify-start flex-1 relative">
           {isPlaying ? (
             <div className="flex items-center gap-1 relative">
-              <div className="relative">
-                <motion.button
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  whileHover={{ scale: 1.15 }}
-                  whileTap={{ scale: 0.85 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                  onClick={() => { triggerHaptic(10); setIsForfeitMenuOpen(!isForfeitMenuOpen); }}
-                  className={`w-12 h-12 flex items-center justify-center transition-all ${isForfeitMenuOpen ? 'text-white bg-red-500 rounded-xl' : 'text-[#ef4444]'}`}
-                >
-                  <span className="material-symbols-outlined text-[32px] font-black">{isForfeitMenuOpen ? 'close' : 'close'}</span>
-                </motion.button>
-
-                <AnimatePresence>
-                  {isForfeitMenuOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10, scale: 0.9 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -10, scale: 0.9 }}
-                      className="absolute left-0 mt-2 w-[85px] bg-mono-white dark:bg-mono-900 border border-mono-200 dark:border-mono-800 rounded-md p-3 shadow-xl flex flex-col gap-1 z-50 overflow-hidden transition-colors duration-300"
-                    >
-                      <button
-                        onClick={() => { triggerHaptic(15); setIsForfeitMenuOpen(false); onForfeit(); }}
-                        className="flex items-center justify-center px-3 py-2 hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-sm transition-all"
-                      >
-                        <span className="text-sm font-medium">بەڵێ</span>
-                      </button>
-                      <button
-                        onClick={() => { triggerHaptic(5); setIsForfeitMenuOpen(false); }}
-                        className="flex items-center justify-center px-3 py-2 hover:bg-mono-100 dark:hover:bg-mono-800 text-mono-700 dark:text-mono-300 rounded-sm transition-all"
-                      >
-                        <span className="text-sm font-medium">نەخێر</span>
-                      </button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
               <motion.button
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 whileHover={{ scale: 1.15 }}
                 whileTap={{ scale: 0.85 }}
-                transition={{ type: "spring", stiffness: 400, damping: 15, delay: 0.1 }}
+                transition={{ type: "spring", stiffness: 400, damping: 15 }}
                 onClick={() => { triggerHaptic(10); onOpenHowToPlay(gameMode); }}
                 className={`w-12 h-12 flex items-center justify-center ${isDark ? 'text-white/40' : 'text-slate-400'} hover:text-primary transition-all`}
               >
@@ -163,13 +125,13 @@ export default function TopAppBar({
             ) : (
               currentView !== 'store' && (
                 <div className="flex items-center gap-1">
-                  {(currentView === 'stats' || currentView === 'lobby' || currentView === 'leaderboard') && (
+                  {(currentView === 'lobby' || currentView === 'leaderboard' || currentView === 'profile') && (
                     <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
                       transition={{ type: "spring", stiffness: 400, damping: 17 }}
                       onClick={() => { triggerHaptic(10); onOpenSettings(); }}
-                      className="w-12 h-12 flex items-center justify-center text-[#10b981] transition-all"
+                      className="w-12 h-12 flex items-center justify-center text-mono-600 dark:text-mono-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
                     >
                       <span className="material-symbols-outlined text-[32px] font-black">settings</span>
                     </motion.button>
@@ -184,7 +146,43 @@ export default function TopAppBar({
         <div className="flex items-center justify-end gap-3 flex-1 relative">
           {isPlaying ? (
             <div className="flex items-center gap-2">
-              <CurrencyStat key="ingame-fils" value={fils} Icon={FilsIcon} color="text-[#facc15]" resetKey={currentView} isDark={isDark} />
+              <div className="relative">
+                <motion.button
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  whileHover={{ scale: 1.15 }}
+                  whileTap={{ scale: 0.85 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                  onClick={() => { triggerHaptic(10); setIsForfeitMenuOpen(!isForfeitMenuOpen); }}
+                  className={`w-12 h-12 flex items-center justify-center transition-all ${isForfeitMenuOpen ? 'text-white bg-red-500 rounded-full shadow-lg shadow-red-500/20' : 'text-[#ef4444]'}`}
+                >
+                  <span className="material-symbols-outlined text-[32px] font-black">{isForfeitMenuOpen ? 'close' : 'close'}</span>
+                </motion.button>
+
+                <AnimatePresence>
+                  {isForfeitMenuOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, scale: 0.9 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10, scale: 0.9 }}
+                      className="absolute right-0 mt-2 w-[72px] bg-mono-white dark:bg-mono-900 border border-mono-200 dark:border-mono-800 rounded-md p-1.5 shadow-xl flex flex-col gap-0.5 z-50 overflow-hidden transition-colors duration-300"
+                    >
+                      <button
+                        onClick={() => { triggerHaptic(15); setIsForfeitMenuOpen(false); onForfeit(); }}
+                        className="flex items-center justify-center px-2 py-1.5 hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-sm transition-all"
+                      >
+                        <span className="text-sm font-medium">بەڵێ</span>
+                      </button>
+                      <button
+                        onClick={() => { triggerHaptic(5); setIsForfeitMenuOpen(false); }}
+                        className="flex items-center justify-center px-2 py-1.5 hover:bg-mono-100 dark:hover:bg-mono-800 text-mono-700 dark:text-mono-300 rounded-sm transition-all"
+                      >
+                        <span className="text-sm font-medium">نەخێر</span>
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           ) : (
             <div className="flex items-center gap-2">
@@ -203,10 +201,8 @@ export default function TopAppBar({
                   <>
                     <CurrencyStat key="store-dinar" value={dinar} Icon={DinarIcon} color="text-yellow-400" currency="dinar" bg="bg-black/20" resetKey={currentView} isDark={isDark} />
                     <CurrencyStat key="store-derhem" value={derhem} Icon={DerhemIcon} color="text-slate-300" currency="derhem" bg="bg-black/20" resetKey={currentView} isDark={isDark} />
+                    <CurrencyStat key="store-fils" value={fils} Icon={FilsIcon} color="text-[#facc15]" currency="fils" bg="bg-black/20" resetKey={currentView} isDark={isDark} />
                   </>
-                )}
-                {(currentView === 'store' || currentView === 'leaderboard' || currentView === 'stats' || currentView === 'dictionary') && (
-                  <CurrencyStat key="store-fils" value={fils} Icon={FilsIcon} color="text-[#facc15]" currency="fils" bg="bg-black/20" resetKey={currentView} isDark={isDark} />
                 )}
               </div>
 
@@ -226,9 +222,9 @@ export default function TopAppBar({
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => { triggerHaptic(10); if (onPlaySound) onPlaySound(); setIsNotifsOpen(!isNotifsOpen); }}
-                    className={`w-14 h-14 flex items-center justify-center transition-all relative ${isNotifsOpen || notificationCount > 0 ? 'text-[#10b981]' : 'text-[#10b981]/60'}`}
+                    className={`w-14 h-14 flex items-center justify-center transition-all relative ${isNotifsOpen || notificationCount > 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-mono-600/60 dark:text-mono-400/60 hover:text-emerald-600 dark:hover:text-emerald-400'}`}
                   >
-                    <span className="material-symbols-outlined text-[48px] font-black" style={{ fontVariationSettings: "'FILL' 1" }}>notifications</span>
+                    <span className="material-symbols-outlined text-[48px] font-black" style={{ fontVariationSettings: notificationCount > 0 ? "'FILL' 1" : "'FILL' 0" }}>notifications</span>
                     {notificationCount > 0 && (
                       <motion.div
                         initial={{ scale: 0 }}

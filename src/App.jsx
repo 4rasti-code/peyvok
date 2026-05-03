@@ -59,6 +59,9 @@ const SettingsModal = lazyWithRetry(() => import('./components/SettingsModal'));
 const HowToPlayModal = lazyWithRetry(() => import('./components/HowToPlayModal'));
 const DailyRewardModal = lazyWithRetry(() => import('./components/DailyRewardModal'));
 const MasteryModal = lazyWithRetry(() => import('./components/MasteryModal'));
+const KeyboardLanguageModal = lazyWithRetry(() => import('./components/KeyboardLanguageModal'));
+const StatsView = lazyWithRetry(() => import('./components/StatsView'));
+const AchievementsView = lazyWithRetry(() => import('./components/AchievementsView'));
 
 import { useGame } from './context/GameContext';
 import { useUser } from './context/AuthContext';
@@ -162,7 +165,7 @@ export default function App() {
     user, setUser, hapticEnabled, loadingAuth, authProgress,
     userNickname, userAvatar, city, isInKurdistan, countryCode,
     ownedAvatars, equippedAvatar, unlockedThemes, currentTheme,
-    updateProfile
+    updateProfile, profileData
   } = useUser();
 
   const {
@@ -199,17 +202,18 @@ export default function App() {
     const path = window.location.pathname.replace('/', '');
     return path || 'lobby';
   });
+
   const bgmStatusRef = useRef('stopped');
 
   // --- THEME SYNC ENGINE (OS PREFERENCE & USER SELECTION) ---
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
+
     const applyTheme = () => {
       // Priority: 1. User Selected Dark Theme, 2. OS Preference
       const isDarkTheme = currentTheme === 'zakho_nights' || currentTheme === 'dark';
       const isOSDark = mediaQuery.matches;
-      
+
       if (isDarkTheme || (currentTheme === 'default' && isOSDark)) {
         document.documentElement.classList.add('dark');
       } else {
@@ -225,7 +229,7 @@ export default function App() {
     };
 
     mediaQuery.addEventListener('change', handleOSThemeChange);
-    
+
     // --- GLOBAL AUDIO UNLOCK: Clear browser policy block on first interaction ---
     const handleFirstInteraction = () => {
       console.log("🔊 [App] Interaction detected, unlocking AudioContext...");
@@ -279,6 +283,7 @@ export default function App() {
     isVerifyingRef.current = val;
     setIsVerifyingSignup(val);
   };
+  const [initialStatsTab, setInitialStatsTab] = useState('stats');
   const setRecoveringPassword = (val) => {
     isRecoveringRef.current = val;
     setIsRecoveringPassword(val);
@@ -325,6 +330,7 @@ export default function App() {
   const [isLevelingUp, setIsLevelingUp] = useState(false);
   const [isMasteryOpen, setIsMasteryOpen] = useState(false);
   const [masteryData, setMasteryData] = useState(null);
+  const [isKeyboardWarningOpen, setIsKeyboardWarningOpen] = useState(false);
 
 
   // Expose initialization helper to console for the user
@@ -415,7 +421,7 @@ export default function App() {
       // --- CALCULATE SCORE FOR STATS ---
       let score = 0;
       const maxRows = gMode === 'secret_word' ? 1 : (gMode === 'word_fever' ? 3 : 6);
-      
+
       if (gMode === 'word_fever') {
         score = feverStreak + 1; // Current word count in the streak
       } else if (gMode === 'battle') {
@@ -438,11 +444,13 @@ export default function App() {
         {
           sessionId: `${gMode}_${Date.now()}`, // 1 Attempt Only logic guard
           score: score,
-          solvedWords: [tWord], 
+          solvedWords: [tWord],
           filsBonus: breakdown.awardAmount,
-          magnetsUsed: magnetsUsedInRound, 
-          hintsUsed: hintTaps,   
-          skipsUsed: skipsUsedInRound    
+          magnetsUsed: magnetsUsedInRound,
+          hintsUsed: hintTaps,
+          skipsUsed: skipsUsedInRound,
+          attempts: finalGuesses.length,
+          isWin: true
         }
       );
       // Extra verification from server if needed
@@ -457,7 +465,12 @@ export default function App() {
 
       // Sync loss to update 'score' (0) for stats
       if (gMode !== 'multiplayer') { // Battle handled by multiplayer logic
-        syncProgressToDatabase(tWord.length, gMode, { score: 0, solvedWords: [] });
+        syncProgressToDatabase(tWord.length, gMode, {
+          score: 0,
+          solvedWords: [],
+          isWin: false,
+          attempts: finalGuesses.length
+        });
       }
     }
   }, [syncProgressToDatabase, updateInventory, incrementSecretWordProgress, resetSecretWordProgress, feverStreak]); // Stable dependencies
@@ -543,7 +556,13 @@ export default function App() {
     onWin: onWinHandler,
     onLoss: onLossHandler,
     isActive: currentView === 'game',
-    handleGameplayUpdate // Passing it down in case the hook needs it
+    handleGameplayUpdate, // Passing it down in case the hook needs it
+    onWrongLanguage: () => {
+      setIsKeyboardWarningOpen(true);
+      triggerHaptic([50, 50]);
+    },
+    soundEnabled: appSoundsEnabled,
+    hapticEnabled: hapticEnabled
   });
 
   // --- UNIFIED AUTOMATIC BACKGROUND MUSIC (BGM) CONTROLLER ---
@@ -1169,7 +1188,10 @@ export default function App() {
 
 
   // WRAPPED NAVIGATION: Unified state transition
-  const navigateTo = useCallback((view) => {
+  const navigateTo = useCallback((view, state = {}) => {
+    if (view === 'stats' && state.tab) {
+      setInitialStatsTab(state.tab);
+    }
     // Sync URL with State
     navigate('/' + view);
     setCurrentView(view);
@@ -1245,14 +1267,14 @@ export default function App() {
   // --- CRITICAL AUTH GUARD (Flicker Fix) ---
   // Shows loader if auth is initializing, game assets are loading,
   // or if we have no user but haven't yet redirected to the auth screen.
-  if (loadingAuth || isGameLoading || (!user && currentView !== 'auth')) return (
+  if (loadingAuth || isGameLoading || (!user && !['auth', 'lobby', 'game'].includes(currentView))) return (
     <div className="h-[100dvh] flex items-center justify-center bg-mono-white dark:bg-mono-950 transition-colors duration-500">
       <KurdishSunLoader progress={authProgress} />
     </div>
   );
 
   return (
-    <div className={`flex flex-col h-[100dvh] max-h-[100dvh] w-full items-center bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 transition-colors duration-500 font-noto-sans-arabic ${currentTheme === 'zakho_nights' ? 'zakho-theme' : ''}`} dir="rtl">
+    <div className="flex flex-col h-[100dvh] max-h-[100dvh] w-full items-center bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 transition-colors duration-500 font-noto-sans-arabic" dir="rtl">
       <div className={`flex-1 flex flex-col w-full max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto relative overflow-hidden transition-colors duration-500`}>
         {/* Panic Overlay for Word Fever Mode Critical Time */}
         {gameMode === 'word_fever' && currentView === 'game' && timeLeft <= 10 && !isVictory && (
@@ -1323,9 +1345,9 @@ export default function App() {
 
           {(multiplayerState === 'playing' || multiplayerState === 'game_over' || multiplayerState === 'syncing') && (
             <Suspense fallback={<KurdishSunLoader />}>
-              <MultiplayerGameView 
-                opponent={opponent} 
-                isDark={isSystemDark} 
+              <MultiplayerGameView
+                opponent={opponent}
+                isDark={isSystemDark}
                 onOpenHowToPlay={() => handleOpenHowToPlay('multiplayer', false)}
                 handleGameplayUpdate={handleGameplayUpdate} // Safety prop passing
               />
@@ -1500,7 +1522,6 @@ export default function App() {
                   // Security Hardening: Use the atomic RPC-based processPurchase
                   await processPurchase(item);
                 }}
-                onEquipTheme={(id) => updateProfile({ currentTheme: id })}
                 onPurchaseAvatar={async (id, price, currency) => {
                   // Security Hardening: Treat avatar purchase as a standard item purchase
                   const result = await processPurchase({ id, price, currency, type: 'avatar' });
@@ -1509,21 +1530,37 @@ export default function App() {
                   }
                 }}
                 onEquipAvatar={(id) => updateProfile({ avatar_url: id })}
-                onPurchaseTheme={async (theme) => {
-                  // Security Hardening: Treat theme purchase as a standard item purchase
-                  const result = await processPurchase({ ...theme, type: 'theme' });
-                  if (result.success) {
-                    updateProfile({ unlockedThemes: [...unlockedThemes, theme.id] });
-                  }
-                }}
                 playPurchaseSound={playPurchaseSound}
                 ownedAvatars={ownedAvatars}
                 equippedAvatar={equippedAvatar}
-                unlockedThemes={unlockedThemes}
-                currentTheme={currentTheme}
               />
             )}
             {currentView === 'stats' && (
+              <StatsView
+                profileData={profileData}
+                playerStats={playerStats}
+                rank={userRank}
+                userNickname={userNickname}
+                userAvatar={userAvatar}
+                level={level}
+                currentXP={currentXP}
+                onViewChange={navigateTo}
+              />
+            )}
+            {currentView === 'achievements' && (
+              <AchievementsView
+                profileData={profileData}
+                onViewChange={navigateTo}
+              />
+            )}
+            {currentView === 'dictionary' && (
+              <DictionaryView
+                solvedWords={solvedWords}
+                wordList={wordList}
+                onBack={() => navigateTo('lobby')}
+              />
+            )}
+            {currentView === 'profile' && (
               <ProfileView
                 user={user}
                 userNickname={userNickname}
@@ -1544,19 +1581,15 @@ export default function App() {
                 onViewChange={navigateTo}
               />
             )}
-            {currentView === 'dictionary' && (
-              <DictionaryView
-                solvedWords={solvedWords}
-                wordList={wordList}
-                onBack={() => setCurrentView('lobby')}
-              />
-            )}
           </Suspense>
         </main>
 
         {/* 3. CONDITIONAL BOTTOM NAV (Hide during ANY gameplay or multiplayer) */}
         {currentView !== 'game' &&
           currentView !== 'auth' &&
+          currentView !== 'stats' &&
+          currentView !== 'achievements' &&
+          currentView !== 'dictionary' &&
           (multiplayerState === 'idle' || multiplayerState === 'game_over') &&
           !isKeyboardOpen && (
             <BottomNav
@@ -1578,6 +1611,7 @@ export default function App() {
               xp={rewardAmountXp}
               customTitle={victoryCustomText?.title}
               customDescription={victoryCustomText?.description}
+              isDark={isSystemDark}
               onNext={() => {
                 setIsVictory(false);
                 handleNextGame();
@@ -1599,6 +1633,7 @@ export default function App() {
                 if (wordObj) resetBoard(wordObj);
               }}
               onHome={handleGoHome}
+              isDark={isSystemDark}
             />
             {/* Word Fever Result */}
             <WordFeverResultOverlay
@@ -1629,14 +1664,14 @@ export default function App() {
           opponent={opponent}
           user={{ nickname: userNickname, avatar_url: userAvatar, level: level }}
           isPlayer1={activeMatch?.player1_id === user?.id}
-          breakdown={MatchReward?.awards ? { 
-            awardAmount: MatchReward.awards.amount, 
-            awardType: MatchReward.awards.type, 
-            xpAdded: MatchReward.xpAdded 
-          } : { 
-            awardAmount: LastMatchResult === 'victory' ? 1 : (LastMatchResult === 'draw' ? 20 : 0), 
-            awardType: LastMatchResult === 'victory' ? 'derhem' : 'fils', 
-            xpAdded: LastMatchResult === 'victory' ? 30 : (LastMatchResult === 'draw' ? 5 : 0) 
+          breakdown={MatchReward?.awards ? {
+            awardAmount: MatchReward.awards.amount,
+            awardType: MatchReward.awards.type,
+            xpAdded: MatchReward.xpAdded
+          } : {
+            awardAmount: LastMatchResult === 'victory' ? 1 : (LastMatchResult === 'draw' ? 20 : 0),
+            awardType: LastMatchResult === 'victory' ? 'derhem' : 'fils',
+            xpAdded: LastMatchResult === 'victory' ? 30 : (LastMatchResult === 'draw' ? 5 : 0)
           }}
           xp={MatchReward?.xpAdded || (LastMatchResult === 'victory' ? 30 : (LastMatchResult === 'draw' ? 5 : 0))}
           onNext={() => {
@@ -1648,14 +1683,14 @@ export default function App() {
             handleGoHome();
           }}
           playStartSound={playStartGameSound}
+          isDark={isSystemDark}
         />
 
         <Suspense fallback={null}>
           <SettingsModal
             isOpen={isSettingsOpen}
             onClose={() => { playSettingsCloseSound(); setIsSettingsOpen(false); }}
-            currentTheme={currentTheme}
-            onThemeChange={(id) => updateProfile({ currentTheme: id })}
+            isDark={isSystemDark}
             appSfxVolume={appSfxVolume}
             onAppSfxVolumeChange={updateSfxVolume}
             bgMusicVolume={bgMusicVolume}
@@ -1672,6 +1707,7 @@ export default function App() {
           <DailyRewardModal
             isOpen={isDailyRewardOpen}
             onClose={() => setIsDailyRewardOpen(false)}
+            isDark={isSystemDark}
           />
 
           <HowToPlayModal
@@ -1686,6 +1722,12 @@ export default function App() {
             isOpen={isMasteryOpen}
             onClose={() => setIsMasteryOpen(false)}
             masteryData={masteryData}
+            isDark={isSystemDark}
+          />
+
+          <KeyboardLanguageModal
+            isOpen={isKeyboardWarningOpen}
+            onClose={() => setIsKeyboardWarningOpen(false)}
           />
         </Suspense>
 
@@ -1751,17 +1793,18 @@ export default function App() {
             </Motion.div>
           )}
         </AnimatePresence>
-        
+
         {/* 6. LEVEL UP OVERLAY */}
-        <LevelUpOverlay 
-          isVisible={isLevelingUp} 
-          newLevel={level} 
+        <LevelUpOverlay
+          isVisible={isLevelingUp}
+          newLevel={level}
+          isDark={isSystemDark}
           onClose={() => {
             setIsLevelingUp(false);
             setLastNotifiedLevel(level); // Sync notified level locally
             localStorage.setItem('peyvchin_last_notified_level', level.toString());
             updateInventory({ fils: 500 }); // Bonus reward
-          }} 
+          }}
         />
 
       </div>

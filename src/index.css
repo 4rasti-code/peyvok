@@ -52,7 +52,7 @@
   --font-ui: 'Vazirmatn', sans-serif;
   --font-fallback: 'Vazirmatn', sans-serif;
 
-  --color-primary: #00874e;
+  --color-primary: #059669;
   --color-on-primary: #ffffff;
   --color-secondary: #ff9800;
   --color-background: #ffffff;
@@ -64,6 +64,7 @@
   --color-surface-container-highest: #d9e0e8;
   --color-outline: #cbd5e0;
   --color-text-dim: #4a5568;
+  --color-error: #e11d48;
 }
 
 @theme {
@@ -108,10 +109,11 @@
   --color-mono-900: #171717;
   --color-mono-950: #0A0A0A;
   --color-mono-black: #000000;
+  --color-error: var(--color-error);
 }
 
 .dark {
-  --color-primary: #58cc02;
+  --color-primary: #34d399;
   --color-on-primary: #ffffff;
   --color-secondary: #fbc02d;
   --color-background: #0d0d0d;
@@ -123,32 +125,9 @@
   --color-surface-container-highest: #3d3d3d;
   --color-outline: #2d2d2d;
   --color-text-dim: #94a3b8;
+  --color-error: #fb7185;
 }
 
-/* Premium City Themes */
-.zakho-theme {
-  --color-primary: #fbbf24;
-  --color-on-primary: #020617;
-  --color-secondary: #dc2626;
-  --color-background: #020617;
-  --color-surface: #1e293b;
-  --color-on-surface: #f8fafc;
-  --color-surface-container: #0f172a;
-  --color-outline: #334155;
-  --color-text-dim: #94a3b8;
-}
-
-.duhok-theme {
-  --color-primary: #10b981;
-  --color-on-primary: #ffffff;
-  --color-secondary: #f43f5e;
-  --color-background: #ecfdf5;
-  --color-surface: #ffffff;
-  --color-on-surface: #064e3b;
-  --color-surface-container: #d1fae5;
-  --color-outline: #a7f3d0;
-  --color-text-dim: #065f46;
-}
 
 
 html,

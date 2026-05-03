@@ -49,20 +49,20 @@ const NICKNAME_REGEX = /^[a-zA-Z0-9_\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE7
 
 const KurdistanFlag = () => (
   <svg viewBox="0 0 512 341" xmlns="http://www.w3.org/2000/svg" className="w-full h-full object-cover">
-    <path fill="#ed2024" d="M0 0h512v113.8H0z"/>
-    <path fill="#fff" d="M0 113.8h512v113.4H0z"/>
-    <path fill="#278e3c" d="M0 227.2h512v113.8H0z"/>
+    <path fill="#ed2024" d="M0 0h512v113.8H0z" />
+    <path fill="#fff" d="M0 113.8h512v113.4H0z" />
+    <path fill="#278e3c" d="M0 227.2h512v113.8H0z" />
     <g transform="translate(256 170.5)">
-      <circle fill="#f8e71c" r="54"/>
+      <circle fill="#f8e71c" r="54" />
       {Array.from({ length: 21 }).map((_, i) => (
-        <path 
+        <path
           key={i}
-          fill="#f8e71c" 
-          d="M0-65L6-45h-12z" 
+          fill="#f8e71c"
+          d="M0-65L6-45h-12z"
           transform={`rotate(${(i * 360) / 21})`}
         />
       ))}
-      <circle fill="#f8e71c" r="22"/>
+      <circle fill="#f8e71c" r="22" />
     </g>
   </svg>
 );
@@ -82,7 +82,7 @@ const FloatingInput = ({ label, value, onChange, id, type = 'text', required = f
 
   return (
     <div className="relative w-full text-right">
-      <label 
+      <label
         htmlFor={id}
         className={`block text-[11px] font-black font-rabar mb-1.5 pr-2 uppercase tracking-[0.15em] transition-colors duration-200 ${isFocused ? 'text-emerald-400' : 'text-mono-400 dark:text-white/70 hover:text-mono-900 dark:hover:text-white/90'}`}
       >
@@ -111,9 +111,9 @@ const FloatingInput = ({ label, value, onChange, id, type = 'text', required = f
           name={name || id}
           aria-label={label}
           className={`w-full bg-transparent py-2 pr-5 ${suffix ? 'pl-12' : 'pl-5'} font-rabar text-mono-900 dark:text-white text-lg font-bold focus:outline-none transition-all duration-200 caret-emerald-400 relative z-10`}
-          style={{ 
-            appearance: 'none', 
-            userSelect: 'text', 
+          style={{
+            appearance: 'none',
+            userSelect: 'text',
             WebkitUserSelect: 'text',
             cursor: 'text',
             touchAction: 'manipulation'
@@ -125,10 +125,10 @@ const FloatingInput = ({ label, value, onChange, id, type = 'text', required = f
           </div>
         )}
       </div>
-      
+
       {/* Caret / Cursor Highlight for active field */}
       {isFocused && (
-        <motion.div 
+        <motion.div
           layoutId="input-glow"
           className="absolute inset-0 bg-emerald-500/10 blur-2xl -z-10 rounded-3xl"
           initial={{ opacity: 0 }}
@@ -152,7 +152,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
   // Validation States
   const [nameAvailability, setNameAvailability] = useState(null); // 'checking', 'available', 'taken', 'invalid'
   const [nameError, setNameError] = useState('');
-  
+
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmError, setConfirmError] = useState('');
@@ -176,7 +176,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
     const checkName = async () => {
       const raw = nickname.trim();
-      
+
       // 1. Basic Format Validation
       if (raw.includes(' ')) {
         setNameAvailability('invalid');
@@ -200,14 +200,14 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
       }
 
       setNameAvailability('checking');
-      
+
       try {
         const { data } = await supabase
           .from('profiles')
           .select('nickname')
           .ilike('nickname', raw)
           .maybeSingle();
-        
+
         if (data) {
           setNameAvailability('taken');
           setNameError('ئەڤ ناڤە یێ ھاتییە برن');
@@ -299,14 +299,14 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
           options: {
             data: {
               nickname: nickname,
-              name: nickname,       
-              username: nickname,   
+              name: nickname,
+              username: nickname,
               country: selectedCountry.name,
               country_code: selectedCountry.code,
             }
           }
         });
-        
+
         if (error) {
           if (onVerifyingSignupChange) onVerifyingSignupChange(false);
           throw error;
@@ -317,10 +317,10 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
         if (data.session) {
           await supabase.auth.signOut();
         }
-        
+
         // Ensure global router doesn't kick in
         if (onVerifyingSignupChange) onVerifyingSignupChange(true);
-        
+
         setShowOtpScreen(true);
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
@@ -328,7 +328,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
     } catch (err) {
       console.error("Supabase Error Details:", err);
       playAlertSfx();
-      
+
       let kurdishError = err.message;
       if (err.message.includes('User already registered')) {
         kurdishError = 'ئەڤ ئیمەیڵە بەری نوکە هاتییە تۆمارکرن';
@@ -342,7 +342,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
         setIsUnverifiedLogin(true);
         setShowOtpScreen(true);
         if (onVerifyingSignupChange) onVerifyingSignupChange(true);
-        
+
         // Trigger automatic resend so they have a code immediately
         try {
           const { error: resendError } = await supabase.auth.resend({ type: 'signup', email: cleanEmail });
@@ -357,16 +357,16 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
         } catch (re) {
           console.error("Resend execution error:", re);
         }
-        
+
         return; // Stop here, OTP screen will take over
       }
-      
+
       setError(kurdishError);
     } finally {
       setLoading(false);
     }
   };
-  
+
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     triggerHaptic(10);
@@ -398,11 +398,11 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
       if (onVerifyingSignupChange) onVerifyingSignupChange(true);
       await supabase.auth.signOut();
       if (onVerifyingSignupChange) onVerifyingSignupChange(false);
-      
+
       setIsLogin(true);
       setShowOtpScreen(false);
-      setRegistrationSuccess(true); 
-      setOtpCode(''); 
+      setRegistrationSuccess(true);
+      setOtpCode('');
     } catch (err) {
       console.error("OTP Error:", err);
       playAlertSfx();
@@ -414,7 +414,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
   const handleResendOtp = async () => {
     if (resendCooldown > 0 || loading) return;
-    
+
     triggerHaptic(10);
     playTabSound();
     setLoading(true);
@@ -428,10 +428,10 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
       });
 
       if (error) throw error;
-      
+
       // SUCCESS MESSAGE
       setError("کۆدەکێ نوی هاتە هنارتن بۆ ئیمێلێ تە."); // Reuse error state for simplicity or add a success state
-      
+
       // Start 60s cooldown
       setResendCooldown(60);
       const timer = setInterval(() => {
@@ -569,18 +569,18 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
   };
 
   return (
-    <div 
+    <div
       onClick={handleBackgroundClick}
       className="flex-1 w-full max-w-lg mx-auto flex flex-col items-center justify-center pt-[env(safe-area-inset-top,24px)] px-6 pb-[env(safe-area-inset-bottom,24px)] h-full animate-in fade-in duration-500 overflow-hidden relative auth-view-container bg-mono-white dark:bg-mono-950 transition-colors duration-500"
     >
       <FloatingLetterBackground ref={bgRef} />
-      
+
       <div className="flex flex-col items-center mb-4 text-center relative z-20">
-         <h1 className="text-5xl font-black font-heading text-mono-900 dark:text-white text-pop tracking-tight transform hover:scale-110 transition-transform duration-500">پەیڤچن</h1>
-         <div className="w-12 h-0.5 bg-mono-200 dark:bg-white/20 rounded-full mt-4"></div>
+        <h1 className="text-5xl font-black font-heading text-mono-900 dark:text-white text-pop tracking-tight transform hover:scale-110 transition-transform duration-500">پەیڤچن</h1>
+        <div className="w-12 h-0.5 bg-mono-200 dark:bg-white/20 rounded-full mt-4"></div>
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full px-8 py-5 sm:px-12 sm:py-7 relative z-20 bg-mono-50 dark:bg-mono-900 rounded-[32px] border border-mono-200 dark:border-white/5 shadow-2xl transition-colors duration-500"
@@ -590,16 +590,16 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
           {!showOtpScreen && recoveryStep === 0 && (
             <>
               <div className="flex p-0.5 bg-mono-100 dark:bg-mono-950 rounded-2xl border border-mono-200 dark:border-white/10 mb-5 relative z-10">
-                <motion.div 
+                <motion.div
                   className="absolute top-1 bottom-1 bg-[#0095f6] rounded-xl shadow-[0_0_15px_rgba(0,149,246,0.5)]"
                   initial={false}
-                  animate={{ 
-                    right: isLogin ? '4px' : '50%', 
-                    left: isLogin ? '50%' : '4px' 
+                  animate={{
+                    right: isLogin ? '4px' : '50%',
+                    left: isLogin ? '50%' : '4px'
                   }}
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
-                <button 
+                <button
                   onClick={() => {
                     triggerHaptic(10);
                     playTabSound();
@@ -609,7 +609,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 >
                   چوونا ژوورێ
                 </button>
-                <button 
+                <button
                   onClick={() => {
                     triggerHaptic(10);
                     playTabSound();
@@ -624,7 +624,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
               {/* SUCCESS MESSAGE (Verification / Registration) */}
               <AnimatePresence>
                 {registrationSuccess && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
@@ -657,7 +657,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 {!isLogin && (
                   <div className="grid grid-cols-1 gap-5">
                     <div className="space-y-2">
-                      <FloatingInput 
+                      <FloatingInput
                         label="ناسناڤ"
                         id="reg-nickname"
                         value={nickname}
@@ -667,25 +667,24 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                         autoComplete="off"
                         isError={nameAvailability === 'taken' || nameAvailability === 'invalid'}
                       />
-                      
+
                       <AnimatePresence>
                         {nameAvailability && (
-                          <motion.div 
+                          <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
                             className="overflow-hidden"
                           >
-                            <div className={`text-[10px] font-black font-rabar pt-1 pr-2 flex items-center gap-1.5 ${
-                              nameAvailability === 'available' ? 'text-emerald-400' : 
-                              nameAvailability === 'checking' ? 'text-blue-400' : 'text-red-400'
-                            }`}>
+                            <div className={`text-[10px] font-black font-rabar pt-1 pr-2 flex items-center gap-1.5 ${nameAvailability === 'available' ? 'text-emerald-400' :
+                                nameAvailability === 'checking' ? 'text-blue-400' : 'text-red-400'
+                              }`}>
                               <span className="material-symbols-outlined text-[14px]">
-                                {nameAvailability === 'available' ? 'check_circle' : 
-                                 nameAvailability === 'checking' ? 'sync' : 'error'}
+                                {nameAvailability === 'available' ? 'check_circle' :
+                                  nameAvailability === 'checking' ? 'sync' : 'error'}
                               </span>
-                              {nameAvailability === 'available' ? 'ناڤ یێ ئامادەیە' : 
-                               nameAvailability === 'checking' ? 'لێگەریان...' : nameError}
+                              {nameAvailability === 'available' ? 'ناڤ یێ ئامادەیە' :
+                                nameAvailability === 'checking' ? 'لێگەریان...' : nameError}
                             </div>
                           </motion.div>
                         )}
@@ -694,7 +693,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   </div>
                 )}
 
-                <FloatingInput 
+                <FloatingInput
                   label="ئیمەیڵ"
                   id="auth-email"
                   type="email"
@@ -705,7 +704,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   autoComplete="off"
                 />
 
-                <FloatingInput 
+                <FloatingInput
                   label="پەیڤا نهێنی"
                   id="auth-password"
                   type={showPassword ? 'text' : 'password'}
@@ -718,8 +717,8 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   }}
                   required
                   suffix={
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={() => setShowPassword(!showPassword)}
                       id="toggle-password"
                       name="toggle-password"
@@ -734,7 +733,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 />
 
                 {isLogin && (
-                  <button 
+                  <button
                     type="button"
                     onClick={() => {
                       setRecoveryStep(1);
@@ -748,7 +747,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
                 {!isLogin && (
                   <div className="space-y-2">
-                    <FloatingInput 
+                    <FloatingInput
                       label="دوبارەکرنا پەیڤا نهێنی"
                       id="reg-confirm-password"
                       type={showPassword ? 'text' : 'password'}
@@ -758,10 +757,10 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                       name="peyvcin_reg_confirm"
                       autoComplete="new-password"
                     />
-                    
+
                     <AnimatePresence>
                       {(passwordError || confirmError) && (
-                        <motion.div 
+                        <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
@@ -779,7 +778,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
                 <AnimatePresence>
                   {error && (
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
@@ -790,7 +789,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   )}
                 </AnimatePresence>
 
-                <button 
+                <button
                   type="submit"
                   disabled={loading}
                   className="w-full h-11 bg-[#0095f6] hover:bg-[#1877f2] active:scale-[0.98] text-white rounded-lg font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2 shadow-sm"
@@ -812,24 +811,24 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
-                  <button 
+                  <button
                     onClick={() => handleSocialLogin('google')}
                     className="h-12 rounded-xl bg-white text-black border border-outline/10 flex items-center justify-center gap-3 hover:bg-gray-50 active:scale-95 transition-all font-bold text-sm shadow-sm"
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
-                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                      <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"/>
-                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                      <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" />
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
                     </svg>
                     <span>Google</span>
                   </button>
-                  <button 
+                  <button
                     onClick={() => handleSocialLogin('facebook')}
                     className="h-12 rounded-xl bg-[#1877F2] text-white flex items-center justify-center gap-3 hover:bg-[#1877F2]/90 active:scale-95 transition-all font-bold text-sm shadow-sm"
                   >
                     <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                      <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+                      <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
                     </svg>
                     <span>Facebook</span>
                   </button>
@@ -852,15 +851,15 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   {isUnverifiedLogin ? "پشتڕاستکرنا هەژمارێ" : "کۆدێ پشتڕاستکرنێ بنڤێسە"}
                 </h2>
                 <p className="text-xs font-black font-rabar text-white/70 leading-relaxed">
-                  {isUnverifiedLogin 
+                  {isUnverifiedLogin
                     ? "تە هێشتا ئیمێلێ خۆ پشتڕاست نەکرییە. مە کۆدەکێ نوی بۆ تە فرێکر، ژ کەرەما خۆ ل ڤێرە بنڤێسە."
                     : "مە کۆدەکێ ٦ ژمارەیی هنارت بۆ ئیمێلێ تە. ژ کەرەما خوە کۆدی ل ڤێرە بنڤێیسە دا کو هەژمارا تە چالاک ببیت."
                   }
                 </p>
               </div>
-              
+
               <form onSubmit={handleVerifyOtp} className="space-y-4">
-                <FloatingInput 
+                <FloatingInput
                   label="کۆدێ ٦ ژمارەیی"
                   id="auth-otp"
                   value={otpCode}
@@ -869,10 +868,10 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   name="otp_code"
                   autoComplete="one-time-code"
                 />
-                
+
                 <AnimatePresence>
                   {error && (
-                    <motion.div 
+                    <motion.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
@@ -883,7 +882,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   )}
                 </AnimatePresence>
 
-                <button 
+                <button
                   type="submit"
                   disabled={loading}
                   className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white rounded-lg font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2 shadow-sm"
@@ -896,7 +895,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 </button>
 
                 <div className="flex flex-col items-center gap-2 pt-2">
-                  <button 
+                  <button
                     type="button"
                     onClick={handleResendOtp}
                     disabled={loading || resendCooldown > 0}
@@ -906,7 +905,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   </button>
                 </div>
 
-                <button 
+                <button
                   type="button"
                   onClick={() => {
                     setShowOtpScreen(false);
@@ -932,7 +931,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 </p>
               </div>
               <form onSubmit={handleRequestReset} className="space-y-4">
-                <FloatingInput 
+                <FloatingInput
                   label="ئیمەیڵ"
                   id="recovery-email"
                   type="email"
@@ -969,7 +968,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 </p>
               </div>
               <form onSubmit={handleVerifyRecoveryOtp} className="space-y-4">
-                <FloatingInput 
+                <FloatingInput
                   label="کۆدێ ٦ ژمارەیی"
                   id="recovery-otp"
                   value={otpCode}
@@ -1005,7 +1004,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 </p>
               </div>
               <form onSubmit={handleUpdatePassword} className="space-y-4">
-                <FloatingInput 
+                <FloatingInput
                   label="پەیڤا نهێنی یا نوی"
                   id="new-password"
                   type="password"
@@ -1013,7 +1012,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   onChange={(e) => setNewPassword(e.target.value)}
                   required
                 />
-                <FloatingInput 
+                <FloatingInput
                   label="پشتڕاستکرنا پەیڤا نهێنی"
                   id="confirm-new-password"
                   type="password"
@@ -1043,25 +1042,25 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
           <div className="mt-8 flex flex-col items-center gap-6">
             <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface/20">
-              <button 
+              <button
                 type="button"
-                onClick={() => setActivePolicyModal('terms')} 
+                onClick={() => setActivePolicyModal('terms')}
                 className="hover:text-primary transition-colors uppercase"
               >
                 Terms
               </button>
               <span className="w-1 h-1 rounded-full bg-on-surface/5"></span>
-              <button 
+              <button
                 type="button"
-                onClick={() => setActivePolicyModal('privacy')} 
+                onClick={() => setActivePolicyModal('privacy')}
                 className="hover:text-primary transition-colors uppercase"
               >
                 Privacy
               </button>
               <span className="w-1 h-1 rounded-full bg-on-surface/5"></span>
-              <button 
+              <button
                 type="button"
-                onClick={() => setActivePolicyModal('deletion')} 
+                onClick={() => setActivePolicyModal('deletion')}
                 className="hover:text-primary transition-colors uppercase"
               >
                 Deletion
@@ -1071,10 +1070,10 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
         </div>
       </motion.div>
 
-      <PolicyModal 
-        isOpen={!!activePolicyModal} 
-        onClose={() => setActivePolicyModal(null)} 
-        type={activePolicyModal} 
+      <PolicyModal
+        isOpen={!!activePolicyModal}
+        onClose={() => setActivePolicyModal(null)}
+        type={activePolicyModal}
         onViewChange={setActivePolicyModal}
       />
     </div>
@@ -1103,7 +1102,7 @@ const PolicyModal = ({ isOpen, onClose, type, onViewChange }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div 
+        <motion.div
           ref={scrollRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -1113,9 +1112,9 @@ const PolicyModal = ({ isOpen, onClose, type, onViewChange }) => {
           {/* Custom Header for Policy Modals */}
           <div className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-[#050510]/80 backdrop-blur-xl border-b border-white/5">
             <h3 className="text-xl font-black font-heading text-white uppercase tracking-wider">
-               {type === 'terms' ? 'Terms of Service' : type === 'privacy' ? 'Privacy Policy' : 'Data Deletion'}
+              {type === 'terms' ? 'Terms of Service' : type === 'privacy' ? 'Privacy Policy' : 'Data Deletion'}
             </h3>
-            <button 
+            <button
               onClick={() => {
                 playBackSfx();
                 onClose();
@@ -1125,7 +1124,7 @@ const PolicyModal = ({ isOpen, onClose, type, onViewChange }) => {
               <span className="material-symbols-outlined text-white text-2xl">close</span>
             </button>
           </div>
-          
+
           <div className="flex-1">
             {renderContent()}
           </div>

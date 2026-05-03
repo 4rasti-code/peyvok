@@ -9,7 +9,7 @@ export default function CategoryModal({ onSelect, isOpen, onClose }) {
   const getCategoryColor = (idx) => {
     const colors = [
       'bg-[#0ea5e9]', // Sky Blue
-      'bg-[#10b981]', // Emerald
+      'bg-emerald-600 dark:bg-emerald-400', // Emerald
       'bg-[#f59e0b]', // Amber
       'bg-[#6366f1]', // Indigo
       'bg-[#f43f5e]', // Rose
@@ -25,7 +25,7 @@ export default function CategoryModal({ onSelect, isOpen, onClose }) {
         case 'ھەموو': return 'apps';
         case 'ئاژەل': return 'pets';
         case 'خوارن': return 'restaurant';
-        case 'باژێر': return 'location_city';
+        case 'باژێڕ': return 'location_city';
         case 'سروشت': return 'forest';
         case 'کەلوپەل': return 'inventory_2';
         case 'جھ_و_دەڤەر': return 'terrain';
@@ -37,6 +37,7 @@ export default function CategoryModal({ onSelect, isOpen, onClose }) {
         case 'وەرزش': return 'sports_soccer';
         case 'میوە': return 'nutrition';
         case 'خێزان': return 'family_restroom';
+        case 'هەست': return 'mood';
         default: return 'stars';
     }
   };

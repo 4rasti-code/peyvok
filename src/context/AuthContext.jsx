@@ -42,13 +42,6 @@ export const AuthProvider = ({ children }) => {
     const saved = localStorage.getItem('peyvchin_owned_avatars');
     return saved ? JSON.parse(saved) : ['default'];
   });
-  const [unlockedThemes, setUnlockedThemes] = useState(() => {
-    const saved = localStorage.getItem('peyvchin_unlocked_themes');
-    return saved ? JSON.parse(saved) : ['default'];
-  });
-  const [currentTheme, setCurrentTheme] = useState(() => {
-    return localStorage.getItem('peyvchin_current_theme') || 'default';
-  });
   const [hapticEnabled, setHapticEnabled] = useState(() => {
     const saved = localStorage.getItem('peyvchin_haptic_enabled');
     return saved !== null ? saved === 'true' : true;
@@ -124,10 +117,6 @@ export const AuthProvider = ({ children }) => {
           return JSON.stringify(prev) !== JSON.stringify(next) ? next : prev;
         });
         
-        setUnlockedThemes(prev => {
-          const next = Array.isArray(data.unlocked_themes) ? data.unlocked_themes : ['default'];
-          return JSON.stringify(prev) !== JSON.stringify(next) ? next : prev;
-        });
         
         const haptic = data.haptic_enabled ?? true;
         setHapticEnabled(prev => {
@@ -138,14 +127,6 @@ export const AuthProvider = ({ children }) => {
           return prev;
         });
 
-        const theme = data.equipped_theme || 'default';
-        setCurrentTheme(prev => {
-          if (prev !== theme) {
-            localStorage.setItem('peyvchin_current_theme', theme);
-            return theme;
-          }
-          return prev;
-        });
 
         // 3.2 INVENTORY SELF-HEAL: REMOVED direct update due to potential trigger mismatch.
         // The user should run the database repair script instead.
@@ -315,10 +296,6 @@ export const AuthProvider = ({ children }) => {
       setHapticEnabled(profileData.haptic_enabled);
       localStorage.setItem('peyvchin_haptic_enabled', profileData.haptic_enabled.toString());
     }
-    if (profileData.currentTheme !== undefined) {
-      setCurrentTheme(profileData.currentTheme);
-      localStorage.setItem('peyvchin_current_theme', profileData.currentTheme);
-    }
 
     try {
       const { error } = await supabase.rpc('update_profile_identity', {
@@ -360,14 +337,13 @@ export const AuthProvider = ({ children }) => {
     userNickname, setUserNickname, userAvatar, setUserAvatar, city, setCity,
     isInKurdistan, setIsInKurdistan, countryCode, setCountryCode,
     profileData,
-    ownedAvatars, setOwnedAvatars, unlockedThemes, setUnlockedThemes,
-    currentTheme, setCurrentTheme, hapticEnabled, setHapticEnabled,
+    ownedAvatars, setOwnedAvatars, hapticEnabled, setHapticEnabled,
     lastProfileUpdate, setLastProfileUpdate,
     syncProfile, refreshProfile: syncProfile, updateProfile, handleToggleBlock, checkBlockStatus,
     isProfileLoaded
   }), [
-    user, loadingAuth, loading, visualProgress, userNickname, userAvatar, city, isInKurdistan, 
-    countryCode, ownedAvatars, unlockedThemes, currentTheme, hapticEnabled, syncProfile, 
+    user, loadingAuth, loading, userNickname, userAvatar, city, isInKurdistan, 
+    countryCode, ownedAvatars, hapticEnabled, syncProfile, 
     updateProfile, handleToggleBlock, checkBlockStatus, profileData, lastProfileUpdate
   ]);
 

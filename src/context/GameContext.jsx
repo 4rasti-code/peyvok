@@ -24,7 +24,10 @@ export const GameProvider = ({ children }) => {
     return saved ? Number(saved) : 0;
   });
 
-  const [dailyStreak, setDailyStreak] = useState(0);
+  const [dailyStreak, setDailyStreak] = useState(() => {
+    const saved = localStorage.getItem('peyvchin_daily_streak');
+    return saved ? Number(saved) : 0;
+  });
   const [rewardStreak, setRewardStreak] = useState(0);
   const [lastRewardClaimedAt, setLastRewardClaimedAt] = useState(null);
   const [_userRank, setUserRank] = useState(1);
@@ -60,12 +63,12 @@ export const GameProvider = ({ children }) => {
   const [playerStats, setPlayerStats] = useState(() => {
     const saved = localStorage.getItem('peyvchin_stats');
     return saved ? JSON.parse(saved) : {
-      classic: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 },
-      mamak: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 },
-      secret_word: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 },
-      word_fever: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 },
-      hard_words: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 },
-      battle: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 }
+      classic: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } },
+      mamak: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } },
+      secret_word: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } },
+      word_fever: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } },
+      hard_words: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } },
+      battle: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } }
     };
   });
 
@@ -100,9 +103,30 @@ export const GameProvider = ({ children }) => {
   useEffect(() => {
     if (profileData?.statistics) {
       setPlayerStats(prev => {
-        if (JSON.stringify(prev) !== JSON.stringify(profileData.statistics)) {
-          localStorage.setItem('peyvchin_stats', JSON.stringify(profileData.statistics));
-          return { ...prev, ...profileData.statistics };
+        const serverStats = profileData.statistics;
+        const merged = { ...prev };
+        let hasChanged = false;
+
+        Object.entries(serverStats).forEach(([mode, sData]) => {
+          const pData = prev[mode] || {};
+          
+          // Deep merge the mode data
+          const mergedMode = {
+            ...pData,
+            ...sData,
+            // Preserve/Merge guess_distribution
+            guess_distribution: sData.guess_distribution || pData.guess_distribution || { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 }
+          };
+
+          if (JSON.stringify(pData) !== JSON.stringify(mergedMode)) {
+            merged[mode] = mergedMode;
+            hasChanged = true;
+          }
+        });
+
+        if (hasChanged) {
+          localStorage.setItem('peyvchin_stats', JSON.stringify(merged));
+          return merged;
         }
         return prev;
       });
@@ -136,7 +160,8 @@ export const GameProvider = ({ children }) => {
     if (!loadingAuth && profileData) {
       // If we have profile data, apply it to local states ONLY IF it changed meaningfully
       // Use a stringified comparison for a stable "deep" check on the profile object
-      const profileSignature = `${profileData.xp}-${profileData.fils}-${profileData.updated_at}`;
+      // Use a more stable signature to prevent loops. We only apply if values change.
+      const profileSignature = `${profileData.xp}-${profileData.fils}-${profileData.derhem}-${profileData.dinar}-${profileData.magnets}-${profileData.hints}-${profileData.skips}`;
       
       if (profileSignature !== lastAppliedProfileRef.current) {
         console.log("[GameContext] Applying profile progression sync...");
@@ -428,6 +453,16 @@ export const GameProvider = ({ children }) => {
     if (score > (updatedStats[mode].bestScore || 0)) {
       updatedStats[mode].bestScore = score;
     }
+
+    // --- UPDATE GUESS DISTRIBUTION (LOCAL) ---
+    if (additionalData.isWin && additionalData.attempts) {
+      if (!updatedStats[mode].guess_distribution) {
+        updatedStats[mode].guess_distribution = { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 };
+      }
+      const attemptsKey = additionalData.attempts.toString();
+      updatedStats[mode].guess_distribution[attemptsKey] = (updatedStats[mode].guess_distribution[attemptsKey] || 0) + 1;
+    }
+
     setPlayerStats(updatedStats);
     localStorage.setItem('peyvchin_stats', JSON.stringify(updatedStats));
 
@@ -438,13 +473,8 @@ export const GameProvider = ({ children }) => {
     if (currentAward.type === 'derhem') setDerhem(prev => Number(prev) + currentAward.amount);
     if (currentAward.type === 'dinar') setDinar(prev => Number(prev) + currentAward.amount);
 
-    if (mode === 'classic' || mode === 'hard_words' || mode === 'mamak') {
-      setDailyStreak(prev => {
-        const next = prev + 1;
-        localStorage.setItem('peyvchin_daily_streak', next.toString());
-        return next;
-      });
-    }
+    // Daily Streak local logic removed - Now handled server-side via RPC to ensure date-accuracy
+
 
     // --- UPDATE SOLVED WORDS (LOCAL) ---
     const currentSolved = Array.isArray(gameStateRef.current.solvedWords) ? gameStateRef.current.solvedWords : [];
@@ -476,15 +506,50 @@ export const GameProvider = ({ children }) => {
         p_fils_to_add: currentAward.type === 'fils' ? (additionalData.filsBonus || currentAward.amount) : 0,
         p_derhem_to_add: currentAward.type === 'derhem' ? currentAward.amount : 0,
         p_dinar_to_add: currentAward.type === 'dinar' ? currentAward.amount : 0,
-        p_level: newLevel, // SEND CALCULATED INFINITE LEVEL
-        p_solved_words: nextSolvedWords, // Send the full updated array to ensure sync
+        p_level: newLevel,
+        p_solved_words: nextSolvedWords,
         p_mode: mode,
-        p_score: score
+        p_score: score,
+        p_is_win: additionalData.isWin !== undefined ? additionalData.isWin : true,
+        p_attempts: additionalData.attempts || 0,
+        p_is_flawless: (additionalData.hintsUsed === 0 && additionalData.magnetsUsed === 0),
+        p_is_secret_win: mode === 'secret_word',
+        p_is_riddle_no_skip: (mode === 'mamak' && additionalData.hintsUsed === 0),
+        p_is_pvp_flawless: additionalData.isPvPFlawless || false
       });
 
       if (error) throw error;
+
+      // --- DIRECT DATABASE SYNC (BACKUP) ---
+      // The user explicitly requested that statistics be stored in the database.
+      // We perform a direct update to ensure guess_distribution and mode stats are persisted,
+      // even if the sync_profile_progression RPC has limitations.
+      try {
+        const dbGuessDist = {};
+        Object.entries(updatedStats).forEach(([m, data]) => {
+          if (data.guess_distribution) dbGuessDist[m] = data.guess_distribution;
+        });
+
+        await supabase
+          .from('profiles')
+          .update({
+            statistics: updatedStats,
+            guess_distribution: dbGuessDist,
+            // Also update basic counts to ensure sync
+            games_played: (profileData?.games_played || 0) + 1,
+            games_won: (profileData?.games_won || 0) + (additionalData.isWin ? 1 : 0)
+          })
+          .eq('id', currentUser.id);
+      } catch (dbErr) {
+        console.warn("Direct DB stats update failed:", dbErr.message);
+      }
       if (data) {
-        const { new_level, new_xp, award_xp } = data;
+        const { new_level, new_xp, award_xp, daily_streak } = data;
+        
+        if (daily_streak !== undefined) {
+          setDailyStreak(daily_streak);
+          localStorage.setItem('peyvchin_daily_streak', daily_streak.toString());
+        }
         
         await syncProfile(currentUser.id); 
         refreshRank(new_xp, true);

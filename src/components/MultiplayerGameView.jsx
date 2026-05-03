@@ -14,13 +14,13 @@ import { triggerHaptic } from '../utils/haptics';
 import { toKuDigits } from '../utils/formatters';
 
 export default function MultiplayerGameView({ opponent: propOpponent, isDark = true, onOpenHowToPlay }) {
-  const { 
-    activeMatch, 
-    opponent: contextOpponent, 
-    submitGuess, 
+  const {
+    activeMatch,
+    opponent: contextOpponent,
+    submitGuess,
     broadcastGuess,
-    opponentGuesses, 
-    scores, 
+    opponentGuesses,
+    scores,
     currentRound,
     isRoundWinner,
     winnerNickname,
@@ -41,13 +41,13 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
 
   // Prioritize Prop over Context to force re-renders from App.jsx
   const opponent = propOpponent || contextOpponent;
-  
+
   const [isConfirmingExit, setIsConfirmingExit] = useState(false);
-  
+
   const { user, userNickname, userAvatar } = useUser();
   const { playPopSound, playVictorySound, playStartGameSound: playStartSound } = useAudio();
   const { level: userLevel } = useGame();
-  
+
   // 1. TOP-LEVEL DERIVED DATA (DECLARE BEFORE ANY RETURNS)
   const isPlayer1 = useMemo(() => activeMatch?.player1_id === user?.id, [activeMatch, user]);
   const targetWord = useMemo(() => {
@@ -60,12 +60,12 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
   // CORE ENGINE
   const onGuessSubmitted = useCallback(async (colors, isWin) => {
     if (isWin) {
-        await submitGuess(colors, true);
-        // Only play sound at the very end of the match (handled by Context/Overlay)
-        // playVictorySound(); // REMOVED - requested by user
+      await submitGuess(colors, true);
+      // Only play sound at the very end of the match (handled by Context/Overlay)
+      // playVictorySound(); // REMOVED - requested by user
     } else {
-        broadcastGuess(colors, false);
-        playPopSound(true);
+      broadcastGuess(colors, false);
+      playPopSound(true);
     }
   }, [submitGuess, broadcastGuess, playPopSound]);
 
@@ -145,7 +145,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
     return (
       <div className="h-full w-full flex flex-col items-center justify-center bg-[#020617] text-white">
         <KurdishSunLoader />
-        <p className="mt-8 text-emerald-100/40 font-rabar animate-pulse">بەرھەڤکرنا یاریێ...</p>
+        <p className="mt-8 text-primary/40 font-rabar animate-pulse">بەرھەڤکرنا یاریێ...</p>
       </div>
     );
   }
@@ -180,10 +180,58 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
           }
         `}
       </style>
-      
+
+      {/* 0. ACTION TOP BAR */}
+      <div className="fixed top-0 left-0 right-0 z-[400] pt-[env(safe-area-inset-top)] px-2 flex items-center justify-between pointer-events-none">
+        <div className="relative pointer-events-auto">
+          <button
+            onClick={() => { triggerHaptic(15); setIsConfirmingExit(!isConfirmingExit); }}
+            className={`w-12 h-12 flex items-center justify-center transition-all ${isConfirmingExit ? 'text-white bg-red-500 rounded-full' : 'text-red-500'} active:scale-90 shadow-sm`}
+            title="Exit Match"
+          >
+            <span className="material-symbols-outlined text-[32px] font-black">close</span>
+          </button>
+
+          <AnimatePresence>
+            {isConfirmingExit && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.9 }}
+                className={`absolute right-0 mt-2 w-[72px] ${isDark ? 'bg-mono-900 border-mono-800' : 'bg-white border-mono-200'} border rounded-md p-1.5 shadow-xl flex flex-col gap-0.5 z-50 overflow-hidden transition-colors duration-300`}
+              >
+                <button
+                  onClick={() => { triggerHaptic(15); setIsConfirmingExit(false); cancelMatch(); }}
+                  className="flex items-center justify-center px-2 py-1.5 hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-sm transition-all"
+                >
+                  <span className="text-sm font-medium">بەڵێ</span>
+                </button>
+                <button
+                  onClick={() => { triggerHaptic(5); setIsConfirmingExit(false); }}
+                  className={`flex items-center justify-center px-3 py-2 ${isDark ? 'hover:bg-mono-800 text-mono-300' : 'hover:bg-mono-100 text-mono-700'} rounded-sm transition-all`}
+                >
+                  <span className="text-sm font-medium">نەخێر</span>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        <button
+          onClick={() => {
+            triggerHaptic(10);
+            onOpenHowToPlay?.();
+          }}
+          className={`w-12 h-12 flex items-center justify-center ${isDark ? 'text-white/40' : 'text-slate-400'} hover:text-emerald-400 transition-all active:scale-90 pointer-events-auto`}
+          title="How to Play"
+        >
+          <span className="material-symbols-outlined text-[28px] font-black">help</span>
+        </button>
+      </div>
+
       {/* 1. SYMMETRIC BATTLEFIELD */}
       <div className="battlefield-container no-scrollbar pt-[calc(env(safe-area-inset-top)+52px)]" dir="rtl">
-        
+
         {/* RIDDLE DISPLAY */}
         <div className={`w-full flex flex-col items-center justify-center py-3 px-4 animate-in fade-in duration-700 shrink-0 ${isDark ? 'bg-white/5 border-b border-white/5' : 'bg-white border-b border-slate-200'}`}>
           <p className={`text-lg sm:text-2xl font-light ${isDark ? 'text-white' : 'text-slate-800'} leading-none font-noto-sans-arabic ${isDark ? 'drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]' : ''} riddle-text`}>
@@ -194,14 +242,14 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
         {/* TOP HALF: YOUR GRID */}
         <div className="flex-[1.2] min-h-0 flex flex-col items-center justify-center p-1 bg-white/[0.02]">
           <div className="flex items-center gap-2 opacity-60 scale-75 mb-1">
-             <Avatar src={userAvatar} size="xs" />
-             <span className="text-[10px] font-black text-blue-400 uppercase">{userNickname}</span>
+            <Avatar src={userAvatar} size="xs" />
+            <span className="text-[10px] font-black text-blue-400 uppercase">{userNickname}</span>
           </div>
           <div className="w-full flex justify-center items-center overflow-hidden" dir="rtl">
-            <Grid 
+            <Grid
               gridId="player"
-              guesses={guesses} 
-              currentGuess={currentGuess} 
+              guesses={guesses}
+              currentGuess={currentGuess}
               targetWord={targetWord}
               wordLength={targetWord.length}
               getLetterStatus={getLetterStatus}
@@ -214,25 +262,25 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
 
         {/* CENTER VS BAR: THE SCORES & ROUND */}
         <div className="shrink-0 flex items-center justify-center gap-4 py-1 z-20 relative">
-           <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${isDark ? 'white/5' : 'slate-200'} to-transparent h-[1px] top-1/2 -translate-y-1/2 w-full`} />
-           
-           <div className={`flex items-center gap-3 ${isDark ? 'bg-[#020617] border-white/10' : 'bg-white border-slate-200 shadow-md'} px-3 py-1 rounded-full border relative z-10`}>
-              <div className="flex items-center gap-2">
-                 <span className={`text-[12px] font-black ${isDark ? 'text-blue-400' : 'text-blue-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p1 : scores.p2)}</span>
-              </div>
-              <div className={`w-[1px] h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
-              <div className={`text-[9px] font-black ${isDark ? 'text-white/40' : 'text-slate-500'} uppercase tracking-tighter`}>گەڕ {toKuDigits(currentRound + 1)}</div>
-              <div className={`w-[1px] h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
-              <div className="flex items-center gap-2">
-                 <span className={`text-[12px] font-black ${isDark ? 'text-red-400' : 'text-red-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p2 : scores.p1)}</span>
-              </div>
-           </div>
+          <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${isDark ? 'white/5' : 'slate-200'} to-transparent h-[1px] top-1/2 -translate-y-1/2 w-full`} />
+
+          <div className={`flex items-center gap-3 ${isDark ? 'bg-[#020617] border-white/10' : 'bg-white border-slate-200 shadow-md'} px-3 py-1 rounded-full border relative z-10`}>
+            <div className="flex items-center gap-2">
+              <span className={`text-[12px] font-black ${isDark ? 'text-blue-400' : 'text-blue-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p1 : scores.p2)}</span>
+            </div>
+            <div className={`w-[1px] h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
+            <div className={`text-[9px] font-black ${isDark ? 'text-white/40' : 'text-slate-500'} uppercase tracking-tighter`}>گەڕ {toKuDigits(currentRound + 1)}</div>
+            <div className={`w-[1px] h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
+            <div className="flex items-center gap-2">
+              <span className={`text-[12px] font-black ${isDark ? 'text-red-400' : 'text-red-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p2 : scores.p1)}</span>
+            </div>
+          </div>
         </div>
 
         {/* BOTTOM HALF: OPPONENT GRID */}
         <div className="flex-1 min-h-0 flex flex-col items-center justify-center p-1 bg-black/10">
           <div className="w-full flex justify-center items-center overflow-hidden" dir="rtl">
-            <Grid 
+            <Grid
               gridId="opponent"
               opponentStatuses={opponentGuesses}
               wordLength={targetWord.length}
@@ -252,18 +300,18 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
             />
           </div>
           <div className="flex items-center gap-2 opacity-60 scale-75 mt-1">
-             <span className="text-[10px] font-black text-red-400 uppercase">{opponent?.nickname || 'چاڤەڕێ'}</span>
-             <Avatar src={activeMatch?.opp_avatar_url || opponent?.avatar_url} size="xs" />
+            <span className="text-[10px] font-black text-red-400 uppercase">{opponent?.nickname || 'چاڤەڕێ'}</span>
+            <Avatar src={activeMatch?.opp_avatar_url || opponent?.avatar_url} size="xs" />
           </div>
         </div>
       </div>
 
       {/* 3. KEYBOARD (Pinned to bottom via Flex) */}
       <div className={`shrink-0 w-full z-50 p-2 ${isDark ? 'bg-[#020617]/40' : 'bg-[#f5f5f4]'} pb-[max(env(safe-area-inset-bottom),16px)] m-0 border-t ${isDark ? 'border-white/5' : 'border-slate-200 shadow-lg'}`}>
-        <Keyboard 
-          onKey={onKey} 
-          onDelete={onDelete} 
-          onEnter={onEnter} 
+        <Keyboard
+          onKey={onKey}
+          onDelete={onDelete}
+          onEnter={onEnter}
           usedKeys={usedKeys}
           gameState={(multiplayerState === 'game_over' || isRoundWinner) ? 'won' : (guesses.length >= 3 ? 'lost' : 'playing')}
           hidePowerups={true}
@@ -272,7 +320,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
       </div>
 
       {/* TEKKEN-STYLE CINEMATIC ROUND INTRO */}
-      <RoundIntro 
+      <RoundIntro
         opponent={opponent}
         userAvatar={userAvatar}
         userNickname={userNickname}
@@ -281,83 +329,17 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
         roundMessage={roundMessage}
       />
 
-      {/* FIXED TOP-LEFT ACTIONS */}
-      <div className="fixed top-[calc(env(safe-area-inset-top)+12px)] left-4 z-[400] flex items-center gap-3">
-        <button 
-          onClick={() => { triggerHaptic(15); setIsConfirmingExit(true); }}
-          className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center text-[#ff4444] shadow-2xl transition-all hover:bg-white/20 active:scale-90"
-          title="Exit Match"
-        >
-          <span className="material-symbols-outlined text-[24px] font-black rotate-180 leading-none">logout</span>
-        </button>
-
-        <button 
-          onClick={() => { 
-            triggerHaptic(10); 
-            console.log('[Multiplayer] Help button clicked, calling onOpenHowToPlay');
-            onOpenHowToPlay?.(); 
-          }}
-          className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center text-[#10b981] shadow-2xl transition-all hover:bg-white/20 active:scale-90"
-          title="How to Play"
-        >
-          <span className="material-symbols-outlined text-[24px] font-black leading-none">help</span>
-        </button>
-      </div>
-
-      {/* 5. CONFIRM EXIT OVERLAY */}
-      <AnimatePresence>
-        {isConfirmingExit && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className={`fixed inset-0 z-[600] ${isDark ? 'bg-[#020617]/95' : 'bg-slate-900/40'} backdrop-blur-xl flex items-center justify-center p-6`}
-          >
-            <motion.div 
-               initial={{ scale: 0.9, opacity: 0 }}
-               animate={{ scale: 1, opacity: 1 }}
-               exit={{ scale: 0.9, opacity: 0 }}
-               className={`w-full max-w-sm ${isDark ? 'bg-white/5 border-white/10' : 'bg-white border-slate-200 shadow-2xl'} border rounded-[40px] p-10 text-center`}
-            >
-              <div className={`w-20 h-20 ${isDark ? 'bg-red-500/20' : 'bg-red-50'} rounded-full flex items-center justify-center mx-auto mb-6`}>
-                <span className="material-symbols-outlined text-4xl text-red-500">logout</span>
-              </div>
-              
-              <h2 className={`text-2xl font-black ${isDark ? 'text-white' : 'text-slate-900'} mb-2 font-noto-sans-arabic`}>پشتراستی؟</h2>
-              <p className={`${isDark ? 'text-white/40' : 'text-slate-500'} mb-8 font-noto-sans-arabic`}>دێ دەست ژ یاریێ بەردەی و دەرکەڤی؟</p>
-              
-              <div className="flex flex-col gap-3">
-                <button 
-                  onClick={() => {
-                    triggerHaptic(20);
-                    cancelMatch();
-                  }}
-                  className="h-16 bg-red-500 text-white rounded-2xl font-black text-lg active:scale-95 transition-all shadow-lg shadow-red-500/20"
-                >
-                  بەلێ، دەرکەفتن
-                </button>
-                <button 
-                  onClick={() => setIsConfirmingExit(false)}
-                  className={`h-16 ${isDark ? 'bg-white/5 text-white/60' : 'bg-slate-100 text-slate-600'} rounded-2xl font-bold active:scale-95 transition-all`}
-                >
-                  نەخێر، مانەوە
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* 6. FORFEIT PENDING (GRACE PERIOD) OVERLAY */}
       <AnimatePresence>
         {forfeitStatus === 'pending' && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[700] bg-black/90 backdrop-blur-xl flex items-center justify-center p-8 text-center"
           >
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               className="bg-amber-500/10 border-2 border-amber-500/30 p-10 rounded-[40px] shadow-2xl max-w-sm w-full"
@@ -371,11 +353,11 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
               <p className="text-amber-100/60 text-lg font-bold mb-6 font-noto-sans-arabic">
                 چاڤەڕێبە {forfeitCountdown} چرکەیان
               </p>
-              
+
               <div className="flex items-center justify-center gap-3">
-                 <div className="w-2.5 h-2.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                 <div className="w-2.5 h-2.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '200ms' }} />
-                 <div className="w-2.5 h-2.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '400ms' }} />
+                <div className="w-2.5 h-2.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-2.5 h-2.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '200ms' }} />
+                <div className="w-2.5 h-2.5 bg-amber-400 rounded-full animate-bounce" style={{ animationDelay: '400ms' }} />
               </div>
 
               <div className="mt-8 pt-6 border-t border-white/5">

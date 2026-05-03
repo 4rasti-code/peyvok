@@ -672,7 +672,8 @@ export const MultiplayerProvider = ({ children }) => {
         // 1. Victory: 30 XP (via 'battle' mode)
         // 2. Draw: 5 XP (via 'battle_draw' mode)
         if (result === 'victory') {
-          syncProgressToDatabase(10, 'battle').then(rewardData => {
+          const isFlawless = myScore === 3 && oppScore === 0;
+          syncProgressToDatabase(10, 'battle', { isPvPFlawless: isFlawless }).then(rewardData => {
             if (rewardData) setMatchReward(rewardData);
           });
         } else if (result === 'draw') {

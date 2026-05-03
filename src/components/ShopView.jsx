@@ -113,7 +113,7 @@ const SpecialOfferCard = ({ item, onOpenGateway, playPurchaseSound }) => (
   </motion.button>
 );
 
-export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, skipCount, currentTheme, onPurchase, onPurchaseAvatar, onEquipAvatar, onEquipTheme, unlockedThemes = [], ownedAvatars = ['default'], equippedAvatar = 'default', playPurchaseSound }) {
+export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, skipCount, onPurchase, onPurchaseAvatar, onEquipAvatar, ownedAvatars = ['default'], equippedAvatar = 'default', playPurchaseSound }) {
   const { playTabSound } = useAudio();
   const { user, loadingAuth } = useUser();
   const [activeTab, setActiveTab] = useState('powerups');
@@ -186,7 +186,7 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
 
       <div className="relative z-20 bg-mono-white/5 dark:bg-mono-900/40 border border-mono-200/50 dark:border-mono-800/50 rounded-md p-3 shadow-sm flex flex-col gap-4 transition-colors duration-300">
         <div className="flex p-1 bg-mono-100 dark:bg-mono-950 backdrop-blur-2xl rounded-md border border-mono-200 dark:border-mono-800 shadow-sm relative transition-colors duration-300">
-        {['powerups', 'avatars', 'themes'].map((tab) => (
+        {['powerups', 'avatars'].map((tab) => (
           <button 
             key={tab}
             onClick={() => { 
@@ -207,7 +207,7 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
                 transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
               />
             )}
-            {tab === 'powerups' ? 'ھاریکار' : tab === 'avatars' ? 'ئێمۆجی' : 'نیشان'}
+            {tab === 'powerups' ? 'ھاریکار' : 'ئێمۆجی'}
           </button>
         ))}
       </div>
@@ -268,72 +268,6 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
                         </button>
                       </div>
                     )}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
-          {activeTab === 'themes' && (
-            <motion.div key="themes" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} className="flex flex-col gap-3">
-              {Object.values(THEMES).map(theme => (
-                <motion.div
-                  key={theme.id}
-                  className={`py-3 px-4 bg-mono-white dark:bg-mono-900 rounded-md border border-mono-200 dark:border-mono-800 transition-all flex items-center gap-3 group shadow-sm ${currentTheme === theme.id ? 'border-primary/50 ring-1 ring-primary/10' : ''}`}
-                >
-                  <div 
-                    className="w-10 h-10 rounded-[8px] border border-mono-200 dark:border-white/10 shrink-0 overflow-hidden relative shadow-sm"
-                    style={{ background: theme.colors.background }}
-                  >
-                    <div className="absolute inset-0 flex items-center justify-center opacity-30">
-                       <span className="material-symbols-outlined text-xl" style={{ color: theme.colors.primary }}>{theme.isHeritage ? 'auto_awesome' : 'palette'}</span>
-                    </div>
-                  </div>
-                  <div className="flex-1 text-right min-w-0">
-                    <div className="flex items-center justify-end gap-1 mb-0">
-                       {theme.price === 0 && <span className="px-1 py-0.5 rounded-md bg-green-500/10 text-[7px] font-bold text-green-600 uppercase tracking-tighter shadow-xs">Free</span>}
-                       <h3 className="text-[14px] font-black text-mono-900 dark:text-mono-50 truncate">{theme.name}</h3>
-                    </div>
-                    <p className="text-[9px] font-bold text-mono-500 dark:text-mono-400 tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">
-                      {theme.id === 'default' ? 'ستایلێ ئەسلیێ یاریێ' : theme.isHeritage ? 'ھونەرێ رەسەن یێ کوردی' : 'ستایلەکێ نوی بۆ یارێ'}
-                    </p>
-                  </div>
-                  <div className="shrink-0 flex items-center">
-                    <div className="flex items-center justify-end gap-2">
-                      {unlockedThemes.includes(theme.id) ? (
-                        <button
-                          onClick={() => { triggerHaptic(10); onEquipTheme(theme.id); }}
-                          className={`px-3 py-1 rounded-md font-bold text-[11px] transition-all ${currentTheme === theme.id ? 'bg-primary text-white shadow-md' : 'bg-mono-100 dark:bg-white/10 text-mono-600 dark:text-mono-300 hover:bg-mono-200'}`}
-                        >
-                          {currentTheme === theme.id ? 'چالاکە' : 'بکاربینە'}
-                        </button>
-                      ) : (
-                        <div className="relative">
-                          <button
-                            onClick={() => { 
-                              const currentBalance = theme.currency === 'dinar' ? dinar : (theme.currency === 'derhem' ? derhem : fils);
-                              if (currentBalance >= theme.price) {
-                                triggerHaptic(10); 
-                                executePurchase({ data: theme, type: 'theme' });
-                              } else {
-                                triggerHaptic([50, 30, 50]);
-                              }
-                            }}
-                            className={`flex items-center gap-1.5 px-3.5 py-1 rounded-md transition-all shadow-sm ${unlockedThemes.includes(theme.id) ? 'bg-mono-100 dark:bg-mono-800 text-mono-700 dark:text-mono-200' : ( (theme.currency === 'dinar' ? dinar : (theme.currency === 'derhem' ? derhem : fils)) >= theme.price) ? 'bg-mono-100 dark:bg-mono-800 text-mono-700 dark:text-mono-200 border border-mono-200 dark:border-mono-700' : 'bg-mono-100 dark:bg-mono-900 text-mono-400 dark:text-mono-500 border border-mono-200/50 dark:border-mono-800/50 cursor-not-allowed'}`}
-                          >
-                            <div className="flex flex-col items-center leading-none">
-                              <span className="text-[11px] font-bold">
-                                {theme.price === 0 ? 'خۆڕایی' : toKuDigits(theme.price || 0)}
-                              </span>
-                            </div>
-                            {theme.price > 0 && (
-                              <div className="w-3.5 h-3.5 flex items-center justify-center shrink-0">
-                                {theme.currency === 'dinar' ? <DinarIcon /> : (theme.currency === 'derhem' ? <DerhemIcon /> : <FilsIcon />)}
-                              </div>
-                            )}
-                          </button>
-                        </div>
-                      )}
-                    </div>
                   </div>
                 </motion.div>
               ))}

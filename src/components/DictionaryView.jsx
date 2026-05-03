@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 import { useAudio } from '../context/AudioContext';
+import { toKuDigits } from '../utils/formatters';
 import { normalizeKurdishInput } from '../utils/textUtils';
 
 export default function DictionaryView({ solvedWords, wordList, highlightWord, onBack }) {
@@ -30,19 +32,19 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
 
   // Filter discovered (solved) words based on search and category
   const discoveredWords = useMemo(() => {
-    const cleanedSearch = normalizeKurdish(searchTerm);
+    const cleanedSearch = normalizeKurdishInput(searchTerm);
     
     // 1. Start with words from our master list that are solved
     const wordsFromList = allWordsWithCategories
       .filter(item => {
-        const normItemWord = normalizeKurdish(item.word);
-        return solvedWords.some(sw => normalizeKurdish(sw) === normItemWord);
+        const normItemWord = normalizeKurdishInput(item.word);
+        return solvedWords.some(sw => normalizeKurdishInput(sw) === normItemWord);
       });
 
     // 2. Add words that are solved but NOT in our master list (e.g. newly discovered words from server)
-    const listWordsSet = new Set(allWordsWithCategories.map(w => normalizeKurdish(w.word)));
+    const listWordsSet = new Set(allWordsWithCategories.map(w => normalizeKurdishInput(w.word)));
     const externalSolvedWords = solvedWords
-      .filter(sw => !listWordsSet.has(normalizeKurdish(sw)))
+      .filter(sw => !listWordsSet.has(normalizeKurdishInput(sw)))
       .map(sw => ({ word: sw, hint: 'پەیڤەکا نوى یا هاتییە دیتن', category: 'پەیڤێن من' }));
 
     const combined = [...wordsFromList, ...externalSolvedWords];
@@ -76,116 +78,90 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
   }, [highlightWord]);
 
   return (
-    <div className="flex-1 w-full max-w-4xl mx-auto flex flex-col h-full animate-in fade-in slide-in-from-bottom-5 duration-700 relative z-10 bg-mono-white dark:bg-mono-950 transition-colors duration-500">
-      {/* Header & Search */}
-      <div className="px-6 py-6 flex flex-col gap-6">
-        <div className="flex items-center gap-6">
-          {/* Back Button */}
-          <button 
-            onClick={() => { triggerHaptic(10); onBack && onBack(); }}
-            className="w-12 h-12 rounded-2xl bg-mono-50 dark:bg-white/5 backdrop-blur-xl flex items-center justify-center border border-mono-200 dark:border-white/10 shadow-lg hover:bg-mono-100 dark:hover:bg-white/10 active:scale-95 transition-all group"
-          >
-            <span className="material-symbols-outlined text-mono-400 dark:text-white/50 group-hover:text-primary transition-colors">chevron_right</span>
-          </button>
-
-          <div className="w-16 h-16 rounded-2xl bg-mono-50 dark:bg-white/5 backdrop-blur-xl flex items-center justify-center border border-mono-200 dark:border-white/10 shadow-xl">
-             <span className="material-symbols-outlined text-3xl text-primary">auto_stories</span>
-          </div>
-          <div className="flex-1">
-            <h2 className="text-2xl font-bold font-heading text-mono-900 dark:text-white tracking-tight">فەرھەنگا من</h2>
-            <p className="text-[10px] text-mono-500 dark:text-slate-400 font-bold uppercase tracking-widest mt-0.5">
-               پەرتووکخانا من
-            </p>
-          </div>
-          <div className="bg-mono-50 dark:bg-white/5 backdrop-blur-xl px-4 py-2 rounded-2xl flex items-center gap-2.5 border border-mono-200 dark:border-white/10 shadow-lg  sm:flex">
-            <span className="text-xl font-bold text-mono-900 dark:text-white">{solvedWords.length}</span>
-          </div>
-        </div>
-
-        {/* Search Bar */}
-        <div className="relative group">
-          <input
-            type="text"
-            id="dictionary-search"
-            name="dictionary-search"
-            aria-label="Search solved words"
-            placeholder="ل پەیڤەکێ بگەڕێ..."
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className="w-full bg-mono-50 dark:bg-white/5 backdrop-blur-xl border border-mono-200 dark:border-white/10 rounded-2xl py-4 pl-12 pr-14 font-bold font-rabar text-lg text-mono-900 dark:text-white placeholder:text-mono-300 dark:placeholder:text-white/20 focus:bg-mono-100 dark:focus:bg-white/10 transition-all shadow-xl"
-          />
-          <span className="material-symbols-outlined absolute left-5 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary transition-all">
-            search
-          </span>
-          {searchTerm && (
-            <button
-              onClick={() => setSearchTerm('')}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20"
-            >
-              <span className="material-symbols-outlined text-sm text-slate-400">close</span>
-            </button>
-          )}
-        </div>
-
-        {/* Category Tabs */}
-        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => {
-                triggerHaptic(5);
-                playTabSound();
-                setActiveCategory(cat);
-              }}
-              className={`whitespace-nowrap px-6 py-2.5 rounded-full font-bold text-xs transition-all border ${
-                activeCategory === cat
-                  ? 'bg-primary text-black border-primary shadow-lg scale-105'
-                  : 'bg-white/5 text-slate-400 border-white/10 hover:bg-white/10'
-              }`}
-            >
-              {cat === 'All' ? 'ھەمی' : cat.replace('_', ' ')}
-            </button>
-          ))}
+    <div className="min-h-screen bg-mono-white dark:bg-mono-950 flex flex-col items-center safe-top safe-bottom overflow-x-hidden transition-colors duration-500" dir="rtl">
+      {/* Premium Minimal Header */}
+      <div className="w-full max-w-lg flex items-center justify-between px-6 py-4 sticky top-0 z-50 bg-mono-white/80 dark:bg-mono-950/80 backdrop-blur-xl border-b border-mono-100 dark:border-mono-800/30">
+        <button 
+          onClick={() => { triggerHaptic(10); onBack(); }}
+          className="w-10 h-10 rounded-[4px] bg-mono-50 dark:bg-white/5 border border-mono-200 dark:border-white/10 flex items-center justify-center text-mono-600 dark:text-white/60 hover:bg-mono-100 dark:hover:bg-white/10 transition-all active:scale-90"
+        >
+          <span className="material-symbols-outlined">arrow_forward</span>
+        </button>
+        <h2 className="text-xl font-black font-rabar text-mono-900 dark:text-white uppercase tracking-tight">فەرهەنگ</h2>
+        <div className="w-10 flex justify-end">
+           <div className="px-2 py-1 rounded bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/10">
+              <span className="text-[10px] font-black text-mono-600 dark:text-white/70 tabular-nums">{toKuDigits(solvedWords.length)}</span>
+           </div>
         </div>
       </div>
 
-      {/* Word List */}
-      <div className="flex-1 overflow-y-auto px-6 py-4 no-scrollbar pb-24">
-        {discoveredWords.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {discoveredWords.map((item, idx) => (
-              <div
+      <div className="w-full max-w-lg flex-1 flex flex-col px-6 pt-6 pb-20">
+        {/* Minimal Search Bar */}
+        <div className="relative group mb-6">
+          <input
+            type="text"
+            placeholder="ل پەیڤەکێ بگەڕێ..."
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            className="w-full bg-mono-50 dark:bg-mono-900/40 border border-mono-200 dark:border-mono-800/60 rounded-[4px] py-3.5 pl-4 pr-12 font-bold font-rabar text-[15px] text-mono-900 dark:text-white placeholder:text-mono-400 dark:placeholder:text-mono-600 focus:border-mono-400 dark:focus:border-mono-500 transition-all outline-none shadow-sm"
+          />
+          <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-mono-400 dark:text-mono-600 text-2xl">
+            search
+          </span>
+        </div>
+
+        {/* Minimal Pill Categories */}
+        <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 mb-8">
+          {categories.map(cat => {
+            const isActive = activeCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => { triggerHaptic(5); playTabSound(); setActiveCategory(cat); }}
+                className={`whitespace-nowrap px-5 py-2 rounded-[4px] font-black text-[10px] transition-all border uppercase tracking-wider ${
+                  isActive
+                    ? 'bg-mono-900 dark:bg-mono-100 text-mono-50 dark:text-mono-900 border-mono-900 dark:border-mono-100 shadow-md'
+                    : 'bg-mono-white dark:bg-mono-900/20 text-mono-400 dark:text-mono-500 border-mono-200 dark:border-mono-800/60 hover:border-mono-400 dark:hover:border-mono-600'
+                }`}
+              >
+                {cat === 'All' ? 'ھەمی' : cat.replace('_', ' ')}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Minimal Word Cards */}
+        <div className="flex flex-col gap-4">
+          {discoveredWords.length > 0 ? (
+            discoveredWords.map((item, idx) => (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.03 }}
                 key={idx}
-                className="bg-mono-50 dark:bg-white/5 backdrop-blur-xl p-6 rounded-3xl border border-mono-200 dark:border-white/10 flex flex-col gap-3 relative overflow-hidden highlight-target shadow-xl hover:bg-mono-100 dark:hover:bg-white/10 transition-all"
+                className="bg-mono-white dark:bg-mono-900/20 p-5 rounded-[4px] border border-mono-200 dark:border-mono-800/60 flex flex-col gap-2.5 hover:bg-mono-50 dark:hover:bg-mono-800/40 transition-all highlight-target shadow-sm group"
                 data-word={item.word.replace('_', ' ')}
               >
-                <div className="flex justify-between items-center relative z-10">
-                  <h3 className="text-2xl font-bold font-heading text-mono-900 dark:text-white">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-black font-heading text-mono-900 dark:text-white group-hover:text-primary transition-colors">
                     {item.word.replace('_', ' ')}
                   </h3>
-                  <span className="bg-primary/10 text-primary text-[10px] font-bold uppercase px-3 py-1 rounded-full border border-primary/20">
+                  <span className="text-[7px] font-black uppercase text-mono-400 dark:text-mono-500 tracking-[0.2em] border border-mono-200 dark:border-mono-800 px-2 py-1 rounded-[2px]">
                     {item.category.replace('_', ' ')}
                   </span>
                 </div>
-                <p className="text-sm text-slate-400 font-medium font-rabar leading-relaxed">
+                <p className="text-[12px] text-mono-500 dark:text-mono-400 font-bold font-rabar leading-relaxed">
                   {item.hint}
                 </p>
-                <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-3xl -mr-12 -mt-12 pointer-events-none" />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-24 px-10 text-center">
-            <div className="w-24 h-24 rounded-2xl bg-white/5 flex items-center justify-center mb-8 border border-white/10 relative shadow-2xl">
-              <span className="material-symbols-outlined text-5xl text-slate-600">auto_stories</span>
-              <div className="absolute inset-0 rounded-2xl border-2 border-primary/20 animate-ping opacity-20" />
+              </motion.div>
+            ))
+          ) : (
+            <div className="flex flex-col items-center justify-center py-24 text-center opacity-30 grayscale">
+              <span className="material-symbols-outlined text-5xl mb-4 font-light">menu_book</span>
+              <p className="text-sm font-black font-rabar tracking-tight">فەرھەنگا تە یا ڤالایە</p>
             </div>
-            <h3 className="text-2xl font-bold font-heading text-white mb-2">فەرھەنگا تە ھێشتا یا ڤالایە</h3>
-            <p className="text-base font-medium font-rabar text-slate-500 max-w-xs">
-               ل پەیڤێن خوە بگەڕێی
-            </p>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
