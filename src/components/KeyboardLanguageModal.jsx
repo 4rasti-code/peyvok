@@ -1,13 +1,13 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 
 const KeyboardLanguageModal = ({ isOpen, onClose }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-1000 flex items-center justify-center p-4">
           {/* Subtle Backdrop */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -16,7 +16,7 @@ const KeyboardLanguageModal = ({ isOpen, onClose }) => {
           />
 
           {/* Precision Minimal Modal Content */}
-          <motion.div
+          <Motion.div
             initial={{ scale: 0.98, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.98, opacity: 0 }}
@@ -40,7 +40,7 @@ const KeyboardLanguageModal = ({ isOpen, onClose }) => {
                 باشە
               </button>
             </div>
-          </motion.div>
+          </Motion.div>
         </div>
       )}
     </AnimatePresence>

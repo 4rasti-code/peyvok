@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
 import Avatar from './Avatar';
@@ -67,7 +67,7 @@ const BattleResultOverlay = ({
     if (!isVisible) {
       hasTriggeredRef.current = false;
     }
-  }, [isVisible, isVictory]);
+  }, [isVisible, isVictory, isDark]);
 
   const myScore = isPlayer1 ? scores.p1 : scores.p2;
   const oppScore = isPlayer1 ? scores.p2 : scores.p1;
@@ -75,14 +75,14 @@ const BattleResultOverlay = ({
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[2000] flex items-center justify-center bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md p-6"
+          className="fixed inset-0 z-2000 flex items-center justify-center bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md p-6"
         >
 
-          <motion.div
+          <Motion.div
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
@@ -90,7 +90,7 @@ const BattleResultOverlay = ({
           >
             {/* Status Icon */}
             <div className="relative">
-              <motion.div
+              <Motion.div
                 initial={{ scale: 0.5 }}
                 animate={{ scale: 1 }}
                 className={`w-24 h-24 rounded-full flex items-center justify-center relative z-10 ${isVictory ? 'bg-emerald-500/20 text-emerald-400' : isDefeat ? 'bg-red-500/20 text-red-500' : 'bg-blue-500/20 text-blue-400'}`}
@@ -98,7 +98,7 @@ const BattleResultOverlay = ({
                 <span className="material-symbols-outlined text-[56px]">
                   {isVictory ? 'workspace_premium' : isDefeat ? 'sentiment_very_dissatisfied' : 'balance'}
                 </span>
-              </motion.div>
+              </Motion.div>
             </div>
 
             {/* Title */}
@@ -111,7 +111,7 @@ const BattleResultOverlay = ({
 
             {/* VS SECTION (Premium Look) */}
             <div className="w-full bg-mono-100 dark:bg-[#141414] rounded-2xl border border-mono-200 dark:border-white/10 p-6 flex items-center justify-between relative">
-              <div className="absolute inset-0 bg-mono-200 dark:bg-white/5 h-[1px] top-1/2 -translate-y-1/2 w-full" />
+              <div className="absolute inset-0 bg-mono-200 dark:bg-white/5 h-px top-1/2 -translate-y-1/2 w-full" />
 
               {/* Player 1 (YOU) */}
               <div className="flex flex-col items-center gap-2 flex-1 z-10">
@@ -174,7 +174,7 @@ const BattleResultOverlay = ({
                     else if (i < myScore + oppScore) colorClass = "bg-red-500";
 
                     return (
-                      <motion.div
+                      <Motion.div
                         key={i}
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
@@ -198,8 +198,8 @@ const BattleResultOverlay = ({
                 <span className="material-symbols-outlined group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
               </button>
             </div>
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
       )}
     </AnimatePresence>
   );

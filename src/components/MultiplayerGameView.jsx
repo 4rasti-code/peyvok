@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import Grid from './Grid';
 import Keyboard from './Keyboard';
 import { useMultiplayer } from '../context/MultiplayerContext';
@@ -23,15 +23,15 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
     scores,
     currentRound,
     isRoundWinner,
-    winnerNickname,
+    winnerNickname: _winnerNickname,
     roundMessage,
     multiplayerState,
-    setMultiplayerState,
+    setMultiplayerState: _setMultiplayerState,
     fetchOpponentProfile,
-    resetMatchResultTrigger,
+    resetMatchResultTrigger: _resetMatchResultTrigger,
     forfeitStatus,
     forfeitCountdown,
-    triggerForfeitVictory,
+    triggerForfeitVictory: _triggerForfeitVictory,
     submitFailure,
     cancelMatch,
     broadcastLiveAction,
@@ -45,7 +45,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
   const [isConfirmingExit, setIsConfirmingExit] = useState(false);
 
   const { user, userNickname, userAvatar } = useUser();
-  const { playPopSound, playVictorySound, playStartGameSound: playStartSound } = useAudio();
+  const { playPopSound, playVictorySound: _playVictorySound, playStartGameSound: playStartSound } = useAudio();
   const { level: userLevel } = useGame();
 
   // 1. TOP-LEVEL DERIVED DATA (DECLARE BEFORE ANY RETURNS)
@@ -182,7 +182,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
       </style>
 
       {/* 0. ACTION TOP BAR */}
-      <div className="fixed top-0 left-0 right-0 z-[400] pt-[env(safe-area-inset-top)] px-2 flex items-center justify-between pointer-events-none">
+      <div className="fixed top-0 left-0 right-0 z-400 pt-[env(safe-area-inset-top)] px-2 flex items-center justify-between pointer-events-none">
         <div className="relative pointer-events-auto">
           <button
             onClick={() => { triggerHaptic(15); setIsConfirmingExit(!isConfirmingExit); }}
@@ -194,7 +194,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
 
           <AnimatePresence>
             {isConfirmingExit && (
-              <motion.div
+              <Motion.div
                 initial={{ opacity: 0, y: -10, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -10, scale: 0.9 }}
@@ -212,7 +212,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
                 >
                   <span className="text-sm font-medium">نەخێر</span>
                 </button>
-              </motion.div>
+              </Motion.div>
             )}
           </AnimatePresence>
         </div>
@@ -240,7 +240,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
         </div>
 
         {/* TOP HALF: YOUR GRID */}
-        <div className="flex-[1.2] min-h-0 flex flex-col items-center justify-center p-1 bg-white/[0.02]">
+        <div className="flex-[1.2] min-h-0 flex flex-col items-center justify-center p-1 bg-white/2">
           <div className="flex items-center gap-2 opacity-60 scale-75 mb-1">
             <Avatar src={userAvatar} size="xs" />
             <span className="text-[10px] font-black text-blue-400 uppercase">{userNickname}</span>
@@ -262,15 +262,15 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
 
         {/* CENTER VS BAR: THE SCORES & ROUND */}
         <div className="shrink-0 flex items-center justify-center gap-4 py-1 z-20 relative">
-          <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-${isDark ? 'white/5' : 'slate-200'} to-transparent h-[1px] top-1/2 -translate-y-1/2 w-full`} />
+          <div className={`absolute inset-0 bg-linear-to-r from-transparent via-${isDark ? 'white/5' : 'slate-200'} to-transparent h-px top-1/2 -translate-y-1/2 w-full`} />
 
           <div className={`flex items-center gap-3 ${isDark ? 'bg-[#020617] border-white/10' : 'bg-white border-slate-200 shadow-md'} px-3 py-1 rounded-full border relative z-10`}>
             <div className="flex items-center gap-2">
               <span className={`text-[12px] font-black ${isDark ? 'text-blue-400' : 'text-blue-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p1 : scores.p2)}</span>
             </div>
-            <div className={`w-[1px] h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
+            <div className={`w-px h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
             <div className={`text-[9px] font-black ${isDark ? 'text-white/40' : 'text-slate-500'} uppercase tracking-tighter`}>گەڕ {toKuDigits(currentRound + 1)}</div>
-            <div className={`w-[1px] h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
+            <div className={`w-px h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
             <div className="flex items-center gap-2">
               <span className={`text-[12px] font-black ${isDark ? 'text-red-400' : 'text-red-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p2 : scores.p1)}</span>
             </div>
@@ -333,13 +333,13 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
       {/* 6. FORFEIT PENDING (GRACE PERIOD) OVERLAY */}
       <AnimatePresence>
         {forfeitStatus === 'pending' && (
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[700] bg-black/90 backdrop-blur-xl flex items-center justify-center p-8 text-center"
+            className="fixed inset-0 z-700 bg-black/90 backdrop-blur-xl flex items-center justify-center p-8 text-center"
           >
-            <motion.div
+            <Motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               className="bg-amber-500/10 border-2 border-amber-500/30 p-10 rounded-[40px] shadow-2xl max-w-sm w-full"
@@ -363,8 +363,8 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
               <div className="mt-8 pt-6 border-t border-white/5">
                 {/* English Text Removed */}
               </div>
-            </motion.div>
-          </motion.div>
+            </Motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
     </div>

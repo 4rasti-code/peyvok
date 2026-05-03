@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import Avatar from './Avatar';
 import { triggerHaptic } from '../utils/haptics';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
 
 const AnimatedNumber = ({ value, prefix = "" }) => {
   const [displayValue, setDisplayValue] = useState(0);
-  
+
   useEffect(() => {
     let start = 0;
     const end = parseInt(value) || 0;
@@ -27,7 +27,7 @@ const AnimatedNumber = ({ value, prefix = "" }) => {
   return <span>{prefix}{displayValue}</span>;
 };
 
-export default function MultiplayerResultOverlay({ 
+export default function MultiplayerResultOverlay({
   isVisible, 
   result, 
   scores, 
@@ -45,16 +45,16 @@ export default function MultiplayerResultOverlay({
 
   return (
     <AnimatePresence>
-      <motion.div
+      <Motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[1000] flex items-center justify-center p-6 bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md"
+        className="fixed inset-0 z-1000 flex items-center justify-center p-6 bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md"
       >
         {/* Cinematic Backdrop Glow */}
         {/* Removed Glow */}
 
-        <motion.div
+        <Motion.div
           initial={{ scale: 0.9, y: 20, opacity: 0 }}
           animate={{ scale: 1, y: 0, opacity: 1 }}
           exit={{ scale: 0.9, y: 20, opacity: 0 }}
@@ -73,7 +73,7 @@ export default function MultiplayerResultOverlay({
 
           {/* Header Status */}
           <div className="flex flex-col items-center mb-8">
-            <motion.div
+            <Motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', damping: 12, stiffness: 200, delay: 0.2 }}
@@ -84,7 +84,7 @@ export default function MultiplayerResultOverlay({
               <span className="material-symbols-outlined text-6xl">
                 {isVictory ? 'workspace_premium' : isDraw ? 'balance' : 'sentiment_very_dissatisfied'}
               </span>
-            </motion.div>
+            </Motion.div>
             
             <h1 className={`text-4xl font-black font-rabar mb-2 ${
               isVictory ? 'text-emerald-400' : isDraw ? 'text-slate-300' : 'text-red-400'
@@ -93,13 +93,13 @@ export default function MultiplayerResultOverlay({
             </h1>
 
             {isVictory && isForfeitWin && (
-              <motion.div
+              <Motion.div
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-amber-500/10 text-amber-400 px-4 py-1 rounded-full text-sm font-bold font-rabar mb-3 border border-amber-500/20"
               >
                 سەرکەفتن ب دەستژێبەردانا ھەڤڕکی!
-              </motion.div>
+              </Motion.div>
             )}
 
             <p className="text-mono-400 dark:text-white/40 font-medium">ئەنجامێ یاریێ</p>
@@ -128,7 +128,7 @@ export default function MultiplayerResultOverlay({
 
           {/* Rewards Section (Only for Victory) */}
           {isVictory && (
-            <motion.div 
+            <Motion.div 
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
@@ -158,15 +158,15 @@ export default function MultiplayerResultOverlay({
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </Motion.div>
           )}
 
           {/* Action Buttons Removed per User Request */}
           <div className="mt-4">
              {/* Spacing for layout consistency */}
           </div>
-        </motion.div>
-      </motion.div>
+        </Motion.div>
+      </Motion.div>
     </AnimatePresence>
   );
 }

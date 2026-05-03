@@ -1,12 +1,12 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 
 const KurdishSunLoader = ({ size = 80, color = "#FFD700", progress = 0 }) => {
   return (
     <div className="flex flex-col items-center justify-center p-8 gap-10">
       {/* The Sun Container with Glow */}
       <div className="relative flex items-center justify-center">
-        <motion.svg
+        <Motion.svg
           width={size}
           height={size}
           viewBox="0 0 100 100"
@@ -22,7 +22,7 @@ const KurdishSunLoader = ({ size = 80, color = "#FFD700", progress = 0 }) => {
           {Array.from({ length: 21 }).map((_, i) => {
             const angle = (i * 360) / 21;
             return (
-              <motion.path
+              <Motion.path
                 key={i}
                 d="M50 15 L54 30 L46 30 Z"
                 fill={color}
@@ -33,16 +33,16 @@ const KurdishSunLoader = ({ size = 80, color = "#FFD700", progress = 0 }) => {
               />
             );
           })}
-        </motion.svg>
+        </Motion.svg>
         
         {/* Pulsing Outer Glow Background */}
-        <motion.div 
+        <Motion.div 
           animate={{ 
             scale: [1, 1.2, 1],
             opacity: [0.2, 0.35, 0.2] 
           }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute w-24 h-24 bg-yellow-500 rounded-full blur-3xl -z-0"
+          className="absolute w-24 h-24 bg-yellow-500 rounded-full blur-3xl z-0"
         />
       </div>
 
@@ -51,11 +51,11 @@ const KurdishSunLoader = ({ size = 80, color = "#FFD700", progress = 0 }) => {
         {/* The Track */}
         <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden border border-white/10 relative shadow-inner">
           {/* The Filling Bar */}
-          <motion.div 
+          <Motion.div 
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ type: "spring", stiffness: 40, damping: 15 }}
-            className="absolute top-0 left-0 h-full bg-gradient-to-r from-yellow-600 via-yellow-400 to-yellow-200 shadow-[0_0_15px_rgba(234,179,8,0.6)]"
+            className="absolute top-0 left-0 h-full bg-linear-to-r from-yellow-600 via-yellow-400 to-yellow-200 shadow-[0_0_15px_rgba(234,179,8,0.6)]"
           />
         </div>
         
@@ -71,14 +71,14 @@ const KurdishSunLoader = ({ size = 80, color = "#FFD700", progress = 0 }) => {
             </div>
             
             {/* Subtle sub-text based on progress */}
-            <motion.span 
+            <Motion.span 
                 key={progress > 60 ? 'syncing' : 'connecting'}
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 0.5, y: 0 }}
                 className="text-[9px] text-slate-400 font-medium uppercase tracking-widest"
             >
                 {progress < 40 ? 'Connecting to Server' : progress < 80 ? 'Syncing Profile' : 'Finalizing'}
-            </motion.span>
+            </Motion.span>
         </div>
       </div>
     </div>

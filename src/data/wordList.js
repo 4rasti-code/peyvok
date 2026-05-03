@@ -1,4 +1,6 @@
 // 5. Human Names (Classic & Hard)
+import { verbsWords } from './verbsList.js';
+import { normalizeKurdishInput } from '../utils/textUtils';
 const humanNamesRaw = [
   { word: "نارین", hint: "ناڤێ مرۆڤان", category: "ناڤێ مرۆڤان" },
   { word: "ھێڤی", hint: "ناڤێ مرۆڤان", category: "ناڤێ مرۆڤان" },
@@ -157,6 +159,7 @@ const hardHumanNames = humanNamesRaw.filter(n => n.word.length > 5);
 // 1. Classic Mode Pool (2-5 letters)
 const classicWords = [
   ...classicHumanNames,
+  ...verbsWords.filter(v => v.word.length >= 2 && v.word.length <= 5),
   { word: "کورد", hint: "نەتەوەیەکێ ئاریە و ل میزۆپۆتامیا دژیت", category: "نەتەوە" },
   { word: "ئاشتی", hint: "دەمێ د ناڤبەرا مرۆڤاندا تەناھی ھەبیت", category: "هەست" },
   { word: "وەڵات", hint: "ئەو ئەردێ ئەم لێ ژدایک بووین", category: "جهـ" },
@@ -189,7 +192,7 @@ const classicWords = [
   { word: "کین", hint: "دەمێ کەسەک نەخوەشییەکێ دگەھینیتە مرۆڤی و مرۆڤ ھەردەم دڤێت تۆلا خوە ژێ ڤەکەت", category: "هەست" },
   // Household Items (Classic)
   { word: "جلشۆ", hint: "ئامیرێ کارەبایی یێ پاقژکرنا جلاوبەرگان", category: "کەلوپەلێن ئەلکترۆنی" },
-  { word: "سپلێت", hint: "ئامیرێ ھەلاویستی یێ sارکرن و گەرمکرنێ", category: "کەلوپەلێن ئەلکترۆنی" },
+  { word: "سپلێت", hint: "ئامیرێ ھەلاویستی یێ سارکرن و گەرمکرنێ", category: "کەلوپەلێن ئەلکترۆنی" },
   { word: "ئۆتی", hint: "ئامیرێ گەرم یێ ڕاستکرنا قورمچینا جلان", category: "کەلوپەلێن ئەلکترۆنی" },
   { word: "پانک", hint: "باوەشینا کارەبایی یا زڤڕۆک", category: "کەلوپەلێن ئەلکترۆنی" },
   { word: "تەخت", hint: "جھێ نڤستنێ", category: "کەلوپەلێن ناڤمالێ" },
@@ -267,7 +270,7 @@ const classicWords = [
   { word: "شێر", hint: "پاشایێ دارستانێ", category: "گیانەوەر" },
   { word: "پڵنگ", hint: "دڕندەیێ پنی-پنی یێ ھەرە بلەز", category: "گیانەوەر" },
   { word: "ڕێڤی", hint: "فێڵبازێ د ناڤ چیرۆکاندا", category: "گیانەوەر" },
-  { word: "ھرچ", hint: "نیشانا خەوا کویر و حەزژێکەرێ ھngڤینی", category: "گیانەوەر" },
+  { word: "ھرچ", hint: "نیشانا خەوا کویر و حەزژێکەرێ ھنگڤینی", category: "گیانەوەر" },
   { word: "بەڕاز", hint: "کیڤیێ بێھن تيژ کو ب خوارنا پیساتیێ دھێتە نیاسین", category: "گیانەوەر" },
   { word: "فیل", hint: "مەزنترینێ سەر ھشکاتییێ", category: "گیانەوەر" },
   { word: "ھەڵۆ", hint: "نێچیرڤانێ بلنداھییان", category: "گیانەوەر" },
@@ -364,6 +367,7 @@ const mamakWords = [
 // 3. Hard Words Pool (6-15 letters)
 const hardWords = [
   ...hardHumanNames,
+  ...verbsWords.filter(v => v.word.length >= 6),
   { word: "ڕەوشەنبیر", hint: "کەسێ خودان زانست و تێگەھشتن و ڕەوشت", category: "زانست و مرۆڤ" },
   { word: "حەزژێکرن", hint: "دەمێ مرۆڤ کەسەکی پتر ژ گیانێ خوە دڤێت و حەز دکەت ل نێزیک بیت", category: "هەست" },
   { word: "سپیندار", hint: "دارەکا بلند و نازک ل دەڤەرێن چیا و ئاڤێ", category: "سرۆشت" },
@@ -398,7 +402,7 @@ const hardWords = [
   { word: "دەرنەفیس", hint: "بۆ ڤەکرن و گرتنا بزماران دھێتە بکارھینان", category: "کەلوپەلێن کارکرنێ" },
   { word: "درێزیک", hint: "چاڤەکێ مەزن یێ ب منڤە، لێ ئەز چ نابینم.", category: "کەلوپەلێن کارکرنێ" },
   { word: "ئیسفەنج", hint: "ئەز ھەردەم تژی ئاڤم, لێ جهێ من یێ ھشکە.", category: "کەلوپەلێن ناڤمالێ" },
-  { word: "تەلەفۆن", hint: "دەنگێ من یێ ھەی, لێ زمانێ من nینە.", category: "کەلوپەلێن ئەلکترۆنی" },
+  { word: "تەلەفۆن", hint: "دەنگێ من یێ ھەی, لێ زمانێ من نینە.", category: "کەلوپەلێن ئەلکترۆنی" },
   { word: "دەمژمێر", hint: "من دوو دەست یێن ھەین, لێ ئەز چ تشتان ناگرم.", category: "کەلوپەلێن ئەلکترۆنی" },
   { word: "پەرتووک", hint: "من گەلەک پەڕ یێن ھەین, لێ ئەز نە باڵندەمە.", category: "کەلوپەلێن قوتابخانێ" },
   { word: "تەڕازی", hint: "ئەو چ تشتە یێ بێ زمانە, لێ ڕاستیێ دبێژیت؟", category: "کەلوپەلێن کارکرنێ" },
@@ -429,7 +433,7 @@ const hardWords = [
   { word: "ئارامی", hint: "دەمێ چ ئاریشە نینن و مرۆڤ ھەست ب سڤکیێ دکەت و مێشکێ خوە ژ ھزران ڤالا دکەت", category: "هەست" },
   { word: "باوەڕی", hint: "دەمێ مرۆڤ ب شیانێن کەسەکی پشتڕاستە و بێ ترس کارێ خوە ددەتە دەستێ وی", category: "هەست" },
   { word: "بێھیڤیبوون", hint: "دەمێ ھەمی دەرگەھ ل بەر مرۆڤی دھێنە گرتن و باوەرییا خوە ب باشبوونا ڕەوشێ ژ دەست ددەت", category: "هەست" },
-  { word: "دلۆڤانی", hint: "دەمێ مرۆڤ ڕەوشا بێزار یا کەسەکی dبینیت و دڤێت ب ھاریکاریێ خوە نێزیکی وی بکەت", category: "هەست" },
+  { word: "دلۆڤانی", hint: "دەمێ مرۆڤ ڕەوشا بێزار یا کەسەکی دبینیت و دڤێت ب ھاریکاریێ خوە نێزیکی وی بکەت", category: "هەست" },
   { word: "تەنگاڤی", hint: "دەمێ ئاریشەیەکا ژ نیشکێڤە دروست دبیت و مرۆڤ ب زەحمەت دشێت ھەناسەیا خوە ھەلکێشیت", category: "هەست" },
   { word: "گونەھکاری", hint: "دەمێ مرۆڤ شاشییەکێ دکەت و ل ھەمبەر ویژدانا خوە ھەست ب کێماسیێ دکەت", category: "هەست" },
   { word: "سوپاسداری", hint: "دەمێ کەسەک قەنجییەکێ دکەت و مرۆڤ حەز دکەت ب ڕێزڤە منەتدارییا خوە پێشان بدەت", category: "هەست" },
@@ -547,7 +551,7 @@ const hardWords = [
   { word: "ژمێریار", hint: "شارەزایێ ژماران کو چاڤدێرییا پارە و حساباتێن کۆمپانیان دکەت", category: "پیشە" },
   { word: "زێڕنگەر", hint: "ئەو شارەزایێ زێڕ و زیڤی دحەلینیت", category: "پیشە" },
   { word: "ئاگرکوژێن", hint: "ئەو قارەمانێ ب ئاڤێ شەڕێ ئاگری دکەت بۆ قورتالکرنا خەلکی", category: "پیشە" },
-  { word: "دارەڤان", hint: "پارێزەرێ دارستان و سروشتی ژ بڕین و sۆتنێ", category: "پیشە" },
+  { word: "دارەڤان", hint: "پارێزەرێ دارستان و سروشتی ژ بڕین و سۆتنێ", category: "پیشە" },
   { word: "تیمارکار", hint: "ئەو کەسێ چاڤدێرییا گیانەوەران دکەت و برینێن وان چارەسەر دکەت", category: "پیشە" },
   { word: "ھونەرمەند", hint: "ئەو کەسێ ب شێوەیەکێ داھێنەرانە کارێن جوان و پڕ ڕامان ئەنجام ددەت", category: "پیشە" },
   { word: "وەرزشڤان", hint: "ئەو کەسێ ژیانا خوە تەرخان کری بۆ ڕاھێنان و پێشبڕکێیان", category: "پیشە" },
@@ -565,7 +569,7 @@ const hardWords = [
   { word: "قامشلۆ", hint: "باژێڕێ ئەڤینێ", category: "باژێڕ" },
   { word: "کۆبانی", hint: "باژێڕێ بەرخوەدان و قارەمانییێ ل بەرامبەر تیرۆرێ", category: "باژێڕ" },
   { word: "لەندەن", hint: "باژێڕێ کو ب دەمژمێرا 'بیگ بێن' دھێتە نیاسین", category: "باژێڕ" },
-  { word: "ئەسینا", hint: "لانکda فەلسەفە و دیموکراسییێ و پایتەختێ یونانا کەڤن", category: "باژێڕ" },
+  { word: "ئەسینا", hint: "لانکا فەلسەفە و دیموکراسییێ و پایتەختێ یونانا کەڤن", category: "باژێڕ" },
   { word: "قاھیرە", hint: "باژێڕێ ھزار مناران و نێزیکترین باژێڕ بۆ ئەھرامێن مسرێ", category: "باژێڕ" },
   { word: "نیویۆرک", hint: "باژێڕێ کو چ جاران نانڤیت و خودانێ پەیکەرێ ئازادییێ یە", category: "باژێڕ" },
   { word: "ئیستەنبۆڵ", hint: "باژێڕێ کو دکەڤیتە سەر دوو کیشوەران", category: "باژێڕ" },
@@ -587,6 +591,7 @@ const hardWords = [
 // 4. Word Fever Mode Pool (Exactly 5 letters)
 const wordFeverWords = [
   ...humanNamesRaw.filter(n => n.word.length === 5),
+  ...verbsWords.filter(v => v.word.length === 5),
   { word: "ئاشتی", hint: "دەمێ د ناڤبەرا مرۆڤاندا تەناھی ھەبیت", category: "هەست" },
   { word: "ئومێد", hint: "چاڤەڕێکرنا تشتەکێ باشە بۆ ژیانێ", category: "هەست" },
   { word: "وەڵات", hint: "ئەو ئەردێ ئەم لێ ژدایک بووین", category: "جهـ" },
@@ -679,7 +684,8 @@ export const gameWordLists = {
 };
 
 // Also keep the original category-based object for filtering in UI
-export const wordList = {
+const rawWordList = {
+  "کار": verbsWords,
   "گیانەوەر": generalPool.filter(w => w.category === "گیانەوەر"),
   "خوارن": generalPool.filter(w => w.category === "خوارن"),
   "سرۆشت": generalPool.filter(w => w.category === "سرۆشت"),
@@ -714,6 +720,11 @@ export const wordList = {
   "مامک": mamakWords
 };
 
+// Filter out empty categories
+export const wordList = Object.fromEntries(
+  Object.entries(rawWordList).filter(([_, words]) => words && words.length > 0)
+);
+
 export const categories = [
   "ھەموو",
   ...Object.keys(wordList).filter(c => c !== 'مامک')
@@ -723,7 +734,7 @@ export function getUnifiedWords() {
   return generalPool;
 }
 
-export function getRandomWordFromCategory(category, level = 1, solvedWords = [], gameMode = 'classic') {
+export function getRandomWordFromCategory(category, _level = 1, solvedWords = [], gameMode = 'classic') {
   let modeKey = "پەیڤچن کلاسیک";
   switch (gameMode) {
     case 'mamak': modeKey = "مامک"; break;
@@ -750,18 +761,38 @@ export function getRandomWordFromCategory(category, level = 1, solvedWords = [],
   if (category && category !== 'ھەموو' && category !== 'generalWordPool') {
     const filtered = pool.filter(w => w.category === category);
     if (filtered.length > 0) pool = filtered;
+  } else if (category === 'ھەموو' || !category) {
+    // --- BALANCED CATEGORY SELECTION ---
+    // If 'All' is selected, we pick a random category FIRST, then pick a word.
+    // This prevents categories with many words (like Human Names) from dominating.
+    const normSolved = (solvedWords || []).map(sw => sw.toLowerCase().trim());
+    
+    // 1. Get all available categories in the current pool that have unsolved words
+    const availableCategories = [...new Set(pool
+      .filter(item => !normSolved.includes(item.word.toLowerCase().trim()))
+      .map(item => item.category)
+    )].filter(Boolean);
+
+    if (availableCategories.length > 0) {
+      // 2. Pick a random category
+      const chosenCategory = availableCategories[Math.floor(Math.random() * availableCategories.length)];
+      // 3. Filter pool to only this category
+      pool = pool.filter(w => w.category === chosenCategory);
+    }
   }
 
   if (!pool || pool.length === 0) return null;
 
-  const normSolved = solvedWords.map(sw => sw.toLowerCase().trim());
+  const normSolved = (solvedWords || []).map(sw => normalizeKurdishInput(sw).toLowerCase().trim());
 
   let availableWords = pool.filter(item => {
-    const normWord = item.word.toLowerCase().trim();
+    const normWord = normalizeKurdishInput(item.word).toLowerCase().trim();
     return !normSolved.includes(normWord);
   });
 
   if (availableWords.length === 0) {
+    // Fallback: If all words in the chosen category are solved, reset to full pool
+    // and try again without category balancing to ensure the game doesn't crash.
     availableWords = pool;
   }
 

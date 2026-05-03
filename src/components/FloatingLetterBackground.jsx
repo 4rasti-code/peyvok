@@ -1,5 +1,5 @@
-﻿import React, { useMemo, useEffect, useRef, forwardRef, useImperativeHandle, memo } from 'react';
-import { motion, useSpring, useMotionValue, useTransform, animate, useMotionValueEvent } from 'framer-motion';
+import React, { forwardRef, useImperativeHandle, memo, useState } from 'react';
+import { motion as Motion, useSpring, useMotionValue, useMotionValueEvent } from 'framer-motion';
 
 const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
   // Movement springs - Low stiffness, High damping for "liquid" feel
@@ -48,12 +48,12 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
     }
   });
 
-  // Unique animation delay for organic feel
-  const delay = useMemo(() => `${Math.random() * -20}s`, []);
-  const duration = useMemo(() => `${45 + Math.random() * 30}s`, []);
+  // Unique animation delay for organic feel - using state for purity
+  const [delay] = useState(() => `${Math.random() * -20}s`);
+  const [duration] = useState(() => `${45 + Math.random() * 30}s`);
 
   return (
-    <motion.div
+    <Motion.div
       className="absolute text-mono-900/10 dark:text-mono-100/10 font-bold text-[16px] select-none font-rabar pointer-events-none transition-opacity duration-1000"
       style={{
         left: `${initialX}%`,
@@ -66,23 +66,24 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
       }}
     >
       {char}
-    </motion.div>
+    </Motion.div>
   );
 });
 
+const chars = ['ط¦ط§', 'ط¨', 'ظ¾', 'طھ', 'ط¬', 'ط¯', 'ع•', 'ط²', 'ع¤', 'عµ', 'غ†', 'غژ', 'ع¯', 'ع†', 'عک', 'ظ‡ظ€'];
+
 const FloatingLetterBackground = forwardRef((props, ref) => {
   const pulseMV = useMotionValue(null);
-  const chars = ['ط¦ط§', 'ط¨', 'ظ¾', 'طھ', 'ط¬', 'ط¯', 'ع•', 'ط²', 'ع¤', 'عµ', 'غ†', 'غژ', 'ع¯', 'ع†', 'عک', 'ظ‡ظ€'];
 
-  // Reduce count to 20 for better performance on mobile/low-end devices
-  const letters = useMemo(() => {
+  // Use useState lazy initialization for purity
+  const [letters] = useState(() => {
     return [...Array(20)].map((_, i) => ({
       id: i,
       char: chars[i % chars.length],
       x: 5 + Math.random() * 90,
       y: 5 + Math.random() * 90
     }));
-  }, []);
+  });
 
   useImperativeHandle(ref, () => ({
     pulse: (px, py) => {
@@ -91,7 +92,7 @@ const FloatingLetterBackground = forwardRef((props, ref) => {
   }));
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-[5] bg-white dark:bg-black transition-colors duration-500">
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-5 bg-white dark:bg-black transition-colors duration-500">
       <style>
         {`
           @keyframes drift {

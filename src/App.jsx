@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
+import OneSignal from 'react-onesignal';
 import TopAppBar from './components/TopAppBar';
 import RoundIntro from './components/RoundIntro';
 import BattleResultOverlay from './components/BattleResultOverlay';
@@ -15,7 +16,7 @@ import BottomNav from './components/BottomNav';
 import LobbyView from './components/LobbyView';
 import { wordList } from './data/wordList';
 import { STATUS } from './data/constants';
-import { getLocalDateString } from './utils/formatters';
+import { getLocalDateString as _getLocalDateString } from './utils/formatters';
 import KurdishSunLoader from './components/KurdishSunLoader';
 
 import useMultiplayer from './hooks/useMultiplayer';
@@ -164,7 +165,7 @@ export default function App() {
   const {
     user, setUser, hapticEnabled, loadingAuth, authProgress,
     userNickname, userAvatar, city, isInKurdistan, countryCode,
-    ownedAvatars, equippedAvatar, unlockedThemes, currentTheme,
+    ownedAvatars, equippedAvatar, unlockedThemes: _unlockedThemes, currentTheme,
     updateProfile, profileData
   } = useUser();
 
@@ -190,12 +191,38 @@ export default function App() {
     getFreshWord,
     userRank, refreshRank,
     setLastNotifiedLevel,
-    claimDailyReward,
+    claimDailyReward: _claimDailyReward,
     updateInventory,
     initializeStatsInDB,
     loading: isGameLoading,
-    resetBoard: resetContextBoard
+    resetBoard: _resetContextBoard
   } = useGame();
+
+  // --- ONESIGNAL NOTIFICATION ENGINE ---
+  useEffect(() => {
+    let isMounted = true;
+    const initOneSignal = async () => {
+      try {
+        await OneSignal.init({
+          appId: 'b642fbbb-f82b-4d0d-93b0-192e702cbd75',
+          allowLocalhostAsSecureOrigin: true,
+        });
+        if (isMounted) {
+          OneSignal.Slidedown.promptPush();
+          console.log("🔔 [OneSignal] Initialized successfully");
+        }
+      } catch (err) {
+        // Suppress "already initialized" error which happens in StrictMode or re-mounts
+        if (err.message?.includes('already initialized')) {
+          console.warn("🔔 [OneSignal] Already initialized, skipping.");
+        } else {
+          console.error("🔔 [OneSignal] Initialization failed:", err);
+        }
+      }
+    };
+    initOneSignal();
+    return () => { isMounted = false; };
+  }, []);
 
   // 1. INITIALIZE VIEW FROM URL
   const [currentView, setCurrentView] = useState(() => {
@@ -255,7 +282,9 @@ export default function App() {
   // Sync URL -> State (Handles Initial Load & Back/Forward Buttons)
   useEffect(() => {
     const path = location.pathname.replace('/', '') || 'lobby';
-    setCurrentView(prev => prev !== path ? path : prev);
+    requestAnimationFrame(() => {
+      setCurrentView(prev => prev !== path ? path : prev);
+    });
   }, [location.pathname]);
 
   // Sync State -> URL (Handles internal navigateTo calls)
@@ -264,7 +293,7 @@ export default function App() {
     if (path !== currentView) {
       navigate('/' + currentView, { replace: true });
     }
-  }, [currentView, navigate]);
+  }, [currentView, navigate, location.pathname]);
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isDailyRewardOpen, setIsDailyRewardOpen] = useState(false);
@@ -283,7 +312,7 @@ export default function App() {
     isVerifyingRef.current = val;
     setIsVerifyingSignup(val);
   };
-  const [initialStatsTab, setInitialStatsTab] = useState('stats');
+  const [_initialStatsTab, setInitialStatsTab] = useState('stats');
   const setRecoveringPassword = (val) => {
     isRecoveringRef.current = val;
     setIsRecoveringPassword(val);
@@ -320,16 +349,16 @@ export default function App() {
   });
   const [victoryCustomText, setVictoryCustomText] = useState(null);
   const [lastSolvedWord, setLastSolvedWord] = useState('');
-  const [isForfeitConfirmOpen, setIsForfeitConfirmOpen] = useState(false);
+  const [_isForfeitConfirmOpen, setIsForfeitConfirmOpen] = useState(false);
   const [isWordFeverResultVisible, setIsWordFeverResultVisible] = useState(false);
   const [showResultOverlay, setShowResultOverlay] = useState(false);
   const [defeatBreakdown, setDefeatBreakdown] = useState({ base: 0, mistakes: 0, total: 0 });
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const [wordFeverResultType, setWordFeverResultType] = useState('win');
-  const [hintLimitToast, setHintLimitToast] = useState({ visible: false, message: '' });
+  const [_hintLimitToast, setHintLimitToast] = useState({ visible: false, message: '' });
   const [isLevelingUp, setIsLevelingUp] = useState(false);
   const [isMasteryOpen, setIsMasteryOpen] = useState(false);
-  const [masteryData, setMasteryData] = useState(null);
+  const [masteryData, _setMasteryData] = useState(null);
   const [isKeyboardWarningOpen, setIsKeyboardWarningOpen] = useState(false);
 
 
@@ -397,14 +426,14 @@ export default function App() {
       }
     }
     prevNotifCount.current = currentCount;
-  }, [notificationsList.length, notificationsList[0]?.id, playNotifSound, playMessageSound]);
+  }, [notificationsList, playNotifSound, playMessageSound]);
 
 
   // --- CORE GAME ENGINE (Unified) ---
   const [feverStreak, setFeverStreak] = useState(0);
 
   const handleGameCompletion = useCallback(async (finalGuesses, isWin, forcedMode = null, forcedTarget = null, precalcBreakdown = null, precalcPenalty = null) => {
-    const { targetWord: refTWord, gameMode: refGMode, winsTowardsSecret: wts, fils: currFils } = gameRefs.current;
+    const { targetWord: refTWord, gameMode: refGMode, winsTowardsSecret: _wts, fils: currFils } = gameRefs.current;
 
     // Prioritize passed arguments over refs to avoid race conditions
     const tWord = forcedTarget || refTWord;
@@ -473,7 +502,7 @@ export default function App() {
         });
       }
     }
-  }, [syncProgressToDatabase, updateInventory, incrementSecretWordProgress, resetSecretWordProgress, feverStreak]); // Stable dependencies
+  }, [syncProgressToDatabase, updateInventory, incrementSecretWordProgress, resetSecretWordProgress, feverStreak, magnetsUsedInRound, hintTaps, skipsUsedInRound]); // Stable dependencies
 
   const onWinHandler = useCallback((finalGuesses, winWord, winMode) => {
     const { hapticEnabled: hEnabled } = gameRefs.current;
@@ -533,7 +562,7 @@ export default function App() {
   // Some legacy components or keyboard listeners may attempt to call this function.
   // We define it here to prevent 'ReferenceError: handleGameplayUpdate is not defined' crashes.
   const handleGameplayUpdate = useCallback((data) => {
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.MODE === 'development') {
       console.warn('[App] Phantom handleGameplayUpdate called with:', data);
     }
   }, []);
@@ -755,7 +784,7 @@ export default function App() {
       hintCount: -1
     }, true, true); // Sync to DB immediately to prevent refresh exploit
     setHintTaps(prev => prev + 1);
-  }, [updateInventory, playBoosterSound, setCurrentGuess, showHintLimitToast]); // Added missing dependencies
+  }, [updateInventory, playBoosterSound, setCurrentGuess, showHintLimitToast, getMaxHintsForWord]); // Added missing dependencies
 
   const handleMagnet = useCallback(() => {
     const { magnetCount: mCount, isVictory: isV, targetWord: tWord, magnetDisabledKeys: mDisabled } = gameRefs.current;
@@ -952,7 +981,9 @@ export default function App() {
       }, 3000);
       return () => clearTimeout(timer);
     } else {
-      setShowResultOverlay(false);
+      requestAnimationFrame(() => {
+        setShowResultOverlay(false);
+      });
     }
   }, [isVictory, isDefeat, isWordFeverResultVisible]);
 
@@ -1025,7 +1056,7 @@ export default function App() {
     }
   }, [resetBoard, getFreshWord]);
 
-  const handleForfeit = useCallback(() => {
+  const _handleForfeit = useCallback(() => {
     playPopSound();
     setIsForfeitConfirmOpen(true);
   }, [playPopSound]);
@@ -1056,7 +1087,7 @@ export default function App() {
       }
     }
     return () => clearInterval(timer);
-  }, [currentView, gameMode, isVictory, isWordFeverResultVisible, timeLeft]);
+  }, [currentView, gameMode, isVictory, isWordFeverResultVisible, timeLeft, setIsDefeat]);
 
   // Word Fever Reward & Penalty Effect
   useEffect(() => {
@@ -1268,14 +1299,14 @@ export default function App() {
   // Shows loader if auth is initializing, game assets are loading,
   // or if we have no user but haven't yet redirected to the auth screen.
   if (loadingAuth || isGameLoading || (!user && !['auth', 'lobby', 'game'].includes(currentView))) return (
-    <div className="h-[100dvh] flex items-center justify-center bg-mono-white dark:bg-mono-950 transition-colors duration-500">
+    <div className="h-dvh flex items-center justify-center bg-mono-white dark:bg-mono-950 transition-colors duration-500">
       <KurdishSunLoader progress={authProgress} />
     </div>
   );
 
   return (
-    <div className="flex flex-col h-[100dvh] max-h-[100dvh] w-full items-center bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 transition-colors duration-500 font-noto-sans-arabic" dir="rtl">
-      <div className={`flex-1 flex flex-col w-full max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl mx-auto relative overflow-hidden transition-colors duration-500`}>
+    <div className="flex flex-col h-dvh max-h-dvh w-full items-center bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 transition-colors duration-500 font-noto-sans-arabic" dir="rtl">
+      <div className={`flex-1 flex flex-col w-full max-w-screen-sm md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto relative overflow-hidden transition-colors duration-500`}>
         {/* Panic Overlay for Word Fever Mode Critical Time */}
         {gameMode === 'word_fever' && currentView === 'game' && timeLeft <= 10 && !isVictory && (
           <div className="panic-overlay" />
@@ -1460,7 +1491,7 @@ export default function App() {
               </div>
 
               {/* Tier 3: Keyboard (Pinned to bottom) */}
-              <div className={`shrink-0 w-full z-50 p-3 ${isSystemDark ? 'bg-[#171717] border-t border-white/5' : 'bg-[#FFFFFF] border-t border-slate-200'} pb-[max(env(safe-area-inset-bottom),16px)] m-0 transition-colors duration-500`}>
+              <div className={`shrink-0 w-full z-50 p-3 ${isSystemDark ? 'bg-mono-900 border-t border-white/5' : 'bg-mono-white border-t border-slate-200'} pb-[max(env(safe-area-inset-bottom),16px)] m-0 transition-colors duration-500`}>
                 <Keyboard
                   onKey={onKey}
                   onDelete={onDelete}

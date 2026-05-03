@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
 import { triggerHaptic } from '../utils/haptics';
@@ -74,18 +74,18 @@ const WordFeverResultOverlay = ({
       }, 7000);
       return () => clearTimeout(timer);
     }
-  }, [isVisible, isWin, onContinue]);
+  }, [isVisible, isWin, onContinue, onHome]);
 
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-1000 flex items-center justify-center bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md p-6"
         >
-          <motion.div
+          <Motion.div
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
@@ -93,7 +93,7 @@ const WordFeverResultOverlay = ({
           >
             {/* Status Icon Hub */}
             <div className="relative flex flex-col items-center">
-              <motion.div
+              <Motion.div
                 initial={{ scale: 0.5, rotate: -15 }}
                 animate={{ scale: 1, rotate: 0 }}
                 className={`w-24 h-24 rounded-2xl flex items-center justify-center relative z-10 ${isWin ? 'bg-sky-500/20 text-sky-400' : 'bg-red-500/20 text-red-500'} border ${isWin ? 'border-sky-500/30' : 'border-red-500/30'}`}
@@ -101,7 +101,7 @@ const WordFeverResultOverlay = ({
                 <span className="material-symbols-outlined text-[72px]">
                   {isWin ? 'electric_bolt' : 'timer_off'}
                 </span>
-              </motion.div>
+              </Motion.div>
             </div>
 
             {/* Message Area */}
@@ -121,7 +121,7 @@ const WordFeverResultOverlay = ({
               )}
 
               {/* Stats & Rewards Table */}
-              <div className="w-full flex flex-col gap-3 bg-mono-50 dark:bg-[#171717]/60 p-5 rounded-2xl border border-mono-100 dark:border-white/5">
+              <div className="w-full flex flex-col gap-3 bg-mono-50 dark:bg-mono-900/60 p-5 rounded-2xl border border-mono-100 dark:border-white/5">
                 {/* Main Reward Row */}
                 <div className="flex justify-between items-center text-sm font-black group/row">
                   <span className="text-mono-600 dark:text-white/80 transition-colors group-hover/row:text-mono-900 dark:group-hover/row:text-white">
@@ -209,8 +209,8 @@ const WordFeverResultOverlay = ({
                 ڤەگەڕیان
               </button>
             </div>
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
       )}
     </AnimatePresence>
   );

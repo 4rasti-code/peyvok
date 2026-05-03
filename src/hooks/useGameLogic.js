@@ -269,7 +269,7 @@ export default function useGameLogic({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isActive, onKey, onDelete, onEnter]);
+  }, [isActive, onKey, onDelete, onEnter, hapticEnabled, onWrongLanguage, soundEnabled]);
 
   return {
     guesses,

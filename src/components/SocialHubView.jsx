@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 import { useUser } from '../context/AuthContext';
 import { useAudio } from '../context/AudioContext';
@@ -62,7 +62,7 @@ function useLongPress(onLongPress, onClick, ms = 500) {
 function MessageContextMenu({ m, x, y, isMe, onReact, onReply, onCopy, onClose }) {
   return (
     <div className="fixed inset-0 z-100 flex flex-col items-center justify-center p-4">
-      <motion.div 
+      <Motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -70,7 +70,7 @@ function MessageContextMenu({ m, x, y, isMe, onReact, onReply, onCopy, onClose }
         className="absolute inset-0 bg-mono-950/80"
       />
       
-      <motion.div 
+      <Motion.div 
         initial={{ scale: 0.8, opacity: 0, y: 20 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.8, opacity: 0, y: 20 }}
@@ -117,7 +117,7 @@ function MessageContextMenu({ m, x, y, isMe, onReact, onReply, onCopy, onClose }
             <span className="material-symbols-outlined text-[20px] text-mono-500">content_copy</span>
           </button>
         </div>
-      </motion.div>
+      </Motion.div>
     </div>
   );
 }
@@ -141,7 +141,7 @@ function MessageItem({ m, isMe, onSeen, onLongPress, currentUserId, showNickname
   });
 
   return (
-    <motion.div
+    <Motion.div
       ref={ref}
       initial={{ opacity: 0, y: 10, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -206,7 +206,7 @@ function MessageItem({ m, isMe, onSeen, onLongPress, currentUserId, showNickname
           )}
         </div>
       </div>
-    </motion.div>
+    </Motion.div>
   );
 }
 
@@ -215,8 +215,8 @@ export default function SocialHubView({
   onBack,
   initialChatPartner = null,
   initialTab = null,
-  onViewMessages,
-  onViewFriends,
+  onViewMessages: _onViewMessages,
+  onViewFriends: _onViewFriends,
   onKeyboardToggle
 }) {
   const { 
@@ -227,7 +227,7 @@ export default function SocialHubView({
   } = useUser();
   const {
     playNotifSound, 
-    playMessageSound, 
+    playMessageSound: _playMessageSound, 
     playMessageSentSound, 
     playTabSound, 
     playBubblePopSound
@@ -277,7 +277,7 @@ export default function SocialHubView({
     } finally {
       if (activeTab === 'global') setLoading(false);
     }
-  }, [activeTab]);
+  }, [activeTab, loading, messages.length]);
 
   const fetchFriendsData = useCallback(async (signal = null) => {
     if (!user?.id) return;
@@ -391,7 +391,7 @@ export default function SocialHubView({
     } catch (err) {
       console.error("Chat history fetch error:", err);
     }
-  }, [user?.id]);
+  }, [user?.id, loadingAuth]);
 
   useEffect(() => {
     if (!user?.id) return;
@@ -965,7 +965,7 @@ export default function SocialHubView({
                     ))}
                     
                     {partnerIsTyping && (
-                      <motion.div
+                      <Motion.div
                         initial={{ opacity: 0, scale: 0.8, x: -10 }}
                         animate={{ opacity: 1, scale: 1, x: 0 }}
                         className="flex items-center gap-2 mb-4"
@@ -978,7 +978,7 @@ export default function SocialHubView({
                           </div>
                           <span className="text-[10px] font-black text-mono-500 dark:text-mono-400">دنڤیسیت...</span>
                         </div>
-                      </motion.div>
+                      </Motion.div>
                     )}
                     
                     <div ref={scrollRef} className="h-4" />
@@ -1100,7 +1100,7 @@ export default function SocialHubView({
       {/* Copy Success Toast */}
       <AnimatePresence>
         {showCopySuccess && (
-          <motion.div 
+          <Motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
@@ -1108,17 +1108,17 @@ export default function SocialHubView({
           >
             <span className="material-symbols-outlined text-sm">check_circle</span>
             ھاتە ژبەرتنکرن
-          </motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
 
       {/* Input Area - WhatsApp Pill Style Swapped */}
       {(activeTab === 'global' || selectedChat) && (
-        <div className="bg-mono-white dark:bg-mono-950 border-t border-mono-200 dark:border-mono-800 relative z-[45] transition-colors duration-300">
+        <div className="bg-mono-white dark:bg-mono-950 border-t border-mono-200 dark:border-mono-800 relative z-45 transition-colors duration-300">
           {/* Reply Preview Box */}
           <AnimatePresence>
             {replyingTo && (
-              <motion.div
+              <Motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
@@ -1134,7 +1134,7 @@ export default function SocialHubView({
                 >
                   <span className="material-symbols-outlined text-[18px]">close</span>
                 </button>
-              </motion.div>
+              </Motion.div>
             )}
           </AnimatePresence>
 
@@ -1177,7 +1177,7 @@ export default function SocialHubView({
               }}
               className="px-8 py-2 focus:outline-none active:scale-95 transition-transform"
             >
-              <motion.div 
+              <Motion.div 
                 animate={{ 
                   width: [40, 50, 40],
                   opacity: [0.3, 0.5, 0.3]

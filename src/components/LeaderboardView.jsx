@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { AVATARS, DEFAULT_AVATAR } from '../data/avatars';
 import Avatar from './Avatar';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { motion as Motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import PublicProfileModal from './PublicProfileModal';
 import { FilsIcon } from './CurrencyIcon';
 import { triggerHaptic } from '../utils/haptics';
@@ -18,8 +18,8 @@ export default function LeaderboardView({ onOpenChat }) {
     user,
     userNickname,
     userAvatar,
-    countryCode,
-    isInKurdistan,
+    _countryCode,
+    _isInKurdistan,
     lastProfileUpdate,
     handleToggleBlock: toggleBlockInContext,
     loadingAuth
@@ -27,9 +27,9 @@ export default function LeaderboardView({ onOpenChat }) {
 
   const {
     currentXP: userXP,
-    level: userLevel,
-    fils: userFils,
-    useGameLoading
+    level: _userLevel,
+    fils: _userFils,
+    useGameLoading: _useGameLoading
   } = useGame();
 
   const userId = user?.id;
@@ -37,7 +37,7 @@ export default function LeaderboardView({ onOpenChat }) {
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [userRank, setUserRank] = useState('--');
+  const [_userRank, setUserRank] = useState('--');
   const [view, setView] = useState('global');
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
@@ -63,7 +63,7 @@ export default function LeaderboardView({ onOpenChat }) {
     }
   };
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     // 1. HARDENED GUARD: Reject invalid, undefined, or loading states
     if (loadingAuth || !userId || userId === 'undefined' || userId.length < 5) {
       setLoading(false);
@@ -131,7 +131,7 @@ export default function LeaderboardView({ onOpenChat }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [loadingAuth, userId, view, userXP]);
 
   useEffect(() => {
     fetchData();
@@ -142,13 +142,13 @@ export default function LeaderboardView({ onOpenChat }) {
     return () => {
       window.removeEventListener('focus', handleFocus);
     };
-  }, [view, userId]);
+  }, [view, userId, fetchData]);
 
 
   return (
     <div
       onClick={handleBackgroundClick}
-      className="w-full max-w-full px-4 md:px-6 pb-56 h-full relative animate-in fade-in duration-700 bg-mono-50 dark:bg-mono-900 overflow-x-hidden pt-[calc(env(safe-area-inset-top,24px)+32px)] md:pt-20 text-right bg-trigger-zone transition-colors duration-500"
+      className="w-full max-w-full px-4 md:px-6 pb-56 h-full relative animate-in fade-in duration-700 bg-mono-50 dark:bg-mono-900 overflow-x-hidden pt-[calc(env(safe-area-inset-top,24px)+32px)] md:pt-20 text-right bg-trigger-zone transition-colors"
     >
       <FloatingLetterBackground ref={bgRef} />
 
@@ -159,7 +159,7 @@ export default function LeaderboardView({ onOpenChat }) {
         </div>
 
         {/* Top Tab Swapper - Synced Card Style */}
-        <div className="flex p-1 rounded-md border mb-10 w-full max-w-xs mx-auto relative z-30 shadow-sm transition-all overflow-hidden bg-mono-100 dark:bg-mono-950 border-mono-200 dark:border-mono-800 transition-colors duration-300">
+        <div className="flex p-1 rounded-md border mb-10 w-full max-w-xs mx-auto relative z-30 shadow-sm transition-all overflow-hidden bg-mono-100 dark:bg-mono-950 border-mono-200 dark:border-mono-800 duration-300">
           {['global', 'friends'].map((tab) => {
             const isActive = view === tab;
             return (
@@ -176,7 +176,7 @@ export default function LeaderboardView({ onOpenChat }) {
                   }`}
               >
                 {isActive && (
-                  <motion.div
+                  <Motion.div
                     layoutId="activeTabIndicator"
                     className="absolute inset-0 bg-mono-900 dark:bg-mono-800 rounded-sm shadow-sm"
                     transition={{ type: "spring", bounce: 0.1, duration: 0.4 }}
@@ -192,7 +192,7 @@ export default function LeaderboardView({ onOpenChat }) {
 
         <AnimatePresence mode="wait">
           {!loading ? (
-            <motion.div
+            <Motion.div
               key={view}
               variants={{
                 hidden: { opacity: 0 },
@@ -216,7 +216,7 @@ export default function LeaderboardView({ onOpenChat }) {
                 const effectiveXP = isMe ? userXP : player.xp;
 
                 return (
-                  <motion.div
+                  <Motion.div
                     key={player.id}
                     variants={{
                       hidden: { opacity: 0, y: 15, scale: 0.98 },
@@ -227,7 +227,7 @@ export default function LeaderboardView({ onOpenChat }) {
                     whileHover={{ scale: 1.01, backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
                     whileTap={{ scale: 0.99 }}
                     onClick={() => { triggerHaptic(10); setSelectedPlayer({ ...player, avatar_url: effectiveAvatar, nickname: effectiveNickname, xp: effectiveXP }); }}
-                    className={`flex flex-row items-center justify-between p-2.5 px-5 rounded-md border relative transition-all cursor-pointer shadow-sm bg-mono-white dark:bg-mono-800 border-mono-200 dark:border-mono-700 transition-colors duration-300`}
+                    className={`flex flex-row items-center justify-between p-2.5 px-5 rounded-md border relative transition-all cursor-pointer shadow-sm bg-mono-white dark:bg-mono-800 border-mono-200 dark:border-mono-700 duration-300`}
                     style={{
                       zIndex: isTop3 ? 50 : 1 // Ensure top 3 cards have higher z-index for floating crowns
                     }}
@@ -238,7 +238,7 @@ export default function LeaderboardView({ onOpenChat }) {
                     {/* Sleek Metallic Rank Number (MINIMALIST) */}
                     <div className="flex items-center justify-center w-10 shrink-0 z-10 relative">
                       {rank <= 3 && (
-                        <motion.div
+                        <Motion.div
                           initial={{ y: 0, rotate: rank === 1 ? -5 : rank === 2 ? 5 : 0 }}
                           animate={{
                             y: [-2, 2, -2],
@@ -287,7 +287,7 @@ export default function LeaderboardView({ onOpenChat }) {
                               />
 
                               {/* Central Diamond Gem (Purple) with Shine Animation */}
-                              <motion.path
+                              <Motion.path
                                 d="M50 45 L58 55 L50 65 L42 55 Z"
                                 fill={rank === 1 ? "#7E57C2" : rank === 2 ? "#3B82F6" : "#EF4444"}
                                 stroke="#3E2723" strokeWidth="1.5"
@@ -298,7 +298,7 @@ export default function LeaderboardView({ onOpenChat }) {
                               />
 
                               {/* Glowing Highlight for Diamond */}
-                              <motion.path
+                              <Motion.path
                                 d="M50 48 L54 55 L50 62 L46 55 Z"
                                 fill="white" fillOpacity="0.4"
                                 animate={{ opacity: [0.2, 0.6, 0.2] }}
@@ -314,13 +314,13 @@ export default function LeaderboardView({ onOpenChat }) {
                                 { cx: 95, cy: 40, r: 5 }
                               ].map((b, i) => (
                                 <g key={i}>
-                                  <motion.circle
+                                  <Motion.circle
                                     cx={b.cx} cy={b.cy} r={b.r}
                                     fill="#4DD0E1" stroke="#3E2723" strokeWidth="1.5"
                                     animate={{ filter: ["brightness(1)", "brightness(1.3)", "brightness(1)"] }}
                                     transition={{ repeat: Infinity, duration: 2, delay: i * 0.2 }}
                                   />
-                                  <motion.circle
+                                  <Motion.circle
                                     cx={b.cx - b.r / 3} cy={b.cy - b.r / 3} r={b.r / 4}
                                     fill="white" fillOpacity="0.6"
                                     animate={{ opacity: [0.4, 0.9, 0.4] }}
@@ -339,7 +339,7 @@ export default function LeaderboardView({ onOpenChat }) {
                               <path d="M50 25 L50 40" stroke="white" strokeWidth="2" strokeOpacity="0.3" strokeLinecap="round" />
                             </svg>
                           </div>
-                        </motion.div>
+                        </Motion.div>
                       )}
                       <span className={`text-2xl font-black italic tracking-normal relative z-10 ${rank === 1 ? 'text-[#92400e]' :
                         rank === 2 ? 'text-mono-500 dark:text-mono-300' :
@@ -390,10 +390,10 @@ export default function LeaderboardView({ onOpenChat }) {
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </Motion.div>
                 );
               })}
-            </motion.div>
+            </Motion.div>
           ) : error ? (
             <div className="flex flex-col items-center justify-center py-48 gap-4">
               <span className="material-symbols-outlined text-4xl text-red-500/50">cloud_off</span>

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { useGame } from '../context/GameContext';
 import { useAudio } from '../context/AudioContext';
 import { triggerHaptic } from '../utils/haptics';
-import { toKuDigits, getLocalDateString } from '../utils/formatters';
+import { toKuDigits } from '../utils/formatters';
 import { playBackSfx } from '../utils/audio';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
 
@@ -115,13 +115,13 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
     <>
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/40 dark:bg-black/80 backdrop-blur-sm"
           >
-            <motion.div
+            <Motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
@@ -145,7 +145,7 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
                   const isDay7 = item.day === 7;
                   
                   return (
-                    <motion.div
+                    <Motion.div
                       key={item.day}
                       onClick={isNext && !claiming ? handleClaim : undefined}
                       // STOP ALL ANIMATION IF CLAIMED
@@ -175,7 +175,7 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
                         {isDay7 ? (
                           <DinarIcon size={isDay7 && isNext ? 85 : 70} />
                         ) : isNext && !isClaimed ? (
-                          <span className="material-symbols-outlined !text-4xl">redeem</span>
+                          <span className="material-symbols-outlined text-4xl!">redeem</span>
                         ) : (!isFuture || isClaimed) ? (
                           <>
                             {item.type === 'fils' ? (
@@ -183,14 +183,14 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
                             ) : item.type === 'derhem' ? (
                               <DerhemIcon size={36} />
                             ) : (
-                              <span className="material-symbols-outlined !text-4xl">
+                              <span className="material-symbols-outlined text-4xl!">
                                 {item.icon || 'redeem'}
                               </span>
                             )}
                           </>
                         ) : (
                           <div className="flex flex-col items-center justify-center opacity-40">
-                            <span className="material-symbols-outlined !text-4xl">
+                            <span className="material-symbols-outlined text-4xl!">
                               lock
                             </span>
                           </div>
@@ -221,7 +221,7 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
                           </span>
                         </div>
                       )}
-                    </motion.div>
+                    </Motion.div>
                   );
                 })}
               </div>
@@ -244,20 +244,20 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
                   </p>
                 )}
               </div>
-            </motion.div>
-          </motion.div>
+            </Motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
 
       <AnimatePresence>
         {showSuccess && (
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-110 flex items-center justify-center bg-black/40 dark:bg-black/80 backdrop-blur-md p-6"
           >
-            <motion.div
+            <Motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               className="text-center bg-white dark:bg-black border border-mono-200 dark:border-white/10 rounded-md shadow-2xl p-10 flex flex-col items-center relative overflow-hidden"
@@ -269,7 +269,7 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
                 {claimedDayInfo?.isGrand ? (
                   <DinarIcon size={100} />
                 ) : (
-                  <span className="material-symbols-outlined !text-[80px] text-black dark:text-white">redeem</span>
+                  <span className="material-symbols-outlined text-[80px]! text-black dark:text-white">redeem</span>
                 )}
                 <div className="mt-4 px-6 py-2 bg-black dark:bg-white text-white dark:text-black rounded-md font-black text-xl">
                   + {claimedDayInfo?.label}
@@ -282,8 +282,8 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
               >
                 بەردەوام بە
               </button>
-            </motion.div>
-          </motion.div>
+            </Motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
     </>

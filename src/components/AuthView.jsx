@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 import { triggerHaptic } from '../utils/haptics';
 import { playAlertSfx, playBackSfx } from '../utils/audio';
@@ -571,7 +571,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
   return (
     <div
       onClick={handleBackgroundClick}
-      className="flex-1 w-full max-w-lg mx-auto flex flex-col items-center justify-center pt-[env(safe-area-inset-top,24px)] px-6 pb-[env(safe-area-inset-bottom,24px)] h-full animate-in fade-in duration-500 overflow-hidden relative auth-view-container bg-mono-white dark:bg-mono-950 transition-colors duration-500"
+      className="flex-1 w-full max-w-lg mx-auto flex flex-col items-center justify-center pt-[env(safe-area-inset-top,24px)] px-6 pb-[env(safe-area-inset-bottom,24px)] h-full animate-in fade-in duration-500 overflow-hidden relative auth-view-container bg-mono-white dark:bg-mono-950 transition-colors"
     >
       <FloatingLetterBackground ref={bgRef} />
 
@@ -580,7 +580,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
         <div className="w-12 h-0.5 bg-mono-200 dark:bg-white/20 rounded-full mt-4"></div>
       </div>
 
-      <motion.div
+      <Motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full px-8 py-5 sm:px-12 sm:py-7 relative z-20 bg-mono-50 dark:bg-mono-900 rounded-[32px] border border-mono-200 dark:border-white/5 shadow-2xl transition-colors duration-500"
@@ -590,7 +590,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
           {!showOtpScreen && recoveryStep === 0 && (
             <>
               <div className="flex p-0.5 bg-mono-100 dark:bg-mono-950 rounded-2xl border border-mono-200 dark:border-white/10 mb-5 relative z-10">
-                <motion.div
+                <Motion.div
                   className="absolute top-1 bottom-1 bg-[#0095f6] rounded-xl shadow-[0_0_15px_rgba(0,149,246,0.5)]"
                   initial={false}
                   animate={{
@@ -624,7 +624,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
               {/* SUCCESS MESSAGE (Verification / Registration) */}
               <AnimatePresence>
                 {registrationSuccess && (
-                  <motion.div
+                  <Motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
@@ -632,12 +632,12 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   >
                     <span className="material-symbols-outlined text-xl">check_circle</span>
                     <p>هژمارا تە هاتە پشتڕاستکرن. نۆکە دشێی بچییە ژوورڤە.</p>
-                  </motion.div>
+                  </Motion.div>
                 )}
               </AnimatePresence>
 
               <AnimatePresence mode="wait">
-                <motion.div
+                <Motion.div
                   key={isLogin ? 'login' : 'signup'}
                   initial={{ opacity: 0, x: isLogin ? -10 : 10 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -650,7 +650,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   <h2 className="text-2xl font-black font-heading text-mono-900 dark:text-white text-pop uppercase tracking-wide text-right">
                     {isLogin ? 'چوونا ژوورێ' : 'تۆمارکرن'}
                   </h2>
-                </motion.div>
+                </Motion.div>
               </AnimatePresence>
 
               <form onSubmit={handleAuth} className="space-y-4" autoComplete="off">
@@ -670,7 +670,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
                       <AnimatePresence>
                         {nameAvailability && (
-                          <motion.div
+                          <Motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
@@ -686,7 +686,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                               {nameAvailability === 'available' ? 'ناڤ یێ ئامادەیە' :
                                 nameAvailability === 'checking' ? 'لێگەریان...' : nameError}
                             </div>
-                          </motion.div>
+                          </Motion.div>
                         )}
                       </AnimatePresence>
                     </div>
@@ -760,7 +760,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
                     <AnimatePresence>
                       {(passwordError || confirmError) && (
-                        <motion.div
+                        <Motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
@@ -770,7 +770,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                             <span className="material-symbols-outlined text-[14px]">error</span>
                             {passwordError || confirmError}
                           </div>
-                        </motion.div>
+                        </Motion.div>
                       )}
                     </AnimatePresence>
                   </div>
@@ -778,14 +778,14 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
                 <AnimatePresence>
                   {error && (
-                    <motion.div
+                    <Motion.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center"
                     >
                       {error}
-                    </motion.div>
+                    </Motion.div>
                   )}
                 </AnimatePresence>
 
@@ -871,14 +871,14 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
                 <AnimatePresence>
                   {error && (
-                    <motion.div
+                    <Motion.div
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center"
                     >
                       {error}
-                    </motion.div>
+                    </Motion.div>
                   )}
                 </AnimatePresence>
 
@@ -941,9 +941,9 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 />
                 <AnimatePresence>
                   {error && (
-                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
+                    <Motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
                       {error}
-                    </motion.div>
+                    </Motion.div>
                   )}
                 </AnimatePresence>
                 <button type="submit" disabled={loading} className="w-full h-11 bg-[#0095f6] hover:bg-[#1877f2] text-white rounded-lg font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
@@ -977,9 +977,9 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 />
                 <AnimatePresence>
                   {error && (
-                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
+                    <Motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
                       {error}
-                    </motion.div>
+                    </Motion.div>
                   )}
                 </AnimatePresence>
                 <button type="submit" disabled={loading} className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
@@ -1022,9 +1022,9 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 />
                 <AnimatePresence>
                   {error && (
-                    <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
+                    <Motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
                       {error}
-                    </motion.div>
+                    </Motion.div>
                   )}
                 </AnimatePresence>
                 <button type="submit" disabled={loading} className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
@@ -1068,7 +1068,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
             </div>
           </div>
         </div>
-      </motion.div>
+      </Motion.div>
 
       <PolicyModal
         isOpen={!!activePolicyModal}
@@ -1102,7 +1102,7 @@ const PolicyModal = ({ isOpen, onClose, type, onViewChange }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
+        <Motion.div
           ref={scrollRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -1128,7 +1128,7 @@ const PolicyModal = ({ isOpen, onClose, type, onViewChange }) => {
           <div className="flex-1">
             {renderContent()}
           </div>
-        </motion.div>
+        </Motion.div>
       )}
     </AnimatePresence>
   );

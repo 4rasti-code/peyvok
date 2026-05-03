@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
 export default function useThemeDetector() {
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
+  const [isDarkTheme, setIsDarkTheme] = useState(() => 
+    typeof window !== 'undefined' ? window.matchMedia('(prefers-color-scheme: dark)').matches : true
+  );
 
   useEffect(() => {
-    // Check initial system preference
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    setIsDarkTheme(mediaQuery.matches);
-
+    
     // Listen for real-time changes
     const handler = (e) => setIsDarkTheme(e.matches);
     mediaQuery.addEventListener('change', handler);

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 import { FilsIcon } from './CurrencyIcon';
 import { useState } from 'react';
@@ -35,11 +35,11 @@ const AnimatedNumber = ({ value, prefix = "" }) => {
 
 const DefeatOverlay = ({ 
   isVisible, 
-  solvedWord, 
+  _solvedWord, 
   onRetry, 
   onHome,
   breakdown,
-  gameMode = 'classic',
+  _gameMode = 'classic',
   playStartSound
 }) => {
   useEffect(() => {
@@ -56,13 +56,13 @@ const DefeatOverlay = ({
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div 
+        <Motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-1000 flex items-center justify-center bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md p-6"
         >
-          <motion.div 
+          <Motion.div 
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
@@ -70,7 +70,7 @@ const DefeatOverlay = ({
           >
             {/* Status Icon Hub */}
             <div className="relative flex flex-col items-center">
-              <motion.div 
+              <Motion.div 
                 initial={{ scale: 0.5, rotate: -15 }}
                 animate={{ scale: 1, rotate: 0 }}
                 className="w-32 h-32 rounded-2xl flex items-center justify-center relative z-10 bg-linear-to-br from-red-500/20 to-orange-600/20 text-red-500 border border-red-500/30"
@@ -78,7 +78,7 @@ const DefeatOverlay = ({
                 <span className="material-symbols-outlined text-[72px] text-red-500">
                    heart_broken
                 </span>
-              </motion.div>
+              </Motion.div>
             </div>
 
             {/* Message Area */}
@@ -91,7 +91,7 @@ const DefeatOverlay = ({
               </p>
 
               {/* Stats & Penalties Table */}
-              <div className="w-full space-y-1.5 mt-2 bg-mono-100 dark:bg-[#171717]/60 p-4 rounded-[2.5rem] border border-red-500/10">
+              <div className="w-full space-y-1.5 mt-2 bg-mono-100 dark:bg-mono-900/60 p-4 rounded-2xl border border-red-500/10">
                 <div className="flex justify-between items-center text-sm font-black  group/row">
                   <span className="text-mono-600 dark:text-white/80 transition-colors group-hover/row:text-mono-900 dark:group-hover/row:text-white">سزایێ دۆڕاندنێ</span>
                   <div className="flex items-center gap-2 text-red-400">
@@ -150,8 +150,8 @@ const DefeatOverlay = ({
                 ڤەگەڕیان
               </button>
             </div>
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
       )}
     </AnimatePresence>
   );

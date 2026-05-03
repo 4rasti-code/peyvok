@@ -198,7 +198,7 @@ class SoundEngine {
     }
 
     if (this.context.state === 'suspended') {
-      try { await this.context.resume(); } catch (e) {}
+      try { await this.context.resume(); } catch (_e) { /* Audio context resume failed or was blocked */ }
     }
 
     const { volume = 1.0, pitchRandomization = 0, detune = 0 } = options;

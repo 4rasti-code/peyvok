@@ -15,7 +15,7 @@ export const MultiplayerProvider = ({ children }) => {
   const { 
     startSearchingSound, 
     stopSearchingSound, 
-    playStartGameSound,
+    playStartGameSound: _playStartGameSound,
     playRewardSound 
   } = useAudio();
   const { syncProgressToDatabase } = useGame();
@@ -70,10 +70,10 @@ export const MultiplayerProvider = ({ children }) => {
   const matchIdRef = useRef(matchId);
   const channelRef = useRef(null);
   const matchmakingTimeoutRef = useRef(null);
-  const handshakeTimerRef = useRef(null);
+  const _handshakeTimerRef = useRef(null);
   const isFetchingOpponentRef = useRef(false);
   const isPollingRef = useRef(false);
-  const isFetchingMatchRef = useRef(false);
+  const _isFetchingMatchRef = useRef(false);
   const safeClearMatchmakingTimeout = useCallback(() => {
     if (matchmakingTimeoutRef.current) {
       clearTimeout(matchmakingTimeoutRef.current);
@@ -130,7 +130,7 @@ export const MultiplayerProvider = ({ children }) => {
       setMatchmakingTime(0);
     }
     return () => clearInterval(interval);
-  }, [multiplayerState]);
+  }, [multiplayerState, setActiveMatchGuarded]);
 
   const broadcastGuess = useCallback((colors, isWin = false) => {
     if (!channelRef.current || !user?.id) return;
@@ -171,7 +171,6 @@ export const MultiplayerProvider = ({ children }) => {
     }
 
     if (isWin) {
-      const isP1 = activeMatch.player1_id === user.id;
       const p1Score = activeMatch.p1_score || 0;
       const p2Score = activeMatch.p2_score || 0;
       const myNewScore = isP1 ? p1Score + 1 : p2Score + 1;
@@ -277,7 +276,7 @@ export const MultiplayerProvider = ({ children }) => {
       const rewardData = await syncProgressToDatabase(5, 'battle');
       if (rewardData) setMatchReward(rewardData);
       // Trigger reward sound
-      try { playRewardSound(); } catch(_) {}
+      try { playRewardSound(); } catch(_e) { /* Audio context failure */ }
 
       // 3. UI Update with specific disconnect message
       setLastMatchResult('victory');
@@ -294,8 +293,8 @@ export const MultiplayerProvider = ({ children }) => {
     } catch (err) {
       console.error('[Multiplayer] Forfeit handling failed:', err);
     }
-  }, [matchId, activeMatch?.player1_id, user?.id, syncProgressToDatabase, playRewardSound]);
-
+  }, [matchId, activeMatch?.player1_id, user?.id, syncProgressToDatabase, playRewardSound, setMultiplayerStateGuarded]);
+  
   const ResetMatchResultTrigger = useCallback(() => {
     setMatchResultTrigger(0);
     setLastMatchResult(null);
@@ -329,7 +328,41 @@ export const MultiplayerProvider = ({ children }) => {
     } finally {
       isFetchingOpponentRef.current = false;
     }
+  }, [setOpponentGuarded]);
+
+  const clearForfeitLogic = useCallback(() => {
+    if (forfeitTimerRef.current) {
+      clearTimeout(forfeitTimerRef.current);
+      forfeitTimerRef.current = null;
+    }
+    if (countdownIntervalRef.current) {
+      clearInterval(countdownIntervalRef.current);
+      countdownIntervalRef.current = null;
+    }
   }, []);
+
+  const startGracePeriod = useCallback(() => {
+    setForfeitStatus('pending');
+    setForfeitCountdown(10);
+    
+    clearForfeitLogic();
+
+    // Start countdown interval
+    countdownIntervalRef.current = setInterval(() => {
+      setForfeitCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(countdownIntervalRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    forfeitTimerRef.current = setTimeout(() => {
+      console.log('[Multiplayer] Grace period expired, triggering forfeit.');
+      triggerForfeitVictory();
+    }, 10000);
+  }, [triggerForfeitVictory, clearForfeitLogic]);
 
   const cancelMatch = useCallback(async () => {
     const idToCancel = matchId || matchIdRef.current;
@@ -378,7 +411,7 @@ export const MultiplayerProvider = ({ children }) => {
         console.warn("Failed to stop searching sound:", e);
       }
     }
-  }, [matchId, multiplayerState, stopSearchingSound, supabase]);
+  }, [matchId, multiplayerState, stopSearchingSound, setActiveMatchGuarded, setMultiplayerStateGuarded, setOpponentGuarded]);
 
   // 1. POLLING FALLBACK: Detect player join automatically
   useEffect(() => {
@@ -416,7 +449,7 @@ export const MultiplayerProvider = ({ children }) => {
       clearInterval(pollInterval);
       controller.abort();
     };
-  }, [multiplayerState, matchId]);
+  }, [multiplayerState, matchId, setActiveMatchGuarded]);
 
   // 2. REALTIME SUBSCRIPTION
   useEffect(() => {
@@ -524,41 +557,7 @@ export const MultiplayerProvider = ({ children }) => {
       channelRef.current = null;
       clearForfeitLogic();
     };
-  }, [matchId, user?.id]);
-
-  const clearForfeitLogic = useCallback(() => {
-    if (forfeitTimerRef.current) {
-      clearTimeout(forfeitTimerRef.current);
-      forfeitTimerRef.current = null;
-    }
-    if (countdownIntervalRef.current) {
-      clearInterval(countdownIntervalRef.current);
-      countdownIntervalRef.current = null;
-    }
-  }, []);
-
-  const startGracePeriod = useCallback(() => {
-    setForfeitStatus('pending');
-    setForfeitCountdown(10);
-    
-    clearForfeitLogic();
-
-    // Start countdown interval
-    countdownIntervalRef.current = setInterval(() => {
-      setForfeitCountdown(prev => {
-        if (prev <= 1) {
-          clearInterval(countdownIntervalRef.current);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    forfeitTimerRef.current = setTimeout(() => {
-      console.log('[Multiplayer] Grace period expired, triggering forfeit.');
-      triggerForfeitVictory();
-    }, 10000);
-  }, [triggerForfeitVictory, clearForfeitLogic]);
+  }, [matchId, user?.id, clearForfeitLogic, fetchOpponentProfile, opponentLiveCursor, setActiveMatchGuarded, setMultiplayerStateGuarded, startGracePeriod]);
 
   // 2.5 APP STATE VISIBILITY HANDLER (Clinical Recovery)
   useEffect(() => {
@@ -570,16 +569,11 @@ export const MultiplayerProvider = ({ children }) => {
         if (supabase.realtime && !supabase.realtime.isConnected()) {
           supabase.realtime.connect();
         }
-        // Force channel re-subscription if missing
-        if (matchIdRef.current && !channelRef.current) {
-          console.log('[Multiplayer] Missing channel on return, re-triggering subscription...');
-          // This will be caught by the matchId useEffect
-        }
       }
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, []);
+  }, [user?.id]);
 
   useEffect(() => {
     if (!activeMatch || !user?.id) return;
@@ -622,10 +616,11 @@ export const MultiplayerProvider = ({ children }) => {
 
     verifyAndStart();
   }, [activeMatch, opponent, user?.id, multiplayerState]);
-// 4. GAME SYNC EFFECT: Handle round transitions and match results
+  
+  // 4. GAME SYNC EFFECT: Handle round transitions and match results
   useEffect(() => {
     if (!activeMatch || !user?.id) return;
-    const controller = new AbortController();
+    
     const isP1 = activeMatch.player1_id === user.id;
 
     // --- 4.1 DETECT ROUND TRANSITION ---
@@ -654,7 +649,6 @@ export const MultiplayerProvider = ({ children }) => {
     if (activeMatch.status === 'finished' && multiplayerState !== 'idle') {
       // Logic for anyone who didn't trigger the game_over state locally (e.g. the loser)
       if (multiplayerState !== 'game_over' || LastMatchResult === null) {
-        const isP1 = activeMatch.player1_id === user.id;
         const myScore = isP1 ? activeMatch.p1_score : activeMatch.p2_score;
         const oppScore = isP1 ? activeMatch.p2_score : activeMatch.p1_score;
         
@@ -669,8 +663,6 @@ export const MultiplayerProvider = ({ children }) => {
         setMultiplayerStateGuarded('game_over');
 
         // SYNC REWARDS TO DATABASE
-        // 1. Victory: 30 XP (via 'battle' mode)
-        // 2. Draw: 5 XP (via 'battle_draw' mode)
         if (result === 'victory') {
           const isFlawless = myScore === 3 && oppScore === 0;
           syncProgressToDatabase(10, 'battle', { isPvPFlawless: isFlawless }).then(rewardData => {
@@ -689,14 +681,11 @@ export const MultiplayerProvider = ({ children }) => {
     }
 
     // NEW: Sync Opponent Colors from DB if missing in local state
-    // Use existing isP1
     const oppColors = isP1 ? activeMatch.p2_colors : activeMatch.p1_colors;
     if (oppColors && Array.isArray(oppColors) && oppColors.length > opponentGuesses.length) {
       setOpponentGuesses(oppColors);
     }
-
-    return () => controller.abort();
-  }, [activeMatch, user?.id, multiplayerState, fetchOpponentProfile, opponentGuesses.length, cancelMatch]);
+  }, [activeMatch, user?.id, multiplayerState, opponentGuesses.length, LastMatchResult, setMultiplayerStateGuarded, syncProgressToDatabase]);
 
   // 5. MOUNT-TIME RECOVERY EFFECT
   useEffect(() => {
@@ -750,7 +739,7 @@ export const MultiplayerProvider = ({ children }) => {
 
     recoverActiveMatch();
     return () => controller.abort();
-  }, [user?.id]);
+  }, [user?.id, fetchOpponentProfile, multiplayerState, setActiveMatchGuarded, setMultiplayerStateGuarded]);
 
   // UNIFIED ONE-CLICK MATCHMAKING
   const startMatchmaking = useCallback(async () => {
@@ -888,10 +877,10 @@ export const MultiplayerProvider = ({ children }) => {
     } catch (error) {
       console.error('[Multiplayer] Matchmaking Failed:', error);
       safeClearMatchmakingTimeout();
-      try { stopSearchingSound(false); } catch(_) {}
+      try { stopSearchingSound(false); } catch(_e) { /* Ignore audio stop failures */ }
       setMultiplayerStateGuarded('idle');
     }
-  }, [user?.id, startSearchingSound, stopSearchingSound, safeClearMatchmakingTimeout, fetchOpponentProfile]);
+  }, [user?.id, startSearchingSound, stopSearchingSound, safeClearMatchmakingTimeout, fetchOpponentProfile, setActiveMatchGuarded, setMultiplayerStateGuarded]);
 
 
 

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 import { THEMES } from '../data/themes';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
@@ -42,7 +42,7 @@ const PowerUpCard = ({ item, onRequestPurchase, canAfford }) => {
   const dynamicClass = getDynamicStyles(item.id);
 
   return (
-    <motion.button
+    <Motion.button
       layout
       whileHover={{ scale: 1.01 }}
       whileTap={{ scale: 0.98 }}
@@ -75,12 +75,12 @@ const PowerUpCard = ({ item, onRequestPurchase, canAfford }) => {
           </div>
         </div>
       </div>
-    </motion.button>
+    </Motion.button>
   );
 };
 
 const SpecialOfferCard = ({ item, onOpenGateway, playPurchaseSound }) => (
-  <motion.button
+  <Motion.button
     layout
     whileHover={{ scale: 1.01 }}
     whileTap={{ scale: 0.98 }}
@@ -110,12 +110,12 @@ const SpecialOfferCard = ({ item, onOpenGateway, playPurchaseSound }) => (
     <div className="flex items-center bg-white/10 p-3.5 rounded-md border border-white/20 relative z-10 w-full text-right">
        <span className="text-[12px] font-bold text-white leading-relaxed block w-full">{item.description}</span>
     </div>
-  </motion.button>
+  </Motion.button>
 );
 
-export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, skipCount, onPurchase, onPurchaseAvatar, onEquipAvatar, ownedAvatars = ['default'], equippedAvatar = 'default', playPurchaseSound }) {
+export default function ShopView({ fils, derhem, dinar: _dinar, magnetCount, hintCount, skipCount, onPurchase, onPurchaseAvatar, onEquipAvatar, ownedAvatars = ['default'], equippedAvatar = 'default', playPurchaseSound }) {
   const { playTabSound } = useAudio();
-  const { user, loadingAuth } = useUser();
+  const { user: _user, loadingAuth } = useUser();
   const [activeTab, setActiveTab] = useState('powerups');
   const [gatewayOpen, setGatewayOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState(null);
@@ -167,7 +167,7 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
   return (
     <div 
       onClick={handleBackgroundClick}
-      className="flex-1 w-full bg-mono-white dark:bg-mono-950 px-4 pt-6 pb-[120px] max-w-full flex flex-col gap-6 animate-in fade-in duration-700 overflow-x-hidden relative bg-trigger-zone transition-colors duration-500"
+      className="flex-1 w-full bg-mono-white dark:bg-mono-950 px-4 pt-6 pb-[120px] max-w-full flex flex-col gap-6 animate-in fade-in duration-700 overflow-x-hidden relative bg-trigger-zone transition-colors"
     >
       <FloatingLetterBackground ref={bgRef} />
       
@@ -201,7 +201,7 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
             }`}
           >
             {activeTab === tab && (
-              <motion.div
+              <Motion.div
                 layoutId="shopActiveTab"
                 className="absolute inset-0 bg-mono-white dark:bg-mono-800 rounded-sm shadow-sm z-[-1] transition-all duration-300"
                 transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
@@ -212,22 +212,22 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
         ))}
       </div>
 
-      <motion.div layout className="flex flex-col gap-5">
+      <Motion.div layout className="flex flex-col gap-5">
         <AnimatePresence mode="wait">
           {activeTab === 'powerups' && (
-            <motion.div key="powerups" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} className="flex flex-col gap-5">
+            <Motion.div key="powerups" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} className="flex flex-col gap-5">
               <div className="grid grid-cols-1 gap-4">
                 {SHOP_ITEMS.POWERUPS.map(item => (
                   <PowerUpCard key={item.id} item={item} onRequestPurchase={(i) => executePurchase({ data: i, type: 'powerup' })} canAfford={fils >= item.price} />
                 ))}
               </div>
               <SpecialOfferCard item={SHOP_ITEMS.SPECIALS.find(s => s.id === 'premium_bundle')} onOpenGateway={openGateway} playPurchaseSound={playPurchaseSound} />
-            </motion.div>
+            </Motion.div>
           )}
           {activeTab === 'avatars' && (
-            <motion.div key="avatars" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} className="flex flex-col gap-3">
+            <Motion.div key="avatars" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.02 }} className="flex flex-col gap-3">
               {SHOP_ITEMS.AVATARS.map(avatar => (
-                <motion.div
+                <Motion.div
                   key={avatar.id}
                   className={`bg-mono-white dark:bg-mono-900 py-3 px-4 rounded-md border border-mono-200 dark:border-mono-800 flex items-center gap-3 transition-all shadow-sm ${ownedAvatars.includes(avatar.id) && equippedAvatar === avatar.id ? 'border-primary/50 ring-1 ring-primary/10' : ''}`}
                 >
@@ -269,12 +269,12 @@ export default function ShopView({ fils, derhem, dinar, magnetCount, hintCount, 
                       </div>
                     )}
                   </div>
-                </motion.div>
+                </Motion.div>
               ))}
-            </motion.div>
+            </Motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </Motion.div>
     </div>
 
       <PaymentGatewayModal 
