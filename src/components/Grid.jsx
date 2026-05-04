@@ -1,11 +1,11 @@
-import React, { memo, useState, useEffect, useLayoutEffect, useMemo } from 'react';
+import React, { memo, useState, useEffect, useMemo } from 'react';
 import { STATUS } from '../data/constants';
-import { motion, useTransform } from 'framer-motion';
+import { motion as Motion, useTransform } from 'framer-motion';
 
-const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isNewHint, isFocused, isSecretMode, isMobile, hideLetters = false, flipDelay = 0, isFocusedMV = null, index = 0, isDark = true, rowIndex = 0, gridId = 'main' }) => {
+const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isHinted, isFocused, isSecretMode, hideLetters = false, flipDelay = 0, isFocusedMV = null, index = 0, isDark = true, rowIndex = 0, gridId = 'main' }) => {
   
   // 🎨 COLORS BASED ON THEME (isDark)
-  const showStatus = (!isCurrent && status !== STATUS.NONE) || isRevealed;
+  const showStatus = (!isCurrent && status !== STATUS.NONE) || isRevealed || isHinted;
   const isMaskedLive = isCurrent && hideLetters && status !== STATUS.NONE;
   const isFlipped = showStatus && !isMaskedLive;
 
@@ -17,7 +17,7 @@ const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isNewHint,
   let targetBg = neutralBg;
   
   if (isDark) {
-    if ((showStatus || isMaskedLive) && (status === STATUS.CORRECT || isRevealed)) {
+    if ((showStatus || isMaskedLive) && (status === STATUS.CORRECT || isRevealed || isHinted)) {
       targetBg = 'bg-[#538d4e] border-2 border-[#538d4e]';
     } else if ((showStatus || isMaskedLive) && (status === STATUS.WRONG_POS)) {
       targetBg = 'bg-[#b59f3b] border-2 border-[#b59f3b]';
@@ -29,7 +29,7 @@ const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isNewHint,
       targetBg = 'bg-transparent border-2 border-white/50';
     }
   } else {
-    if ((showStatus || isMaskedLive) && (status === STATUS.CORRECT || isRevealed)) {
+    if ((showStatus || isMaskedLive) && (status === STATUS.CORRECT || isRevealed || isHinted)) {
       targetBg = 'bg-[#6aaa64] border-2 border-[#6aaa64]';
     } else if ((showStatus || isMaskedLive) && (status === STATUS.WRONG_POS)) {
       targetBg = 'bg-[#c9b458] border-2 border-[#c9b458]';
@@ -62,13 +62,11 @@ const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isNewHint,
       activeFrontBg = isDark ? 'bg-[#262626] border-2 border-[#262626]' : 'bg-[#D4D4D4] border-2 border-[#D4D4D4]';
     }
   } else if (char && isCurrent) {
-    activeFrontBg = isDark ? 'bg-white/30 border-2 border-white/60' : 'bg-white border-2 border-[#878a8c]';
-  } else if (isFocused) {
-    activeFrontBg = isDark ? 'bg-white/5 border-2 border-white/30' : 'bg-white border-2 border-[#878a8c]';
+    activeFrontBg = isDark ? 'bg-white/30 border-2 border-white' : 'bg-white border-2 border-mono-900';
   }
 
   return (
-    <motion.div 
+    <Motion.div 
       initial={false}
       style={{ 
         perspective: '1000px',
@@ -78,19 +76,20 @@ const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isNewHint,
         minHeight: 'var(--min-tile-size)',
         aspectRatio: '1 / 1'
       }} 
-      className="flex-shrink-0"
+      className="shrink-0"
       id={`cell-${gridId}-${rowIndex}-${index}`}
       aria-label={`Row ${rowIndex + 1} Letter ${index + 1}: ${char || 'Empty'}`}
     >
-      <motion.div 
+      <Motion.div 
         initial={false}
         animate={{ 
           rotateX: isFlipped ? 180 : 0,
           y: 0,
-          scale: 1
+          scale: isCurrent ? (char ? [1, 1.05, 1] : [1, 0.95, 1]) : 1
         }}
         transition={{ 
-          rotateX: { duration: 0.5, delay: flipDelay / 1000 }
+          rotateX: { duration: 0.5, delay: flipDelay / 1000 },
+          scale: { duration: 0.15, times: [0, 0.5, 1] }
         }}
         style={{ transformStyle: 'preserve-3d', position: 'relative', width: '100%', height: '100%' }}
         className="rounded-none items-center justify-center flex"
@@ -127,14 +126,14 @@ const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isNewHint,
         </div>
 
         {/* Focused State Indicator */}
-        <motion.div 
+        <Motion.div 
           className={`absolute inset-0 border-2 ${isDark ? 'border-white/20' : 'border-slate-300'} z-30 pointer-events-none`}
           style={{ 
             opacity: isFocusedMV ? mvOpacity : 0
           }}
         />
-      </motion.div>
-    </motion.div>
+      </Motion.div>
+    </Motion.div>
   );
 }, (prev, next) => {
   return prev.char === next.char &&
@@ -143,25 +142,24 @@ const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isNewHint,
          prev.isFocusedMV === next.isFocusedMV &&
          prev.isCurrent === next.isCurrent &&
          prev.isRevealed === next.isRevealed &&
-         prev.isNewHint === next.isNewHint &&
+         prev.isHinted === next.isHinted &&
          prev.isSecretMode === next.isSecretMode &&
          prev.isDark === next.isDark &&
          prev.hideLetters === next.hideLetters;
 });
 
-const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, revealedIndices, lastHintIndex, isMobile, isShaking, isSecretMode, hideLetters = false, forcedStatuses = null, gap = '8px', forcedFocusIndex = null, isDark = true, rowIndex = 0, gridId = 'main' }) => {
+const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, revealedIndices, hintIndices = [], isShaking, isSecretMode, hideLetters = false, forcedStatuses = null, gap = '8px', forcedFocusIndex = null, isDark = true, rowIndex = 0, gridId = 'main' }) => {
   const activeClass = '';
 
   // PRE-CALCULATE CONSTANTS for the row maps
   const guessArr = Array.isArray(guess) ? guess : (typeof guess === 'string' ? guess.split('') : []);
   const firstEmptyIndex = guessArr.findIndex(c => c === '');
   
-  // If forcedFocusIndex is a MotionValue, we'll pass it down differently
   const isMV = forcedFocusIndex && typeof forcedFocusIndex === 'object' && forcedFocusIndex.get;
-  const actualFocusIndex = isMV ? null : (forcedFocusIndex !== null ? forcedFocusIndex : (firstEmptyIndex === -1 ? wordLength - 1 : firstEmptyIndex));
+  const actualFocusIndex = isMV ? null : (forcedFocusIndex !== null ? forcedFocusIndex : (firstEmptyIndex === 0 ? -1 : (firstEmptyIndex === -1 ? wordLength - 1 : firstEmptyIndex - 1)));
 
   return (
-    <motion.div 
+    <Motion.div 
       initial={false}
       className={`transition-all duration-300 ${activeClass} ${isShaking ? 'shake-anim' : ''} flex items-center justify-center`}
       dir="rtl"
@@ -175,7 +173,7 @@ const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, re
         let char = guessArr[i] || '';
         let status = STATUS.NONE;
         let isRevealed = (revealedIndices || []).includes(i);
-        let isNewHint = i === lastHintIndex;
+        let isHinted = isCurrent && (hintIndices || []).includes(i);
         
         const isFocused = !isMV && isCurrent && i === actualFocusIndex;
         
@@ -193,12 +191,11 @@ const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, re
             status={status}
             wordLength={wordLength}
             isRevealed={isRevealed}
-            isNewHint={isNewHint}
+            isHinted={isHinted}
             isFocused={isFocused}
             isFocusedMV={isMV ? forcedFocusIndex : null}
             index={i}
             rowIndex={rowIndex}
-            isMobile={isMobile}
             isSecretMode={isSecretMode}
             hideLetters={hideLetters}
             flipDelay={isCurrent ? 0 : i * 100}
@@ -207,7 +204,7 @@ const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, re
           />
         );
       })}
-    </motion.div>
+    </Motion.div>
   );
 }, (prev, next) => {
   const prevStr = Array.isArray(prev.guess) ? prev.guess.join('') : prev.guess;
@@ -222,10 +219,10 @@ const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, re
          prev.forcedFocusIndex === next.forcedFocusIndex &&
          JSON.stringify(prev.forcedStatuses) === JSON.stringify(next.forcedStatuses) &&
          prev.revealedIndices?.length === next.revealedIndices?.length &&
-         prev.lastHintIndex === next.lastHintIndex;
+         prev.hintIndices?.length === next.hintIndices?.length;
 });
 
-const Grid = memo(({ guesses = [], currentGuess = [], wordLength = 0, getLetterStatus, revealedIndices = [], lastHintIndex = -1, maxRows = 6, isSecretMode = false, comboGlow = false, isShaking = false, hideLetters = false, opponentStatuses = [], compact = false, activeRowIndex = null, opponentLiveStatuses = [], opponentLiveCursor = null, isDark = true, gridId = 'main' }) => {
+const Grid = memo(({ guesses = [], currentGuess = [], wordLength = 0, getLetterStatus, revealedIndices = [], hintIndices = [], maxRows = 6, isSecretMode = false, isShaking = false, hideLetters = false, opponentStatuses = [], compact = false, activeRowIndex = null, opponentLiveStatuses = [], opponentLiveCursor = null, isDark = true, gridId = 'main' }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
   
   useEffect(() => {
@@ -309,7 +306,7 @@ const Grid = memo(({ guesses = [], currentGuess = [], wordLength = 0, getLetterS
                 getLetterStatus={getLetterStatus}
                 isCurrent={isCurrent}
                 revealedIndices={isCurrent ? revealedIndices : []}
-                lastHintIndex={lastHintIndex}
+                hintIndices={isCurrent ? hintIndices : []}
                 isMobile={isMobile}
                 isShaking={isCurrent && isShaking}
                 isSecretMode={isSecretMode}
@@ -335,7 +332,8 @@ const Grid = memo(({ guesses = [], currentGuess = [], wordLength = 0, getLetterS
          prev.isDark === next.isDark &&
          JSON.stringify(prev.opponentStatuses) === JSON.stringify(next.opponentStatuses) &&
          JSON.stringify(prev.opponentLiveStatuses) === JSON.stringify(next.opponentLiveStatuses) &&
-         prev.opponentLiveCursor === next.opponentLiveCursor;
+         prev.opponentLiveCursor === next.opponentLiveCursor &&
+         prev.hintIndices?.length === next.hintIndices?.length;
 });
 
 export default Grid;

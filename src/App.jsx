@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import OneSignal from 'react-onesignal';
 import TopAppBar from './components/TopAppBar';
 import RoundIntro from './components/RoundIntro';
@@ -76,6 +77,7 @@ import { supabase } from './lib/supabase';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import DataDeletion from './components/DataDeletion';
 import TermsOfService from './components/TermsOfService';
+import { colorsToEmojiGrid } from './utils/share';
 
 
 
@@ -569,11 +571,13 @@ export default function App() {
 
   const {
     guesses,
-    currentGuess, setCurrentGuess,
+    currentGuess,
     usedKeys,
     isVictory, setIsVictory,
     isDefeat, setIsDefeat,
+    hintIndices,
     onKey, onDelete, onEnter,
+    triggerHint,
     getLetterStatus,
     resetLocalBoard
   } = useGameLogic({
@@ -585,7 +589,7 @@ export default function App() {
     onWin: onWinHandler,
     onLoss: onLossHandler,
     isActive: currentView === 'game',
-    handleGameplayUpdate, // Passing it down in case the hook needs it
+    handleGameplayUpdate,
     onWrongLanguage: () => {
       setIsKeyboardWarningOpen(true);
       triggerHaptic([50, 50]);
@@ -595,196 +599,80 @@ export default function App() {
   });
 
   // --- UNIFIED AUTOMATIC BACKGROUND MUSIC (BGM) CONTROLLER ---
-  // Ensures BGM is only active in main menu views and stops in all gameplay/matchmaking/auth states.
   const lastBgmActionRef = useRef(null);
   useEffect(() => {
     if (!startBGM || !stopBGM || currentView === undefined) return;
-
-    // Define where BGM SHOULD be active (Menu/Static Views)
     const menuViews = ['lobby', 'social_hub', 'store', 'leaderboard', 'stats', 'dictionary', 'profile'];
-
-    // Define where BGM SHOULD be suppressed (Gameplay/Transition/Auth)
-    const isGameplayActive = currentView === 'game' ||
-      multiplayerState === 'searching' ||
-      multiplayerState === 'waiting' ||
-      multiplayerState === 'playing' ||
-      isVictory ||
-      isDefeat ||
-      isWordFeverResultVisible;
-
+    const isGameplayActive = currentView === 'game' || multiplayerState === 'searching' || multiplayerState === 'waiting' || multiplayerState === 'playing' || isVictory || isDefeat || isWordFeverResultVisible;
     const isAuth = currentView === 'auth';
-
-    // Policy: Play music ONLY in menu views, and ONLY if gameplay is not active
     const shouldPlay = menuViews.includes(currentView) && !isGameplayActive && !isAuth;
     const intendedAction = (shouldPlay && bgMusicVolume > 0) ? 'PLAY' : 'STOP';
-
-    // GUARD: Prevent infinite loop by checking if the action is already processed
     if (lastBgmActionRef.current === intendedAction) return;
     lastBgmActionRef.current = intendedAction;
-
     if (intendedAction === 'PLAY') {
       const timer = setTimeout(() => {
-        if (lastBgmActionRef.current !== 'PLAY') return; // Safety check if state changed during delay
-        console.log("🎵 [App] Starting BGM for view:", currentView);
+        if (lastBgmActionRef.current !== 'PLAY') return;
         bgmStatusRef.current = 'playing';
         startBGM();
       }, 800);
       return () => clearTimeout(timer);
     } else {
-      // Only stop if we are actually entering a game or auth or volume is 0
       if (isGameplayActive || isAuth || bgMusicVolume <= 0) {
-        console.log("🎵 [App] Stopping BGM due to gameplay or auth state");
         bgmStatusRef.current = 'stopped';
         stopBGM();
       }
     }
   }, [currentView, multiplayerState, isVictory, isDefeat, isWordFeverResultVisible, bgMusicVolume, startBGM, stopBGM]);
 
-  // --- GLOBAL CLICK LISTENER: Nuclear Audio Unlock ---
+  // --- GLOBAL CLICK LISTENER ---
   useEffect(() => {
-    const nuclearUnlock = () => {
-      forceResumeAudio();
-      window.removeEventListener('click', nuclearUnlock);
-    };
+    const nuclearUnlock = () => { forceResumeAudio(); window.removeEventListener('click', nuclearUnlock); };
     window.addEventListener('click', nuclearUnlock);
     return () => window.removeEventListener('click', nuclearUnlock);
   }, []);
 
-
-  // Centralized Navigation (Fixes Ghost Overlays)
   const handleGoHome = useCallback(() => {
-    setIsVictory(false);
-    setIsDefeat(false);
-    setVictoryBreakdown({
-      awardAmount: 0,
-      xpAdded: 0,
-      greenCount: 0,
-      yellowCount: 0,
-      grayCount: 0
-    });
-    setRewardAmountXp(0);
-    setVictoryCustomText(null);
-    setIsWordFeverResultVisible(false);
-    setIsDailyActive(false);
-    setCategory('');
-    setTargetWord('');
-    setRevealedIndices([]); // RESET
-    // Ensure full multiplayer reset when returning from any result screen
+    setIsVictory(false); setIsDefeat(false);
+    setVictoryBreakdown({ awardAmount: 0, xpAdded: 0, greenCount: 0, yellowCount: 0, grayCount: 0 });
+    setRewardAmountXp(0); setVictoryCustomText(null); setIsWordFeverResultVisible(false); setIsDailyActive(false);
+    setCategory(''); setTargetWord(''); setRevealedIndices([]);
     if (cancelMatch) cancelMatch();
     setCurrentView('lobby');
   }, [setIsVictory, setIsDefeat, setIsWordFeverResultVisible, setIsDailyActive, setCategory, setTargetWord, cancelMatch, setCurrentView]);
 
-  // Dynamic Hint Limit Logic
   const getMaxHintsForWord = useCallback((length) => {
-    if (length <= 2) return 0;
-    if (length <= 5) return 1;
-    if (length <= 8) return 2;
-    if (length <= 10) return 3;
-    if (length <= 13) return 4;
-    return 5;
+    if (length <= 2) return 0; if (length <= 5) return 1; if (length <= 8) return 2; if (length <= 10) return 3; if (length <= 13) return 4; return 5;
   }, []);
 
   const showHintLimitToast = useCallback(() => {
     setHintLimitToast({ visible: true, message: 'هاریکاریێن تە ب دوماهیک هاتن' });
-    triggerHaptic([50, 100, 50]); // Error haptic
-    setTimeout(() => setHintLimitToast(prev => ({ ...prev, visible: false })), 3000);
+    triggerHaptic([50, 100, 50]); setTimeout(() => setHintLimitToast(prev => ({ ...prev, visible: false })), 3000);
   }, []);
 
-  // --- NUCLEAR INP OPTIMIZATION: Ref-Synchronized Pattern ---
-  // These refs mirror volatile state to keep handlers stable ([])
-  const gameRefs = useRef({
-    targetWord,
-    category,
-    hintCount,
-    magnetCount,
-    skipCount,
-    isVictory,
-    isDefeat,
-    currentView,
-    revealedIndices,
-    currentGuess,
-    magnetDisabledKeys,
-    gameMode,
-    hapticEnabled,
-    solvedWords,
-    level,
-    lastSolvedWord,
-    winsTowardsSecret,
-    fils,
-    targetHint,
-    hintTaps
-  });
-
-  // Sync refs every time state changes
+  const gameRefs = useRef({ targetWord, category, hintCount, magnetCount, skipCount, isVictory, isDefeat, currentView, revealedIndices, currentGuess, magnetDisabledKeys, gameMode, hapticEnabled, solvedWords, level, lastSolvedWord, winsTowardsSecret, fils, targetHint, hintTaps });
   useEffect(() => {
-    Object.assign(gameRefs.current, {
-      targetWord,
-      category,
-      hintCount,
-      magnetCount,
-      skipCount,
-      isVictory,
-      isDefeat,
-      currentView,
-      revealedIndices,
-      currentGuess,
-      magnetDisabledKeys,
-      gameMode,
-      hapticEnabled,
-      solvedWords,
-      level,
-      lastSolvedWord,
-      winsTowardsSecret,
-      fils,
-      targetHint,
-      hintTaps
-    });
+    Object.assign(gameRefs.current, { targetWord, category, hintCount, magnetCount, skipCount, isVictory, isDefeat, currentView, revealedIndices, currentGuess, magnetDisabledKeys, gameMode, hapticEnabled, solvedWords, level, lastSolvedWord, winsTowardsSecret, fils, targetHint, hintTaps });
   }, [targetWord, category, hintCount, magnetCount, skipCount, isVictory, isDefeat, currentView, revealedIndices, currentGuess, magnetDisabledKeys, gameMode, hapticEnabled, solvedWords, level, lastSolvedWord, winsTowardsSecret, fils, targetHint, hintTaps]);
 
-
-
-  // Wrapped handlers to manage UI feedback (shaking, messages)
-  // IDENTITY STABLE: These never change, preventing Keyboard re-renders
   const handleOnEnter = useCallback(async () => {
     const result = await onEnter();
-    if (result?.error) {
-      setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 500);
-    }
+    if (result?.error) { setIsShaking(true); setTimeout(() => setIsShaking(false), 500); }
   }, [onEnter]);
 
   const handleHint = useCallback(() => {
-    const { hintCount: hCount, isVictory: isV, targetWord: tWord, revealedIndices: rIdx, currentGuess: cGuess, hintTaps: hTaps } = gameRefs.current;
-
-    // Dynamic Limit Check
+    const { hintCount: hCount, isVictory: isV, targetWord: tWord, hintTaps: hTaps } = gameRefs.current;
     const dynamicLimit = getMaxHintsForWord(tWord.length);
-    if (hTaps >= dynamicLimit && !isV) {
-      showHintLimitToast();
-      return;
-    }
-
+    if (hTaps >= dynamicLimit && !isV) { showHintLimitToast(); return; }
     if (hCount <= 0 || isV) return;
-    const available = [];
-    tWord.split('').forEach((char, i) => {
-      if (!rIdx.includes(i) && cGuess[i] === '') available.push(i);
-    });
-    if (available.length === 0) return;
+
+    const hintIndex = triggerHint();
+    if (hintIndex === null) return;
 
     triggerHaptic(20);
     playBoosterSound();
-    const randomIndex = available[Math.floor(Math.random() * available.length)];
-    setRevealedIndices(prev => [...prev, randomIndex]);
-    setCurrentGuess(prev => {
-      const next = [...prev];
-      next[randomIndex] = tWord[randomIndex];
-      return next;
-    });
-
-    updateInventory({
-      hintCount: -1
-    }, true, true); // Sync to DB immediately to prevent refresh exploit
+    updateInventory({ hintCount: -1 }, true, true);
     setHintTaps(prev => prev + 1);
-  }, [updateInventory, playBoosterSound, setCurrentGuess, showHintLimitToast, getMaxHintsForWord]); // Added missing dependencies
+  }, [triggerHint, updateInventory, playBoosterSound, showHintLimitToast, getMaxHintsForWord]);
 
   const handleMagnet = useCallback(() => {
     const { magnetCount: mCount, isVictory: isV, targetWord: tWord, magnetDisabledKeys: mDisabled } = gameRefs.current;
@@ -1306,6 +1194,7 @@ export default function App() {
 
   return (
     <div className="flex flex-col h-dvh max-h-dvh w-full items-center bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 transition-colors duration-500 font-noto-sans-arabic" dir="rtl">
+      <Analytics />
       <div className={`flex-1 flex flex-col w-full max-w-screen-sm md:max-w-3xl lg:max-w-5xl xl:max-w-7xl mx-auto relative overflow-hidden transition-colors duration-500`}>
         {/* Panic Overlay for Word Fever Mode Critical Time */}
         {gameMode === 'word_fever' && currentView === 'game' && timeLeft <= 10 && !isVictory && (
@@ -1478,6 +1367,7 @@ export default function App() {
                       wordLength={targetWord.length}
                       getLetterStatus={getLetterStatus}
                       revealedIndices={revealedIndices}
+                      hintIndices={hintIndices}
                       lastHintIndex={-1}
                       targetWord={targetWord}
                       maxRows={gameMode === 'secret_word' ? 1 : (gameMode === 'word_fever' ? 3 : 6)}
@@ -1639,6 +1529,7 @@ export default function App() {
               isVisible={isVictory && showResultOverlay && currentView === 'game' && gameMode !== 'word_fever'}
               breakdown={victoryBreakdown}
               solvedWord={lastSolvedWord}
+              guesses={guesses}
               xp={rewardAmountXp}
               customTitle={victoryCustomText?.title}
               customDescription={victoryCustomText?.description}
@@ -1649,12 +1540,16 @@ export default function App() {
               }}
               onHome={handleGoHome}
               playStartSound={playStartGameSound}
+              profileData={profileData}
+              playerStats={playerStats}
+              gameMode={gameMode}
             />
 
             {/* Single Player Defeat */}
             <DefeatOverlay
               isVisible={isDefeat && showResultOverlay && currentView === 'game' && gameMode !== 'word_fever'}
               solvedWord={lastSolvedWord}
+              guesses={guesses}
               breakdown={defeatBreakdown}
               gameMode={gameMode}
               playStartSound={playStartGameSound}
@@ -1665,12 +1560,15 @@ export default function App() {
               }}
               onHome={handleGoHome}
               isDark={isSystemDark}
+              profileData={profileData}
+              playerStats={playerStats}
             />
             {/* Word Fever Result */}
             <WordFeverResultOverlay
               isVisible={isWordFeverResultVisible && showResultOverlay && currentView === 'game'}
               type={wordFeverResultType}
               solvedWord={lastSolvedWord}
+              guesses={guesses}
               breakdown={wordFeverResultType === 'win' ? victoryBreakdown : defeatBreakdown}
               xp={rewardAmountXp}
               onContinue={() => {
@@ -1715,6 +1613,7 @@ export default function App() {
           }}
           playStartSound={playStartGameSound}
           isDark={isSystemDark}
+          shareGrid={colorsToEmojiGrid(activeMatch?.player1_id === user?.id ? activeMatch?.p1_colors : activeMatch?.p2_colors)}
         />
 
         <Suspense fallback={null}>

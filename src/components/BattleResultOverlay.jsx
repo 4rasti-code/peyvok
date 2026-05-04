@@ -6,6 +6,7 @@ import Avatar from './Avatar';
 import { triggerHaptic } from '../utils/haptics';
 import { playSuccessSfx } from '../utils/audio';
 import { toKuDigits } from '../utils/formatters';
+import { shareGameResult } from '../utils/share';
 
 const AnimatedNumber = ({ value, prefix = "" }) => {
   const [displayValue, setDisplayValue] = useState(0);
@@ -41,8 +42,10 @@ const BattleResultOverlay = ({
   xp = 0,
   onNext,
   playStartSound,
-  isDark
+  isDark,
+  shareGrid = ""
 }) => {
+  const [shareStatus, setShareStatus] = useState(null); // null, 'success', 'copied'
   const hasTriggeredRef = useRef(false);
   const isVictory = result === 'victory';
   const isDefeat = result === 'defeat';
@@ -189,13 +192,37 @@ const BattleResultOverlay = ({
             </div>
 
             {/* Buttons */}
-            <div className="w-full">
+            <div className="w-full flex flex-col gap-3">
               <button
                 onClick={() => { triggerHaptic(10); playStartSound?.(); onNext(); }}
                 className={`w-full ${isVictory ? 'bg-emerald-600' : 'bg-sky-600'} hover:brightness-110 text-white py-5 rounded-3xl font-black text-xl active:scale-95 transition-all flex items-center justify-center gap-3 group`}
               >
                 ڤەگەڕە
                 <span className="material-symbols-outlined group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
+              </button>
+
+              <button
+                onClick={async () => {
+                  triggerHaptic(10);
+                  const result = await shareGameResult({
+                    title: isVictory ? `من سەرکەفتن ئینا ل سەر ${opponent?.nickname || 'ھەڤڕکەکێ'}! 🏆` : `یەکسانبووم دگەل ${opponent?.nickname || 'ھەڤڕکەکێ'}! 🤝`,
+                    grid: shareGrid
+                  });
+                  
+                  if (result === 'clipboard') {
+                    setShareStatus('copied');
+                    setTimeout(() => setShareStatus(null), 2000);
+                  } else if (result) {
+                    setShareStatus('success');
+                    setTimeout(() => setShareStatus(null), 2000);
+                  }
+                }}
+                className="w-full h-9 bg-transparent text-mono-400 dark:text-white/30 rounded-lg font-bold text-xs flex items-center justify-center gap-2 hover:text-mono-600 dark:hover:text-white/50 transition-colors mt-1"
+              >
+                <span className="material-symbols-outlined text-base">
+                  {shareStatus === 'copied' ? 'content_paste_go' : shareStatus === 'success' ? 'check_circle' : 'share'}
+                </span>
+                {shareStatus === 'copied' ? 'کۆپی بوو!' : shareStatus === 'success' ? 'هاتە ناردن!' : 'بەلاڤ بکە'}
               </button>
             </div>
           </Motion.div>

@@ -1,6 +1,6 @@
-import React, { useState, useCallback, memo } from 'react';
+import React, { useCallback, memo } from 'react';
 import { STATUS } from '../data/constants';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 import { playKeyClickSfx } from '../utils/audio';
 import InventoryBar from './InventoryBar';
@@ -17,6 +17,10 @@ const SPECIAL_KEYS = {
    ENTER: 'تەمام',
    DELETE: 'backspace'
 };
+
+const MotionButton = motion.button;
+const MotionDiv = motion.div;
+
 
 const Key = memo(({ k, status, onKeyPress, isDisabled, isDark = true }) => {
    const getKeyStyle = () => {
@@ -40,7 +44,14 @@ const Key = memo(({ k, status, onKeyPress, isDisabled, isDark = true }) => {
    };
 
    return (
-      <motion.button
+      <MotionButton
+         variants={{
+            initial: { y: 3 },
+            animate: {
+               y: 0,
+               transition: { type: "spring", stiffness: 120, damping: 25 }
+            }
+         }}
          whileHover={{ scale: 1.05 }}
          whileTap={{ scale: 0.92 }}
          transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -48,7 +59,7 @@ const Key = memo(({ k, status, onKeyPress, isDisabled, isDark = true }) => {
          className={`flex-1 h-[clamp(38px,6vh,55px)] rounded-md flex items-center justify-center font-heading font-light transition-[transform,background-color,border-color] border ${getKeyStyle()}`}
       >
          <span className="text-[clamp(1.3rem,4.5vw,1.9rem)] -translate-y-px">{k}</span>
-      </motion.button>
+      </MotionButton>
    );
 });
 
@@ -114,9 +125,29 @@ const Keyboard = memo(({
          <div className={`w-[40%] h-px ${isDark ? 'bg-white/5' : 'bg-slate-200'} mx-auto mb-3`} />
 
          {ROWS.map((row, rowIndex) => (
-            <div key={`kbd-row-${rowIndex}`} className="flex gap-1 w-full justify-center">
+            <MotionDiv
+               key={`kbd-row-${rowIndex}`}
+               className="flex gap-1 w-full justify-center"
+               initial="initial"
+               animate="animate"
+               variants={{
+                  animate: {
+                     transition: {
+                        staggerChildren: 0.04,
+                        delayChildren: rowIndex * 0.08
+                     }
+                  }
+               }}
+            >
                {rowIndex === 2 && (
-                  <motion.button
+                  <MotionButton
+                     variants={{
+                        initial: { y: 3 },
+                        animate: {
+                           y: 0,
+                           transition: { type: "spring", stiffness: 120, damping: 25 }
+                        }
+                     }}
                      whileHover={{ scale: 1.05 }}
                      whileTap={{ scale: 0.95 }}
                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -124,11 +155,18 @@ const Keyboard = memo(({
                      className="flex-[1.5] h-[clamp(38px,6vh,55px)] rounded-md bg-error text-white border border-white/10 flex items-center justify-center transition-all active:scale-95 shadow-md shadow-black/20"
                   >
                      <span className="material-symbols-outlined text-[20px]">backspace</span>
-                  </motion.button>
+                  </MotionButton>
                )}
 
                {rowIndex === 3 && (
-                  <motion.button
+                  <MotionButton
+                     variants={{
+                        initial: { y: 3 },
+                        animate: {
+                           y: 0,
+                           transition: { type: "spring", stiffness: 120, damping: 25 }
+                        }
+                     }}
                      whileHover={{ scale: 1.02 }}
                      whileTap={{ scale: 0.95 }}
                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -136,7 +174,7 @@ const Keyboard = memo(({
                      className="flex-[1.8] h-[clamp(38px,6vh,55px)] rounded-md bg-primary text-white font-bold text-xs uppercase flex items-center justify-center transition-all active:scale-95 border border-white/10 shadow-md shadow-black/20"
                   >
                      <span className="font-rabar font-light text-lg">{SPECIAL_KEYS.ENTER}</span>
-                  </motion.button>
+                  </MotionButton>
                )}
 
                {row.map((key) => (
@@ -149,7 +187,7 @@ const Keyboard = memo(({
                      isDark={isDark}
                   />
                ))}
-            </div>
+            </MotionDiv>
          ))}
       </div>
    );

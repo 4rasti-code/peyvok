@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import ResultStats from './ResultStats';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
 import { triggerHaptic } from '../utils/haptics';
 import { playSuccessSfx, playBackSfx } from '../utils/audio';
+import { generateWordleGrid, shareGameResult } from '../utils/share';
 
 const AnimatedNumber = ({ value, prefix = "" }) => {
   const [displayValue, setDisplayValue] = useState(0);
@@ -42,9 +44,13 @@ const VictoryOverlay = ({
   onHome,
   playStartSound,
   customTitle,
-  customDescription,
-  isDark
+  guesses = [],
+  isDark,
+  profileData,
+  playerStats,
+  gameMode
 }) => {
+  const [shareStatus, setShareStatus] = useState(null); // null, 'success', 'copied'
   const hasTriggeredRef = useRef(false);
 
   useEffect(() => {
@@ -63,143 +69,153 @@ const VictoryOverlay = ({
     }
 
     if (isVisible) {
+      // Extended timer to allow reading stats
       const timer = setTimeout(() => {
         onHome();
-      }, 7000);
+      }, 10000);
       return () => clearTimeout(timer);
     } else {
       // Reset trigger flag when overlay is hidden
       hasTriggeredRef.current = false;
     }
-  }, [isVisible, onNext, onHome]);
+  }, [isVisible, onNext, onHome, isDark]);
 
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-1000 flex items-center justify-center bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md p-6"
+          className="fixed inset-0 z-1000 flex items-center justify-center bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md p-6 overflow-y-auto"
         >
-          <motion.div
+          <Motion.div
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="w-full max-w-[340px] bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-white/10 rounded-[2rem] p-6 flex flex-col items-center gap-4 relative transition-colors duration-500 shadow-2xl"
+            className="w-full max-w-[360px] bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-white/10 rounded-lg p-6 flex flex-col items-center gap-4 relative transition-colors duration-500 shadow-2xl my-8"
           >
 
             {/* Status Icon Hub */}
             <div className="relative flex flex-col items-center">
-              <motion.div
+              <Motion.div
                 initial={{ scale: 0.5, rotate: 15 }}
                 animate={{ scale: 1, rotate: 0 }}
-                className="w-20 h-20 rounded-xl flex items-center justify-center relative z-10 bg-mono-100 dark:bg-white/5 text-mono-900 dark:text-white border border-mono-200 dark:border-white/10"
+                className="w-16 h-16 rounded flex items-center justify-center relative z-10 bg-mono-100 dark:bg-white/5 text-mono-900 dark:text-white border border-mono-200 dark:border-white/10"
               >
-                <span className="material-symbols-outlined text-[72px]">
+                <span className="material-symbols-outlined text-[48px]">
                   workspace_premium
                 </span>
-              </motion.div>
+              </Motion.div>
             </div>
 
             {/* Message Area */}
-            <div className="text-center space-y-4 w-full">
-              <h2 className="text-3xl font-black font-heading text-mono-900 dark:text-white">
+            <div className="text-center space-y-3 w-full">
+              <h2 className="text-2xl font-black font-heading text-mono-900 dark:text-white">
                 {customTitle || "تە سەرکەفتن ئینا!"}
               </h2>
-              <p className="text-lg font-bold font-body text-mono-500 dark:text-white/60 leading-relaxed px-4">
-                {customDescription || ""}
-              </p>
 
               {solvedWord && (
-                <div className="bg-mono-100 dark:bg-[#141414] border border-mono-200 dark:border-white/5 px-5 py-3 rounded-2xl mt-1 inline-block">
-                  <span className="text-mono-400 dark:text-white/40 text-[10px] font-bold uppercase tracking-normal block mb-0.5">پەیڤا ڕاست</span>
-                  <span className="text-xl font-black text-mono-900 dark:text-white font-heading tracking-normal">{solvedWord}</span>
+                <div className="bg-mono-100 dark:bg-[#141414] border border-mono-200 dark:border-white/5 px-4 py-2 rounded-sm inline-block">
+                  <span className="text-mono-400 dark:text-white/40 text-[9px] font-bold uppercase tracking-normal block mb-0.5">پەیڤا ڕاست</span>
+                  <span className="text-lg font-black text-mono-900 dark:text-white font-heading tracking-normal">{solvedWord}</span>
                 </div>
               )}
 
               {/* Stats & Rewards Table */}
-              <div className="w-full space-y-3 mt-1 bg-mono-100 dark:bg-[#141414] p-4 rounded-[1.5rem] border border-mono-200 dark:border-white/5">
-                <div className="flex justify-between items-center text-lg font-black group/row">
-                  <span className="text-mono-600 dark:text-white/70 transition-colors group-hover/row:text-mono-900 dark:group-hover/row:text-white">خەلاتێ تە</span>
-                  <div className="flex items-center gap-3 text-mono-900 dark:text-white">
-                    <div className="flex flex-col items-end leading-none pt-0.5">
+              <div className="w-full space-y-2 mt-1 bg-mono-100 dark:bg-[#141414] p-4 rounded border border-mono-200 dark:border-white/5">
+                <div className="flex justify-between items-center text-base font-black">
+                  <span className="text-mono-600 dark:text-white/70">خەلاتێ تە</span>
+                  <div className="flex items-center gap-2 text-mono-900 dark:text-white">
+                    <div className="flex flex-col items-end leading-none">
                       <AnimatedNumber
                         value={breakdown?.awardAmount || 50}
                         prefix="+"
                       />
-                      <span className="text-[9px] font-black uppercase tracking-normal opacity-60">
+                      <span className="text-[8px] font-black uppercase opacity-60">
                         {(breakdown?.awardType || 'fils') === 'derhem' ? 'دەرهەم' : (breakdown?.awardType || 'fils') === 'dinar' ? 'دینار' : 'فلس'}
                       </span>
                     </div>
                     {(breakdown?.awardType || 'fils') === 'derhem' ? (
-                      <DerhemIcon size={24} className="opacity-90" />
+                      <DerhemIcon size={20} className="opacity-90" />
                     ) : (breakdown?.awardType || 'fils') === 'dinar' ? (
-                      <DinarIcon size={24} className="opacity-90" />
+                      <DinarIcon size={20} className="opacity-90" />
                     ) : (
-                      <FilsIcon size={24} className="opacity-90" />
+                      <FilsIcon size={20} className="opacity-90" />
                     )}
                   </div>
                 </div>
 
                 <div className="h-px bg-mono-200 dark:bg-white/5 my-1" />
 
-                <div className="flex justify-between items-center text-base font-black group/row mt-1">
-                  <span className="text-mono-600 dark:text-white/70 transition-colors group-hover/row:text-mono-900 dark:group-hover/row:text-white">خەلاتێ ئێکس پی</span>
+                <div className="flex justify-between items-center text-sm font-black">
+                  <span className="text-mono-600 dark:text-white/70">خەلاتێ ئێکس پی</span>
                   <div className="flex items-center gap-2 text-mono-900 dark:text-white">
                     <div className="flex flex-col items-end leading-none">
                       <AnimatedNumber value={breakdown?.xpAdded || xp || 25} prefix="+" />
-                      <span className="text-[9px] font-black tracking-tighter opacity-60">XP</span>
+                      <span className="text-[8px] font-black tracking-tighter opacity-60">XP</span>
                     </div>
                   </div>
                 </div>
-
-                {/* Minimalist Stats Summary (Horizontal & Reordered) */}
-                <div className="flex items-center justify-center gap-4 pt-3 mt-1 border-t border-mono-200 dark:border-white/5 opacity-50">
-                  {/* Yellow (Wrong Position) */}
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-yellow-500" />
-                    <span className="text-[9px] font-bold text-mono-500 dark:text-white/60">ڕاست/جهێ شاش</span>
-                    <span className="text-[10px] font-black text-mono-900 dark:text-white">{breakdown?.yellowCount || 0}</span>
-                  </div>
-
-                  {/* Green (Correct) */}
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                    <span className="text-[9px] font-bold text-mono-500 dark:text-white/60">پیت ڕاست</span>
-                    <span className="text-[10px] font-black text-mono-900 dark:text-white">{breakdown?.greenCount || 0}</span>
-                  </div>
-
-                  {/* Gray (Wrong) */}
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-2 h-2 rounded-full bg-slate-500" />
-                    <span className="text-[9px] font-bold text-mono-500 dark:text-white/60">پیت شاش</span>
-                    <span className="text-[10px] font-black text-mono-900 dark:text-white">{breakdown?.grayCount || 0}</span>
-                  </div>
-                </div>
               </div>
+
+              {/* NYT Style Stats */}
+              <ResultStats 
+                profileData={profileData}
+                playerStats={playerStats}
+                gameMode={gameMode}
+                currentGuessCount={guesses.length}
+              />
             </div>
 
             {/* Action Buttons */}
-            <div className="w-full flex flex-col gap-3">
+            <div className="w-full flex flex-col gap-2 mt-2">
               <button
                 onClick={() => { triggerHaptic(10); playStartSound?.(); onNext(); }}
-                className="w-full h-12 bg-primary text-white rounded-xl font-black text-lg active:scale-95 transition-all flex items-center justify-center gap-3"
+                className="w-full h-11 bg-primary text-white rounded font-black text-base active:scale-95 transition-all flex items-center justify-center gap-3"
               >
-                <span className="material-symbols-outlined text-xl">arrow_left</span>
+                <span className="material-symbols-outlined text-lg">arrow_left</span>
                 بەردەوام بە
               </button>
 
-              <button
-                onClick={() => { triggerHaptic(10); playBackSfx(); onHome(); }}
-                className="w-full h-11 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-400 dark:text-white/50 py-3 rounded-xl font-bold text-base active:scale-95 transition-all flex items-center justify-center gap-2"
-              >
-                <span className="material-symbols-outlined text-lg">home</span>
-                ڤەگەڕیان
-              </button>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => { triggerHaptic(10); playBackSfx(); onHome(); }}
+                  className="h-10 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-600 dark:text-white/50 rounded font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-base">home</span>
+                  ڤەگەڕیان
+                </button>
+
+                <button
+                  onClick={async () => {
+                    triggerHaptic(10);
+                    const grid = generateWordleGrid(guesses, solvedWord);
+                    const result = await shareGameResult({
+                      title: 'تە سەرکەفتن ئینا د پەیڤچن دا! 🎉',
+                      grid: grid
+                    });
+                    
+                    if (result === 'clipboard') {
+                      setShareStatus('copied');
+                      setTimeout(() => setShareStatus(null), 2000);
+                    } else if (result) {
+                      setShareStatus('success');
+                      setTimeout(() => setShareStatus(null), 2000);
+                    }
+                  }}
+                  className="h-10 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-600 dark:text-white/50 rounded font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-base">
+                    {shareStatus === 'copied' ? 'content_paste_go' : shareStatus === 'success' ? 'check_circle' : 'share'}
+                  </span>
+                  {shareStatus === 'copied' ? 'کۆپی!' : shareStatus === 'success' ? 'نارد!' : 'بەلاڤ بکە'}
+                </button>
+              </div>
+
             </div>
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
       )}
     </AnimatePresence>
   );

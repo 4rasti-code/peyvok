@@ -23,11 +23,13 @@ export default function useGameLogic({
   const [usedKeys, setUsedKeys] = useState({});
   const [isVictory, setIsVictory] = useState(false);
   const [isDefeat, setIsDefeat] = useState(false);
+  const [hintIndices, setHintIndices] = useState([]); // Track hints for the CURRENT row only
 
   // Use refs for values needed in stable callbacks
   const isSubmittingRef = useRef(false);
   const targetWordRef = useRef(targetWord);
   const revealedIndicesRef = useRef(revealedIndices);
+  const hintIndicesRef = useRef(hintIndices);
   const isGameStateLockedRef = useRef(false);
   const guessesRef = useRef(guesses);
   const currentGuessRef = useRef(currentGuess);
@@ -39,6 +41,10 @@ export default function useGameLogic({
   useEffect(() => {
     revealedIndicesRef.current = revealedIndices;
   }, [revealedIndices]);
+
+  useEffect(() => {
+    hintIndicesRef.current = hintIndices;
+  }, [hintIndices]);
 
   useEffect(() => {
     isGameStateLockedRef.current = isLevelingUp || isVictory || isDefeat;
@@ -59,6 +65,7 @@ export default function useGameLogic({
     setUsedKeys({});
     setIsVictory(false);
     setIsDefeat(false);
+    setHintIndices([]);
     isSubmittingRef.current = false;
   }, []);
 
@@ -112,7 +119,8 @@ export default function useGameLogic({
       const nextGuess = [...prev];
       let placed = false;
       for (let i = 0; i < nextGuess.length; i++) {
-        if (nextGuess[i] === '' && !revealedIndicesRef.current.includes(i)) {
+        // LOCKING: Don't overwrite if it's a hint or revealed
+        if (nextGuess[i] === '' && !revealedIndicesRef.current.includes(i) && !hintIndicesRef.current.includes(i)) {
           nextGuess[i] = cleanKey;
           placed = true;
           break;
@@ -129,7 +137,8 @@ export default function useGameLogic({
       const nextGuess = [...prev];
       let deleted = false;
       for (let i = nextGuess.length - 1; i >= 0; i--) {
-        if (nextGuess[i] !== '' && !revealedIndicesRef.current.includes(i)) {
+        // LOCKING: Cannot delete hintIndices or revealedIndices
+        if (nextGuess[i] !== '' && !revealedIndicesRef.current.includes(i) && !hintIndicesRef.current.includes(i)) {
           nextGuess[i] = '';
           deleted = true;
           break;
@@ -139,6 +148,76 @@ export default function useGameLogic({
     });
   }, []); // COMPLETELY STABLE
 
+  const triggerHint = useCallback(() => {
+    const target = targetWordRef.current;
+    if (!target || isSubmittingRef.current || isGameStateLockedRef.current) return null;
+
+    const currentGuesses = guessesRef.current;
+    
+    // 1. Logic: Reveal only letters that have NOT been correctly guessed (Green) OR seen as Yellow yet.
+    const knownCharacters = new Set();
+    const knownGreenIndices = new Set();
+
+    currentGuesses.forEach(g => {
+      g.split('').forEach((char, i) => {
+        const status = getLetterStatus(g, i, target);
+        if (status === STATUS.CORRECT) {
+          knownGreenIndices.add(i);
+          knownCharacters.add(char);
+        } else if (status === STATUS.WRONG_POS) {
+          knownCharacters.add(char); // Exclude if it was seen as Yellow
+        }
+      });
+    });
+
+    // Also include currently revealed or hinted indices/letters
+    revealedIndicesRef.current.forEach(idx => {
+      knownGreenIndices.add(idx);
+      knownCharacters.add(target[idx]);
+    });
+    hintIndicesRef.current.forEach(idx => {
+      knownGreenIndices.add(idx);
+      knownCharacters.add(target[idx]);
+    });
+
+    // 2. Identify available indices
+    // A position is available if:
+    // - It is not already Green/Revealed/Hinted
+    // - AND the letter at that position has NOT been seen before (neither Green nor Yellow)
+    const available = [];
+    for (let i = 0; i < target.length; i++) {
+      const charAtTarget = target[i];
+      if (!knownGreenIndices.has(i) && !knownCharacters.has(charAtTarget)) {
+        available.push(i);
+      }
+    }
+
+    // FALLBACK: If all target letters have been "seen" but some positions are still wrong
+    if (available.length === 0) {
+      for (let i = 0; i < target.length; i++) {
+        if (!knownGreenIndices.has(i)) {
+          available.push(i);
+        }
+      }
+    }
+
+    if (available.length === 0) return null;
+
+    // 3. Select random index
+    const randomIndex = available[Math.floor(Math.random() * available.length)];
+    const revealedLetter = target[randomIndex];
+
+    // 4. Update states
+    setHintIndices(prev => [...prev, randomIndex]);
+    setCurrentGuess(prev => {
+      const next = [...prev];
+      next[randomIndex] = revealedLetter;
+      return next;
+    });
+
+    return randomIndex;
+  }, [getLetterStatus]);
+
   // Internal hooks for cleanup and stability
   const onWinRef = useRef(onWin);
   const onLossRef = useRef(onLoss);
@@ -147,8 +226,6 @@ export default function useGameLogic({
   useEffect(() => { onWinRef.current = onWin; }, [onWin]);
   useEffect(() => { onLossRef.current = onLoss; }, [onLoss]);
   useEffect(() => { onGuessSubmittedRef.current = onGuessSubmitted; }, [onGuessSubmitted]);
-
-  // ... (rest of the component logic)
 
   const onEnter = useCallback(async (forcedGuess = null) => {
     const target = targetWordRef.current;
@@ -189,6 +266,9 @@ export default function useGameLogic({
       setIsDefeat(true);
       if (onLossRef.current) onLossRef.current(finalStateGuesses, targetWord, gameMode);
     }
+
+    // RESET HINTS for next attempt
+    setHintIndices([]);
 
     // Notify caller
     if (onGuessSubmittedRef.current) {
@@ -282,9 +362,11 @@ export default function useGameLogic({
     setIsVictory,
     isDefeat,
     setIsDefeat,
+    hintIndices,
     onKey,
     onDelete,
     onEnter,
+    triggerHint,
     getLetterStatus,
     resetLocalBoard
   };

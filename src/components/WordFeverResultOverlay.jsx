@@ -4,6 +4,7 @@ import confetti from 'canvas-confetti';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
 import { triggerHaptic } from '../utils/haptics';
 import { playSuccessSfx, playBackSfx } from '../utils/audio';
+import { generateWordleGrid, shareGameResult } from '../utils/share';
 
 const AnimatedNumber = ({ value, prefix = "" }) => {
   const [displayValue, setDisplayValue] = useState(0);
@@ -42,8 +43,10 @@ const WordFeverResultOverlay = ({
   onContinue, // Resets timer to 60s + new word
   onRepeat,   // Resets timer to 60s + retry board
   onHome,      // Returns to lobby
-  playStartSound
+  playStartSound,
+  guesses = []
 }) => {
+  const [shareStatus, setShareStatus] = useState(null); // null, 'success', 'copied'
   const isWin = type === 'win';
   const hasTriggeredRef = React.useRef(false);
 
@@ -207,6 +210,31 @@ const WordFeverResultOverlay = ({
               >
                 <span className="material-symbols-outlined">home</span>
                 ڤەگەڕیان
+              </button>
+
+              <button
+                onClick={async () => {
+                  triggerHaptic(10);
+                  const grid = generateWordleGrid(guesses, solvedWord);
+                  const result = await shareGameResult({
+                    title: isWin ? 'من شیام هەمی پەیڤێن Word Fever بدۆزم! ⚡' : 'من تاقیكرنا Word Fever ئەنجامدا! 🔥',
+                    grid: grid
+                  });
+                  
+                  if (result === 'clipboard') {
+                    setShareStatus('copied');
+                    setTimeout(() => setShareStatus(null), 2000);
+                  } else if (result) {
+                    setShareStatus('success');
+                    setTimeout(() => setShareStatus(null), 2000);
+                  }
+                }}
+                className="w-full h-9 bg-transparent text-mono-400 dark:text-white/30 rounded-lg font-bold text-xs flex items-center justify-center gap-2 hover:text-mono-600 dark:hover:text-white/50 transition-colors mt-1"
+              >
+                <span className="material-symbols-outlined text-base">
+                  {shareStatus === 'copied' ? 'content_paste_go' : shareStatus === 'success' ? 'check_circle' : 'share'}
+                </span>
+                {shareStatus === 'copied' ? 'کۆپی بوو!' : shareStatus === 'success' ? 'هاتە ناردن!' : 'بەلاڤ بکە'}
               </button>
             </div>
           </Motion.div>
