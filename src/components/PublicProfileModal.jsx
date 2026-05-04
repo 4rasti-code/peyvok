@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import Avatar from './Avatar';
 import FlagBadge from './FlagBadge';
 import { triggerHaptic } from '../utils/haptics';
@@ -291,7 +291,7 @@ export default function PublicProfileModal({
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-6 sm:p-12 overflow- pointer-events-auto">
       {/* Heavy Backdrop */}
-      <motion.div 
+      <Motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -299,7 +299,7 @@ export default function PublicProfileModal({
         className="absolute inset-0 bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-sm"
       />
 
-      <motion.div
+      <Motion.div
         initial={{ scale: 0.9, opacity: 0, y: 30 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 30 }}
@@ -365,7 +365,7 @@ export default function PublicProfileModal({
                   className="relative flex items-center justify-center cursor-pointer"
                   onClick={() => triggerHaptic(10)}
                 >
-                   <motion.div 
+                   <Motion.div 
                      className={`absolute inset-0 rounded-full ${mastery.bg} opacity-20`}
                    />
                     <div className={`relative z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-mono-100 dark:bg-slate-900 border-2 ${mastery.tierBorder} transition-colors`}>
@@ -375,7 +375,7 @@ export default function PublicProfileModal({
                 </div>
 
                 {isMe && mastery.tierLevel > (displayData.mastery_claims?.[mastery.id] || 0) && (
-                  <motion.button
+                  <Motion.button
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     whileHover={{ scale: 1.1 }}
@@ -386,7 +386,7 @@ export default function PublicProfileModal({
                   >
                     {claiming ? '...' : 'وەرگرتن'}
                     <FilsIcon className="w-3.5 h-3.5" />
-                  </motion.button>
+                  </Motion.button>
                 )}
              </div>
            )}
@@ -394,7 +394,7 @@ export default function PublicProfileModal({
 
         {/* Stats Grid */}
         {!loading && (
-          <motion.div 
+          <Motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="w-full mb-5 pt-4 border-t border-mono-200 dark:border-white/5 space-y-4"
@@ -408,7 +408,7 @@ export default function PublicProfileModal({
                    <span className="text-[9px] font-black text-mono-300 dark:text-white/20">/ {nextLevelXP}</span>
                 </div>
                 <div className="w-full h-2 bg-mono-100 dark:bg-slate-950 rounded-full overflow-hidden relative z-10">
-                   <motion.div 
+                   <Motion.div 
                      initial={{ width: 0 }}
                      animate={{ width: `${progressRatio}%` }}
                      transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
@@ -438,7 +438,7 @@ export default function PublicProfileModal({
                          </button>
                          <AnimatePresence>
                            {activeTooltip === m.id && (
-                             <motion.div
+                             <Motion.div
                                initial={{ opacity: 0, y: 10, scale: 0.9 }}
                                animate={{ opacity: 1, y: 0, scale: 1 }}
                                exit={{ opacity: 0, y: 5, scale: 0.9 }}
@@ -448,7 +448,7 @@ export default function PublicProfileModal({
                                   <span className={`block uppercase mb-1 ${m.color}`}>{m.name}</span>
                                   {m.tooltip}
                                 </p>
-                             </motion.div>
+                             </Motion.div>
                            )}
                          </AnimatePresence>
                        </div>
@@ -456,7 +456,7 @@ export default function PublicProfileModal({
                    })}
                 </div>
              </div>
-          </motion.div>
+          </Motion.div>
         )}
 
         <div className="w-full space-y-3 mt-auto flex flex-col pt-4">
@@ -479,14 +479,14 @@ export default function PublicProfileModal({
 
                 <AnimatePresence mode="wait">
                   {showUnfriendConfirm ? (
-                    <motion.div 
+                    <Motion.div 
                       initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
                       className="flex items-center justify-center gap-3 bg-red-500/10 border border-red-500/20 py-2.5 px-4 rounded-xl"
                     >
                       <span className="text-xs font-bold text-red-200">تو پشتڕاستی؟</span>
                       <button onClick={handleUnfriend} className="text-white bg-red-600 hover:bg-red-500 px-4 py-1.5 rounded-lg text-xs font-black transition-colors">بەڵێ</button>
                       <button onClick={() => { triggerHaptic(10); setShowUnfriendConfirm(false); }} className="text-slate-300 bg-white/10 hover:bg-white/20 px-4 py-1.5 rounded-lg text-xs font-bold transition-colors">نەخێر</button>
-                    </motion.div>
+                    </Motion.div>
                   ) : (
                     <button 
                       onClick={() => { triggerHaptic(10); setShowUnfriendConfirm(true); }}
@@ -529,11 +529,11 @@ export default function PublicProfileModal({
            {onToggleBlock && !isMe && (
              <AnimatePresence mode="wait">
                {showBlockConfirm ? (
-                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="flex items-center justify-center gap-3 mt-2 bg-red-500/10 border border-red-500/20 py-2 px-3 rounded-xl">
+                 <Motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} className="flex items-center justify-center gap-3 mt-2 bg-red-500/10 border border-red-500/20 py-2 px-3 rounded-xl">
                    <span className="text-xs font-bold text-red-200">دڵنیایی؟</span>
                    <button onClick={() => { triggerHaptic(10); onToggleBlock(effectiveIsBlocked); setShowBlockConfirm(false); }} className="text-white bg-red-600 hover:bg-red-500 px-3 py-1 rounded-lg text-xs font-black">بەڵێ، بلۆک</button>
                    <button onClick={() => { triggerHaptic(10); setShowBlockConfirm(false); }} className="text-slate-300 bg-white/10 hover:bg-white/20 px-3 py-1 rounded-lg text-xs font-bold">نەخێر</button>
-                 </motion.div>
+                 </Motion.div>
                ) : (
                  <button onClick={() => { triggerHaptic(10); setShowBlockConfirm(true); }} className={`text-sm font-bold mt-2 hover:opacity-100 transition-opacity flex items-center gap-1 justify-center ${effectiveIsBlocked ? 'text-slate-400 opacity-60' : 'text-red-400/50 opacity-100 hover:text-red-400'}`}>
                    <span className="material-symbols-outlined text-[16px]">{effectiveIsBlocked ? 'undo' : 'person_off'}</span>
@@ -543,8 +543,9 @@ export default function PublicProfileModal({
              </AnimatePresence>
            )}
         </div>
-      </motion.div>
+      </Motion.div>
       <CoinAnimation trigger={showCoinAnim} amount={rewardAmount} />
     </div>
   );
 }
+

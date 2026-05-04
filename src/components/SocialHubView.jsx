@@ -85,7 +85,7 @@ function MessageContextMenu({ m, x, y, isMe, onReact, onReply, onCopy, onClose }
         {/* Reactions Header */}
         <div className="bg-mono-50 dark:bg-mono-900 border border-mono-200 dark:border-white/10 rounded-2xl mb-2 p-1.5 flex items-center justify-between gap-1 overflow-x-auto no-scrollbar shadow-xl">
           {['❤️', '😂', '👍', '🔥', '😮', '🙏'].map((emoji, idx) => (
-            <motion.button 
+            <Motion.button 
               key={emoji}
               whileHover={{ scale: 1.3, y: -5 }}
               whileTap={{ scale: 0.9 }}
@@ -95,7 +95,7 @@ function MessageContextMenu({ m, x, y, isMe, onReact, onReply, onCopy, onClose }
               className="w-10 h-10 flex items-center justify-center text-xl"
             >
               {emoji}
-            </motion.button>
+            </Motion.button>
           ))}
         </div>
 
@@ -1193,3 +1193,5 @@ export default function SocialHubView({
     </div>
   );
 }
+
+

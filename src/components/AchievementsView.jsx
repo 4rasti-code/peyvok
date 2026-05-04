@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion} from 'framer-motion';
 import { ACHIEVEMENTS_CONFIG, TIER_COLORS } from '../constants/achievements';
 import { getAllAchievementsProgress } from '../utils/achievementUtils';
 import { triggerHaptic } from '../utils/haptics';
@@ -37,7 +37,7 @@ const AchievementsView = ({ profileData, onViewChange }) => {
       </div>
 
       <div className="w-full max-w-lg overflow-y-auto no-scrollbar pb-40 px-6 pt-6">
-        <motion.div 
+        <Motion.div 
           variants={container}
           initial="hidden"
           animate="show"
@@ -47,7 +47,7 @@ const AchievementsView = ({ profileData, onViewChange }) => {
             const tierColor = achievement.tier ? TIER_COLORS[achievement.tier] : '#94a3b8'; // gray-400 for locked
             
             return (
-              <motion.div
+              <Motion.div
                 key={achievement.id}
                 variants={item}
                 className="bg-mono-white dark:bg-mono-900/60 border border-mono-200 dark:border-mono-800 rounded-[16px] p-4 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden"
@@ -122,7 +122,7 @@ const AchievementsView = ({ profileData, onViewChange }) => {
                       </div>
                       
                       <div className="h-1.5 w-full bg-mono-100 dark:bg-mono-800 rounded-full overflow-hidden">
-                        <motion.div 
+                        <Motion.div 
                           initial={{ width: 0 }}
                           animate={{ width: `${achievement.percent}%` }}
                           transition={{ duration: 1, ease: "easeOut" }}
@@ -136,13 +136,14 @@ const AchievementsView = ({ profileData, onViewChange }) => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </Motion.div>
             );
           })}
-        </motion.div>
+        </Motion.div>
       </div>
     </div>
   );
 };
 
 export default AchievementsView;
+

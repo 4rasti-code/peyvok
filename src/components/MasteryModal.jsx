@@ -16,7 +16,7 @@ const MasteryModal = ({ isOpen, onClose, targetWord, stats, gameMode, isDark }) 
       // Mastery Triple-Pulse (Extra strong)
       triggerHaptic([50, 70, 50, 70, 100]);
     }
-  }, [isOpen]);
+  }, [isOpen, isDark]);
 
   if (!isOpen) return null;
 

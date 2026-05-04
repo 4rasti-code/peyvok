@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { triggerHaptic } from '../utils/haptics';
 import { useUser } from '../context/AuthContext';
@@ -27,7 +27,7 @@ export default function LevelUpOverlay({ isVisible, newLevel, onClose, isDark })
       // Level Up Triple-Pulse
       triggerHaptic([40, 60, 40, 60, 80]);
     }
-  }, [isVisible]);
+  }, [isVisible, isDark]);
 
   if (!isVisible) return null;
 

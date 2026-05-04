@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { AVATARS, DEFAULT_AVATAR } from '../data/avatars';
 import { COUNTRIES } from '../data/countries';
 import { supabase } from '../lib/supabase';
@@ -301,7 +301,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                   <div className="relative pt-6 w-14">
                      <AnimatePresence mode="popLayout">
                         {(draftAvatar !== userAvatar || pendingFile || draftNickname !== userNickname || draftCountryCode !== countryCode) && !saveSuccess ? (
-                           <motion.button
+                           <Motion.button
                               key="save-btn"
                               initial={{ scale: 0, rotate: -90 }}
                               animate={{ scale: 1, rotate: 0 }}
@@ -318,15 +318,15 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                                     <span className="text-[7px] font-black uppercase -mt-0.5">پاشەکەفت</span>
                                  </>
                               )}
-                           </motion.button>
+                           </Motion.button>
                         ) : (
-                           <motion.div
+                           <Motion.div
                               key="streak-badge"
                               initial={{ opacity: 0, scale: 0.8 }}
                               animate={{ opacity: 1, scale: 1 }}
                               className="flex flex-col items-center justify-center relative w-12 h-14"
                            >
-                              <motion.div
+                              <Motion.div
                                  className="relative text-xl leading-none cursor-pointer"
                                  animate={{
                                     filter: [
@@ -342,17 +342,17 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                                  }}
                               >
                                  🔥
-                                 <motion.div
+                                 <Motion.div
                                     className="absolute inset-x-0 bottom-0 top-1/4 bg-orange-500/30 rounded-full blur-lg z-[-1]"
                                     animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
                                     transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
                                  />
-                              </motion.div>
+                              </Motion.div>
                               <div className="flex flex-col items-center z-10 w-full mt-1">
                                  <span className="text-[8px] font-black text-orange-400 uppercase leading-none mb-0.5 opacity-80 tracking-normal">ستریك</span>
                                  <span className="text-lg font-black text-mono-900 dark:text-mono-100 leading-none tabular-nums">{toKuDigits(dailyStreak || 0)}</span>
                               </div>
-                           </motion.div>
+                           </Motion.div>
                         )}
                      </AnimatePresence>
                   </div>
@@ -379,7 +379,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
 
                {/* 4. Central Avatar Section - Maximum Top Position with Progress Ring */}
                <div className="absolute inset-0 flex items-start justify-center z-30 pointer-events-none pt-4">
-                  <motion.div
+                  <Motion.div
                      className="relative pointer-events-auto cursor-pointer group/avatar p-2"
                      whileHover={{ scale: 1.05 }}
                      whileTap={{ scale: 0.95 }}
@@ -394,7 +394,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                            <circle cx="50" cy="50" r="41" fill="none" className="stroke-mono-200/10 dark:stroke-mono-800/20" strokeWidth="1" />
 
                            {/* Progress Path (Thick & Vibrant) */}
-                           <motion.circle
+                           <Motion.circle
                               cx="50"
                               cy="50"
                               r="41"
@@ -422,7 +422,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                            <span className="material-symbols-outlined text-[20px] font-black leading-none">edit</span>
                         </div>
                      </div>
-                  </motion.div>
+                  </Motion.div>
                </div>
 
                {/* 5. Bottom Info Dock */}
@@ -466,7 +466,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
 
 
          <div className="flex-1 overflow-y-auto px-4 pb-[max(env(safe-area-inset-bottom),80px)] scrollbar-hide relative z-10 bg-trigger-zone">
-             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pt-2 w-full">
+             <Motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pt-2 w-full">
                      <div className="space-y-2 flex flex-col items-end">
                         <label htmlFor="profile-nickname" className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1 tracking-normal text-right block w-full mt-1">ناسناڤێ تە</label>
                         <div className="flex items-center gap-2 w-full">
@@ -494,7 +494,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                               </button>
                            </div>
                            {(draftNickname !== userNickname) && draftNickname.trim() && !saveSuccess && (
-                              <motion.button
+                              <Motion.button
                                  initial={{ scale: 0.8, opacity: 0 }}
                                  animate={{ scale: 1, opacity: 1 }}
                                  onClick={handleSave}
@@ -502,17 +502,17 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                                  className={`h-12 px-5 rounded-md font-black text-xs whitespace-nowrap transition-all ${draftNickname.length < 8 || draftNickname.length > 15 ? 'bg-mono-200 dark:bg-mono-800 text-mono-400 dark:text-mono-600 cursor-not-allowed' : 'bg-green-600 text-white shadow-lg shadow-green-900/20'}`}
                               >
                                  پاراستن
-                              </motion.button>
+                              </Motion.button>
                            )}
                         </div>
                         {!isNicknameLocked && (
                            <div className="w-full text-right px-1 mt-1">
                               <AnimatePresence>
                                  {draftNickname.length > 0 && draftNickname.length < 8 && (
-                                    <motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناسناڤێ تە ژ ٨ پیتان کێمتر بیت</motion.p>
+                                    <Motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناسناڤێ تە ژ ٨ پیتان کێمتر بیت</Motion.p>
                                  )}
                                  {draftNickname.length > 15 && (
-                                    <motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناڤێ تە ژ ١٥ پیتان زێدەتر بیت</motion.p>
+                                    <Motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناڤێ تە ژ ١٥ پیتان زێدەتر بیت</Motion.p>
                                  )}
                               </AnimatePresence>
                            </div>
@@ -548,13 +548,13 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                               </button>
                            </div>
                            {(draftCountryCode !== countryCode || draftIsInKurdistan !== isInKurdistan) && !saveSuccess && (
-                              <motion.button initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} onClick={handleSave} className="h-12 px-5 bg-green-600 text-white rounded-md font-black text-xs whitespace-nowrap shadow-lg shadow-green-900/20">پاراستن</motion.button>
+                              <Motion.button initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} onClick={handleSave} className="h-12 px-5 bg-green-600 text-white rounded-md font-black text-xs whitespace-nowrap shadow-lg shadow-green-900/20">پاراستن</Motion.button>
                            )}
                         </div>
 
                         {isFlagBoxOpen && createPortal(
                            <AnimatePresence mode="wait">
-                              <motion.div ref={flagDropdownRef} initial={{ opacity: 0, y: 8, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.95 }} style={{ position: 'absolute', top: dropdownCoords.top + 6, left: dropdownCoords.left, width: dropdownCoords.width }} className="bg-mono-white dark:bg-mono-900 rounded-xl border border-mono-200 dark:border-mono-800 z-[9999] shadow-2xl overflow-hidden noise-grain">
+                              <Motion.div ref={flagDropdownRef} initial={{ opacity: 0, y: 8, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.95 }} style={{ position: 'absolute', top: dropdownCoords.top + 6, left: dropdownCoords.left, width: dropdownCoords.width }} className="bg-mono-white dark:bg-mono-900 rounded-xl border border-mono-200 dark:border-mono-800 z-[9999] shadow-2xl overflow-hidden noise-grain">
                                  <div className="p-2 max-h-60 overflow-y-auto no-scrollbar">
                                     <button onClick={() => { triggerHaptic(10); setDraftIsInKurdistan(true); setIsFlagBoxOpen(false); }} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-mono-100 dark:hover:bg-mono-800 w-full transition-colors">
                                        <FlagBadge isInKurdistan={true} size="xs" />
@@ -569,7 +569,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                                        </button>
                                     ))}
                                  </div>
-                              </motion.div>
+                              </Motion.div>
                            </AnimatePresence>,
                            document.body
                         )}
@@ -612,11 +612,11 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                            کۆپی کرنا لینکی
                         </button>
                      </div>
-                  </motion.div>
+                  </Motion.div>
          </div>
          {isCropModalOpen && createPortal(
             <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/90 overflow-hidden" dir="rtl">
-               <motion.div
+               <Motion.div
                   initial={{ opacity: 0, scale: 0.9, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   className="bg-mono-white dark:bg-mono-950 rounded-md w-full max-w-2xl overflow-hidden relative border border-mono-200 dark:border-mono-800 transition-colors duration-300 shadow-2xl"
@@ -721,10 +721,11 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                         </button>
                      </div>
                   </div>
-               </motion.div>
+               </Motion.div>
             </div>,
             document.body
          )}
       </div>
    );
 }
+

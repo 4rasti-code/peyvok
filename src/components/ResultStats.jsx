@@ -89,3 +89,5 @@ export default function ResultStats({ profileData, playerStats, gameMode, curren
     </div>
   );
 }
+
+

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 import CurrencyDecrementEffect from './CurrencyDecrementEffect';
 import NotificationsView from './NotificationsView';
@@ -74,7 +74,7 @@ export default function TopAppBar({
         <div className="flex items-center justify-start flex-1 relative">
           {isPlaying ? (
             <div className="flex items-center gap-1 relative">
-              <motion.button
+              <Motion.button
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 whileHover={{ scale: 1.15 }}
@@ -84,12 +84,12 @@ export default function TopAppBar({
                 className={`w-12 h-12 flex items-center justify-center ${isDark ? 'text-white/40' : 'text-slate-400'} hover:text-primary transition-all`}
               >
                 <span className="material-symbols-outlined text-[28px] font-black">help</span>
-              </motion.button>
+              </Motion.button>
             </div>
           ) : (
             currentView === 'lobby' ? (
               <div className="flex items-center gap-1">
-                <motion.button
+                <Motion.button
                   key="daily-reward-btn"
                   initial={{ opacity: 0, scale: 0, x: -20 }}
                   animate={{
@@ -120,13 +120,13 @@ export default function TopAppBar({
                   {isDailyAvailable && (
                     <div className="absolute top-1 right-1 w-3.5 h-3.5 bg-red-500 rounded-full border-2 border-mono-white dark:border-mono-950" />
                   )}
-                </motion.button>
+                </Motion.button>
               </div>
             ) : (
               currentView !== 'store' && (
                 <div className="flex items-center gap-1">
                   {(currentView === 'lobby' || currentView === 'leaderboard' || currentView === 'profile') && (
-                    <motion.button
+                    <Motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       transition={{ type: "spring", stiffness: 400, damping: 17 }}
@@ -134,7 +134,7 @@ export default function TopAppBar({
                       className="w-12 h-12 flex items-center justify-center text-mono-600 dark:text-mono-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all"
                     >
                       <span className="material-symbols-outlined text-[32px] font-black">settings</span>
-                    </motion.button>
+                    </Motion.button>
                   )}
                 </div>
               )
@@ -147,7 +147,7 @@ export default function TopAppBar({
           {isPlaying ? (
             <div className="flex items-center gap-2">
               <div className="relative">
-                <motion.button
+                <Motion.button
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   whileHover={{ scale: 1.15 }}
@@ -157,11 +157,11 @@ export default function TopAppBar({
                   className={`w-12 h-12 flex items-center justify-center transition-all ${isForfeitMenuOpen ? 'text-white bg-red-500 rounded-full shadow-lg shadow-red-500/20' : 'text-[#ef4444]'}`}
                 >
                   <span className="material-symbols-outlined text-[32px] font-black">{isForfeitMenuOpen ? 'close' : 'close'}</span>
-                </motion.button>
+                </Motion.button>
 
                 <AnimatePresence>
                   {isForfeitMenuOpen && (
-                    <motion.div
+                    <Motion.div
                       initial={{ opacity: 0, y: -10, scale: 0.9 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.9 }}
@@ -179,7 +179,7 @@ export default function TopAppBar({
                       >
                         <span className="text-sm font-medium">نەخێر</span>
                       </button>
-                    </motion.div>
+                    </Motion.div>
                   )}
                 </AnimatePresence>
               </div>
@@ -209,7 +209,7 @@ export default function TopAppBar({
               {/* Notification Button (Lobby Only) */}
               {currentView === 'lobby' && (
                 <div className="relative ml-2">
-                  <motion.button
+                  <Motion.button
                     animate={notificationCount > 0 ? {
                       scale: [1, 1.1, 1],
                       filter: ["brightness(1)", "brightness(1.5)", "brightness(1)"]
@@ -226,15 +226,15 @@ export default function TopAppBar({
                   >
                     <span className="material-symbols-outlined text-[48px] font-black" style={{ fontVariationSettings: notificationCount > 0 ? "'FILL' 1" : "'FILL' 0" }}>notifications</span>
                     {notificationCount > 0 && (
-                      <motion.div
+                      <Motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         className="absolute top-0 right-0 w-6 h-6 bg-red-500 rounded-full border-2 border-mono-white dark:border-mono-950 flex items-center justify-center pointer-events-none"
                       >
                         <span className="text-[11px] font-black text-white leading-none">{toKuDigits(notificationCount)}</span>
-                      </motion.div>
+                      </Motion.div>
                     )}
-                  </motion.button>
+                  </Motion.button>
 
                   <AnimatePresence>
                     {isNotifsOpen && (
@@ -259,3 +259,4 @@ export default function TopAppBar({
     </header>
   );
 }
+

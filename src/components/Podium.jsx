@@ -1,14 +1,12 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import FlagBadge from './FlagBadge';
-import { AVATARS, DEFAULT_AVATAR } from '../data/avatars';
 import { toKuDigits } from '../utils/formatters';
 import Avatar from './Avatar';
 
 const PodiumStep = ({ player, rank, delay, onPlayerClick }) => {
   const isFirst = rank === 1;
   const isSecond = rank === 2;
-  const isThird = rank === 3;
 
   const renderAvatar = (player, size = "md") => {
     return (
@@ -51,7 +49,7 @@ const PodiumStep = ({ player, rank, delay, onPlayerClick }) => {
   const style = getRankStyle();
 
   return (
-    <motion.div
+    <Motion.div
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, type: 'spring', stiffness: 120, damping: 18 }}
@@ -61,13 +59,13 @@ const PodiumStep = ({ player, rank, delay, onPlayerClick }) => {
       {/* Avatar Container */}
       <div className="relative mb-4 group px-1">
         {isFirst && (
-          <motion.div 
+          <Motion.div 
             animate={{ rotate: [0, 8, -8, 0], scale: [1, 1.1, 1] }}
             transition={{ repeat: Infinity, duration: 4 }}
             className="absolute -top-7 left-1/2 -translate-x-1/2 text-[#d9a441]"
           >
             <span className="material-symbols-outlined text-2xl gold-glow">crown</span>
-          </motion.div>
+          </Motion.div>
         )}
         
         <div className={`relative ${isFirst ? 'scale-110' : 'scale-90'}`}>
@@ -93,7 +91,7 @@ const PodiumStep = ({ player, rank, delay, onPlayerClick }) => {
            </p>
          </div>
       </div>
-    </motion.div>
+    </Motion.div>
   );
 };
 
@@ -120,3 +118,5 @@ export default function Podium({ topThree, onPlayerClick }) {
     </div>
   );
 }
+
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { FilsIcon } from './CurrencyIcon';
 import CurrencyDecrementEffect from './CurrencyDecrementEffect';
 
@@ -77,7 +77,7 @@ export default function InfoBar({
              </AnimatePresence>
 
              {/* Dynamic Bolt Background Overlay */}
-             <motion.div 
+             <Motion.div 
                animate={timeLeft <= 10 ? { 
                  x: [-1, 1, -1, 1, 0],
                  rotate: [-1, 1, -1, 1, 0],
@@ -96,9 +96,9 @@ export default function InfoBar({
                 >
                   bolt
                 </span>
-             </motion.div>
+             </Motion.div>
 
-             <motion.div 
+             <Motion.div 
                animate={{ rotate: [0, 360] }}
                transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
                className="relative z-10"
@@ -122,7 +122,7 @@ export default function InfoBar({
                   />
                   
                   {/* Progress Ring - Vibrant Purple/Red Filling */}
-                  <motion.circle
+                  <Motion.circle
                     key={displayText} 
                     cx="50%"
                     cy="50%"
@@ -146,17 +146,17 @@ export default function InfoBar({
                     }}
                   />
                </svg>
-             </motion.div>
+             </Motion.div>
              
              {/* Centered Numbers */}
-             <motion.span 
+             <Motion.span 
                key={timeLeft}
                initial={{ scale: 0.7, opacity: 0 }}
                animate={{ scale: 1, opacity: 1 }}
                className="absolute inset-0 flex items-center justify-center text-2xl sm:text-3xl font-black font-heading text-white drop-shadow-[0_0_15px_rgba(0,0,0,1)] z-20 select-none"
              >
                 {timeLeft}
-             </motion.span>
+             </Motion.span>
           </div>
         )}
         
@@ -196,3 +196,4 @@ export default function InfoBar({
     </div>
   );
 }
+

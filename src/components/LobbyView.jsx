@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { DerhemIcon } from './CurrencyIcon';
 import { triggerHaptic } from '../utils/haptics';
 import FloatingLetterBackground from './FloatingLetterBackground';
@@ -11,10 +11,10 @@ const LobbyView = React.memo(({
   onStartSecretWord,
   onStartWordFever,
   onStartMultiplayer, // Handle matchmaking
-  onDailyRewardClick,
-  dailyStreak,
+  _onDailyRewardClick,
+  _dailyStreak,
   onViewChange,
-  notificationCount = 0,
+  _notificationCount = 0,
   winsTowardsSecret = 0,
   onOpenHowToPlay
 }) => {
@@ -62,7 +62,7 @@ const LobbyView = React.memo(({
   const isSecretUnlocked = winsTowardsSecret >= 3;
 
   return (
-    <motion.div
+    <Motion.div
       variants={containerVariants}
       initial="hidden"
       animate="show"
@@ -78,7 +78,7 @@ const LobbyView = React.memo(({
             <div className="flex items-center gap-2">
               {/* Stats Button */}
               {/* Stats Button */}
-              <motion.button
+              <Motion.button
                 whileHover={{ scale: 1.15, y: -2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => { triggerHaptic(15); onViewChange('stats'); }}
@@ -87,10 +87,10 @@ const LobbyView = React.memo(({
                 <span className="material-symbols-outlined text-mono-500 dark:text-mono-400 text-[24px] group-hover:text-mono-900 dark:group-hover:text-white transition-colors">
                   bar_chart
                 </span>
-              </motion.button>
+              </Motion.button>
 
               {/* Achievement/Trophy Button */}
-              <motion.button
+              <Motion.button
                 whileHover={{ scale: 1.15, y: -2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => { triggerHaptic(15); onViewChange('achievements'); }}
@@ -99,10 +99,10 @@ const LobbyView = React.memo(({
                 <span className="material-symbols-outlined text-mono-500 dark:text-mono-400 text-[24px] group-hover:text-mono-900 dark:group-hover:text-white transition-colors">
                   emoji_events
                 </span>
-              </motion.button>
+              </Motion.button>
 
               {/* Dictionary Button */}
-              <motion.button
+              <Motion.button
                 whileHover={{ scale: 1.15, y: -2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => { triggerHaptic(15); onViewChange('dictionary'); }}
@@ -111,12 +111,12 @@ const LobbyView = React.memo(({
                 <span className="material-symbols-outlined text-mono-500 dark:text-mono-400 text-[24px] group-hover:text-mono-900 dark:group-hover:text-white transition-colors">
                   menu_book
                 </span>
-              </motion.button>
+              </Motion.button>
 
               <div className="w-px h-6 bg-mono-200 dark:bg-white/10 mx-1" />
 
               {/* Help Button */}
-              <motion.button
+              <Motion.button
                 whileHover={{ scale: 1.15, y: -2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => { triggerHaptic(10); onOpenHowToPlay?.(); }}
@@ -125,7 +125,7 @@ const LobbyView = React.memo(({
                 <span className="material-symbols-outlined text-mono-500 dark:text-mono-400 text-[24px] group-hover:text-mono-900 dark:group-hover:text-white transition-colors">
                   help
                 </span>
-              </motion.button>
+              </Motion.button>
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@ const LobbyView = React.memo(({
 
           {/* ONLINE MULTIPLAYER */}
           <div className="col-span-2 md:col-span-4 relative group">
-            <motion.button
+            <Motion.button
               variants={itemVariants}
               onClick={() => { triggerHaptic(15); onStartMultiplayer(); }}
               {...bentoMotionProps}
@@ -150,12 +150,12 @@ const LobbyView = React.memo(({
                   <span className="material-symbols-outlined text-5xl text-white" style={{ fontVariationSettings: "'FILL' 1" }}>swords</span>
                 </div>
               </div>
-            </motion.button>
+            </Motion.button>
           </div>
 
           {/* CLASSIC MODE */}
           <div className="col-span-2 relative group">
-            <motion.button
+            <Motion.button
               variants={itemVariants}
               onClick={() => { triggerHaptic(10); onStartClassic(); }}
               {...bentoMotionProps}
@@ -170,12 +170,12 @@ const LobbyView = React.memo(({
                   <span className="material-symbols-outlined text-4xl text-amber-950" style={{ fontVariationSettings: "'FILL' 1" }}>videogame_asset</span>
                 </div>
               </div>
-            </motion.button>
+            </Motion.button>
           </div>
 
           {/* MAMAK MODE */}
           <div className="col-span-2 relative group">
-            <motion.button
+            <Motion.button
               variants={itemVariants}
               onClick={() => { triggerHaptic(10); onStartMamak(); }}
               {...bentoMotionProps}
@@ -190,12 +190,12 @@ const LobbyView = React.memo(({
                   <span className="material-symbols-outlined text-4xl text-white" style={{ fontVariationSettings: "'FILL' 1" }}>quiz</span>
                 </div>
               </div>
-            </motion.button>
+            </Motion.button>
           </div>
 
           {/* HARD MODE */}
           <div className="col-span-1 relative group">
-            <motion.button
+            <Motion.button
               variants={itemVariants}
               onClick={() => { triggerHaptic(10); onStartHardWords(); }}
               {...bentoMotionProps}
@@ -210,12 +210,12 @@ const LobbyView = React.memo(({
                   <span className="text-[9px] font-medium font-rabar uppercase tracking-normal text-white/50 mt-1 leading-none">بۆ شارەزایان</span>
                 </div>
               </div>
-            </motion.button>
+            </Motion.button>
           </div>
 
           {/* WORD FEVER MODE */}
           <div className="col-span-1 relative group">
-            <motion.button
+            <Motion.button
               variants={itemVariants}
               onClick={() => { triggerHaptic(10); onStartWordFever(); }}
               {...bentoMotionProps}
@@ -230,12 +230,12 @@ const LobbyView = React.memo(({
                   <span className="text-[9px] font-medium font-rabar uppercase tracking-normal text-white/50 mt-1 leading-none">بەرھەڤ بە</span>
                 </div>
               </div>
-            </motion.button>
+            </Motion.button>
           </div>
 
           {/* SECRET MODE */}
           <div className="col-span-2 relative group">
-            <motion.button
+            <Motion.button
               variants={itemVariants}
               disabled={!isSecretUnlocked}
               onClick={() => { triggerHaptic(10); if (isSecretUnlocked) onStartSecretWord(); }}
@@ -274,12 +274,14 @@ const LobbyView = React.memo(({
                   </span>
                 </div>
               </div>
-            </motion.button>
+            </Motion.button>
           </div>
         </div>
       </div>
-    </motion.div>
+    </Motion.div>
   );
 });
 
 export default LobbyView;
+
+

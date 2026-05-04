@@ -86,3 +86,5 @@ const KurdishSunLoader = ({ size = 80, color = "#FFD700", progress = 0 }) => {
 };
 
 export default React.memo(KurdishSunLoader);
+
+

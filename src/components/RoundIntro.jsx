@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import Avatar from './Avatar';
 import { playSwordComboSfx, playWhooshSfx } from '../utils/audio';
 import { triggerHaptic } from '../utils/haptics';
@@ -28,7 +28,7 @@ export default function RoundIntro({ opponent, userAvatar, userNickname, userLev
   return (
     <AnimatePresence>
       {roundMessage && (
-        <motion.div
+        <Motion.div
           key="diagonal-arcade-intro"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -49,7 +49,7 @@ export default function RoundIntro({ opponent, userAvatar, userNickname, userLev
           </div>
 
           {/* 2. TOP BADGE - "هەڤڕکی" */}
-          <motion.div
+          <Motion.div
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
@@ -64,17 +64,17 @@ export default function RoundIntro({ opponent, userAvatar, userNickname, userLev
               {/* Animated Glow Border */}
               <div className="absolute -inset-[2px] rounded-full bg-gradient-to-r from-cyan-500 via-purple-500 to-red-500 opacity-50 blur-[2px] -z-10 animate-pulse" />
             </div>
-          </motion.div>
+          </Motion.div>
 
           {/* 3. DIAGONAL ENERGY BEAM */}
-          <motion.div
+          <Motion.div
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3, ease: "circOut" }}
             className="absolute w-[150%] h-[6px] bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_40px_rgba(251,191,36,0.9)] z-10 origin-center -rotate-[35deg]"
           />
           
-          <motion.div
+          <Motion.div
             animate={{ x: ['100%', '-100%'] }}
             transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
             className="absolute w-[150%] h-[12px] bg-white/60 blur-md z-10 -rotate-[35deg] pointer-events-none"
@@ -85,7 +85,7 @@ export default function RoundIntro({ opponent, userAvatar, userNickname, userLev
             
             {/* OPPONENT - TOP LEFT */}
             <div className="w-full flex justify-start mt-28 px-8">
-              <motion.div
+              <Motion.div
                 initial={{ x: -200, y: -200, opacity: 0, scale: 0.3 }}
                 animate={{ x: 0, y: 0, opacity: 1, scale: 1 }}
                 transition={{ type: "spring", stiffness: 120, damping: 15, delay: 0.4 }}
@@ -110,11 +110,11 @@ export default function RoundIntro({ opponent, userAvatar, userNickname, userLev
                 <span className="text-white font-black text-2xl sm:text-3xl tracking-normal drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)] font-rabar">
                   {opponent?.nickname || 'ھەڤڕک'}
                 </span>
-              </motion.div>
+              </Motion.div>
             </div>
 
             {/* VS CENTER */}
-            <motion.div
+            <Motion.div
               initial={{ scale: 0, opacity: 0, rotate: 90, filter: 'blur(20px)' }}
               animate={{ scale: 1, opacity: 1, rotate: 0, filter: 'blur(0px)' }}
               transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.8 }}
@@ -122,7 +122,7 @@ export default function RoundIntro({ opponent, userAvatar, userNickname, userLev
             >
               <div className="relative group">
                 {/* Intense Central Flare */}
-                <motion.div
+                <Motion.div
                   animate={{ scale: [1, 1.2, 1], opacity: [0.6, 0.9, 0.6] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                   className="absolute -inset-16 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full blur-[60px] mix-blend-screen"
@@ -138,11 +138,11 @@ export default function RoundIntro({ opponent, userAvatar, userNickname, userLev
                   VS
                 </h1>
               </div>
-            </motion.div>
+            </Motion.div>
 
             {/* YOU - BOTTOM RIGHT */}
             <div className="w-full flex justify-end mb-28 px-8">
-              <motion.div
+              <Motion.div
                 initial={{ x: 200, y: 200, opacity: 0, scale: 0.3 }}
                 animate={{ x: 0, y: 0, opacity: 1, scale: 1 }}
                 transition={{ type: "spring", stiffness: 120, damping: 15, delay: 0.4 }}
@@ -167,13 +167,13 @@ export default function RoundIntro({ opponent, userAvatar, userNickname, userLev
                 <span className="text-white font-black text-2xl sm:text-3xl tracking-normal drop-shadow-[0_2px_15px_rgba(0,0,0,0.8)] font-rabar">
                   {userNickname}
                 </span>
-              </motion.div>
+              </Motion.div>
             </div>
 
           </div>
 
           {/* 5. ROUND TEXT (Sleek Bottom Bar) */}
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 100, damping: 20, delay: 1.2 }}
@@ -190,10 +190,11 @@ export default function RoundIntro({ opponent, userAvatar, userNickname, userLev
               </h2>
               <div className="mt-4 w-32 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent rounded-full opacity-50" />
             </div>
-          </motion.div>
+          </Motion.div>
 
-        </motion.div>
+        </Motion.div>
       )}
     </AnimatePresence>
   );
 }
+

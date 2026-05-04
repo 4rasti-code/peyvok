@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion as Motion } from 'framer-motion';
 import { playBackSfx } from '../utils/audio';
 import { useNavigate } from 'react-router-dom';
 
@@ -203,7 +203,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                     </div>
                 </div>
 
-                <motion.div 
+                <Motion.div 
                     key={lang}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -246,7 +246,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                             </section>
                         ))}
                     </div>
-                </motion.div>
+                </Motion.div>
 
                 {/* Footer */}
                 <div className="mt-16 text-center space-y-8">
@@ -286,3 +286,5 @@ const TermsOfService = ({ onViewChange, onClose }) => {
 };
 
 export default TermsOfService;
+
+

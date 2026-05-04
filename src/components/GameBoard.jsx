@@ -1,12 +1,12 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 
 const GameBoard = ({ gridState = [] }) => {
   return (
     <div className="grid grid-cols-5 gap-2 p-4 justify-center">
       {gridState.map((row, rIndex) => (
         row.map((cell, cIndex) => (
-          <motion.div
+          <Motion.div
             key={`cell-${rIndex}-${cIndex}`}
             initial={false}
             animate={{
@@ -17,7 +17,7 @@ const GameBoard = ({ gridState = [] }) => {
             className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center font-bold text-white rounded shadow-lg border border-white/5"
           >
             {cell.letter}
-          </motion.div>
+          </Motion.div>
         ))
       ))}
     </div>
@@ -25,3 +25,5 @@ const GameBoard = ({ gridState = [] }) => {
 };
 
 export default GameBoard;
+
+

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { playBackSfx } from '../utils/audio';
 
@@ -194,7 +194,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                 </div>
 
                 {/* Content Card */}
-                <motion.div 
+                <Motion.div 
                     key={lang}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -237,7 +237,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                             </section>
                         ))}
                     </div>
-                </motion.div>
+                </Motion.div>
 
                 {/* Footer */}
                 <div className="mt-16 text-center space-y-8">
@@ -277,3 +277,5 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
 };
 
 export default PrivacyPolicy;
+
+

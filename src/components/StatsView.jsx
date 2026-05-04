@@ -1,30 +1,49 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useMemo } from 'react';
+import { motion as Motion } from 'framer-motion';
 import { toKuDigits } from '../utils/formatters';
 import { triggerHaptic } from '../utils/haptics';
-import AchievementsView from './AchievementsView';
+
+const modeConfigs = [
+  { id: 'classic', name: 'کلاسیك', icon: 'videogame_asset', color: 'bg-amber-500', textColor: 'text-amber-500', maxAttempts: 6 },
+  { id: 'mamak', name: 'مامک', icon: 'quiz', color: 'bg-emerald-500', textColor: 'text-emerald-500', maxAttempts: 6 },
+  { id: 'hard_words', name: 'پەیڤێن دژوار', icon: 'psychology', color: 'bg-rose-500', textColor: 'text-rose-500', maxAttempts: 6 },
+  { id: 'word_fever', name: 'تایا پەیڤان', icon: 'timer', color: 'bg-sky-500', textColor: 'text-sky-500', maxAttempts: 3 },
+  { id: 'battle', name: 'هەڤڕکی سەرهێل', icon: 'swords', color: 'bg-orange-500', textColor: 'text-orange-500', maxAttempts: 3 },
+  { id: 'secret_word', name: 'پەیڤا نەهێنی', icon: 'lock', color: 'bg-mono-400', textColor: 'text-mono-400', maxAttempts: 1 }
+];
+
+const ChartSection = ({ title, dist, maxValue, color, textColor, icon }) => (
+  <div className="bg-mono-white dark:bg-mono-900/30 rounded-[6px] border border-mono-200 dark:border-mono-800 p-5 backdrop-blur-sm transition-all duration-300">
+    <div className="flex items-center gap-3 mb-5">
+      <span className={`material-symbols-outlined ${textColor} text-2xl`} style={{ fontVariationSettings: "'FILL' 1" }}>{icon || 'bar_chart'}</span>
+      <h4 className="text-[11px] font-black text-mono-800 dark:text-mono-200 uppercase tracking-widest font-rabar">{title}</h4>
+    </div>
+    <div className="space-y-3">
+      {Object.entries(dist).map(([key, value]) => (
+        <div key={key} className="flex items-center gap-4">
+          <span className="text-[11px] font-black text-mono-400 w-3 tabular-nums text-left">{toKuDigits(key)}</span>
+          <div className="flex-1 h-6 bg-mono-100/50 dark:bg-mono-800/40 rounded-[4px] overflow-hidden relative border border-mono-200/30 dark:border-mono-700/20">
+          <Motion.div 
+              initial={{ width: 0 }}
+              animate={{ width: `${(value / maxValue) * 100}%` }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className={`h-full min-w-[28px] flex items-center justify-end px-2.5 relative ${value > 0 ? color : 'bg-mono-200 dark:bg-mono-800/60'}`}
+            >
+              {value > 0 && <div className="absolute inset-0 bg-white/10" />}
+              <span className="text-[10px] font-black text-white tabular-nums drop-shadow-sm">{toKuDigits(value)}</span>
+            </Motion.div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 export default function StatsView({ 
   profileData,
   playerStats, 
-  onViewChange,
-  initialTab = 'stats'
+  onViewChange
 }) {
-  const [activeTab, setActiveTab] = useState(initialTab);
-
-  // Sync with initialTab if it changes (e.g. when opening from different menu buttons)
-  useEffect(() => {
-    setActiveTab(initialTab);
-  }, [initialTab]);
-
-  const modeConfigs = [
-    { id: 'classic', name: 'کلاسیك', icon: 'videogame_asset', color: 'bg-amber-500', textColor: 'text-amber-500', maxAttempts: 6 },
-    { id: 'mamak', name: 'مامک', icon: 'quiz', color: 'bg-emerald-500', textColor: 'text-emerald-500', maxAttempts: 6 },
-    { id: 'hard_words', name: 'پەیڤێن دژوار', icon: 'psychology', color: 'bg-rose-500', textColor: 'text-rose-500', maxAttempts: 6 },
-    { id: 'word_fever', name: 'تایا پەیڤان', icon: 'timer', color: 'bg-sky-500', textColor: 'text-sky-500', maxAttempts: 3 },
-    { id: 'battle', name: 'هەڤڕکی سەرهێل', icon: 'swords', color: 'bg-orange-500', textColor: 'text-orange-500', maxAttempts: 3 },
-    { id: 'secret_word', name: 'پەیڤا نەهێنی', icon: 'lock', color: 'bg-mono-400', textColor: 'text-mono-400', maxAttempts: 1 }
-  ];
 
   // Core Stats
   const stats = {
@@ -87,32 +106,6 @@ export default function StatsView({
     visible: { y: 0, opacity: 1 }
   };
 
-  const ChartSection = ({ title, dist, maxValue, color, textColor, icon, modeId }) => (
-    <div className="bg-mono-white dark:bg-mono-900/30 rounded-[6px] border border-mono-200 dark:border-mono-800 p-5 backdrop-blur-sm transition-all duration-300">
-      <div className="flex items-center gap-3 mb-5">
-        <span className={`material-symbols-outlined ${textColor} text-2xl`} style={{ fontVariationSettings: "'FILL' 1" }}>{icon || 'bar_chart'}</span>
-        <h4 className="text-[11px] font-black text-mono-800 dark:text-mono-200 uppercase tracking-widest font-rabar">{title}</h4>
-      </div>
-      <div className="space-y-3">
-        {Object.entries(dist).map(([key, value]) => (
-          <div key={key} className="flex items-center gap-4">
-            <span className="text-[11px] font-black text-mono-400 w-3 tabular-nums text-left">{toKuDigits(key)}</span>
-            <div className="flex-1 h-6 bg-mono-100/50 dark:bg-mono-800/40 rounded-[4px] overflow-hidden relative border border-mono-200/30 dark:border-mono-700/20">
-              <motion.div 
-                initial={{ width: 0 }}
-                animate={{ width: `${(value / maxValue) * 100}%` }}
-                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className={`h-full min-w-[28px] flex items-center justify-end px-2.5 relative ${value > 0 ? color : 'bg-mono-200 dark:bg-mono-800/60'}`}
-              >
-                {value > 0 && <div className="absolute inset-0 bg-white/10" />}
-                <span className="text-[10px] font-black text-white tabular-nums drop-shadow-sm">{toKuDigits(value)}</span>
-              </motion.div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-mono-white dark:bg-mono-950 flex flex-col items-center safe-top safe-bottom overflow-x-hidden transition-colors duration-500" dir="rtl">
@@ -129,14 +122,14 @@ export default function StatsView({
       </div>
 
       <div className="w-full max-w-lg overflow-y-auto no-scrollbar pb-40 px-6 pt-6">
-        <motion.div
+        <Motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           className="flex flex-col gap-6"
         >
           {/* 1. Core Performance Grid */}
-          <motion.div variants={itemVariants} className="grid grid-cols-4 gap-3">
+          <Motion.div variants={itemVariants} className="grid grid-cols-4 gap-3">
             {[
               { label: 'یاریێن کرین', value: stats.played, icon: 'sports_esports' },
               { label: 'ڕێژەیا سەرکەفتنێ', value: winRate, suffix: '%', icon: 'emoji_events' },
@@ -152,10 +145,10 @@ export default function StatsView({
                 </span>
               </div>
             ))}
-          </motion.div>
+          </Motion.div>
 
           {/* 2. Advanced Gamer Metrics */}
-          <motion.div variants={itemVariants} className="flex flex-col gap-4">
+          <Motion.div variants={itemVariants} className="flex flex-col gap-4">
             <div className="flex items-center gap-3 px-1">
               <div className="h-px flex-1 bg-mono-100 dark:bg-mono-800" />
               <span className="text-[9px] font-black text-mono-400 dark:text-mono-500 uppercase tracking-[0.3em]">ئامارێن پێشکەفتی</span>
@@ -198,10 +191,10 @@ export default function StatsView({
                 <span className="text-sm font-black text-mono-900 dark:text-white tabular-nums">{toKuDigits((advancedStats.fastestSolve / 1000).toFixed(2))} چرکە</span>
               </div>
             )}
-          </motion.div>
+          </Motion.div>
 
           {/* 3. Global Distribution Chart */}
-          <motion.div variants={itemVariants}>
+          <Motion.div variants={itemVariants}>
             <ChartSection 
               title="دابەشکرنا هەوڵدانان (گشتی)" 
               dist={globalDist} 
@@ -210,7 +203,7 @@ export default function StatsView({
               textColor="text-primary"
               icon="analytics"
             />
-          </motion.div>
+          </Motion.div>
 
           {/* 4. Individual Mode Distributions */}
           <div className="flex flex-col gap-5">
@@ -233,7 +226,7 @@ export default function StatsView({
               const maxValue = Math.max(...Object.values(dist), 1);
 
               return (
-                <motion.div key={mode.id} variants={itemVariants}>
+                <Motion.div key={mode.id} variants={itemVariants}>
                   <ChartSection 
                     title={`دابەشکرنا: ${mode.name}`} 
                     dist={dist} 
@@ -243,12 +236,14 @@ export default function StatsView({
                     icon={mode.icon}
                     modeId={mode.id}
                   />
-                </motion.div>
+                </Motion.div>
               );
             })}
           </div>
-        </motion.div>
+        </Motion.div>
       </div>
     </div>
   );
 }
+
+

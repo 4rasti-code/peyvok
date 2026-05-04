@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { toKuDigits } from '../utils/formatters';
 import { useAudio } from '../context/AudioContext';
 
@@ -502,7 +502,7 @@ export default function HowToPlayModal({ isOpen, onClose, initialMode = 'classic
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -510,7 +510,7 @@ export default function HowToPlayModal({ isOpen, onClose, initialMode = 'classic
           className="absolute inset-0 bg-[#000000]/90"
         />
 
-        <motion.div
+        <Motion.div
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -569,8 +569,9 @@ export default function HowToPlayModal({ isOpen, onClose, initialMode = 'classic
               تێگەهشتم
             </button>
           </div>
-        </motion.div>
+        </Motion.div>
       </div>
     </AnimatePresence>
   );
 }
+

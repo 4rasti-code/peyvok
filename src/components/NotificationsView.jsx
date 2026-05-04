@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 import { AVATARS } from '../data/avatars';
 
@@ -29,7 +29,7 @@ export default function NotificationsView({
     const timeAgo = formatTimeAgo(item.created_at);
     
     return (
-      <motion.div
+      <Motion.div
         key={item.id}
         initial={{ x: 10, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -55,7 +55,7 @@ export default function NotificationsView({
           <span className="text-[9px] text-mono-400 dark:text-white/30 font-bold uppercase">{timeAgo}</span>
         </div>
         <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-      </motion.div>
+      </Motion.div>
     );
   };
 
@@ -64,7 +64,7 @@ export default function NotificationsView({
       {/* Backdrop to close when clicking outside */}
       <div className="fixed inset-0 z-40" onClick={onClose} />
       
-      <motion.div 
+      <Motion.div 
         initial={{ opacity: 0, y: -10, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
@@ -120,7 +120,7 @@ export default function NotificationsView({
             داخستن
           </button>
         </div>
-      </motion.div>
+      </Motion.div>
     </>
   );
 }
@@ -137,3 +137,4 @@ function formatTimeAgo(dateString) {
   if (diffHours < 24) return `${diffHours}h`;
   return `${diffDays}d`;
 }
+

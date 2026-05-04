@@ -128,7 +128,7 @@ const FloatingInput = ({ label, value, onChange, id, type = 'text', required = f
 
       {/* Caret / Cursor Highlight for active field */}
       {isFocused && (
-        <motion.div
+        <Motion.div
           layoutId="input-glow"
           className="absolute inset-0 bg-emerald-500/10 blur-2xl -z-10 rounded-3xl"
           initial={{ opacity: 0 }}
@@ -1133,3 +1133,5 @@ const PolicyModal = ({ isOpen, onClose, type, onViewChange }) => {
     </AnimatePresence>
   );
 }
+
+

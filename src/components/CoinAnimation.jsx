@@ -28,14 +28,22 @@ const CoinAnimation = ({ trigger, isDaily, amount = 0 }) => {
         x: Math.random() * 160 - 80, 
         y: Math.random() * 160 - 80,
       }));
-      setCoins(newCoins);
+
+      // Use a timeout to avoid synchronous setState in useEffect (cascading renders)
+      const animationTimer = setTimeout(() => {
+        setCoins(newCoins);
+      }, 0);
       
-      const timer = setTimeout(() => {
+      const cleanupTimer = setTimeout(() => {
         setCoins([]);
       }, 3500); // Clear after animation
-      return () => clearTimeout(timer);
+
+      return () => {
+        clearTimeout(animationTimer);
+        clearTimeout(cleanupTimer);
+      };
     }
-  }, [trigger, isDaily]);
+  }, [trigger, isDaily, amount]);
 
   if (coins.length === 0) return null;
 

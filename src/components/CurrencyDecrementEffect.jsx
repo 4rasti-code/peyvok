@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
 import { toKuDigits } from '../utils/formatters';
 import { playCoinSfx } from '../utils/audio';
@@ -83,7 +83,7 @@ const CurrencyDecrementEffect = ({ value, currency, children, className = "", re
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center" style={{ zIndex: 9999 }}>
         <AnimatePresence mode="popLayout">
           {changes.map(change => (
-            <motion.div
+            <Motion.div
               key={change.id}
               initial={{ opacity: 0, y: 10, scale: 0.5, filter: 'blur(4px)' }}
               animate={{ 
@@ -106,7 +106,7 @@ const CurrencyDecrementEffect = ({ value, currency, children, className = "", re
               <div className="flex items-center justify-center drop-shadow-[0_0_5px_rgba(255,0,0,0.4)] brightness-125">
                  <IconComponent />
               </div>
-            </motion.div>
+            </Motion.div>
           ))}
         </AnimatePresence>
       </div>
@@ -115,3 +115,4 @@ const CurrencyDecrementEffect = ({ value, currency, children, className = "", re
 };
 
 export default CurrencyDecrementEffect;
+

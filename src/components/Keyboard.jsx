@@ -1,6 +1,6 @@
 import React, { useCallback, memo } from 'react';
 import { STATUS } from '../data/constants';
-import { motion } from 'framer-motion';
+import { motion as Motion} from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 import { playKeyClickSfx } from '../utils/audio';
 import InventoryBar from './InventoryBar';
@@ -18,8 +18,8 @@ const SPECIAL_KEYS = {
    DELETE: 'backspace'
 };
 
-const MotionButton = motion.button;
-const MotionDiv = motion.div;
+const MotionButton = Motion.button;
+const MotionDiv = Motion.div;
 
 
 const Key = memo(({ k, status, onKeyPress, isDisabled, isDark = true }) => {
@@ -194,3 +194,4 @@ const Keyboard = memo(({
 });
 
 export default Keyboard;
+

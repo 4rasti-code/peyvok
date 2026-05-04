@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 
 function SettingsModal({
@@ -20,14 +20,14 @@ function SettingsModal({
    return (
       <AnimatePresence>
          {isOpen && (
-            <motion.div
+            <Motion.div
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
                exit={{ opacity: 0 }}
                className="fixed inset-0 z-100 flex items-center justify-center px-4 bg-mono-white/80 dark:bg-mono-950/80 backdrop-blur-md p-4 transition-colors duration-500"
                onClick={onClose}
             >
-               <motion.div
+               <Motion.div
                   initial={{ scale: 0.98, opacity: 0, y: 10 }}
                   animate={{ scale: 1, opacity: 1, y: 0 }}
                   exit={{ scale: 0.98, opacity: 0, y: 10 }}
@@ -88,7 +88,7 @@ function SettingsModal({
                               onClick={() => { triggerHaptic(10); onBgMusicVolumeChange(bgMusicVolume > 0 ? 0 : 10); }}
                               className={`w-11 h-5.5 rounded-sm p-1 transition-all duration-300 relative ${bgMusicVolume > 0 ? 'bg-green-600/20' : 'bg-red-600/20'}`}
                            >
-                              <motion.div
+                              <Motion.div
                                  animate={{ x: bgMusicVolume > 0 ? -22 : 0 }}
                                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
                                  className={`w-3.5 h-3.5 rounded-sm ${bgMusicVolume > 0 ? 'bg-green-600' : 'bg-red-600'} shadow-sm`}
@@ -106,7 +106,7 @@ function SettingsModal({
                               onClick={() => { triggerHaptic(10); onHapticToggle(); }}
                               className={`w-11 h-5.5 rounded-sm p-1 transition-all duration-300 relative ${hapticEnabled ? 'bg-green-600/20' : 'bg-red-600/20'}`}
                            >
-                              <motion.div
+                              <Motion.div
                                  animate={{ x: hapticEnabled ? -22 : 0 }}
                                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
                                  className={`w-3.5 h-3.5 rounded-sm ${hapticEnabled ? 'bg-green-600' : 'bg-red-600'} shadow-sm`}
@@ -128,11 +128,12 @@ function SettingsModal({
                         <p className="text-[8px] font-black tracking-[0.4em] uppercase text-mono-400">Peyvçîn v2.0</p>
                      </div>
                   </div>
-               </motion.div>
-            </motion.div>
+               </Motion.div>
+            </Motion.div>
          )}
       </AnimatePresence>
    );
 }
 
 export default SettingsModal;
+

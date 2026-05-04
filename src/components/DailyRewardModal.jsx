@@ -289,3 +289,5 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
     </>
   );
 }
+
+

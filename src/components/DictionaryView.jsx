@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 import { useAudio } from '../context/AudioContext';
 import { toKuDigits } from '../utils/formatters';
@@ -134,7 +134,7 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
         <div className="flex flex-col gap-4">
           {discoveredWords.length > 0 ? (
             discoveredWords.map((item, idx) => (
-              <motion.div
+              <Motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.03 }}
@@ -153,7 +153,7 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
                 <p className="text-[12px] text-mono-500 dark:text-mono-400 font-bold font-rabar leading-relaxed">
                   {item.hint}
                 </p>
-              </motion.div>
+              </Motion.div>
             ))
           ) : (
             <div className="flex flex-col items-center justify-center py-24 text-center opacity-30 grayscale">
@@ -166,3 +166,5 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
     </div>
   );
 }
+
+

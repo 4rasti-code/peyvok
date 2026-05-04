@@ -286,3 +286,5 @@ export default function ShopView({ fils, derhem, dinar: _dinar, magnetCount, hin
     </div>
   );
 }
+
+
