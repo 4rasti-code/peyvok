@@ -1,5 +1,5 @@
 // Deployment Trigger: Ensuring timer removal is live
-import React, { useState, useEffect, useRef, useCallback, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useRef, useCallback, Suspense, lazy, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
@@ -15,7 +15,7 @@ import Keyboard from './components/Keyboard';
 import CategoryModal from './components/CategoryModal';
 import BottomNav from './components/BottomNav';
 import LobbyView from './components/LobbyView';
-import { wordList } from './data/wordList';
+import { wordList, gameWordLists } from './data/wordList';
 import { STATUS } from './data/constants';
 import { getLocalDateString as _getLocalDateString } from './utils/formatters';
 import KurdishSunLoader from './components/KurdishSunLoader';
@@ -326,7 +326,6 @@ export default function App() {
   const [category, setCategory] = useState('');
   const [currentWordCategory, setCurrentWordCategory] = useState('');
 
-  const [isShaking, setIsShaking] = useState(false);
   const [, setStartTime] = useState(0);
   const [, setRewardAmount] = useState(0);
   const [rewardAmountXp, setRewardAmountXp] = useState(0);
@@ -362,6 +361,23 @@ export default function App() {
   const [isMasteryOpen, setIsMasteryOpen] = useState(false);
   const [masteryData, _setMasteryData] = useState(null);
   const [isKeyboardWarningOpen, setIsKeyboardWarningOpen] = useState(false);
+
+  // 1. Memoized flattened dictionary for ultra-fast lookups
+  const dictionarySet = useMemo(() => {
+    const set = new Set();
+    Object.values(gameWordLists).forEach(list => {
+      list.forEach(item => {
+        if (item.word) set.add(normalizeKurdishInput(item.word));
+      });
+    });
+    return set;
+  }, []);
+
+  const [toastMessage, setToastMessage] = useState(null);
+  const showToast = useCallback((msg) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 2500);
+  }, []);
 
 
   // Expose initialization helper to console for the user
@@ -579,7 +595,8 @@ export default function App() {
     onKey, onDelete, onEnter,
     triggerHint,
     getLetterStatus,
-    resetLocalBoard
+    resetLocalBoard,
+    isShaking
   } = useGameLogic({
     targetWord,
     maxRows: gameMode === 'secret_word' ? 1 : (gameMode === 'word_fever' ? 3 : 6),
@@ -595,7 +612,15 @@ export default function App() {
       triggerHaptic([50, 50]);
     },
     soundEnabled: appSoundsEnabled,
-    hapticEnabled: hapticEnabled
+    hapticEnabled: hapticEnabled,
+    dictionary: dictionarySet,
+    onInvalidWord: (reason) => {
+      if (reason === 'not_in_dictionary') {
+        showToast('ئەڤ پەیڤە د فەرهەنگێ دا نینە');
+      } else if (reason === 'short') {
+        showToast('پەیڤ کێمە!');
+      }
+    }
   });
 
   // --- UNIFIED AUTOMATIC BACKGROUND MUSIC (BGM) CONTROLLER ---
@@ -655,8 +680,7 @@ export default function App() {
   }, [targetWord, category, hintCount, magnetCount, skipCount, isVictory, isDefeat, currentView, revealedIndices, currentGuess, magnetDisabledKeys, gameMode, hapticEnabled, solvedWords, level, lastSolvedWord, winsTowardsSecret, fils, targetHint, hintTaps]);
 
   const handleOnEnter = useCallback(async () => {
-    const result = await onEnter();
-    if (result?.error) { setIsShaking(true); setTimeout(() => setIsShaking(false), 500); }
+    await onEnter();
   }, [onEnter]);
 
   const handleHint = useCallback(() => {
@@ -1402,7 +1426,6 @@ export default function App() {
                   skipsUsedInRound={skipsUsedInRound}
                   skipLimit={1}
                   keyboardSoundEnabled={appSoundsEnabled}
-
                   hapticEnabled={hapticEnabled}
                 />
               </div>
@@ -1410,7 +1433,6 @@ export default function App() {
           )}
 
           <Suspense fallback={<KurdishSunLoader />}>
-
             {currentView === 'social_hub' && (
               <SocialHubView
                 user={user}
@@ -1503,6 +1525,21 @@ export default function App() {
               />
             )}
           </Suspense>
+
+          {/* Premium Toast Notification System */}
+          <AnimatePresence>
+            {toastMessage && (
+              <Motion.div
+                initial={{ opacity: 0, y: -20, x: '-50%' }}
+                animate={{ opacity: 1, y: 0, x: '-50%' }}
+                exit={{ opacity: 0, y: -20, x: '-50%' }}
+                className="fixed top-32 left-1/2 z-100 bg-mono-900/90 dark:bg-mono-100/90 backdrop-blur-md text-mono-50 dark:text-mono-900 px-4 py-2 rounded-md shadow-2xl font-rabar font-light text-xs pointer-events-none border border-white/10 dark:border-black/10"
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                {toastMessage}
+              </Motion.div>
+            )}
+          </AnimatePresence>
         </main>
 
         {/* 3. CONDITIONAL BOTTOM NAV (Hide during ANY gameplay or multiplayer) */}

@@ -16,7 +16,9 @@ export default function useGameLogic({
   isActive = false,
   onWrongLanguage = null,
   soundEnabled = true,
-  hapticEnabled = true
+  hapticEnabled = true,
+  dictionary = null,
+  onInvalidWord = null
 }) {
   const [guesses, setGuesses] = useState([]);
   const [currentGuess, setCurrentGuess] = useState(new Array(targetWord?.length || 5).fill(''));
@@ -24,6 +26,7 @@ export default function useGameLogic({
   const [isVictory, setIsVictory] = useState(false);
   const [isDefeat, setIsDefeat] = useState(false);
   const [hintIndices, setHintIndices] = useState([]); // Track hints for the CURRENT row only
+  const [shakeTrigger, setShakeTrigger] = useState(0);
 
   // Use refs for values needed in stable callbacks
   const isSubmittingRef = useRef(false);
@@ -63,6 +66,7 @@ export default function useGameLogic({
     setGuesses([]);
     setCurrentGuess(new Array(newTargetWord?.length || 5).fill(''));
     setUsedKeys({});
+    setShakeTrigger(0);
     setIsVictory(false);
     setIsDefeat(false);
     setHintIndices([]);
@@ -235,7 +239,17 @@ export default function useGameLogic({
 
     if (guessString.length < target.length) {
       triggerHaptic([50, 30, 50]);
+      setShakeTrigger(prev => prev + 1);
+      if (onInvalidWord) onInvalidWord('short');
       return { error: 'پەیڤ کێمە!' };
+    }
+
+    // DICTIONARY CHECK
+    if (dictionary && !dictionary.has(normalizeKurdishInput(guessString))) {
+      triggerHaptic([50, 30, 50]);
+      setShakeTrigger(prev => prev + 1);
+      if (onInvalidWord) onInvalidWord('not_in_dictionary');
+      return { error: 'not_in_dictionary' };
     }
 
     isSubmittingRef.current = true;
@@ -246,6 +260,7 @@ export default function useGameLogic({
 
     // Update Guesses
     setGuesses(prev => [...prev, guessString]);
+    setShakeTrigger(0); // Reset shake when moving to next row
 
     // Update used keys
     setUsedKeys(prevKeys => {
@@ -287,7 +302,7 @@ export default function useGameLogic({
 
     setTimeout(() => { isSubmittingRef.current = false; }, 300);
     return { success: true, colors, isWin };
-  }, [maxRows, getLetterStatus, targetWord, gameMode]);
+  }, [maxRows, getLetterStatus, targetWord, gameMode, dictionary, onInvalidWord]);
 
   // --- CENTRALIZED PHYSICAL KEYBOARD SUPPORT ---
   useEffect(() => {
@@ -368,6 +383,7 @@ export default function useGameLogic({
     onEnter,
     triggerHint,
     getLetterStatus,
-    resetLocalBoard
+    resetLocalBoard,
+    isShaking: shakeTrigger
   };
 }

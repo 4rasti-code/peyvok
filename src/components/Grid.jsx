@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useMemo } from 'react';
+import React, { memo, useState, useEffect, useMemo, useRef } from 'react';
 import { STATUS } from '../data/constants';
 import { motion as Motion, useTransform } from 'framer-motion';
 
@@ -158,10 +158,21 @@ const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, re
   const isMV = forcedFocusIndex && typeof forcedFocusIndex === 'object' && forcedFocusIndex.get;
   const actualFocusIndex = isMV ? null : (forcedFocusIndex !== null ? forcedFocusIndex : (firstEmptyIndex === 0 ? -1 : (firstEmptyIndex === -1 ? wordLength - 1 : firstEmptyIndex - 1)));
 
+  const rowRef = useRef(null);
+  
+  useEffect(() => {
+    if (isShaking > 0 && rowRef.current) {
+      const el = rowRef.current;
+      el.classList.remove('shake-anim');
+      void el.offsetWidth; // Force reflow
+      el.classList.add('shake-anim');
+    }
+  }, [isShaking]);
+
   return (
-    <Motion.div 
-      initial={false}
-      className={`transition-all duration-300 ${activeClass} ${isShaking ? 'shake-anim' : ''} flex items-center justify-center`}
+    <div 
+      ref={rowRef}
+      className={`transition-all duration-300 ${activeClass} flex items-center justify-center`}
       dir="rtl"
       style={{ 
         gap: gap,
@@ -204,7 +215,7 @@ const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, re
           />
         );
       })}
-    </Motion.div>
+    </div>
   );
 }, (prev, next) => {
   const prevStr = Array.isArray(prev.guess) ? prev.guess.join('') : prev.guess;
@@ -308,7 +319,7 @@ const Grid = memo(({ guesses = [], currentGuess = [], wordLength = 0, getLetterS
                 revealedIndices={isCurrent ? revealedIndices : []}
                 hintIndices={isCurrent ? hintIndices : []}
                 isMobile={isMobile}
-                isShaking={isCurrent && isShaking}
+                isShaking={isCurrent ? isShaking : 0}
                 isSecretMode={isSecretMode}
                 hideLetters={hideLetters}
                 forcedStatuses={forcedStatuses}
@@ -333,6 +344,9 @@ const Grid = memo(({ guesses = [], currentGuess = [], wordLength = 0, getLetterS
          JSON.stringify(prev.opponentStatuses) === JSON.stringify(next.opponentStatuses) &&
          JSON.stringify(prev.opponentLiveStatuses) === JSON.stringify(next.opponentLiveStatuses) &&
          prev.opponentLiveCursor === next.opponentLiveCursor &&
+         prev.isShaking === next.isShaking &&
+         prev.targetWord === next.targetWord &&
+         prev.revealedIndices?.length === next.revealedIndices?.length &&
          prev.hintIndices?.length === next.hintIndices?.length;
 });
 
