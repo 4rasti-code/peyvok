@@ -685,7 +685,7 @@ export const gameWordLists = {
 
 // Also keep the original category-based object for filtering in UI
 const rawWordList = {
-  "کار": verbsWords,
+  "کار(چاوگ)": verbsWords,
   "گیانەوەر": generalPool.filter(w => w.category === "گیانەوەر"),
   "خوارن": generalPool.filter(w => w.category === "خوارن"),
   "سرۆشت": generalPool.filter(w => w.category === "سرۆشت"),

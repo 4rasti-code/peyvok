@@ -166,7 +166,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-bold  tracking-tight text-white mb-1">پەیڤچن</h1>
+                            <h1 className="text-4xl font-bold   text-white mb-1">پەیڤچن</h1>
                             <p className="text-text-dim/60 text-xs font-bold uppercase tracking-[0.2em]">Heritage Reborn</p>
                         </div>
                     </div>
@@ -259,7 +259,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                         <span className="material-symbols-outlined text-xl">arrow_back</span>
                         {lang === 'ku' ? 'ڤەگەڕە' : 'Back to Game'}
                     </button>
-                    <p className="mt-8 text-[10px] text-white/10 uppercase font-bold  tracking-widest italic">&copy; 2026 پەیڤچن App. All Rights Reserved.</p>
+                    <p className="mt-8 text-[10px] text-white/10 uppercase font-bold   italic">&copy; 2026 پەیڤچن App. All Rights Reserved.</p>
                 </div>
             </div>
 

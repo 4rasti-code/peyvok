@@ -32,7 +32,7 @@ const MasteryModal = ({ isOpen, onClose, targetWord, stats, gameMode, isDark }) 
         <p className="text-primary text-xs font-bold uppercase tracking-[0.2em] mb-8 opacity-80">MASTERY ACHIEVED</p>
 
         <div className="mb-8 bg-white/5 rounded-2xl p-6 border border-white/5">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">تە پەیڤا دژوار دیت</p>
+          <p className="text-[10px] font-bold text-slate-500 uppercase  mb-2">تە پەیڤا دژوار دیت</p>
           <p className="text-4xl font-bold font-heading text-white tracking-widest">{targetWord}</p>
         </div>
 
@@ -54,7 +54,7 @@ const MasteryModal = ({ isOpen, onClose, targetWord, stats, gameMode, isDark }) 
               <div className="flex items-center gap-3">
                 <div className="flex flex-col items-end leading-none translate-y-1">
                   <span className="text-4xl font-bold text-white">+{(gameMode === 'secret' ? 2500 : 1000).toLocaleString('ku-IQ')}</span>
-                  <span className="text-[10px] font-black uppercase tracking-widest opacity-60 text-primary">فلس</span>
+                  <span className="text-[10px] font-black uppercase  opacity-60 text-primary">فلس</span>
                 </div>
                 <div className="w-8 h-8 flex items-center justify-center">
                   <FilsIcon size={24} className="text-primary" />

@@ -66,7 +66,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
               <div className="space-y-6">
                 {/* Item Summary */}
                 <div className="p-4 rounded-2xl bg-white/5 border border-white/5 text-right">
-                  <span className="text-[10px] font-bold text-white/40 uppercase tracking-wider block mb-1">کڕینا نوی</span>
+                  <span className="text-[10px] font-bold text-white/40 uppercase  block mb-1">کڕینا نوی</span>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-black font-rabar text-primary">
                       ${item?.usd || '4.99'} / {(item?.iqd || 7500).toLocaleString('ku-IQ')} د.ع
@@ -101,7 +101,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 px-2">
                        <div className="h-px flex-1 bg-white/5" />
-                       <span className="text-[10px] font-black font-rabar text-white/30 uppercase tracking-widest">کارتا مۆبایلێ</span>
+                       <span className="text-[10px] font-black font-rabar text-white/30 uppercase">کارتا مۆبایلێ</span>
                        <div className="h-px flex-1 bg-white/5" />
                     </div>
                     <div className="grid grid-cols-2 gap-3">

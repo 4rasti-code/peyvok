@@ -175,7 +175,7 @@ export default function InfoBar({
           <span className="material-symbols-outlined text-[16px]">rotate_right</span>
         </div>
         <div className="flex flex-col items-center justify-center overflow-">
-          <span className={`text-[8px] font-black ${textMuted} uppercase tracking-widest mb-0.5`}>بابەت</span>
+          <span className={`text-[8px] font-black ${textMuted} uppercase  mb-0.5`}>بابەت</span>
           <span className="text-[12px] font-black font-heading text-primary truncate max-w-full">
             {category || 'گشتی'}
           </span>
@@ -184,7 +184,7 @@ export default function InfoBar({
           <div className="flex items-center justify-center gap-1.5 bg-amber-500/10 text-amber-500 px-3 h-10 rounded-2xl border border-amber-500/20 shadow-sm transition-all duration-300">
             <div className="flex flex-col items-center leading-none">
               <span className="text-xs font-black">{(fils || 0).toLocaleString('ku-IQ')}</span>
-              <span className="text-[7px] font-black uppercase tracking-widest opacity-60">فلس</span>
+              <span className="text-[7px] font-black uppercase  opacity-60">فلس</span>
             </div>
             <div className="scale-75"><FilsIcon /></div>
           </div>

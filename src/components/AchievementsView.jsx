@@ -32,7 +32,7 @@ const AchievementsView = ({ profileData, onViewChange }) => {
         >
           <span className="material-symbols-outlined">arrow_forward</span>
         </button>
-        <h2 className="text-xl font-black font-rabar text-mono-900 dark:text-white uppercase tracking-tight">دەستکەفت</h2>
+        <h2 className="text-xl font-black font-rabar text-mono-900 dark:text-white uppercase">دەستکەفت</h2>
         <div className="w-10" />
       </div>
 

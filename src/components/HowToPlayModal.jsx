@@ -485,7 +485,7 @@ export default function HowToPlayModal({ isOpen, onClose, initialMode = 'classic
         </p>
 
         <div className={`p-5 rounded-3xl space-y-4 ${isDark ? 'bg-white/5' : 'bg-slate-50'}`}>
-          <h4 className={`text-sm font-black uppercase tracking-widest ${isDark ? 'text-white/40' : 'text-slate-500'}`}>یاسایێن سەرەکی</h4>
+          <h4 className={`text-sm font-black uppercase  ${isDark ? 'text-white/40' : 'text-slate-500'}`}>یاسایێن سەرەکی</h4>
           <ul className="space-y-2">
             {[1, 2, 3].map(i => (
               <li key={i} className="flex gap-3">

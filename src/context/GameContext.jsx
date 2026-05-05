@@ -2,15 +2,12 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { supabase } from '../lib/supabase';
 import { useUser } from './AuthContext';
-import { useAudio } from './AudioContext';
 import { getLevelFromXP, getLevelData, getRewardForMode } from '../utils/progression';
-import { getLocalDateString } from '../utils/formatters';
 
 const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
-  const { user, loadingAuth, isProfileLoaded, syncProfile, profileData } = useUser();
-  const { refreshProfile } = { refreshProfile: syncProfile }; // Compatibility shim if needed
+  const { user, loadingAuth, syncProfile, profileData } = useUser();
 
   const [lastNotifiedLevel, setLastNotifiedLevel] = useState(() => {
     const saved = localStorage.getItem('peyvchin_last_notified_level');
@@ -72,7 +69,6 @@ export const GameProvider = ({ children }) => {
     };
   });
 
-  const dbSyncRef = useRef({ lastSyncedXP: -1, lastSyncedFils: -1 });
   const isSyncingProgressionRef = useRef(false);
   const lastRefreshTime = useRef(0);
   const lastXPRef = useRef(-1);
@@ -232,7 +228,6 @@ export const GameProvider = ({ children }) => {
         
         // --- HYBRID LEVEL RECALIBRATION ---
         // Ignore the level stored in DB if it's inconsistent with the new Hardcore math
-        const calculatedLevel = getLevelFromXP(profileData.xp || 0);
         
         // If we needed to set state for the profile object, it would happen here based on the instructions
         // Assuming the logic intended is to ensure the UI uses the recalculated level
@@ -388,7 +383,7 @@ export const GameProvider = ({ children }) => {
 
     try {
       // Execute atomic transaction on server
-      const { data, error } = await supabase.rpc('process_purchase', {
+      const { error } = await supabase.rpc('process_purchase', {
         p_item_id: item.id,
         p_item_type: itemType,
         p_currency_used: currency,
@@ -566,12 +561,11 @@ export const GameProvider = ({ children }) => {
       return null; 
     }
     return null;
-  }, [refreshRank, syncProfile]);
+  }, [refreshRank, syncProfile, profileData?.games_played, profileData?.games_won]);
 
   const addXP = useCallback((amount) => { if (amount) setCurrentXP(prev => prev + amount); }, []);
 
   const incrementSecretWordProgress = useCallback(async () => {
-    const { user: currentUser } = gameStateRef.current;
     
     setWinsTowardsSecret(prev => {
       const nextValue = Math.min(3, prev + 1);
@@ -590,6 +584,36 @@ export const GameProvider = ({ children }) => {
     localStorage.setItem('peyvchin_wins_towards_secret', '0');
     // Note: DB reset is blocked by server-side trigger issue
   }, []);
+
+  const applyPenalty = useCallback(async (xpAmount = 20, filsAmount = 50) => {
+    const { user: currentUser, currentXP: currXP } = gameStateRef.current;
+    if (!currentUser) return;
+
+    const newXP = Math.max(0, Number(currXP) - xpAmount);
+    const newLevel = getLevelFromXP(newXP);
+    
+    // Optimistic Update
+    setCurrentXP(newXP);
+    setFils(prev => Math.max(0, Number(prev) - filsAmount));
+
+    try {
+      await supabase.rpc('sync_profile_progression', {
+        p_xp_to_add: -xpAmount,
+        p_fils_to_add: -filsAmount,
+        p_derhem_to_add: 0,
+        p_dinar_to_add: 0,
+        p_level: newLevel,
+        p_solved_words: gameStateRef.current.solvedWords,
+        p_mode: 'penalty',
+        p_is_win: false,
+        p_score: 0,
+        p_attempts: 0
+      });
+      await syncProfile(currentUser.id);
+    } catch (err) {
+      console.warn("Penalty sync failed:", err);
+    }
+  }, [syncProfile]);
 
   const claimDailyReward = useCallback(async () => {
     if (!user) return { error: 'Login required' };
@@ -642,16 +666,25 @@ export const GameProvider = ({ children }) => {
     inventory, magnetCount, hintCount, skipCount,
     solvedWords, playerStats, winsTowardsSecret, incrementSecretWordProgress, resetSecretWordProgress,
     userRank: _userRank, updateInventory, setCurrentXP, setLastNotifiedLevel, lastNotifiedLevel,
-    syncProgressToDatabase, processPurchase, refreshRank, getLevelData, progressPercent: getLevelData(currentXP).progressPercent,
+    syncProgressToDatabase, applyPenalty, processPurchase, refreshRank, getLevelData, progressPercent,
     getFreshWord: async (mode, category) => {
       const { user: currentUser } = gameStateRef.current;
       if (currentUser?.id) {
         try {
-          const { data, error } = await supabase.rpc('get_random_fresh_word', {
+          // If category is "All" (ھەموو), use the balanced randomization RPC
+          const isAll = !category || category === 'ھەموو';
+          const rpcName = isAll ? 'get_balanced_random_word' : 'get_random_fresh_word';
+          
+          const rpcParams = {
             p_user_id: currentUser.id,
-            p_mode_tag: mode === 'classic' ? 'classic' : (mode === 'hard_words' ? 'hard_words' : (mode === 'mamak' ? 'mamak' : mode)),
-            p_category: (category && category !== 'ھەموو') ? category : null
-          });
+            p_mode_tag: mode === 'classic' ? 'classic' : (mode === 'hard_words' ? 'hard_words' : (mode === 'mamak' ? 'mamak' : mode))
+          };
+
+          if (!isAll) {
+            rpcParams.p_category = category;
+          }
+
+          const { data, error } = await supabase.rpc(rpcName, rpcParams);
           if (error) throw error;
           if (data && data.length > 0) return { word: data[0].word, hint: data[0].hint, category: data[0].category, id: data[0].id };
         } catch (err) { console.warn("[GameContext] Failed to fetch fresh word from DB, falling back to local:", err); }
@@ -692,8 +725,8 @@ export const GameProvider = ({ children }) => {
     dailyStreak, rewardStreak, lastRewardClaimedAt, claimDailyReward,
     inventory, magnetCount, hintCount, skipCount, solvedWords, playerStats,
     winsTowardsSecret, incrementSecretWordProgress, resetSecretWordProgress, _userRank,
-    updateInventory, syncProgressToDatabase, processPurchase, refreshRank, loading,
-    syncProfile
+    updateInventory, syncProgressToDatabase, applyPenalty, processPurchase, refreshRank, loading,
+    syncProfile, lastNotifiedLevel, progressPercent
   ]);
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

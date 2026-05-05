@@ -92,19 +92,19 @@ export default function NotificationsView({
             <>
               {groups.new.length > 0 && (
                 <div className="mb-4">
-                  <h4 className="px-2 mb-2 text-[9px] font-black text-mono-400 dark:text-white/20 uppercase tracking-widest">یێن نوى</h4>
+                  <h4 className="px-2 mb-2 text-[9px] font-black text-mono-400 dark:text-white/20 uppercase">یێن نوى</h4>
                   {groups.new.map(renderItem)}
                 </div>
               )}
               {groups.today.length > 0 && (
                 <div className="mb-4">
-                  <h4 className="px-2 mb-2 text-[9px] font-black text-mono-400 dark:text-white/20 uppercase tracking-widest">ئەڤرۆ</h4>
+                  <h4 className="px-2 mb-2 text-[9px] font-black text-mono-400 dark:text-white/20 uppercase">ئەڤرۆ</h4>
                   {groups.today.map(renderItem)}
                 </div>
               )}
               {groups.earlier.length > 0 && (
                 <div>
-                  <h4 className="px-2 mb-2 text-[9px] font-black text-mono-400 dark:text-white/20 uppercase tracking-widest">یێن دیدى</h4>
+                  <h4 className="px-2 mb-2 text-[9px] font-black text-mono-400 dark:text-white/20 uppercase">یێن دیدى</h4>
                   {groups.earlier.map(renderItem)}
                 </div>
               )}

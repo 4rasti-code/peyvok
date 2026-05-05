@@ -97,7 +97,7 @@ const SpecialOfferCard = ({ item, onOpenGateway, playPurchaseSound }) => (
         
         <div className="text-right">
           <h3 className="text-xl sm:text-2xl font-black text-white leading-tight drop-shadow-sm">پاکێجا زێڕین</h3>
-          <p className="text-[11px] font-bold text-white/80 tracking-widest uppercase mt-0.5">پێشنیارا تایبەت</p>
+          <p className="text-[11px] font-bold text-white/80  uppercase mt-0.5">پێشنیارا تایبەت</p>
         </div>
       </div>
 

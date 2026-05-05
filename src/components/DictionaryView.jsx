@@ -87,7 +87,7 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
         >
           <span className="material-symbols-outlined">arrow_forward</span>
         </button>
-        <h2 className="text-xl font-black font-rabar text-mono-900 dark:text-white uppercase tracking-tight">فەرهەنگ</h2>
+        <h2 className="text-xl font-black font-rabar text-mono-900 dark:text-white uppercase">فەرهەنگ</h2>
         <div className="w-10 flex justify-end">
            <div className="px-2 py-1 rounded bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/10">
               <span className="text-[10px] font-black text-mono-600 dark:text-white/70 tabular-nums">{toKuDigits(solvedWords.length)}</span>
@@ -158,7 +158,7 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
           ) : (
             <div className="flex flex-col items-center justify-center py-24 text-center opacity-30 grayscale">
               <span className="material-symbols-outlined text-5xl mb-4 font-light">menu_book</span>
-              <p className="text-sm font-black font-rabar tracking-tight">فەرھەنگا تە یا ڤالایە</p>
+              <p className="text-sm font-black font-rabar">فەرھەنگا تە یا ڤالایە</p>
             </div>
           )}
         </div>

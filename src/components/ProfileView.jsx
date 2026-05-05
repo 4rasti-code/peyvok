@@ -14,25 +14,25 @@ import { useUser } from '../context/AuthContext';
 import { useGame } from '../context/GameContext';
 import { useAudio } from '../context/AudioContext';
 import FloatingLetterBackground from './FloatingLetterBackground';
-import { getLevelData, getLevelFromXP } from '../utils/progression';
-import { compressImage, getCroppedImg } from '../utils/imageUtils';
+import { getLevelFromXP } from '../utils/progression';
+import { getCroppedImg } from '../utils/imageUtils';
 import Cropper from 'react-easy-crop';
-import { wordList } from '../data/wordList';
 
-export default function ProfileView({ onProfileSave, onViewChange }) {
+
+export default function ProfileView({ onProfileSave }) {
    const {
-      user, userNickname, userAvatar, city: userCity,
-      isInKurdistan, countryCode, updateProfile
+      user, userNickname, userAvatar,
+      isInKurdistan, countryCode
    } = useUser();
 
    const {
-      currentXP, level, dailyStreak, fils, derhem, dinar,
-      playerStats, userRank, progressPercent, solvedWords
+      currentXP, level, dailyStreak,
+      userRank, progressPercent, solvedWords
    } = useGame();
 
-   const { playTabSound, playSaveSound } = useAudio();
+   const { playSaveSound } = useAudio();
    const [isFlagBoxOpen, setIsFlagBoxOpen] = useState(false);
-   const [isAvatarBoxOpen, setIsAvatarBoxOpen] = useState(false);
+
    const [isUploading, setIsUploading] = useState(false);
    const [dropdownCoords, setDropdownCoords] = useState({ top: 0, left: 0, width: 0 });
    const fileInputRef = useRef(null);
@@ -43,7 +43,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
    const [draftCountryCode, setDraftCountryCode] = useState(countryCode);
    const [draftIsInKurdistan, setDraftIsInKurdistan] = useState(isInKurdistan);
    const [saveSuccess, setSaveSuccess] = useState(false);
-   const [dbLoading, setDbLoading] = useState(false);
+
    const [isNicknameLocked, setIsNicknameLocked] = useState(true);
    const [pendingFile, setPendingFile] = useState(null);
    const [localPreviewUrl, setLocalPreviewUrl] = useState(null);
@@ -123,20 +123,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
 
    const tier = getLevelTier(safeLevel);
 
-   // Dynamic Win Ratio aggregator
-   const getWinRatio = () => {
-      if (!playerStats) return 0;
-      let wins = 0, total = 0;
-      Object.values(playerStats).forEach(m => {
-         if (typeof m === 'object' && m !== null) {
-            const w = Number(m.totalWins || m.totalCorrect || m.solvedWords?.length || 0);
-            const t = Number(m.totalGames || m.gamesPlayed || (w + (m.losses || 0)) || 0);
-            wins += w; total += Math.max(w, t);
-         }
-      });
-      return total > 0 ? Math.min(100, Math.round((wins / total) * 100)) : 0;
-   };
-   const winRatio = getWinRatio();
+
    const isLoading = !user || userNickname === 'یاریزان';
 
    const handleImageUpload = (e) => {
@@ -166,7 +153,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
          const fileName = `${user?.id || 'guest'}-${Date.now()}.jpg`;
 
          // Upload directly to Supabase Storage
-         const { data, error: uploadError } = await supabase.storage
+         const { error: uploadError } = await supabase.storage
             .from('avatars')
             .upload(fileName, blob, {
                contentType: 'image/jpeg',
@@ -233,7 +220,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
             try {
                const fileName = `${user?.id || 'guest'}-${Date.now()}.jpg`;
 
-               const { data, error: uploadError } = await supabase.storage
+               const { error: uploadError } = await supabase.storage
                   .from('avatars')
                   .upload(fileName, uploadSource, { contentType: 'image/jpeg' });
 
@@ -254,7 +241,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                const fileExt = pendingFile.name.split('.').pop();
                const fileName = `${user?.id || 'guest'}-${Date.now()}.${fileExt}`;
 
-               const { data, error: uploadError } = await supabase.storage
+               const { error: uploadError } = await supabase.storage
                   .from('avatars')
                   .upload(fileName, pendingFile);
 
@@ -264,7 +251,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                      .getPublicUrl(fileName);
                   finalAvatar = publicUrl;
                }
-            } catch (err) { }
+            } catch (_err) { /* ignore upload errors for fallback */ }
          }
 
          await onProfileSave({ nickname: draftNickname, avatar_url: finalAvatar, countryCode: draftCountryCode, isInKurdistan: draftIsInKurdistan });
@@ -296,7 +283,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
 
 
                {/* 3. Top Header: Save & Badges */}
-               <div className="absolute top-0 left-0 right-0 h-20 z-[60] px-6 flex justify-between items-center" dir="ltr">
+               <div className="absolute top-0 left-0 right-0 h-20 z-60 px-6 flex justify-between items-center" dir="ltr">
                   {/* Left: Save/Streak */}
                   <div className="relative pt-6 w-14">
                      <AnimatePresence mode="popLayout">
@@ -349,7 +336,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                                  />
                               </Motion.div>
                               <div className="flex flex-col items-center z-10 w-full mt-1">
-                                 <span className="text-[8px] font-black text-orange-400 uppercase leading-none mb-0.5 opacity-80 tracking-normal">ستریك</span>
+                                 <span className="text-[8px] font-black text-orange-400 uppercase leading-none mb-0.5 opacity-80">ستریك</span>
                                  <span className="text-lg font-black text-mono-900 dark:text-mono-100 leading-none tabular-nums">{toKuDigits(dailyStreak || 0)}</span>
                               </div>
                            </Motion.div>
@@ -370,7 +357,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                            </defs>
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center pt-1" dir="rtl">
-                           <span className="text-[8px] font-black text-slate-900 uppercase leading-none mb-0.5 tracking-tighter">ئاست</span>
+                           <span className="text-[8px] font-black text-slate-900 uppercase leading-none mb-0.5">ئاست</span>
                            <span className="text-[13px] font-black text-slate-950 leading-none tabular-nums">{toKuDigits(safeLevel || level || 1)}</span>
                         </div>
                      </div>
@@ -436,13 +423,13 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                   <div className="grid grid-cols-3 gap-1.5" dir="ltr">
 
                      <div className="flex flex-col items-center justify-center py-1.5 rounded-md bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-mono-800 shadow-sm">
-                        <span className="text-[9px] font-black uppercase mb-0.5 text-mono-400 tracking-tighter">XP سەرجەمێ</span>
+                        <span className="text-[9px] font-black uppercase mb-0.5 text-mono-400">XP سەرجەمێ</span>
                         <span className="text-[12px] font-black text-mono-900 dark:text-mono-100 tabular-nums leading-none">
                            {isLoading ? <div className="w-6 h-2 bg-mono-100 dark:bg-mono-800 animate-pulse rounded"></div> : toKuDigits(currentXP || 0)}
                         </span>
                      </div>
                      <div className="flex flex-col items-center justify-center py-1.5 rounded-md bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-mono-800 shadow-sm">
-                        <span className="text-[9px] font-black uppercase mb-0.5 text-mono-400 tracking-tighter">ڕێزبەندی</span>
+                        <span className="text-[9px] font-black uppercase mb-0.5 text-mono-400">ڕێزبەندی</span>
                         <span className="text-[12px] font-black text-mono-900 dark:text-mono-100 tabular-nums leading-none">
                            {isLoading ? '...' : `#${toKuDigits(userRank || 0)}`}
                         </span>
@@ -452,7 +439,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                         className={`flex flex-col items-center justify-center py-1.5 rounded-md border border-white/10 shadow-sm transition-all ${isLoading ? 'animate-pulse opacity-50' : ''}`}
                         style={{ backgroundColor: tier.stop1 }}
                      >
-                        <span className="text-[9px] font-black uppercase mb-0.5 text-mono-950/90 tracking-wider">پەیڤێن دیتی</span>
+                        <span className="text-[9px] font-black uppercase mb-0.5 text-mono-950/90">پەیڤێن دیتی</span>
                         <span className="text-[12px] font-black text-mono-950 leading-none tabular-nums">
                            {isLoading ? '...' : toKuDigits(solvedWords?.length || 0)}
                         </span>
@@ -468,7 +455,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
          <div className="flex-1 overflow-y-auto px-4 pb-[max(env(safe-area-inset-bottom),80px)] scrollbar-hide relative z-10 bg-trigger-zone">
              <Motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pt-2 w-full">
                      <div className="space-y-2 flex flex-col items-end">
-                        <label htmlFor="profile-nickname" className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1 tracking-normal text-right block w-full mt-1">ناسناڤێ تە</label>
+                        <label htmlFor="profile-nickname" className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1  text-right block w-full mt-1">ناسناڤێ تە</label>
                         <div className="flex items-center gap-2 w-full">
                            <div className="relative w-full">
                               <input
@@ -520,7 +507,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                      </div>
 
                      <div className="space-y-2 flex flex-col items-end">
-                        <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1 tracking-normal text-right block w-full mt-1">ئیمەیڵێ تە (Gmail)</span>
+                        <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1  text-right block w-full mt-1">ئیمەیڵێ تە (Gmail)</span>
                         <div className="w-full h-12 bg-mono-white dark:bg-mono-900 border border-mono-300 dark:border-mono-700 rounded-md px-4 flex items-center justify-end font-bold text-mono-500 dark:text-mono-400 text-[14px] noise-grain overflow-hidden mb-1 shadow-sm transition-colors duration-300">
                            <span className="truncate">{user?.email || 'جیمایڵ نەتایبەتە'}</span>
                            <span className="material-symbols-outlined text-[20px] mr-3 text-mono-400 dark:text-mono-500">mail</span>
@@ -528,7 +515,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                      </div>
 
                      <div className="space-y-2 flex flex-col items-end">
-                        <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1 tracking-normal text-right block w-full">وەڵات</span>
+                        <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1  text-right block w-full">وەڵات</span>
                         <div className="flex items-center gap-2 w-full">
                            <div className="relative w-full">
                               <button
@@ -554,7 +541,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
 
                         {isFlagBoxOpen && createPortal(
                            <AnimatePresence mode="wait">
-                              <Motion.div ref={flagDropdownRef} initial={{ opacity: 0, y: 8, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.95 }} style={{ position: 'absolute', top: dropdownCoords.top + 6, left: dropdownCoords.left, width: dropdownCoords.width }} className="bg-mono-white dark:bg-mono-900 rounded-xl border border-mono-200 dark:border-mono-800 z-[9999] shadow-2xl overflow-hidden noise-grain">
+                              <Motion.div ref={flagDropdownRef} initial={{ opacity: 0, y: 8, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.95 }} style={{ position: 'absolute', top: dropdownCoords.top + 6, left: dropdownCoords.left, width: dropdownCoords.width }} className="bg-mono-white dark:bg-mono-900 rounded-xl border border-mono-200 dark:border-mono-800 z-9999 shadow-2xl overflow-hidden noise-grain">
                                  <div className="p-2 max-h-60 overflow-y-auto no-scrollbar">
                                     <button onClick={() => { triggerHaptic(10); setDraftIsInKurdistan(true); setIsFlagBoxOpen(false); }} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-mono-100 dark:hover:bg-mono-800 w-full transition-colors">
                                        <FlagBadge isInKurdistan={true} size="xs" />
@@ -576,7 +563,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                      </div>
 
                      <div className="space-y-4">
-                        <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1 uppercase tracking-normal text-right block w-full">ھەلبژارتنا ئاڤاتاری</span>
+                        <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1 uppercase  text-right block w-full">ھەلبژارتنا ئاڤاتاری</span>
                         <div className="bg-mono-white dark:bg-mono-900 border border-mono-300 dark:border-mono-700 rounded-md p-4 shadow-sm noise-grain transition-colors duration-300">
                            <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 gap-4 max-h-60 overflow-y-auto pr-1 scrollbar-hide py-2 justify-items-center">
                               {AVATARS.map((avatar) => (
@@ -615,7 +602,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                   </Motion.div>
          </div>
          {isCropModalOpen && createPortal(
-            <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/90 overflow-hidden" dir="rtl">
+            <div className="fixed inset-0 z-10000 flex items-center justify-center p-4 bg-black/90 overflow-hidden" dir="rtl">
                <Motion.div
                   initial={{ opacity: 0, scale: 0.9, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -627,7 +614,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                         <div className="w-9 h-9 rounded-xl bg-primary/20 flex items-center justify-center border border-primary/30">
                            <span className="material-symbols-outlined text-primary text-xl font-bold">crop</span>
                         </div>
-                        <h3 className="text-white font-black font-rabar text-[15px] tracking-wide">کڕۆپکرنا وێنەی</h3>
+                        <h3 className="text-white font-black font-rabar text-[15px]">کڕۆپکرنا وێنەی</h3>
                      </div>
                      <button
                         onClick={() => setIsCropModalOpen(false)}
@@ -665,7 +652,7 @@ export default function ProfileView({ onProfileSave, onViewChange }) {
                   <div className="p-8 space-y-6 relative z-10 bg-mono-50 dark:bg-mono-900">
                      <div className="space-y-4">
                         <div className="flex items-center justify-between px-1">
-                           <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">زۆمکرنا وێنەی (Zoom)</span>
+                           <span className="text-[10px] font-black text-white/40 uppercase ]">زۆمکرنا وێنەی (Zoom)</span>
                            <span className="px-3 py-1 rounded-full bg-primary/20 text-primary text-[12px] font-black tabular-nums border border-primary/30">
                               {zoom.toFixed(1)}x
                            </span>

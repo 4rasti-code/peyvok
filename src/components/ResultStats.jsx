@@ -62,7 +62,7 @@ export default function ResultStats({ profileData, playerStats, gameMode, curren
     <div className="w-full flex flex-col items-center gap-6 py-4 border-t border-mono-200 dark:border-white/5 mt-2">
       {/* Statistics Section */}
       <div className="w-full">
-        <h3 className="text-[11px] font-black text-mono-400 dark:text-mono-500 uppercase tracking-[0.2em] mb-4 text-center">ئامار</h3>
+        <h3 className="text-[11px] font-black text-mono-400 dark:text-mono-500 uppercase ] mb-4 text-center">ئامار</h3>
         <div className="grid grid-cols-4 gap-2">
           <StatItem label="یاریێن کرین" value={played} />
           <StatItem label="ڕێژەیا سەرکەفتنێ" value={winRate} suffix="%" />
@@ -73,7 +73,7 @@ export default function ResultStats({ profileData, playerStats, gameMode, curren
 
       {/* Guess Distribution Section */}
       <div className="w-full">
-        <h3 className="text-[11px] font-black text-mono-400 dark:text-mono-500 uppercase tracking-[0.2em] mb-4 text-center">دابەشکرنا هەوڵدانان</h3>
+        <h3 className="text-[11px] font-black text-mono-400 dark:text-mono-500 uppercase ] mb-4 text-center">دابەشکرنا هەوڵدانان</h3>
         <div className="flex flex-col gap-1.5 w-full max-w-[280px] mx-auto">
           {Object.entries(fullDist).map(([key, val]) => (
             <GuessBar 

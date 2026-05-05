@@ -149,7 +149,7 @@ function MessageItem({ m, isMe, onSeen, onLongPress, currentUserId, showNickname
     >
       {showNickname && (
         <div className="flex items-center gap-2 mb-1 px-1">
-          <span className="text-[9px] font-black text-mono-500 uppercase tracking-tighter">{m.user_nickname || 'یاریکەر'}</span>
+          <span className="text-[9px] font-black text-mono-500 uppercase">{m.user_nickname || 'یاریکەر'}</span>
         </div>
       )}
 
@@ -837,7 +837,7 @@ export default function SocialHubView({
 
             {searchResults.length > 0 && (
               <div className="space-y-3 p-3 bg-mono-50 dark:bg-mono-900/50 rounded-md border border-mono-200 dark:border-mono-800">
-                <h3 className="text-[10px] font-black uppercase text-mono-500 tracking-widest px-1">ئەنجامێن ئەڤێ ھاتینە دیتن</h3>
+                <h3 className="text-[10px] font-black uppercase text-mono-500  px-1">ئەنجامێن ئەڤێ ھاتینە دیتن</h3>
                 {searchResults.map(res => {
                   const isFriend = friends.some(f => f.friend?.id === res.id);
                   const isPending = pendingRequests.some(r => r.sender?.id === res.id || r.friend_id === res.id);
@@ -878,7 +878,7 @@ export default function SocialHubView({
 
             {pendingRequests.length > 0 && (
               <div className="space-y-3">
-                <h3 className="text-[10px] font-black uppercase text-mono-500 tracking-widest px-2">داخوازێن ھەڤالینیێ</h3>
+                <h3 className="text-[10px] font-black uppercase text-mono-500  px-2">داخوازێن ھەڤالینیێ</h3>
                 {pendingRequests.map(req => (
                   <div key={req.id} className="flex items-center gap-3 p-3 bg-mono-white dark:bg-mono-900 rounded-md border border-mono-200 dark:border-mono-800 shadow-sm transition-colors duration-300">
                     <Avatar src={req.sender?.avatar_url} lastActive={req.sender?.updated_at} showStatus={true} size="sm" />
@@ -892,7 +892,7 @@ export default function SocialHubView({
             )}
 
             <div className="space-y-3">
-              <h3 className="text-[10px] font-black uppercase text-mono-600 dark:text-mono-400 tracking-widest px-2">ھەڤالێن تە</h3>
+              <h3 className="text-[10px] font-black uppercase text-mono-600 dark:text-mono-400  px-2">ھەڤالێن تە</h3>
               {friends
                 .sort((a, b) => {
                   const activeA = new Date(a.friend?.updated_at || 0);
@@ -1125,7 +1125,7 @@ export default function SocialHubView({
                 className="px-4 py-2 bg-mono-100/80 dark:bg-mono-900/80 border-b border-mono-200 dark:border-mono-800 flex items-center justify-between gap-3 overflow-hidden"
               >
                 <div className="flex-1 min-w-0 border-r-4 border-primary/50 pr-3 py-1">
-                  <p className="text-[10px] font-black text-primary uppercase tracking-widest mb-0.5">بەرسڤدانا نامەیێ</p>
+                  <p className="text-[10px] font-black text-primary uppercase  mb-0.5">بەرسڤدانا نامەیێ</p>
                   <p className="text-xs text-mono-600 dark:text-mono-400 truncate">{replyingTo.content || replyingTo.text}</p>
                 </div>
                 <button

@@ -38,6 +38,7 @@ export default function CategoryModal({ onSelect, isOpen, onClose }) {
         case 'میوە': return 'nutrition';
         case 'خێزان': return 'family_restroom';
         case 'هەست': return 'mood';
+        case 'کار(چاوگ)': return 'bolt';
         default: return 'stars';
     }
   };
@@ -67,7 +68,7 @@ export default function CategoryModal({ onSelect, isOpen, onClose }) {
             <span className="material-symbols-outlined text-3xl font-black">close</span>
           </Motion.button>
           
-          <h2 className="text-4xl font-black font-heading text-white tracking-tight text-center">بەشەکێ ھەلبژێرە</h2>
+          <h2 className="text-4xl font-black font-heading text-white  text-center">بەشەکێ ھەلبژێرە</h2>
           <p className="text-[11px] font-black  text-[#facc15] uppercase tracking-[0.3em] mt-3 opacity-90">CHOOSE YOUR CHALLENGE</p>
         </div>
 
@@ -96,7 +97,7 @@ export default function CategoryModal({ onSelect, isOpen, onClose }) {
 
         {/* Footer Accent Section */}
         <div className="mt-10 pt-4 flex justify-center text-center border-t-2 border-white/5 shrink-0">
-            <span className="text-[11px] text-white/30 font-black  uppercase tracking-[0.25em]">سلێمانى • ھەولێر • دھۆک • کەرکووک</span>
+            <span className="text-[11px] text-white/30 font-black  uppercase ]">سلێمانى • ھەولێر • دھۆک • کەرکووک</span>
         </div>
         
         {/* Floating Accent Bar */}

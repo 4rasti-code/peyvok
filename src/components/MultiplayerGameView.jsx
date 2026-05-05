@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo, useState } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import Grid from './Grid';
 import Keyboard from './Keyboard';
@@ -10,7 +10,7 @@ import useGameLogic from '../hooks/useGameLogic';
 import Avatar from './Avatar';
 import KurdishSunLoader from './KurdishSunLoader';
 import RoundIntro from './RoundIntro';
-import { triggerHaptic } from '../utils/haptics';
+import VoiceManager from './VoiceManager';
 import { toKuDigits } from '../utils/formatters';
 
 export default function MultiplayerGameView({ opponent: propOpponent, isDark = true, onOpenHowToPlay }) {
@@ -42,7 +42,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
   // Prioritize Prop over Context to force re-renders from App.jsx
   const opponent = propOpponent || contextOpponent;
 
-  const [isConfirmingExit, setIsConfirmingExit] = useState(false);
+
 
   const { user, userNickname, userAvatar } = useUser();
   const { playPopSound, playVictorySound: _playVictorySound, playStartGameSound: playStartSound } = useAudio();
@@ -151,7 +151,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
   }
 
   return (
-    <div className={`flex flex-col flex-1 h-full w-full ${isDark ? 'bg-[#020617]' : 'bg-[#f5f5f4]'} overflow-hidden transition-colors duration-500`}>
+    <div className={`flex flex-col flex-1 h-full w-full ${isDark ? 'bg-mono-950' : 'bg-mono-white'} overflow-hidden transition-colors duration-500`}>
       <style>
         {`
           .battlefield-container {
@@ -182,58 +182,22 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
       </style>
 
       {/* 0. ACTION TOP BAR */}
-      <div className="fixed top-0 left-0 right-0 z-400 pt-[env(safe-area-inset-top)] px-2 flex items-center justify-between pointer-events-none">
-        <div className="relative pointer-events-auto">
-          <button
-            onClick={() => { triggerHaptic(15); setIsConfirmingExit(!isConfirmingExit); }}
-            className={`w-12 h-12 flex items-center justify-center transition-all ${isConfirmingExit ? 'text-white bg-red-500 rounded-full' : 'text-red-500'} active:scale-90 shadow-sm`}
-            title="Exit Match"
-          >
-            <span className="material-symbols-outlined text-[32px] font-black">close</span>
-          </button>
+      <div className="fixed top-0 left-0 right-0 z-400 pt-[env(safe-area-inset-top)] px-2 h-14 flex items-center justify-between pointer-events-none">
+        {/* VOICE CHAT MANAGER (HAMBURGER ON THE RIGHT) */}
+        <VoiceManager 
+          matchId={activeMatch?.id} 
+          onHelp={onOpenHowToPlay}
+          onExit={cancelMatch}
+        />
 
-          <AnimatePresence>
-            {isConfirmingExit && (
-              <Motion.div
-                initial={{ opacity: 0, y: -10, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.9 }}
-                className={`absolute right-0 mt-2 w-[72px] ${isDark ? 'bg-mono-900 border-mono-800' : 'bg-white border-mono-200'} border rounded-md p-1.5 shadow-xl flex flex-col gap-0.5 z-50 overflow-hidden transition-colors duration-300`}
-              >
-                <button
-                  onClick={() => { triggerHaptic(15); setIsConfirmingExit(false); cancelMatch(); }}
-                  className="flex items-center justify-center px-2 py-1.5 hover:bg-red-500/10 text-red-600 dark:text-red-400 rounded-sm transition-all"
-                >
-                  <span className="text-sm font-medium">بەڵێ</span>
-                </button>
-                <button
-                  onClick={() => { triggerHaptic(5); setIsConfirmingExit(false); }}
-                  className={`flex items-center justify-center px-3 py-2 ${isDark ? 'hover:bg-mono-800 text-mono-300' : 'hover:bg-mono-100 text-mono-700'} rounded-sm transition-all`}
-                >
-                  <span className="text-sm font-medium">نەخێر</span>
-                </button>
-              </Motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        <button
-          onClick={() => {
-            triggerHaptic(10);
-            onOpenHowToPlay?.();
-          }}
-          className={`w-12 h-12 flex items-center justify-center ${isDark ? 'text-white/40' : 'text-slate-400'} hover:text-emerald-400 transition-all active:scale-90 pointer-events-auto`}
-          title="How to Play"
-        >
-          <span className="material-symbols-outlined text-[28px] font-black">help</span>
-        </button>
+        <div className="flex items-center gap-1" />
       </div>
 
       {/* 1. SYMMETRIC BATTLEFIELD */}
       <div className="battlefield-container no-scrollbar pt-[calc(env(safe-area-inset-top)+52px)]" dir="rtl">
 
         {/* RIDDLE DISPLAY */}
-        <div className={`w-full flex flex-col items-center justify-center py-3 px-4 animate-in fade-in duration-700 shrink-0 ${isDark ? 'bg-white/5 border-b border-white/5' : 'bg-white border-b border-slate-200'}`}>
+        <div className={`w-full flex flex-col items-center justify-center py-3 px-4 animate-in fade-in duration-700 shrink-0 ${isDark ? 'bg-white/5 border-b border-white/5' : 'bg-slate-50 border-b border-slate-200'}`}>
           <p className={`text-lg sm:text-2xl font-light ${isDark ? 'text-white' : 'text-slate-800'} leading-none font-noto-sans-arabic ${isDark ? 'drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]' : ''} riddle-text`}>
             {activeMatch?.riddles?.[currentRound % (activeMatch?.riddles?.length || 1)] || '...'}
           </p>
@@ -261,18 +225,30 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
         </div>
 
         {/* CENTER VS BAR: THE SCORES & ROUND */}
-        <div className="shrink-0 flex items-center justify-center gap-4 py-1 z-20 relative">
-          <div className={`absolute inset-0 bg-linear-to-r from-transparent via-${isDark ? 'white/5' : 'slate-200'} to-transparent h-px top-1/2 -translate-y-1/2 w-full`} />
+        <div className="shrink-0 flex items-center justify-center h-10 w-full z-20 relative">
+          {/* Background Horizontal Line */}
+          <div className={`absolute inset-x-0 top-1/2 -translate-y-1/2 bg-linear-to-r from-transparent via-${isDark ? 'white/10' : 'slate-300/60'} to-transparent h-px w-full`} />
 
-          <div className={`flex items-center gap-3 ${isDark ? 'bg-[#020617] border-white/10' : 'bg-white border-slate-200 shadow-md'} px-3 py-1 rounded-full border relative z-10`}>
-            <div className="flex items-center gap-2">
-              <span className={`text-[12px] font-black ${isDark ? 'text-blue-400' : 'text-blue-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p1 : scores.p2)}</span>
+          {/* Score & Round Pill */}
+          <div className={`flex items-center gap-4 ${isDark ? 'bg-mono-950/80 border-mono-800' : 'bg-white/90 border-slate-200 shadow-sm'} backdrop-blur-md px-4 py-1.5 rounded-full border relative z-10`}>
+            <div className="flex items-center justify-center min-w-[24px]">
+              <span className={`text-sm font-black ${isDark ? 'text-blue-400' : 'text-blue-600'} leading-none tabular-nums`}>
+                {toKuDigits(isPlayer1 ? scores.p1 : scores.p2)}
+              </span>
             </div>
-            <div className={`w-px h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
-            <div className={`text-[9px] font-black ${isDark ? 'text-white/40' : 'text-slate-500'} uppercase tracking-tighter`}>گەڕ {toKuDigits(currentRound + 1)}</div>
-            <div className={`w-px h-2 ${isDark ? 'bg-white/10' : 'bg-slate-200'} mx-1`} />
-            <div className="flex items-center gap-2">
-              <span className={`text-[12px] font-black ${isDark ? 'text-red-400' : 'text-red-600'} leading-none`}>{toKuDigits(isPlayer1 ? scores.p2 : scores.p1)}</span>
+            
+            <div className={`w-px h-4 ${isDark ? 'bg-white/10' : 'bg-slate-300/80'}`} />
+            
+            <div className={`text-[10px] font-black ${isDark ? 'text-white/60' : 'text-slate-600'} uppercase tracking-widest px-1`}>
+              گەڕ {toKuDigits(currentRound + 1)}
+            </div>
+            
+            <div className={`w-px h-4 ${isDark ? 'bg-white/10' : 'bg-slate-300/80'}`} />
+            
+            <div className="flex items-center justify-center min-w-[24px]">
+              <span className={`text-sm font-black ${isDark ? 'text-red-400' : 'text-red-600'} leading-none tabular-nums`}>
+                {toKuDigits(isPlayer1 ? scores.p2 : scores.p1)}
+              </span>
             </div>
           </div>
         </div>
@@ -307,7 +283,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
       </div>
 
       {/* 3. KEYBOARD (Pinned to bottom via Flex) */}
-      <div className={`shrink-0 w-full z-50 p-2 ${isDark ? 'bg-[#020617]/40' : 'bg-[#f5f5f4]'} pb-[max(env(safe-area-inset-bottom),16px)] m-0 border-t ${isDark ? 'border-white/5' : 'border-slate-200 shadow-lg'}`}>
+      <div className={`shrink-0 w-full z-50 p-2 ${isDark ? 'bg-mono-950/40' : 'bg-mono-50'} pb-[max(env(safe-area-inset-bottom),16px)] m-0 border-t ${isDark ? 'border-white/5' : 'border-mono-200 shadow-lg'}`}>
         <Keyboard
           onKey={onKey}
           onDelete={onDelete}

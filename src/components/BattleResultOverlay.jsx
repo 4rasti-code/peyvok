@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
 import Avatar from './Avatar';
 import { triggerHaptic } from '../utils/haptics';
-import { playSuccessSfx } from '../utils/audio';
+import { playSuccessSfx, playRewardSfx } from '../utils/audio';
 import { toKuDigits } from '../utils/formatters';
 import { shareGameResult } from '../utils/share';
 
@@ -40,8 +40,8 @@ const BattleResultOverlay = ({
   isPlayer1 = true,
   breakdown = null,
   xp = 0,
+  playerStats = null,
   onNext,
-  playStartSound,
   isDark,
   shareGrid = ""
 }) => {
@@ -51,12 +51,25 @@ const BattleResultOverlay = ({
   const isDefeat = result === 'defeat';
 
   useEffect(() => {
-    if (isVisible && !hasTriggeredRef.current) {
+    return () => {
+      confetti.reset();
+    };
+  }, []);
+
+  const lastResultRef = useRef(null);
+  useEffect(() => {
+    if (result !== lastResultRef.current) {
+      hasTriggeredRef.current = false;
+      lastResultRef.current = result;
+    }
+
+    if (isVisible && result && !hasTriggeredRef.current) {
       hasTriggeredRef.current = true;
       triggerHaptic(200);
 
       if (isVictory) {
         playSuccessSfx();
+        playRewardSfx();
         const colors = [isDark ? '#ffffff' : '#171717', '#facc15', '#3b82f6', '#ffffff'];
         confetti({
           particleCount: 150,
@@ -66,11 +79,7 @@ const BattleResultOverlay = ({
         });
       }
     }
-
-    if (!isVisible) {
-      hasTriggeredRef.current = false;
-    }
-  }, [isVisible, isVictory, isDark]);
+  }, [isVisible, result, isDark, isVictory]);
 
   const myScore = isPlayer1 ? scores.p1 : scores.p2;
   const oppScore = isPlayer1 ? scores.p2 : scores.p1;
@@ -89,40 +98,40 @@ const BattleResultOverlay = ({
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className={`w-full max-w-md bg-mono-white dark:bg-mono-950 border-2 ${isVictory ? 'border-emerald-500/30' : isDefeat ? 'border-red-500/30' : 'border-blue-500/30'} rounded-[3.5rem] p-8 flex flex-col items-center gap-6 relative overflow-hidden transition-colors duration-500 shadow-2xl`}
+            className={`w-full max-w-md bg-mono-white dark:bg-mono-950 border-2 ${isVictory
+                ? 'border-black/20 dark:border-white/20'
+                : isDefeat
+                  ? 'border-red-500/20 dark:border-red-500/30'
+                  : 'border-blue-500/20 dark:border-blue-500/30'
+              } rounded-md p-8 flex flex-col items-center gap-6 relative overflow-hidden transition-colors duration-500 shadow-2xl`}
           >
             {/* Status Icon */}
-            <div className="relative">
-              <Motion.div
-                initial={{ scale: 0.5 }}
-                animate={{ scale: 1 }}
-                className={`w-24 h-24 rounded-full flex items-center justify-center relative z-10 ${isVictory ? 'bg-emerald-500/20 text-emerald-400' : isDefeat ? 'bg-red-500/20 text-red-500' : 'bg-blue-500/20 text-blue-400'}`}
-              >
-                <span className="material-symbols-outlined text-[56px]">
-                  {isVictory ? 'workspace_premium' : isDefeat ? 'sentiment_very_dissatisfied' : 'balance'}
-                </span>
-              </Motion.div>
-            </div>
+
 
             {/* Title */}
             <div className="text-center">
-              <h2 className={`text-4xl font-black font-heading ${isVictory ? 'text-emerald-400' : isDefeat ? 'text-red-500' : 'text-blue-400'}`}>
+              <h2 className={`text-4xl font-black font-heading ${isVictory
+                  ? 'text-black dark:text-white'
+                  : isDefeat
+                    ? 'text-red-700 dark:text-red-500'
+                    : 'text-blue-700 dark:text-blue-400'
+                }`}>
                 {isVictory ? 'سەرکەفتن!' : isDefeat ? 'خوسارەتی!' : 'یەکسانبوون!'}
               </h2>
-              <p className="text-mono-400 dark:text-white/40 font-bold mt-1">ئەنجامێ یاریێ</p>
+
             </div>
 
             {/* VS SECTION (Premium Look) */}
-            <div className="w-full bg-mono-100 dark:bg-[#141414] rounded-2xl border border-mono-200 dark:border-white/10 p-6 flex items-center justify-between relative">
+            <div className="w-full bg-mono-100 dark:bg-[#141414] rounded-md border border-mono-200 dark:border-white/10 p-4 flex items-center justify-between relative">
               <div className="absolute inset-0 bg-mono-200 dark:bg-white/5 h-px top-1/2 -translate-y-1/2 w-full" />
 
               {/* Player 1 (YOU) */}
               <div className="flex flex-col items-center gap-2 flex-1 z-10">
-                <div className="p-1 rounded-full border border-sky-500/30">
-                  <Avatar src={user?.avatar_url} size="xl" />
+                <div className="p-0.5 rounded-full border border-sky-500/30">
+                  <Avatar src={user?.avatar_url} size="lg" />
                 </div>
-                <span className="text-[10px] font-black text-mono-400 dark:text-white/40 uppercase truncate w-24 text-center">{user?.nickname || 'تۆ'}</span>
-                <span className={`text-4xl font-black ${isVictory ? 'text-sky-400' : 'text-mono-900 dark:text-white'}`}>{toKuDigits(myScore)}</span>
+                <span className="text-[9px] font-black text-mono-400 dark:text-white/40 uppercase truncate w-20 text-center">{user?.nickname || 'تۆ'}</span>
+                <span className={`text-2xl font-black ${isVictory ? 'text-sky-400' : 'text-mono-900 dark:text-white'}`}>{toKuDigits(myScore)}</span>
               </div>
 
               <div className="flex flex-col items-center z-10">
@@ -131,39 +140,39 @@ const BattleResultOverlay = ({
 
               {/* Player 2 (FOE) */}
               <div className="flex flex-col items-center gap-2 flex-1 z-10">
-                <div className="p-1 rounded-full border border-red-500/30">
-                  <Avatar src={opponent?.avatar_url} size="xl" />
+                <div className="p-0.5 rounded-full border border-red-500/30">
+                  <Avatar src={opponent?.avatar_url} size="lg" />
                 </div>
-                <span className="text-[10px] font-black text-mono-400 dark:text-white/40 uppercase truncate w-24 text-center">{opponent?.nickname || 'ھەڤڕک'}</span>
-                <span className={`text-4xl font-black ${isDefeat ? 'text-red-500' : 'text-mono-900 dark:text-white'}`}>{toKuDigits(oppScore)}</span>
+                <span className="text-[9px] font-black text-mono-400 dark:text-white/40 uppercase truncate w-20 text-center">{opponent?.nickname || 'ھەڤڕک'}</span>
+                <span className={`text-2xl font-black ${isDefeat ? 'text-red-500' : 'text-mono-900 dark:text-white'}`}>{toKuDigits(oppScore)}</span>
               </div>
             </div>
 
             {/* REWARDS SECTION */}
-            <div className="w-full space-y-3 bg-mono-50 dark:bg-[#141414] p-5 rounded-2xl border border-mono-100 dark:border-white/5">
-              <div className="flex justify-between items-center text-md font-black">
+            <div className="w-full space-y-2 bg-mono-50 dark:bg-[#141414] p-4 rounded-md border border-mono-100 dark:border-white/5">
+              <div className="flex justify-between items-center text-sm font-bold">
                 <span className="text-mono-600 dark:text-white/60">خەلاتێ تە</span>
-                <div className={`flex items-center gap-2 ${isVictory ? 'text-emerald-400' : 'text-white/20'}`}>
+                <div className={`flex items-center gap-2 ${isVictory ? 'text-emerald-600 dark:text-emerald-400' : 'text-mono-400 dark:text-white/20'}`}>
                   <div className="flex flex-col items-end leading-none">
                     <AnimatedNumber value={breakdown?.awardAmount || 0} prefix={isVictory ? "+" : ""} />
-                    <span className="text-[8px] font-black uppercase opacity-60">
+                    <span className="text-[7px] font-bold uppercase opacity-60">
                       {breakdown?.awardType === 'fils' ? 'فلس' : breakdown?.awardType === 'derhem' ? 'دەرهەم' : 'دینار'}
                     </span>
                   </div>
-                  {breakdown?.awardType === 'fils' && <FilsIcon size={28} />}
-                  {breakdown?.awardType === 'derhem' && <DerhemIcon size={28} />}
-                  {breakdown?.awardType === 'dinar' && <DinarIcon size={28} />}
+                  {breakdown?.awardType === 'fils' && <FilsIcon size={24} />}
+                  {breakdown?.awardType === 'derhem' && <DerhemIcon size={24} />}
+                  {breakdown?.awardType === 'dinar' && <DinarIcon size={24} />}
                 </div>
               </div>
 
               <div className="h-px bg-mono-200 dark:bg-white/5" />
 
-              <div className="flex justify-between items-center text-md font-black">
+              <div className="flex justify-between items-center text-sm font-bold">
                 <span className="text-mono-600 dark:text-white/60">خەلاتێ ئێکس پی</span>
                 <div className={`flex items-center gap-2 ${isVictory ? 'text-yellow-500' : 'text-mono-400 dark:text-white/20'}`}>
                   <div className="flex flex-col items-end leading-none">
                     <AnimatedNumber value={breakdown?.xpAdded || xp || (isVictory ? 100 : 20)} prefix="+" />
-                    <span className="text-[8px] font-black opacity-60">XP</span>
+                    <span className="text-[7px] font-bold opacity-60">XP</span>
                   </div>
                 </div>
               </div>
@@ -187,15 +196,48 @@ const BattleResultOverlay = ({
                     );
                   })}
                 </div>
-                <span className="text-[8px] font-black text-mono-400 dark:text-white/20 uppercase tracking-[0.2em]">ئەنجامێ گەڕان</span>
+                <span className="text-[7px] font-bold text-mono-400 dark:text-white/20 uppercase">ئەنجامێ گەڕان</span>
               </div>
             </div>
+
+            {/* GUESS DISTRIBUTION CHART (Like Classic) */}
+            {playerStats?.battle?.guess_distribution && (
+              <div className="w-full py-2 space-y-4">
+                <div className="flex items-center gap-2 mb-2 px-1">
+                  <span className="material-symbols-outlined text-orange-500 text-lg">bar_chart</span>
+                  <h4 className="text-[10px] font-black text-mono-400 dark:text-white/40 uppercase tracking-widest">ئامارا هەڤڕکییێ</h4>
+                </div>
+
+                <div className="space-y-2">
+                  {Object.entries(playerStats.battle.guess_distribution)
+                    .filter(([key]) => parseInt(key) <= 3) // Only 1, 2, 3 for battle
+                    .map(([key, val]) => {
+                      const maxVal = Math.max(...Object.values(playerStats.battle.guess_distribution), 1);
+                      return (
+                        <div key={key} className="flex items-center gap-3">
+                          <span className="text-[10px] font-bold text-mono-400 w-2">{toKuDigits(key)}</span>
+                          <div className="flex-1 h-4 bg-mono-200/30 dark:bg-white/5 rounded-sm overflow-hidden border border-white/5">
+                            <Motion.div
+                              initial={{ width: 0 }}
+                              animate={{ width: `${(val / maxVal) * 100}%` }}
+                              className={`h-full min-w-[20px] flex items-center justify-end px-2 ${val > 0 ? 'bg-orange-500' : 'bg-mono-300/30 dark:bg-white/10'}`}
+                            >
+                              <span className="text-[9px] font-black text-white">{toKuDigits(val)}</span>
+                            </Motion.div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            )}
+
 
             {/* Buttons */}
             <div className="w-full flex flex-col gap-3">
               <button
-                onClick={() => { triggerHaptic(10); playStartSound?.(); onNext(); }}
-                className={`w-full ${isVictory ? 'bg-emerald-600' : 'bg-sky-600'} hover:brightness-110 text-white py-5 rounded-3xl font-black text-xl active:scale-95 transition-all flex items-center justify-center gap-3 group`}
+                onClick={() => { onNext(); }}
+                className={`w-full h-12 bg-transparent text-mono-900 dark:text-mono-white font-black text-lg active:scale-95 transition-all flex items-center justify-center gap-3 group`}
               >
                 ڤەگەڕە
                 <span className="material-symbols-outlined group-hover:translate-x-[-4px] transition-transform">arrow_back</span>
@@ -208,7 +250,7 @@ const BattleResultOverlay = ({
                     title: isVictory ? `من سەرکەفتن ئینا ل سەر ${opponent?.nickname || 'ھەڤڕکەکێ'}! 🏆` : `یەکسانبووم دگەل ${opponent?.nickname || 'ھەڤڕکەکێ'}! 🤝`,
                     grid: shareGrid
                   });
-                  
+
                   if (result === 'clipboard') {
                     setShareStatus('copied');
                     setTimeout(() => setShareStatus(null), 2000);

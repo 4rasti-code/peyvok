@@ -576,7 +576,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
       <FloatingLetterBackground ref={bgRef} />
 
       <div className="flex flex-col items-center mb-4 text-center relative z-20">
-        <h1 className="text-5xl font-black font-heading text-mono-900 dark:text-white text-pop tracking-tight transform hover:scale-110 transition-transform duration-500">پەیڤچن</h1>
+        <h1 className="text-5xl font-black font-heading text-mono-900 dark:text-white text-pop  transform hover:scale-110 transition-transform duration-500">پەیڤچن</h1>
         <div className="w-12 h-0.5 bg-mono-200 dark:bg-white/20 rounded-full mt-4"></div>
       </div>
 
@@ -806,7 +806,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
               <div className="mt-12">
                 <div className="flex items-center gap-4 mb-8 text-on-surface/30">
                   <div className="flex-1 h-px bg-current opacity-20"></div>
-                  <span className="text-[10px] font-bold  uppercase tracking-widest font-body opacity-60">یان</span>
+                  <span className="text-[10px] font-bold  uppercase  font-body opacity-60">یان</span>
                   <div className="flex-1 h-px bg-current opacity-20"></div>
                 </div>
 

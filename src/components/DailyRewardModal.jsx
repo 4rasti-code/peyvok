@@ -133,7 +133,7 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
                 <div className="w-16 h-16 rounded-md bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/10 flex items-center justify-center text-mono-900 dark:text-white mb-4 shadow-lg">
                   <span className="material-symbols-outlined text-4xl">redeem</span>
                 </div>
-                <h2 className="text-3xl font-black text-mono-900 dark:text-white tracking-normal">خەلاتێن ڕۆژانە</h2>
+                <h2 className="text-3xl font-black text-mono-900 dark:text-white">خەلاتێن ڕۆژانە</h2>
                 <p className="text-mono-500 dark:text-white/50 text-sm font-medium mt-1">٧ ڕۆژ - خەلاتێن بەردەوام و نایاب</p>
               </div>
 

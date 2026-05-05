@@ -155,7 +155,7 @@ export default function LeaderboardView({ onOpenChat }) {
       <div className="relative z-10">
         <div className="flex flex-col items-center mb-10 max-w-md mx-auto text-center">
           <span className="material-symbols-outlined text-4xl text-primary mb-2.5 drop-shadow-lg">leaderboard</span>
-          <h2 className="text-5xl font-black font-rabar tracking-normal italic uppercase text-mono-900 dark:text-mono-300 transition-colors duration-500">رێزبەندی</h2>
+          <h2 className="text-5xl font-black font-rabar  italic uppercase text-mono-900 dark:text-mono-300 transition-colors duration-500">رێزبەندی</h2>
         </div>
 
         {/* Top Tab Swapper - Synced Card Style */}

@@ -2,7 +2,6 @@ import React from 'react';
 import ExperienceBar from './ExperienceBar';
 import { useGame } from '../context/GameContext';
 import { useUser } from '../context/AuthContext';
-import { toKuDigits } from '../utils/formatters';
 
 /**
  * GameWrapper - Global Experience Simulator.

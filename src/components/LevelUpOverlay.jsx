@@ -57,7 +57,7 @@ export default function LevelUpOverlay({ isVisible, newLevel, onClose, isDark })
             <span className="material-symbols-outlined text-white text-3xl animate-bounce" style={{ fontVariationSettings: "'FILL' 1" }}>payments</span>
             <span className="font-body font-bold  text-white text-xl">+٥٠٠ فلس دیاری</span>
           </div>
-          <span className="text-[10px] uppercase font-bold  tracking-[0.2em] text-white/60 group-hover:text-white transition-colors">وەربگرە</span>
+          <span className="text-[10px] uppercase font-bold  ] text-white/60 group-hover:text-white transition-colors">وەربگرە</span>
         </button>
       </div>
     </div>

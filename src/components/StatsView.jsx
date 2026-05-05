@@ -117,7 +117,7 @@ export default function StatsView({
         >
           <span className="material-symbols-outlined">arrow_forward</span>
         </button>
-        <h2 className="text-xl font-black font-rabar text-mono-900 dark:text-white uppercase tracking-tight">ئامار</h2>
+        <h2 className="text-xl font-black font-rabar text-mono-900 dark:text-white uppercase">ئامار</h2>
         <div className="w-10" />
       </div>
 
@@ -151,7 +151,7 @@ export default function StatsView({
           <Motion.div variants={itemVariants} className="flex flex-col gap-4">
             <div className="flex items-center gap-3 px-1">
               <div className="h-px flex-1 bg-mono-100 dark:bg-mono-800" />
-              <span className="text-[9px] font-black text-mono-400 dark:text-mono-500 uppercase tracking-[0.3em]">ئامارێن پێشکەفتی</span>
+              <span className="text-[9px] font-black text-mono-400 dark:text-mono-500 uppercase ]">ئامارێن پێشکەفتی</span>
               <div className="h-px flex-1 bg-mono-100 dark:bg-mono-800" />
             </div>
 
@@ -177,7 +177,7 @@ export default function StatsView({
             <div className="bg-mono-white dark:bg-mono-900/40 rounded-[6px] border border-mono-200 dark:border-mono-800 p-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <span className="material-symbols-outlined text-rose-500 text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
-                <span className="text-[10px] font-bold text-mono-400 dark:text-mono-500 uppercase tracking-tight">مۆدێ دڵخواز</span>
+                <span className="text-[10px] font-bold text-mono-400 dark:text-mono-500 uppercase">مۆدێ دڵخواز</span>
               </div>
               <span className="text-sm font-black text-mono-900 dark:text-white">{mostPlayedMode}</span>
             </div>
@@ -186,7 +186,7 @@ export default function StatsView({
               <div className="bg-mono-white dark:bg-mono-900/40 rounded-[6px] border border-mono-200 dark:border-mono-800 p-4 flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <span className="material-symbols-outlined text-sky-500 text-2xl">timer</span>
-                  <span className="text-[10px] font-bold text-mono-400 dark:text-mono-500 uppercase tracking-tight">خێراترین سەرکەفتن</span>
+                  <span className="text-[10px] font-bold text-mono-400 dark:text-mono-500 uppercase">خێراترین سەرکەفتن</span>
                 </div>
                 <span className="text-sm font-black text-mono-900 dark:text-white tabular-nums">{toKuDigits((advancedStats.fastestSolve / 1000).toFixed(2))} چرکە</span>
               </div>
@@ -209,7 +209,7 @@ export default function StatsView({
           <div className="flex flex-col gap-5">
             <div className="flex items-center gap-3 px-1 mt-4">
               <div className="h-px flex-1 bg-mono-100 dark:bg-mono-800" />
-              <span className="text-[9px] font-black text-mono-400 dark:text-mono-500 uppercase tracking-[0.3em]">دابەشکرنا مۆدان</span>
+              <span className="text-[9px] font-black text-mono-400 dark:text-mono-500 uppercase ]">دابەشکرنا مۆدان</span>
               <div className="h-px flex-1 bg-mono-100 dark:bg-mono-800" />
             </div>
             

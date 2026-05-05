@@ -33,7 +33,7 @@ export default function GameOverOverlay({ scores, user, opponent, isPlayer1, onR
             </div>
             <div className="flex flex-col items-center">
               <span className={`text-3xl font-black transition-colors ${won ? 'text-emerald-400' : 'text-white'}`}>{myScore}</span>
-              <span className="text-[10px] text-white/40 uppercase font-black tracking-widest">تۆ (YOU)</span>
+              <span className="text-[10px] text-white/40 uppercase font-black">تۆ (YOU)</span>
             </div>
           </div>
 
@@ -47,7 +47,7 @@ export default function GameOverOverlay({ scores, user, opponent, isPlayer1, onR
             </div>
             <div className="flex flex-col items-center">
               <span className={`text-3xl font-black transition-colors ${!won && !draw ? 'text-red-400' : 'text-white'}`}>{oppScore}</span>
-              <span className="text-[10px] text-white/40 uppercase font-black tracking-widest">ھەڤڕک (FOE)</span>
+              <span className="text-[10px] text-white/40 uppercase font-black">ھەڤڕک (FOE)</span>
             </div>
           </div>
         </div>

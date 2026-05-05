@@ -62,7 +62,7 @@ const KurdishSunLoader = ({ size = 80, color = "#FFD700", progress = 0 }) => {
         {/* Status Text & Percentage */}
         <div className="flex flex-col items-center gap-1">
             <div className="flex items-center gap-3">
-                <span className="text-[11px] font-black text-yellow-500/90 uppercase tracking-[0.2em] font-rabar drop-shadow-sm">
+                <span className="text-[11px] font-black text-yellow-500/90 uppercase font-rabar drop-shadow-sm tracking-normal">
                     چاڤەڕێبە...
                 </span>
                 <span className="text-sm font-black text-white tabular-nums font-mono drop-shadow-md">

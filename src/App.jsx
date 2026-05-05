@@ -119,7 +119,7 @@ const ScrollingMatchFinder = ({ opponent }) => {
   );
 
   return (
-    <div className="relative w-32 h-32 rounded-full border-4 border-emerald-500/30 overflow-hidden bg-black/40 shadow-[0_0_40px_rgba(16,185,129,0.3)]">
+    <div className="relative w-24 h-24 rounded-[100%] overflow-hidden bg-mono-100 dark:bg-black/40 shadow-[0_0_15px_rgba(239,68,68,0.3)] border-2 border-red-500">
       <AnimatePresence mode="wait">
         {!opponent ? (
           <Motion.div
@@ -135,7 +135,7 @@ const ScrollingMatchFinder = ({ opponent }) => {
               className="flex flex-col items-center"
             >
               {randomPool.map((av, i) => (
-                <div key={i} className="w-32 h-32 flex items-center justify-center shrink-0">
+                <div key={i} className="w-24 h-24 flex items-center justify-center shrink-0">
                   <Avatar src={av.id} size="full" border={false} />
                 </div>
               ))}
@@ -159,6 +159,8 @@ const ScrollingMatchFinder = ({ opponent }) => {
   );
 };
 
+
+
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -168,7 +170,8 @@ export default function App() {
     user, setUser, hapticEnabled, loadingAuth, authProgress,
     userNickname, userAvatar, city, isInKurdistan, countryCode,
     ownedAvatars, equippedAvatar, unlockedThemes: _unlockedThemes, currentTheme,
-    updateProfile, profileData
+    updateProfile, profileData,
+    micEnabled, speakerEnabled, voiceVolume
   } = useUser();
 
   const {
@@ -409,17 +412,11 @@ export default function App() {
     submitFailure
   } = useMultiplayer();
 
-  // TRANSITION: Return to Lobby when Match ends (Multiplayer High-Speed Flow)
-  useEffect(() => {
-    const mainViews = ['lobby', 'store', 'social_hub', 'leaderboard', 'stats', 'dictionary', 'profile'];
-    if (multiplayerState === 'game_over' && !mainViews.includes(currentView)) {
-      requestAnimationFrame(() => setCurrentView(prev => prev !== 'lobby' ? 'lobby' : prev));
-    }
-  }, [multiplayerState, currentView]);
+
 
   // CLEANUP: Ensure multiplayer state is reset when navigating away from results
   useEffect(() => {
-    const mainViews = ['store', 'social_hub', 'leaderboard', 'stats', 'dictionary', 'profile', 'lobby'];
+    const mainViews = ['store', 'social_hub', 'leaderboard', 'stats', 'dictionary', 'profile'];
     if (multiplayerState === 'game_over' && mainViews.includes(currentView)) {
       // If we are in a result state but moved to a menu, clean up the match record
       if (cancelMatch) cancelMatch();
@@ -813,6 +810,7 @@ export default function App() {
     };
   }, [user?.id]);
 
+
   // Shared Logic (Haptic, Audio, Normalized, etc.) now handled in src/utils/gameStatus.js
 
 
@@ -867,12 +865,16 @@ export default function App() {
       console.log(`[Multiplayer] Result detected: ${LastMatchResult}. View redirected to Lobby.`);
 
       if (LastMatchResult === 'victory') {
-        playRewardSound();
+        // Reward sound handled by result overlay if needed
       }
 
-      requestAnimationFrame(() => setCurrentView('lobby'));
+      const timer = setTimeout(() => {
+        setCurrentView('lobby');
+      }, 10000);
+
+      return () => clearTimeout(timer);
     }
-  }, [MatchResultTrigger, LastMatchResult, setCurrentView, playRewardSound]);
+  }, [MatchResultTrigger, LastMatchResult, playRewardSound, setCurrentView]);
 
   // Safe Audio Trigger for Game Start
   useEffect(() => {
@@ -1628,6 +1630,7 @@ export default function App() {
           result={LastMatchResult}
           scores={scores}
           opponent={opponent}
+          playerStats={playerStats}
           user={{ nickname: userNickname, avatar_url: userAvatar, level: level }}
           isPlayer1={activeMatch?.player1_id === user?.id}
           breakdown={MatchReward?.awards ? {
@@ -1666,6 +1669,10 @@ export default function App() {
             onHapticToggle={() => {
               updateProfile({ haptic_enabled: !hapticEnabled });
             }}
+            micEnabled={micEnabled}
+            speakerEnabled={speakerEnabled}
+            voiceVolume={voiceVolume}
+            updateProfile={updateProfile}
             user={user}
             onLogout={handleLogout}
             onPlaySound={playBubblePopSound}
@@ -1702,48 +1709,107 @@ export default function App() {
 
         {/* 5. MULTIPLAYER MATCHMAKING OVERLAY */}
         <AnimatePresence>
-          {(multiplayerState === 'searching' || multiplayerState === 'waiting') && (
+          {(multiplayerState === 'searching' || multiplayerState === 'waiting' || multiplayerState === 'found') && (
             <Motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-200 flex flex-col items-center justify-center bg-mono-white/95 dark:bg-mono-950/95 backdrop-blur-xl p-8 text-center"
+              className="fixed inset-0 z-200 flex flex-col items-center justify-between bg-mono-50/90 dark:bg-mono-950/90 backdrop-blur-2xl px-6 py-12 text-center overflow-hidden"
             >
-              {/* Pulsing Background Glow */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-emerald-500/20 rounded-full blur-[80px] animate-pulse" />
+              {/* Background gradient elements removed as requested by user */}
 
-              <div className="relative z-10 flex flex-col items-center gap-8 w-full max-w-sm">
-                <div className="relative">
-                  <ScrollingMatchFinder opponent={opponent} />
-                  <Motion.div
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="absolute -inset-4 border-2 border-emerald-500/30 rounded-full"
-                  />
-                </div>
+              {/* TOP RIGHT CANCEL ICON */}
+              <div className={`absolute top-6 right-6 z-50 transition-all duration-500 ${multiplayerState === 'found' ? 'opacity-0 pointer-events-none scale-90' : 'opacity-100 scale-100'}`}>
+                <button
+                  onClick={cancelMatch}
+                  className="p-3 bg-mono-200/50 dark:bg-mono-800/50 hover:bg-mono-300 dark:hover:bg-mono-700 border border-mono-300/50 dark:border-mono-700/50 rounded-full text-mono-600 dark:text-mono-400 hover:text-mono-900 dark:hover:text-white backdrop-blur-md shadow-sm hover:shadow-md transition-all active:scale-90"
+                  aria-label="Cancel Matchmaking"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+              </div>
 
-                <div className="space-y-4">
-                  <div className="flex flex-col items-center gap-2">
-                    <h2 className="text-3xl font-black font-heading text-white">لێگەڕیان لدویڤ ھەڤڕکەکێ...</h2>
-                    {/* LIVE TIMER UI */}
-                    <div className="px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full">
-                      <span className="text-emerald-400 font-black font-mono text-xl tracking-widest tabular-nums">
-                        {Math.floor(MatchmakingTime / 60).toString().padStart(2, '0')}:
-                        {(MatchmakingTime % 60).toString().padStart(2, '0')}
-                      </span>
-                    </div>
+              {/* TOP: OPPONENT SEARCHER / FOUND */}
+              <div className="relative z-10 flex flex-col items-center mt-24 min-h-[220px] w-full">
+                {/* Premium Avatar Rings */}
+                <div className="relative flex flex-col items-center justify-center">
+                  
+                  {/* Minimalist Stage Base */}
+                  <div className="absolute -bottom-4 flex flex-col items-center z-0 pointer-events-none">
+                    <div className="w-32 h-6 bg-linear-to-b from-mono-200/50 to-mono-300/30 dark:from-mono-800/50 dark:to-mono-900/30 border border-white/40 dark:border-mono-700/40 rounded-[100%] backdrop-blur-sm" />
+                    <div className="absolute top-2 w-24 h-2 bg-black/10 dark:bg-black/50 rounded-[100%] blur-md" />
+                  </div>
+
+                  {/* Avatar (Rings removed as requested) */}
+                  <div className="relative z-10 mt-2">
+                    <ScrollingMatchFinder opponent={opponent} />
                   </div>
                 </div>
-
-                <div className="flex flex-col gap-3 w-full">
-                  <button
-                    onClick={cancelMatch}
-                    className="h-16 bg-white/5 border border-white/10 rounded-2xl font-black text-white/50 hover:bg-white/10 hover:text-white transition-all active:scale-95"
-                  >
-                    پەشێمان بووم (Cancel)
-                  </button>
+                
+                {/* Fixed height placeholder for the name to prevent layout shift */}
+                <div className="absolute top-[160px] left-0 right-0 flex flex-col items-center pointer-events-none">
+                  <AnimatePresence>
+                    {multiplayerState === 'found' && opponent && (
+                      <Motion.div
+                        initial={{ opacity: 0, y: -20, scale: 0.8 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        className="flex flex-col items-center gap-2"
+                      >
+                        <div className="text-mono-800 dark:text-mono-100 font-black text-xl drop-shadow-md">
+                          {opponent.nickname || 'ھەڤڕک'}
+                        </div>
+                        <div className="text-sm font-semibold text-mono-500 dark:text-mono-400 bg-white/60 dark:bg-mono-900/60 backdrop-blur-md px-3 py-0.5 rounded-md border border-mono-200 dark:border-mono-800 shadow-sm flex items-center justify-center -mt-1">
+                           <span>ئاستێ {opponent.level || 1}</span>
+                        </div>
+                      </Motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
+
+              {/* MIDDLE: VS & TIMER */}
+              <div className="relative z-10 flex flex-col items-center gap-2 w-full max-w-sm my-auto -translate-y-6">
+                {/* Timer Without Background */}
+                <div className="flex items-center justify-center">
+                  <span className="text-mono-800 dark:text-mono-100 font-black font-mono text-4xl tracking-widest tabular-nums drop-shadow-md">
+                    {Math.floor(MatchmakingTime / 60).toString().padStart(2, '0')}:
+                    {(MatchmakingTime % 60).toString().padStart(2, '0')}
+                  </span>
+                </div>
+
+                <h2 className="text-sm font-light tracking-widest text-mono-500 dark:text-mono-400 transition-colors duration-300">
+                  {multiplayerState === 'found' ? 'ئامادەبە!' : 'لێگەڕیان...'}
+                </h2>
+              </div>
+
+              {/* BOTTOM: USER PODIUM */}
+              <div className="relative z-10 flex flex-col items-center mb-24">
+                <div className="relative flex flex-col items-center justify-center">
+                  
+                  {/* Minimalist Stage Base */}
+                  <div className="absolute -bottom-4 flex flex-col items-center z-0 pointer-events-none">
+                    <div className="w-32 h-6 bg-linear-to-b from-mono-200/50 to-mono-300/30 dark:from-mono-800/50 dark:to-mono-900/30 border border-white/40 dark:border-mono-700/40 rounded-[100%] backdrop-blur-sm" />
+                    <div className="absolute top-2 w-24 h-2 bg-black/10 dark:bg-black/50 rounded-[100%] blur-md" />
+                  </div>
+
+                  <div className="w-24 h-24 relative z-10 rounded-[100%] overflow-hidden shadow-[0_0_15px_rgba(59,130,246,0.3)] border-2 border-blue-500 bg-mono-100 dark:bg-black/40">
+                    <Avatar src={userAvatar} size="full" border={false} />
+                  </div>
+                </div>
+                
+                <div className="mt-12 flex flex-col items-center gap-1 relative z-20">
+                  <span className="text-mono-800 dark:text-mono-100 font-black text-lg uppercase tracking-widest drop-shadow-md">
+                    {userNickname || 'تۆ (YOU)'}
+                  </span>
+                  <div className="text-sm font-semibold text-mono-500 dark:text-mono-400 bg-white/60 dark:bg-mono-900/60 backdrop-blur-md px-3 py-0.5 rounded-md border border-mono-200 dark:border-mono-800 shadow-sm flex items-center justify-center mt-1">
+                     <span>ئاستێ {level}</span>
+                  </div>
+                </div>
+              </div>
+
 
               <div className="absolute bottom-12 left-0 right-0 flex justify-center gap-4 opacity-20">
                 {['پ', 'ە', 'ی', 'ڤ', 'چ', 'ن'].map((char, i) => (
@@ -1751,7 +1817,7 @@ export default function App() {
                     key={i}
                     animate={{ y: [-10, 10, -10] }}
                     transition={{ duration: 3, delay: i * 0.5, repeat: Infinity }}
-                    className="text-4xl font-black font-rabar"
+                    className="text-4xl font-black font-rabar text-mono-900 dark:text-white"
                   >
                     {char}
                   </Motion.span>

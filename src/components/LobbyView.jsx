@@ -164,7 +164,7 @@ const LobbyView = React.memo(({
               <div className="relative z-10 flex items-center justify-between px-8 h-full">
                 <div className="flex flex-col items-start text-right">
                   <h3 className="text-xl font-black font-heading text-amber-950">پەیڤچن</h3>
-                  <span className="text-[9px] font-medium font-rabar uppercase tracking-normal text-amber-900/80 leading-none">کلاسیک</span>
+                  <span className="text-[9px] font-medium font-rabar uppercase  text-amber-900/80 leading-none">کلاسیک</span>
                 </div>
                 <div className="flex items-center justify-center">
                   <span className="material-symbols-outlined text-4xl text-amber-950" style={{ fontVariationSettings: "'FILL' 1" }}>videogame_asset</span>
@@ -184,7 +184,7 @@ const LobbyView = React.memo(({
               <div className="relative z-10 flex items-center justify-between px-8 h-full">
                 <div className="flex flex-col items-start text-right">
                   <h3 className="text-xl font-black font-heading text-white">مامک</h3>
-                  <span className="text-[9px] font-medium font-rabar uppercase tracking-normal text-white/50 leading-none">پەیدا بکە</span>
+                  <span className="text-[9px] font-medium font-rabar uppercase  text-white/50 leading-none">پەیدا بکە</span>
                 </div>
                 <div className="flex items-center justify-center">
                   <span className="material-symbols-outlined text-4xl text-white" style={{ fontVariationSettings: "'FILL' 1" }}>quiz</span>
@@ -207,7 +207,7 @@ const LobbyView = React.memo(({
                 </div>
                 <div className="flex flex-col items-center">
                   <h3 className="text-lg font-black font-heading text-white leading-none">پەیڤێن دژوار</h3>
-                  <span className="text-[9px] font-medium font-rabar uppercase tracking-normal text-white/50 mt-1 leading-none">بۆ شارەزایان</span>
+                  <span className="text-[9px] font-medium font-rabar uppercase  text-white/50 mt-1 leading-none">بۆ شارەزایان</span>
                 </div>
               </div>
             </Motion.button>
@@ -227,7 +227,7 @@ const LobbyView = React.memo(({
                 </div>
                 <div className="flex flex-col items-center">
                   <h3 className="text-lg font-black font-heading text-white leading-none">تایا پەیڤان</h3>
-                  <span className="text-[9px] font-medium font-rabar uppercase tracking-normal text-white/50 mt-1 leading-none">بەرھەڤ بە</span>
+                  <span className="text-[9px] font-medium font-rabar uppercase  text-white/50 mt-1 leading-none">بەرھەڤ بە</span>
                 </div>
               </div>
             </Motion.button>

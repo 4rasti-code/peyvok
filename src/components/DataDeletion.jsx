@@ -124,7 +124,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                             <span className="material-symbols-outlined text-white text-2xl">delete_sweep</span>
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold font-heading tracking-tight bg-clip-text text-transparent bg-linear-to-r from-white to-white/60">پەیڤچن</h1>
+                            <h1 className="text-2xl font-bold font-heading  bg-clip-text text-transparent bg-linear-to-r from-white to-white/60">پەیڤچن</h1>
                             <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary/80">Data Freedom</p>
                         </div>
                     </div>

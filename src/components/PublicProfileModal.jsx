@@ -402,7 +402,7 @@ export default function PublicProfileModal({
              <div className="w-full relative overflow-hidden px-2">
                 <div className="flex justify-between items-end mb-1.5 relative z-10">
                    <div className="text-right">
-                     <span className="text-[8px] font-black  uppercase tracking-widest text-mono-400 dark:text-white/40 block">ئەزموون (XP)</span>
+                     <span className="text-[8px] font-black  uppercase  text-mono-400 dark:text-white/40 block">ئەزموون (XP)</span>
                      <span className="text-base font-black text-mono-900 dark:text-white ">{displayData.xp || 0}</span>
                    </div>
                    <span className="text-[9px] font-black text-mono-300 dark:text-white/20">/ {nextLevelXP}</span>
@@ -419,7 +419,7 @@ export default function PublicProfileModal({
 
 
              <div className="pt-2 border-t border-white/5">
-                <span className="text-[8px] font-black text-white/30 uppercase tracking-widest block text-center mb-3">دەستکەڤت و مەدالیا</span>
+                <span className="text-[8px] font-black text-white/30 uppercase  block text-center mb-3">دەستکەڤت و مەدالیا</span>
                 <div className="flex justify-center gap-2 flex-wrap relative">
                    {medals.map((m, idx) => {
                      const isUnlocked = m.condition(displayData);
@@ -504,7 +504,7 @@ export default function PublicProfileModal({
                   <span className="material-symbols-outlined text-lg">hourglass_top</span>
                   چاڤەڕێبە
                 </div>
-                <button onClick={handleDeclineFriendRequest} className="text-[10px] font-black text-red-400 hover:text-red-300 transition-colors uppercase tracking-widest">پەشێمان بوون</button>
+                <button onClick={handleDeclineFriendRequest} className="text-[10px] font-black text-red-400 hover:text-red-300 transition-colors uppercase">پەشێمان بوون</button>
               </div>
             ) : relStatus === 'pending_received' ? (
               <div className="flex gap-2 w-full">

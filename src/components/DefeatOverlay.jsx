@@ -95,7 +95,7 @@ const DefeatOverlay = ({
 
               {solvedWord && (
                 <div className="bg-mono-100 dark:bg-[#141414] border border-mono-200 dark:border-white/5 px-4 py-2 rounded-sm inline-block">
-                  <span className="text-mono-400 dark:text-white/40 text-[9px] font-bold uppercase tracking-normal block mb-0.5">پەیڤا ڕاست</span>
+                  <span className="text-mono-400 dark:text-white/40 text-[9px] font-bold uppercase  block mb-0.5">پەیڤا ڕاست</span>
                   <span className="text-lg font-black text-mono-900 dark:text-white font-heading tracking-normal">{solvedWord}</span>
                 </div>
               )}
@@ -107,7 +107,7 @@ const DefeatOverlay = ({
                   <div className="flex items-center gap-1.5 text-red-400">
                     <div className="flex flex-col items-end leading-none">
                       <AnimatedNumber value={breakdown?.base || 0} prefix="-" />
-                      <span className="text-[7px] font-black uppercase tracking-widest opacity-60">فلس</span>
+                      <span className="text-[7px] font-black uppercase  opacity-60">فلس</span>
                     </div>
                     <FilsIcon size={12} className="opacity-80" />
                   </div>
@@ -117,7 +117,7 @@ const DefeatOverlay = ({
                   <div className="flex items-center gap-1.5 text-red-500">
                     <div className="flex flex-col items-end leading-none">
                       <AnimatedNumber value={breakdown?.mistakes || 0} prefix="-" />
-                      <span className="text-[7px] font-black uppercase tracking-widest opacity-60">فلس</span>
+                      <span className="text-[7px] font-black uppercase  opacity-60">فلس</span>
                     </div>
                     <FilsIcon size={12} className="opacity-80" />
                   </div>
@@ -128,7 +128,7 @@ const DefeatOverlay = ({
                   <div className="flex items-center gap-1.5 text-red-500">
                     <div className="flex flex-col items-end leading-none">
                       <AnimatedNumber value={breakdown?.total || 0} prefix="-" />
-                      <span className="text-[8px] font-black uppercase tracking-widest opacity-70">فلس</span>
+                      <span className="text-[8px] font-black uppercase  opacity-70">فلس</span>
                     </div>
                     <FilsIcon size={16} />
                   </div>

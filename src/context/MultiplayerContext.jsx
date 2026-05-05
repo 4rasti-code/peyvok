@@ -18,7 +18,7 @@ export const MultiplayerProvider = ({ children }) => {
     playStartGameSound: _playStartGameSound,
     playRewardSound 
   } = useAudio();
-  const { syncProgressToDatabase } = useGame();
+  const { syncProgressToDatabase, applyPenalty } = useGame();
   const [multiplayerState, setMultiplayerState] = useState('idle');
   const [MatchmakingTime, setMatchmakingTime] = useState(0);
   const [activeMatch, setActiveMatch] = useState(null);
@@ -267,8 +267,14 @@ export const MultiplayerProvider = ({ children }) => {
         // Award the win to the remaining player by setting score 
         // Or just let the result logic handle it
       };
-      // To ensure victory, we make sure current player has more points or we just set result
-      if (isP1) updates.p1_score = 3; else updates.p2_score = 3;
+      // To ensure victory, we make sure current player has a 3-0 lead
+      if (isP1) {
+        updates.p1_score = 3;
+        updates.p2_score = 0;
+      } else {
+        updates.p2_score = 3;
+        updates.p1_score = 0;
+      }
 
       await supabase.from('online_matches').update(updates).eq('id', mId);
       
@@ -368,16 +374,28 @@ export const MultiplayerProvider = ({ children }) => {
     const idToCancel = matchId || matchIdRef.current;
     try {
       if (idToCancel) {
-        if (multiplayerState === 'playing' || multiplayerState === 'game_over') {
-          // If in a match, mark as finished/forfeited instead of deleting
-          await supabase.from('online_matches').update({ status: 'finished' }).eq('id', idToCancel);
+          const isP1 = activeMatch?.player1_id === user?.id;
+          const updates = { status: 'finished' };
+          // Award the win to the OTHER player and reset the leaver's score
+          if (isP1) {
+            updates.p2_score = 3;
+            updates.p1_score = 0;
+          } else {
+            updates.p1_score = 3;
+            updates.p2_score = 0;
+          }
+
+          await supabase.from('online_matches').update(updates).eq('id', idToCancel);
           console.log('[Multiplayer] Match marked as FINISHED in DB via Cancel.');
+
+          if (multiplayerState === 'playing') {
+            applyPenalty(10, 25); // Very light penalty for leaving mid-game
+          }
         } else {
           // If just searching/waiting, delete the record
           await supabase.from('online_matches').delete().eq('id', idToCancel);
           console.log('[Multiplayer] Match DELETED from DB via Cancel.');
         }
-      }
     } catch (err) {
       console.warn('[Multiplayer] Cancel/Cleanup failed:', err);
     } finally {
@@ -411,7 +429,7 @@ export const MultiplayerProvider = ({ children }) => {
         console.warn("Failed to stop searching sound:", e);
       }
     }
-  }, [matchId, multiplayerState, stopSearchingSound, setActiveMatchGuarded, setMultiplayerStateGuarded, setOpponentGuarded]);
+  }, [matchId, multiplayerState, stopSearchingSound, setActiveMatchGuarded, setMultiplayerStateGuarded, setOpponentGuarded, activeMatch?.player1_id, applyPenalty, user?.id]);
 
   // 1. POLLING FALLBACK: Detect player join automatically
   useEffect(() => {
@@ -460,14 +478,27 @@ export const MultiplayerProvider = ({ children }) => {
       .channel(`match_room_${matchId}`)
       .on(
         'postgres_changes',
-        { event: 'UPDATE', schema: 'public', table: 'online_matches', filter: `id=eq.${matchId}` },
+        { event: '*', schema: 'public', table: 'online_matches', filter: `id=eq.${matchId}` },
         (payload) => {
+          if (payload.eventType === 'DELETE') {
+            console.log('[Multiplayer] Match record deleted (cancelled by opponent).');
+            // Give the UI time to show the result or just avoid abrupt pop-out
+            setTimeout(() => {
+              setMultiplayerStateGuarded('idle');
+              setActiveMatchGuarded(null);
+              setOpponentGuarded(null);
+            }, 10000);
+            return;
+          }
+
           const updatedMatch = payload.new;
+          if (!updatedMatch) return;
+
           setActiveMatchGuarded(updatedMatch);
 
           // 2.1 DIRECT HANDSHAKE RESOLUTION: If we are Host and a Joiner just claimed the room
           const isP1 = updatedMatch.player1_id === user?.id;
-          if (isP1 && updatedMatch.player2_id && stateRef.current !== 'playing') {
+          if (isP1 && updatedMatch.player2_id && stateRef.current !== 'playing' && stateRef.current !== 'game_over') {
             console.log('[Multiplayer] Realtime found Joiner! Resolving handshake...');
             fetchOpponentProfile(updatedMatch.player2_id).then(prof => {
               if (prof) {
@@ -557,7 +588,7 @@ export const MultiplayerProvider = ({ children }) => {
       channelRef.current = null;
       clearForfeitLogic();
     };
-  }, [matchId, user?.id, clearForfeitLogic, fetchOpponentProfile, opponentLiveCursor, setActiveMatchGuarded, setMultiplayerStateGuarded, startGracePeriod]);
+  }, [matchId, user?.id, clearForfeitLogic, fetchOpponentProfile, opponentLiveCursor, setActiveMatchGuarded, setMultiplayerStateGuarded, startGracePeriod, setOpponentGuarded]);
 
   // 2.5 APP STATE VISIBILITY HANDLER (Clinical Recovery)
   useEffect(() => {
@@ -582,8 +613,9 @@ export const MultiplayerProvider = ({ children }) => {
       try {
         if (activeMatch.player1_id && activeMatch.player2_id) {
           if (opponent) {
-            if (multiplayerState !== 'playing' && multiplayerState !== 'game_over') {
-              setMultiplayerState('playing');
+            if (multiplayerState !== 'playing' && multiplayerState !== 'game_over' && multiplayerState !== 'found') {
+              setMultiplayerState('found');
+              setTimeout(() => setMultiplayerState(prev => prev === 'found' ? 'playing' : prev), 2000);
             }
           } else {
             console.warn("[Multiplayer] Handshake: Waiting for opponent profile...");
@@ -600,7 +632,8 @@ export const MultiplayerProvider = ({ children }) => {
               setMultiplayerState('syncing'); 
             } else {
               setOpponent(opponentProfile);
-              setMultiplayerState('playing');
+              setMultiplayerState('found');
+              setTimeout(() => setMultiplayerState(prev => prev === 'found' ? 'playing' : prev), 2000);
             }
           }
         } else {

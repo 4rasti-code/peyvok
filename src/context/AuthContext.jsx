@@ -46,13 +46,18 @@ export const AuthProvider = ({ children }) => {
     const saved = localStorage.getItem('peyvchin_haptic_enabled');
     return saved !== null ? saved === 'true' : true;
   });
+  
+  // 3.3 VOICE SETTINGS: Persistent global states
+  const [micEnabled, setMicEnabled] = useState(true);
+  const [speakerEnabled, setSpeakerEnabled] = useState(true);
+  const [voiceVolume, setVoiceVolume] = useState(100);
+
   const [profileData, setProfileData] = useState(() => {
     const cached = localStorage.getItem('peyvchin_cached_profile');
     return cached ? JSON.parse(cached) : null;
   });
 
   const isProfileLoaded = useRef(false);
-  const syncPromiseRef = useRef(null);
   const hasInitializedRef = useRef(false);
 
   // Cross-context state ref for stable callbacks
@@ -126,6 +131,11 @@ export const AuthProvider = ({ children }) => {
           }
           return prev;
         });
+
+        // 3.4 VOICE SETTINGS SYNC
+        setMicEnabled(data.mic_enabled ?? true);
+        setSpeakerEnabled(data.speaker_enabled ?? true);
+        setVoiceVolume(data.voice_volume ?? 100);
 
 
         // 3.2 INVENTORY SELF-HEAL: REMOVED direct update due to potential trigger mismatch.
@@ -250,7 +260,7 @@ export const AuthProvider = ({ children }) => {
     return () => {
       subscription?.unsubscribe();
     };
-  }, [syncProfile]);
+  }, [syncProfile, loadingAuth]);
 
   // NEW: Real-time Profile Listener to keep profileData synced everywhere
   useEffect(() => {
@@ -297,15 +307,35 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('peyvchin_haptic_enabled', profileData.haptic_enabled.toString());
     }
 
+    if (profileData.mic_enabled !== undefined) setMicEnabled(profileData.mic_enabled);
+    if (profileData.speaker_enabled !== undefined) setSpeakerEnabled(profileData.speaker_enabled);
+    if (profileData.voice_volume !== undefined) setVoiceVolume(profileData.voice_volume);
+
     try {
-      const { error } = await supabase.rpc('update_profile_identity', {
+      // 1. Update Identity via RPC
+      const { error: rpcError } = await supabase.rpc('update_profile_identity', {
         p_nickname: profileData.nickname || userNickname,
         p_avatar_url: profileData.avatar_url || userAvatar,
         p_country_code: profileData.country_code || countryCode,
         p_is_in_kurdistan: profileData.is_kurdistan ?? isInKurdistan
       });
+      if (rpcError) throw rpcError;
 
-      if (error) throw error;
+      // 2. Update Voice Settings & Haptic via direct update (as columns are new)
+      const directUpdates = {};
+      if (profileData.mic_enabled !== undefined) directUpdates.mic_enabled = profileData.mic_enabled;
+      if (profileData.speaker_enabled !== undefined) directUpdates.speaker_enabled = profileData.speaker_enabled;
+      if (profileData.voice_volume !== undefined) directUpdates.voice_volume = profileData.voice_volume;
+      if (profileData.haptic_enabled !== undefined) directUpdates.haptic_enabled = profileData.haptic_enabled;
+
+      if (Object.keys(directUpdates).length > 0) {
+        const { error: updateError } = await supabase
+          .from('profiles')
+          .update(directUpdates)
+          .eq('id', currentUser.id);
+        if (updateError) throw updateError;
+      }
+
       setLastProfileUpdate(Date.now());
       return { success: true };
     } catch (err) { 
@@ -338,12 +368,13 @@ export const AuthProvider = ({ children }) => {
     isInKurdistan, setIsInKurdistan, countryCode, setCountryCode,
     profileData,
     ownedAvatars, setOwnedAvatars, hapticEnabled, setHapticEnabled,
+    micEnabled, setMicEnabled, speakerEnabled, setSpeakerEnabled, voiceVolume, setVoiceVolume,
     lastProfileUpdate, setLastProfileUpdate,
     syncProfile, refreshProfile: syncProfile, updateProfile, handleToggleBlock, checkBlockStatus,
     isProfileLoaded
   }), [
-    user, loadingAuth, loading, userNickname, userAvatar, city, isInKurdistan, 
-    countryCode, ownedAvatars, hapticEnabled, syncProfile, 
+    user, loadingAuth, loading, visualProgress, userNickname, userAvatar, city, isInKurdistan, 
+    countryCode, ownedAvatars, hapticEnabled, micEnabled, speakerEnabled, voiceVolume, syncProfile, 
     updateProfile, handleToggleBlock, checkBlockStatus, profileData, lastProfileUpdate
   ]);
 
