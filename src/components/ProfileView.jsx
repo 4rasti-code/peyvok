@@ -336,7 +336,7 @@ export default function ProfileView({ onProfileSave }) {
                   </div>
 
                   {/* Right: Level Shield (Restored Original Style) */}
-                  <div className="relative pt-6 w-16 flex flex-col items-center">
+                  <div className="relative pt-6 w-20 flex flex-col items-center pr-4">
                      <div className="relative flex flex-col items-center justify-center">
                         <svg width="48" height="55" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-2xl">
                            <path d="M50 0L95 20V55C95 80 50 115 50 115C50 115 5 80 5 55V20L50 0Z" fill="url(#levelMedalGradient)" stroke="white" strokeWidth="4" strokeOpacity="0.3" />
@@ -348,8 +348,8 @@ export default function ProfileView({ onProfileSave }) {
                            </defs>
                         </svg>
                         <div className="absolute inset-0 flex flex-col items-center justify-center pt-1" dir="rtl">
-                           <span className="text-[10px] font-black text-slate-900 uppercase leading-none mb-0.5">ئاست</span>
-                           <span className="text-[16px] font-black text-slate-950 leading-none tabular-nums">{toKuDigits(safeLevel || level || 1)}</span>
+                           <span className="text-[9px] font-black text-slate-900 uppercase leading-none mb-0.5">ئاست</span>
+                           <span className="text-[14px] font-black text-slate-950 leading-none tabular-nums">{toKuDigits(safeLevel || level || 1)}</span>
                         </div>
                      </div>
                   </div>
