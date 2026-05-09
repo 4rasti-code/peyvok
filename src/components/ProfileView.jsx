@@ -464,30 +464,39 @@ export default function ProfileView({ onProfileSave }) {
                   <div className="grid grid-cols-3 gap-1.5" dir="ltr">
 
                      <div 
-                        className="flex flex-col items-center justify-center py-1.5 rounded-md border border-white/5 shadow-sm transition-all duration-500"
-                        style={{ backgroundColor: `${tier.stop1}15`, borderColor: `${tier.stop1}30` }}
+                        className="flex flex-col items-center justify-center py-1.5 rounded-md border border-white/5 shadow-sm transition-all duration-500 backdrop-blur-md"
+                        style={{ 
+                           backgroundColor: `rgba(${parseInt(tier.stop1.slice(1,3), 16)}, ${parseInt(tier.stop1.slice(3,5), 16)}, ${parseInt(tier.stop1.slice(5,7), 16)}, 0.12)`, 
+                           borderColor: `${tier.stop1}30` 
+                        }}
                      >
-                        <span className="text-[9px] font-black uppercase mb-0.5 opacity-60 dark:text-mono-400 text-mono-600">XP سەرجەمێ</span>
+                        <span className="text-[9px] font-black uppercase mb-0.5 opacity-60 dark:text-mono-300 text-mono-600">XP سەرجەمێ</span>
                         <span className="text-[12px] font-black dark:text-mono-100 text-mono-900 tabular-nums leading-none">
                            {isLoading ? <div className="w-6 h-2 bg-mono-100 dark:bg-mono-800 animate-pulse rounded"></div> : toKuDigits(currentXP || 0)}
                         </span>
                      </div>
                      
                      <div 
-                        className="flex flex-col items-center justify-center py-1.5 rounded-md border border-white/5 shadow-sm transition-all duration-500"
-                        style={{ backgroundColor: `${tier.stop1}25`, borderColor: `${tier.stop1}40` }}
+                        className="flex flex-col items-center justify-center py-1.5 rounded-md border border-white/5 shadow-sm transition-all duration-500 backdrop-blur-md"
+                        style={{ 
+                           backgroundColor: `rgba(${parseInt(tier.stop1.slice(1,3), 16)}, ${parseInt(tier.stop1.slice(3,5), 16)}, ${parseInt(tier.stop1.slice(5,7), 16)}, 0.22)`, 
+                           borderColor: `${tier.stop1}40` 
+                        }}
                      >
-                        <span className="text-[9px] font-black uppercase mb-0.5 opacity-60 dark:text-mono-400 text-mono-600">ڕێزبەندی</span>
+                        <span className="text-[9px] font-black uppercase mb-0.5 opacity-60 dark:text-mono-300 text-mono-600">ڕێزبەندی</span>
                         <span className="text-[12px] font-black dark:text-mono-100 text-mono-900 tabular-nums leading-none">
                            {isLoading ? '...' : `#${toKuDigits(userRank || 0)}`}
                         </span>
                      </div>
 
                      <div
-                        className={`flex flex-col items-center justify-center py-1.5 rounded-md border border-white/10 shadow-sm transition-all duration-500 ${isLoading ? 'animate-pulse opacity-50' : ''}`}
-                        style={{ backgroundColor: tier.stop1 }}
+                        className={`flex flex-col items-center justify-center py-1.5 rounded-md border border-white/10 shadow-sm transition-all duration-500 backdrop-blur-md ${isLoading ? 'animate-pulse opacity-50' : ''}`}
+                        style={{ 
+                           backgroundColor: tier.stop1,
+                           boxShadow: `0 4px 12px ${tier.stop1}40`
+                        }}
                      >
-                        <span className="text-[9px] font-black uppercase mb-0.5 text-mono-950/90">پەیڤێن دیتی</span>
+                        <span className="text-[9px] font-black uppercase mb-0.5 text-mono-950/80">پەیڤێن دیتی</span>
                         <span className="text-[12px] font-black text-mono-950 leading-none tabular-nums">
                            {isLoading ? '...' : toKuDigits(solvedWords?.length || 0)}
                         </span>
