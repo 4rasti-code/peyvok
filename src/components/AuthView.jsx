@@ -312,16 +312,17 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
           throw error;
         }
 
-        // 1. FORCE OTP FLOW: Even if auto-confirmed, we force sign-out to show the verification UI
-        // This ensures the user stays on the OTP screen and must use the code.
+        // 1. AUTO-PROCEED: If email confirmation is disabled in Supabase, we get a session immediately.
         if (data.session) {
-          await supabase.auth.signOut();
+          onAuthSuccess(data.user, data.user?.user_metadata?.nickname);
+          return;
         }
 
-        // Ensure global router doesn't kick in
-        if (onVerifyingSignupChange) onVerifyingSignupChange(true);
-
-        setShowOtpScreen(true);
+        // 2. Fallback for when confirmation is still required but we want to hide OTP UI
+        setRegistrationSuccess(true);
+        setIsLogin(true);
+        setPassword('');
+        setConfirmPassword('');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
@@ -337,28 +338,10 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
       } else if (err.message.includes('email rate limit exceeded')) {
         kurdishError = 'تە داخوازیا گەلەک ئیمێڵان یا کری، هیڤییە کێمەکا دی تاقی بکەی.';
       } else if (err.message.includes('Email not confirmed') || err.message.includes('Email not verified')) {
-        // AUTOMATIC TRANSITION TO OTP SCREEN
-        const cleanEmail = email.trim().toLowerCase();
-        setIsUnverifiedLogin(true);
-        setShowOtpScreen(true);
-        if (onVerifyingSignupChange) onVerifyingSignupChange(true);
-
-        // Trigger automatic resend so they have a code immediately
-        try {
-          const { error: resendError } = await supabase.auth.resend({ type: 'signup', email: cleanEmail });
-          if (resendError) {
-            console.warn("Auto-resend failed:", resendError.message);
-            let errMsg = resendError.message;
-            if (errMsg.includes('security purposes')) {
-              errMsg = 'ژبەر سەدەمێن پاراستنێ، تو تەنێ دشێی پشتی کێمەکا دی تاقی بکەی.';
-            }
-            setError(`ئیمەیڵ نەهاتە هنارتن: ${errMsg}`);
-          }
-        } catch (re) {
-          console.error("Resend execution error:", re);
-        }
-
-        return; // Stop here, OTP screen will take over
+        // Hiding OTP screen transition as requested
+        setRegistrationSuccess(true);
+        setIsLogin(true);
+        return;
       }
 
       setError(kurdishError);
@@ -631,7 +614,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                     className="mb-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold font-rabar text-center flex flex-col items-center gap-2"
                   >
                     <span className="material-symbols-outlined text-xl">check_circle</span>
-                    <p>هژمارا تە هاتە پشتڕاستکرن. نۆکە دشێی بچییە ژوورڤە.</p>
+                    <p>هەژمار ب سەرکەفتیانە هاتە تۆمارکرن</p>
                   </Motion.div>
                 )}
               </AnimatePresence>
