@@ -20,16 +20,16 @@ END $$;
 
 -- Ensure all mandatory columns exist with correct defaults
 ALTER TABLE public.profiles 
-ADD COLUMN IF NOT EXISTS fils INTEGER DEFAULT 1000,
-ADD COLUMN IF NOT EXISTS derhem INTEGER DEFAULT 50,
+ADD COLUMN IF NOT EXISTS fils INTEGER DEFAULT 100,
+ADD COLUMN IF NOT EXISTS derhem INTEGER DEFAULT 10,
 ADD COLUMN IF NOT EXISTS dinar INTEGER DEFAULT 5,
 ADD COLUMN IF NOT EXISTS xp INTEGER DEFAULT 0,
 ADD COLUMN IF NOT EXISTS level INTEGER DEFAULT 1,
 ADD COLUMN IF NOT EXISTS nickname TEXT DEFAULT 'یاریکەر',
 ADD COLUMN IF NOT EXISTS avatar_url TEXT DEFAULT 'default',
 ADD COLUMN IF NOT EXISTS magnets INTEGER DEFAULT 3,
-ADD COLUMN IF NOT EXISTS hints INTEGER DEFAULT 5,
-ADD COLUMN IF NOT EXISTS skips INTEGER DEFAULT 2,
+ADD COLUMN IF NOT EXISTS hints INTEGER DEFAULT 3,
+ADD COLUMN IF NOT EXISTS skips INTEGER DEFAULT 3,
 ADD COLUMN IF NOT EXISTS inventory JSONB DEFAULT '{"owned_avatars": ["default"], "unlocked_themes": ["default"], "solved_words": []}'::JSONB,
 ADD COLUMN IF NOT EXISTS reward_streak INTEGER DEFAULT 0,
 ADD COLUMN IF NOT EXISTS last_notified_level INTEGER DEFAULT 1,
@@ -71,12 +71,12 @@ BEGIN
     VALUES (
         new.id, 
         v_nickname,
-        1000, -- 1000 Fils (Starter Gift)
-        50,   -- 50 Derhem
+        100, -- 100 Fils (Starter Gift)
+        10,   -- 10 Derhem
         5,    -- 5 Zer
         3,    -- 3 Magnets
-        5,    -- 5 Hints
-        2,    -- 2 Skips
+        3,    -- 3 Hints
+        3,    -- 3 Skips
         'default',
         '{"owned_avatars": ["default"], "unlocked_themes": ["default"], "solved_words": []}'::JSONB,
         COALESCE(new.raw_user_meta_data->>'country_code', 'KD'),
@@ -95,6 +95,7 @@ CREATE TRIGGER on_auth_user_created
 
 -- III. ATOMIC PROGRESSION RPC (handle_game_xp)
 -- This function handles XP gain and level calculations in one transaction.
+DROP FUNCTION IF EXISTS public.handle_game_xp(UUID, INTEGER, INTEGER);
 CREATE OR REPLACE FUNCTION public.handle_game_xp(
     p_user_id UUID,
     p_letters_count INTEGER DEFAULT 0,
