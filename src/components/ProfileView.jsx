@@ -14,7 +14,7 @@ import { useUser } from '../context/AuthContext';
 import { useGame } from '../context/GameContext';
 import { useAudio } from '../context/AudioContext';
 import FloatingLetterBackground from './FloatingLetterBackground';
-import { getLevelFromXP } from '../utils/progression';
+import { getLevelFromXP, getLevelTier } from '../utils/progression';
 import { getCroppedImg } from '../utils/imageUtils';
 import Cropper from 'react-easy-crop';
 
