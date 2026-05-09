@@ -463,21 +463,28 @@ export default function ProfileView({ onProfileSave }) {
                   {/* Unified 3-Column Stats Grid */}
                   <div className="grid grid-cols-3 gap-1.5" dir="ltr">
 
-                     <div className="flex flex-col items-center justify-center py-1.5 rounded-md bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-mono-800 shadow-sm">
-                        <span className="text-[9px] font-black uppercase mb-0.5 text-mono-400">XP سەرجەمێ</span>
-                        <span className="text-[12px] font-black text-mono-900 dark:text-mono-100 tabular-nums leading-none">
+                     <div 
+                        className="flex flex-col items-center justify-center py-1.5 rounded-md border border-white/5 shadow-sm transition-all duration-500"
+                        style={{ backgroundColor: `${tier.stop1}15`, borderColor: `${tier.stop1}30` }}
+                     >
+                        <span className="text-[9px] font-black uppercase mb-0.5 opacity-60 dark:text-mono-400 text-mono-600">XP سەرجەمێ</span>
+                        <span className="text-[12px] font-black dark:text-mono-100 text-mono-900 tabular-nums leading-none">
                            {isLoading ? <div className="w-6 h-2 bg-mono-100 dark:bg-mono-800 animate-pulse rounded"></div> : toKuDigits(currentXP || 0)}
                         </span>
                      </div>
-                     <div className="flex flex-col items-center justify-center py-1.5 rounded-md bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-mono-800 shadow-sm">
-                        <span className="text-[9px] font-black uppercase mb-0.5 text-mono-400">ڕێزبەندی</span>
-                        <span className="text-[12px] font-black text-mono-900 dark:text-mono-100 tabular-nums leading-none">
+                     
+                     <div 
+                        className="flex flex-col items-center justify-center py-1.5 rounded-md border border-white/5 shadow-sm transition-all duration-500"
+                        style={{ backgroundColor: `${tier.stop1}25`, borderColor: `${tier.stop1}40` }}
+                     >
+                        <span className="text-[9px] font-black uppercase mb-0.5 opacity-60 dark:text-mono-400 text-mono-600">ڕێزبەندی</span>
+                        <span className="text-[12px] font-black dark:text-mono-100 text-mono-900 tabular-nums leading-none">
                            {isLoading ? '...' : `#${toKuDigits(userRank || 0)}`}
                         </span>
                      </div>
 
                      <div
-                        className={`flex flex-col items-center justify-center py-1.5 rounded-md border border-white/10 shadow-sm transition-all ${isLoading ? 'animate-pulse opacity-50' : ''}`}
+                        className={`flex flex-col items-center justify-center py-1.5 rounded-md border border-white/10 shadow-sm transition-all duration-500 ${isLoading ? 'animate-pulse opacity-50' : ''}`}
                         style={{ backgroundColor: tier.stop1 }}
                      >
                         <span className="text-[9px] font-black uppercase mb-0.5 text-mono-950/90">پەیڤێن دیتی</span>
@@ -485,8 +492,6 @@ export default function ProfileView({ onProfileSave }) {
                            {isLoading ? '...' : toKuDigits(solvedWords?.length || 0)}
                         </span>
                      </div>
-
-
                   </div>
                </div>
             </div>
