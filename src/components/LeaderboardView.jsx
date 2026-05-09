@@ -10,7 +10,7 @@ import { toKuDigits } from '../utils/formatters';
 import { useUser } from '../context/AuthContext';
 import { useGame } from '../context/GameContext';
 import { useAudio } from '../context/AudioContext';
-import { getLevelFromXP } from '../utils/progression';
+import { getLevelFromXP, getLevelTier } from '../utils/progression';
 import FloatingLetterBackground from './FloatingLetterBackground';
 
 export default function LeaderboardView({ onOpenChat }) {
@@ -352,9 +352,32 @@ export default function LeaderboardView({ onOpenChat }) {
 
                     {/* Avatar Section */}
                     <div className="flex items-center gap-3 z-10 px-1">
-                      <div className="relative">
-                        {/* Clean Avatar (No Borders) */}
-                        <div className="w-12 h-12 rounded-full overflow-hidden shadow-sm bg-mono-100 dark:bg-white/5 shrink-0 relative z-10 border border-mono-200 dark:border-white/10">
+                      <div className="relative w-12 h-12 flex items-center justify-center">
+                        {/* XP Progress Ring */}
+                        <div className="absolute inset-[-4px] z-0">
+                          <svg className="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
+                             <circle cx="50" cy="50" r="44" fill="none" className="stroke-mono-200/20 dark:stroke-white/5" strokeWidth="4" />
+                             <Motion.circle
+                                cx="50"
+                                cy="50"
+                                r="44"
+                                fill="none"
+                                stroke={getLevelTier(getLevelFromXP(effectiveXP)).stop1}
+                                strokeWidth="8"
+                                strokeLinecap="butt"
+                                strokeDasharray="276.46"
+                                initial={{ strokeDashoffset: 276.46 }}
+                                animate={{ 
+                                   strokeDashoffset: 276.46 - (276.46 * (player.xp_progress || 0.7)), // Fallback progress for visual
+                                   filter: getLevelTier(getLevelFromXP(effectiveXP)).isLegendary ? `drop-shadow(0 0 5px ${getLevelTier(getLevelFromXP(effectiveXP)).stop1})` : "none"
+                                }}
+                                transition={{ duration: 1.5, ease: "circOut" }}
+                             />
+                          </svg>
+                        </div>
+
+                        {/* Clean Avatar */}
+                        <div className="w-10 h-10 rounded-full overflow-hidden shadow-sm bg-mono-100 dark:bg-white/5 shrink-0 relative z-10 border border-mono-200 dark:border-white/10">
                           <Avatar
                             src={effectiveAvatar}
                             updatedAt={isMe ? lastProfileUpdate : player.updated_at}
