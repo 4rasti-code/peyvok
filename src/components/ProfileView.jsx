@@ -14,7 +14,7 @@ import { useUser } from '../context/AuthContext';
 import { useGame } from '../context/GameContext';
 import { useAudio } from '../context/AudioContext';
 import FloatingLetterBackground from './FloatingLetterBackground';
-import { getLevelFromXP } from '../utils/progression';
+import { getLevelFromXP, getLevelTier } from '../utils/progression';
 import { getCroppedImg } from '../utils/imageUtils';
 import Cropper from 'react-easy-crop';
 
@@ -111,34 +111,6 @@ export default function ProfileView({ onProfileSave }) {
 
    const selectedCountry = COUNTRIES.find(c => c.code === (draftCountryCode || countryCode));
    const selectedCountryName = draftIsInKurdistan ? 'کوردستان' : (selectedCountry ? selectedCountry.name : 'ھەلبژێرە');
-
-   const getLevelTier = (lvl) => {
-      const tiers = [
-         { stop1: '#cd7f32', stop2: '#f97316', shadow: 'rgba(249, 115, 22, 0.4)' }, // 0: Bronze
-         { stop1: '#cbd5e1', stop2: '#94a3b8', shadow: 'rgba(148, 163, 184, 0.4)' }, // 1: Silver
-         { stop1: '#fbbf24', stop2: '#d97706', shadow: 'rgba(245, 158, 11, 0.4)' }, // 2: Gold
-         { stop1: '#10b981', stop2: '#059669', shadow: 'rgba(16, 185, 129, 0.4)' }, // 3: Emerald
-         { stop1: '#22d3ee', stop2: '#0891b2', shadow: 'rgba(6, 182, 212, 0.4)' }, // 4: Cyan
-         { stop1: '#3b82f6', stop2: '#2563eb', shadow: 'rgba(59, 130, 246, 0.4)' }, // 5: Blue
-         { stop1: '#6366f1', stop2: '#4f46e5', shadow: 'rgba(99, 102, 241, 0.4)' }, // 6: Indigo
-         { stop1: '#a855f7', stop2: '#7c3aed', shadow: 'rgba(168, 85, 247, 0.4)' }, // 7: Purple
-         { stop1: '#d946ef', stop2: '#c026d3', shadow: 'rgba(217, 70, 239, 0.4)' }, // 8: Fuchsia
-         { stop1: '#ec4899', stop2: '#db2777', shadow: 'rgba(236, 72, 153, 0.4)' }, // 9: Pink
-         { stop1: '#f43f5e', stop2: '#e11d48', shadow: 'rgba(244, 63, 94, 0.4)' }, // 10: Rose
-         { stop1: '#ef4444', stop2: '#b91c1c', shadow: 'rgba(239, 68, 68, 0.4)' }, // 11: Red
-         { stop1: '#f97316', stop2: '#ea580c', shadow: 'rgba(249, 115, 22, 0.4)' }, // 12: Orange
-         { stop1: '#f59e0b', stop2: '#d97706', shadow: 'rgba(245, 158, 11, 0.4)' }, // 13: Amber
-         { stop1: '#84cc16', stop2: '#65a30d', shadow: 'rgba(132, 204, 22, 0.4)' }, // 14: Lime
-         { stop1: '#14b8a6', stop2: '#0d9488', shadow: 'rgba(20, 184, 166, 0.4)' }, // 15: Teal
-         { stop1: '#0ea5e9', stop2: '#0284c7', shadow: 'rgba(14, 165, 233, 0.4)' }, // 16: Sky
-         { stop1: '#8b5cf6', stop2: '#7c3aed', shadow: 'rgba(139, 92, 246, 0.4)' }, // 17: Violet
-         { stop1: '#64748b', stop2: '#334155', shadow: 'rgba(100, 116, 139, 0.4)' }, // 18: Slate
-         { stop1: '#1e293b', stop2: '#0f172a', shadow: 'rgba(30, 41, 59, 0.4)' },  // 19: Midnight
-      ];
-      
-      const tierIndex = Math.floor(lvl / 5) % tiers.length;
-      return tiers[tierIndex];
-   };
 
    const tier = getLevelTier(safeLevel);
 
