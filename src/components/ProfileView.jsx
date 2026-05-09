@@ -370,31 +370,41 @@ export default function ProfileView({ onProfileSave }) {
                               animate={{ 
                                  rotate: [0, 360]
                               }}
-                              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                              className="absolute w-40 h-40 bg-radial from-cyan-400/20 via-purple-500/5 to-transparent blur-3xl opacity-60"
+                              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                              className="absolute w-44 h-44 bg-radial from-cyan-400/10 via-purple-500/5 to-transparent blur-2xl opacity-40"
                            />
-                           <div className="absolute w-32 h-32 bg-radial from-white/20 to-transparent blur-2xl opacity-40" />
                            
-                           {/* DIAMOND PARTICLES */}
-                           {[...Array(6)].map((_, i) => (
-                              <Motion.div
-                                 key={i}
-                                 initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                                 animate={{ 
-                                    opacity: [0, 1, 0],
-                                    scale: [0, 1.5, 0],
-                                    x: (i % 2 === 0 ? 1 : -1) * (20 + Math.random() * 40),
-                                    y: - (30 + Math.random() * 50),
-                                    rotate: [0, 360]
-                                 }}
-                                 transition={{ 
-                                    duration: 2 + Math.random() * 2,
-                                    repeat: Infinity,
-                                    delay: i * 0.4
-                                 }}
-                                 className="absolute w-1.5 h-1.5 bg-white rotate-45 shadow-[0_0_8px_white] z-50"
-                              />
-                           ))}
+                           {/* DIAMOND SHARDS PARTICLES - Emitting from edges */}
+                           {[...Array(8)].map((_, i) => {
+                              const angle = (i * 45) * (Math.PI / 180);
+                              const radius = 46; // Emerges from the ring edge
+                              const startX = Math.cos(angle) * radius;
+                              const startY = Math.sin(angle) * radius;
+                              
+                              return (
+                                 <Motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, scale: 0, x: startX, y: startY }}
+                                    animate={{ 
+                                       opacity: [0, 0.8, 0],
+                                       scale: [0.5, 1, 0.2],
+                                       x: startX + (Math.cos(angle) * 30),
+                                       y: startY + (Math.sin(angle) * 30),
+                                       rotate: [0, 180]
+                                    }}
+                                    transition={{ 
+                                       duration: 3 + Math.random() * 2,
+                                       repeat: Infinity,
+                                       delay: i * 0.5,
+                                       ease: "easeOut"
+                                    }}
+                                    style={{
+                                       clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'
+                                    }}
+                                    className="absolute w-2 h-3 bg-cyan-100/60 shadow-[0_0_10px_rgba(180,251,255,0.8)] backdrop-blur-sm z-50"
+                                 />
+                              );
+                           })}
                         </div>
                      )}
 
