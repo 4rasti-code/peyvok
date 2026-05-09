@@ -54,8 +54,8 @@ const LobbyView = React.memo(({
   };
 
   const bentoMotionProps = {
-    whileHover: { scale: 1.05 },
-    whileTap: { scale: 0.95 },
+    whileHover: { scale: 1.02 },
+    whileTap: { scale: 0.98 },
     transition: { type: "spring", stiffness: 400, damping: 17 }
   };
 
@@ -79,8 +79,8 @@ const LobbyView = React.memo(({
               {/* Stats Button */}
               {/* Stats Button */}
               <Motion.button
-                whileHover={{ scale: 1.15, y: -2 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05, y: -1 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => { triggerHaptic(15); onViewChange('stats'); }}
                 className="w-10 h-10 flex items-center justify-center group transition-all"
               >
@@ -91,8 +91,8 @@ const LobbyView = React.memo(({
 
               {/* Achievement/Trophy Button */}
               <Motion.button
-                whileHover={{ scale: 1.15, y: -2 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05, y: -1 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => { triggerHaptic(15); onViewChange('achievements'); }}
                 className="w-10 h-10 flex items-center justify-center group transition-all"
               >
@@ -103,8 +103,8 @@ const LobbyView = React.memo(({
 
               {/* Dictionary Button */}
               <Motion.button
-                whileHover={{ scale: 1.15, y: -2 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05, y: -1 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => { triggerHaptic(15); onViewChange('dictionary'); }}
                 className="w-10 h-10 flex items-center justify-center group transition-all"
               >
@@ -117,8 +117,8 @@ const LobbyView = React.memo(({
 
               {/* Help Button */}
               <Motion.button
-                whileHover={{ scale: 1.15, y: -2 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05, y: -1 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => { triggerHaptic(10); onOpenHowToPlay?.(); }}
                 className="w-10 h-10 flex items-center justify-center group transition-all"
               >

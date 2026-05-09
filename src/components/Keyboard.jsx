@@ -105,24 +105,25 @@ const Keyboard = memo(({
       <div className={`flex flex-col gap-2 w-full px-1.5 box-border select-none touch-manipulation relative z-10 transition-all duration-500 ${gameState !== 'playing' ? 'opacity-50 pointer-events-none grayscale' : ''}`} dir="rtl">
 
          {!hidePowerups && (
-            <InventoryBar
-               magnetCount={magnetCount}
-               hintCount={hintCount}
-               skipCount={skipCount}
-               onHint={onHint}
-               onMagnet={onMagnet}
-               onSkip={onSkip}
-               hintTaps={hintTaps}
-               hintLimit={hintLimit}
-               magnetUsedInRound={magnetUsedInRound}
-               skipsUsedInRound={skipsUsedInRound}
-               skipLimit={skipLimit}
-               className="mb-1"
-               isDark={isDark}
-            />
+            <div className="md:hidden">
+               <InventoryBar
+                  magnetCount={magnetCount}
+                  hintCount={hintCount}
+                  skipCount={skipCount}
+                  onHint={onHint}
+                  onMagnet={onMagnet}
+                  onSkip={onSkip}
+                  hintTaps={hintTaps}
+                  hintLimit={hintLimit}
+                  magnetUsedInRound={magnetUsedInRound}
+                  skipsUsedInRound={skipsUsedInRound}
+                  skipLimit={skipLimit}
+                  className="mb-1"
+                  isDark={isDark}
+               />
+               <div className={`w-[40%] h-px ${isDark ? 'bg-white/5' : 'bg-slate-200'} mx-auto mb-3`} />
+            </div>
          )}
-
-         <div className={`w-[40%] h-px ${isDark ? 'bg-white/5' : 'bg-slate-200'} mx-auto mb-3`} />
 
          {ROWS.map((row, rowIndex) => (
             <MotionDiv

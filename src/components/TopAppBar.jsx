@@ -6,13 +6,13 @@ import CurrencyDecrementEffect from './CurrencyDecrementEffect';
 import NotificationsView from './NotificationsView';
 import { toKuDigits } from '../utils/formatters';
 
-const CurrencyStat = ({ value, Icon: IconComponent, color, bg, currency = 'fils', resetKey, isDark = true }) => {
+const CurrencyStat = ({ value, Icon: _IconComponent, color, bg, currency = 'fils', resetKey, isDark = true }) => {
   const currencyName = currency === 'derhem' ? 'دەرهەم' : currency === 'dinar' ? 'دینار' : 'فلس';
   return (
     <CurrencyDecrementEffect value={value} currency={currency} resetKey={resetKey}>
       <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-[10px] ${bg || 'bg-transparent'} transition-all duration-300`}>
         <div className={`w-4 h-4 flex items-center justify-center ${color}`}>
-          <IconComponent className="w-full h-full" />
+          <_IconComponent className="w-full h-full" />
         </div>
         <div className="flex flex-col items-center leading-none">
           <span className={`text-[15px] font-black font-heading ${isDark ? 'text-white' : 'text-mono-900'}`}>{toKuDigits(value || 0)}</span>
@@ -41,11 +41,11 @@ export default function TopAppBar({
   magnetCount = 0,
   hintCount = 0,
   skipCount = 0,
-  level,
+  _level,
   onOpenSettings,
   currentView,
   onForfeit,
-  category = 'گشتی',
+  _category = 'گشتی',
   notificationCount = 0,
   notifications = [],
   onNotificationAction,
@@ -53,6 +53,14 @@ export default function TopAppBar({
   onPlaySound,
   onDailyRewardClick,
   onOpenHowToPlay,
+  onHint,
+  onMagnet,
+  onSkip,
+  hintTaps = 0,
+  hintLimit = 3,
+  magnetUsedInRound = false,
+  skipsUsedInRound = 0,
+  skipLimit = 1,
   isDailyAvailable = false,
   isDark = true
 }) {
@@ -60,8 +68,8 @@ export default function TopAppBar({
   const [isForfeitMenuOpen, setIsForfeitMenuOpen] = useState(false);
 
   const isPlaying = currentView === 'game';
-  const showStats = ['lobby', 'store', 'leaderboard', 'stats', 'dictionary'].includes(currentView);
-  const isClassic = gameMode === 'classic';
+  const _showStats = ['lobby', 'store', 'leaderboard', 'stats', 'dictionary'].includes(currentView);
+  const _isClassic = gameMode === 'classic';
 
   return (
     <header
@@ -141,6 +149,47 @@ export default function TopAppBar({
             )
           )}
         </div>
+
+        {/* Middle Section: Desktop Powerups (Playing Only) */}
+        {isPlaying && (
+          <div className="hidden md:flex items-center justify-center flex-1">
+             <div className="flex items-center gap-8 px-6 py-1 bg-mono-100/50 dark:bg-white/5 rounded-2xl border border-mono-200 dark:border-white/10 shadow-sm transition-all duration-500">
+                {/* Skip */}
+                <button 
+                  onClick={() => { triggerHaptic(10); onSkip?.(); }}
+                  disabled={skipsUsedInRound >= skipLimit || (skipCount || 0) <= 0}
+                  className="flex items-center gap-2 group transition-all active:scale-90 disabled:opacity-40"
+                >
+                  <span className={`material-symbols-outlined text-[24px] ${skipsUsedInRound >= skipLimit || (skipCount || 0) <= 0 ? 'text-mono-400' : 'text-blue-400'}`} style={{ fontVariationSettings: "'FILL' 1" }}>fast_forward</span>
+                  <span className="text-sm font-black text-mono-900 dark:text-mono-100">{toKuDigits(Math.max(0, (skipCount || 0) <= 0 ? 0 : skipLimit - skipsUsedInRound))}</span>
+                </button>
+
+                <div className="w-px h-4 bg-mono-200 dark:bg-white/10" />
+
+                {/* Magnet */}
+                <button 
+                  onClick={() => { triggerHaptic(10); onMagnet?.(); }}
+                  disabled={magnetUsedInRound || (magnetCount || 0) <= 0}
+                  className="flex items-center gap-2 group transition-all active:scale-90 disabled:opacity-40"
+                >
+                  <span className={`material-symbols-outlined text-[24px] ${magnetUsedInRound || (magnetCount || 0) <= 0 ? 'text-mono-400' : 'text-purple-400'}`} style={{ fontVariationSettings: "'FILL' 1" }}>auto_fix_high</span>
+                  <span className="text-sm font-black text-mono-900 dark:text-mono-100">{toKuDigits((magnetUsedInRound || (magnetCount || 0) <= 0) ? 0 : 1)}</span>
+                </button>
+
+                <div className="w-px h-4 bg-mono-200 dark:bg-white/10" />
+
+                {/* Hint */}
+                <button 
+                  onClick={() => { triggerHaptic(10); onHint?.(); }}
+                  disabled={hintTaps >= hintLimit || (hintCount || 0) <= 0}
+                  className="flex items-center gap-2 group transition-all active:scale-90 disabled:opacity-40"
+                >
+                  <span className={`material-symbols-outlined text-[24px] ${hintTaps >= hintLimit || (hintCount || 0) <= 0 ? 'text-mono-400' : 'text-amber-500'}`} style={{ fontVariationSettings: "'FILL' 1" }}>lightbulb</span>
+                  <span className="text-sm font-black text-mono-900 dark:text-mono-100">{toKuDigits(Math.max(0, (hintCount || 0) <= 0 ? 0 : hintLimit - hintTaps))}</span>
+                </button>
+             </div>
+          </div>
+        )}
 
         {/* Right Section: In-Game Info (Mode Specific) OR Global Stats + Notification */}
         <div className="flex items-center justify-end gap-3 flex-1 relative">
