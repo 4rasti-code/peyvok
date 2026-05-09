@@ -99,10 +99,10 @@ const BattleResultOverlay = ({
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className={`w-full max-w-md bg-mono-white dark:bg-mono-950 border-2 ${isVictory
-                ? 'border-black/20 dark:border-white/20'
-                : isDefeat
-                  ? 'border-red-500/20 dark:border-red-500/30'
-                  : 'border-blue-500/20 dark:border-blue-500/30'
+              ? 'border-black/20 dark:border-white/20'
+              : isDefeat
+                ? 'border-red-500/20 dark:border-red-500/30'
+                : 'border-blue-500/20 dark:border-blue-500/30'
               } rounded-md p-8 flex flex-col items-center gap-6 relative overflow-hidden transition-colors duration-500 shadow-2xl`}
           >
             {/* Status Icon */}
@@ -111,10 +111,10 @@ const BattleResultOverlay = ({
             {/* Title */}
             <div className="text-center">
               <h2 className={`text-4xl font-black font-heading ${isVictory
-                  ? 'text-black dark:text-white'
-                  : isDefeat
-                    ? 'text-red-700 dark:text-red-500'
-                    : 'text-blue-700 dark:text-blue-400'
+                ? 'text-black dark:text-white'
+                : isDefeat
+                  ? 'text-red-700 dark:text-red-500'
+                  : 'text-blue-700 dark:text-blue-400'
                 }`}>
                 {isVictory ? 'سەرکەفتن!' : isDefeat ? 'خوسارەتی!' : 'یەکسانبوون!'}
               </h2>

@@ -9,10 +9,7 @@ const GameContext = createContext();
 export const GameProvider = ({ children }) => {
   const { user, loadingAuth, syncProfile, profileData } = useUser();
 
-  const [lastNotifiedLevel, setLastNotifiedLevel] = useState(() => {
-    const saved = localStorage.getItem('peyvchin_last_notified_level');
-    return saved ? Number(saved) : 1;
-  });
+  const [lastNotifiedLevel, setLastNotifiedLevel] = useState(1);
   const [winsTowardsSecret, setWinsTowardsSecret] = useState(0);
   
   // INITIALIZATION: Priority to localStorage to prevent "Zero-Reset" on re-renders
@@ -525,14 +522,46 @@ export const GameProvider = ({ children }) => {
           if (data.guess_distribution) dbGuessDist[m] = data.guess_distribution;
         });
 
+        // --- CALCULATE ADVANCED STATS ---
+        const isWin = additionalData.isWin !== undefined ? additionalData.isWin : true;
+        const isPvPWin = mode === 'battle' && isWin;
+        const isFlawless = isWin && additionalData.hintsUsed === 0 && additionalData.magnetsUsed === 0;
+        const solveTimeMs = additionalData.durationMs || 0;
+        const wordsToAdd = Array.isArray(additionalData.solvedWords) ? additionalData.solvedWords.length : (isWin ? 1 : 0);
+        
+        const newFeverHighscore = mode === 'word_fever' ? Math.max(profileData?.fever_highscore || 0, score) : (profileData?.fever_highscore || 0);
+        const newLongestWord = isWin ? Math.max(profileData?.longest_word_length || 0, lettersCount) : (profileData?.longest_word_length || 0);
+        
+        let newFastestSolve = profileData?.fastest_solve_ms || 0;
+        if (isWin && solveTimeMs > 0) {
+           newFastestSolve = newFastestSolve > 0 ? Math.min(newFastestSolve, solveTimeMs) : solveTimeMs;
+        }
+
+        const currentModePlayCounts = profileData?.mode_play_counts || {};
+        
+        const todayStr = new Date().toISOString().split('T')[0];
+        const lastActiveDate = profileData?.last_active_date;
+        const activeDaysIncrement = (!lastActiveDate || lastActiveDate < todayStr) ? 1 : 0;
+
         await supabase
           .from('profiles')
           .update({
             statistics: updatedStats,
             guess_distribution: dbGuessDist,
-            // Also update basic counts to ensure sync
             games_played: (profileData?.games_played || 0) + 1,
-            games_won: (profileData?.games_won || 0) + (additionalData.isWin ? 1 : 0)
+            games_won: (profileData?.games_won || 0) + (isWin ? 1 : 0),
+            pvp_wins: (profileData?.pvp_wins || 0) + (isPvPWin ? 1 : 0),
+            total_words_found: (profileData?.total_words_found || 0) + wordsToAdd,
+            longest_word_length: newLongestWord,
+            fastest_solve_ms: newFastestSolve,
+            flawless_wins: (profileData?.flawless_wins || 0) + (isFlawless ? 1 : 0),
+            fever_highscore: newFeverHighscore,
+            total_active_days: (profileData?.total_active_days || 0) + activeDaysIncrement,
+            last_active_date: todayStr,
+            mode_play_counts: {
+              ...currentModePlayCounts,
+              [mode]: (currentModePlayCounts[mode] || 0) + 1
+            }
           })
           .eq('id', currentUser.id);
       } catch (dbErr) {
@@ -561,7 +590,7 @@ export const GameProvider = ({ children }) => {
       return null; 
     }
     return null;
-  }, [refreshRank, syncProfile, profileData?.games_played, profileData?.games_won]);
+  }, [refreshRank, syncProfile, profileData?.games_played, profileData?.games_won, profileData?.fastest_solve_ms, profileData?.fever_highscore, profileData?.flawless_wins, profileData?.last_active_date, profileData?.longest_word_length, profileData?.mode_play_counts, profileData?.pvp_wins, profileData?.total_active_days, profileData?.total_words_found]);
 
   const addXP = useCallback((amount) => { if (amount) setCurrentXP(prev => prev + amount); }, []);
 
@@ -660,12 +689,23 @@ export const GameProvider = ({ children }) => {
     }
   }, [user, syncProfile]);
 
+  const setNotifiedLevelDB = useCallback(async (newLevel) => {
+    setLastNotifiedLevel(newLevel);
+    if (user?.id) {
+      try {
+        await supabase.from('profiles').update({ last_notified_level: newLevel }).eq('id', user.id);
+      } catch (err) {
+        console.error("[GameContext] Failed to sync last_notified_level:", err);
+      }
+    }
+  }, [user]);
+
   const value = useMemo(() => ({
     level, currentXP, maxXP, minXPForLevel, fils, derhem, dinar, addXP,
     dailyStreak, setDailyStreak, rewardStreak, lastRewardClaimedAt, claimDailyReward,
     inventory, magnetCount, hintCount, skipCount,
     solvedWords, playerStats, winsTowardsSecret, incrementSecretWordProgress, resetSecretWordProgress,
-    userRank: _userRank, updateInventory, setCurrentXP, setLastNotifiedLevel, lastNotifiedLevel,
+    userRank: _userRank, updateInventory, setCurrentXP, setLastNotifiedLevel, lastNotifiedLevel, setNotifiedLevelDB,
     syncProgressToDatabase, applyPenalty, processPurchase, refreshRank, getLevelData, progressPercent,
     getFreshWord: async (mode, category) => {
       const { user: currentUser } = gameStateRef.current;
@@ -726,7 +766,7 @@ export const GameProvider = ({ children }) => {
     inventory, magnetCount, hintCount, skipCount, solvedWords, playerStats,
     winsTowardsSecret, incrementSecretWordProgress, resetSecretWordProgress, _userRank,
     updateInventory, syncProgressToDatabase, applyPenalty, processPurchase, refreshRank, loading,
-    syncProfile, lastNotifiedLevel, progressPercent
+    syncProfile, lastNotifiedLevel, progressPercent, setNotifiedLevelDB
   ]);
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

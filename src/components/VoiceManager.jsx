@@ -5,6 +5,8 @@ import AgoraRTC, {
   useJoin,
   usePublish,
   useRemoteUsers,
+  useRemoteAudioTracks,
+  RemoteAudioTrack,
 } from "agora-rtc-react";
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '../context/AuthContext';
@@ -18,34 +20,57 @@ const APP_ID = "c1d5e8e055f44d5fa88d6193fd8c471c";
 /**
  * PlayerRow - A simple flat row for a player in the voice menu.
  */
-function PlayerRow({ avatar, nickname, isLocal, isActive, onToggle, isSpeaking }) {
+function PlayerRow({ avatar, nickname, isLocal, isActive, onToggle, isSpeaking, volume, onVolumeChange }) {
   return (
-    <div className="flex items-center justify-between p-1 hover:bg-mono-50 dark:hover:bg-white/5 rounded-sm transition-colors">
-      <div className="flex items-center gap-3">
-        <div className="relative">
-          <Avatar src={avatar} size="sm" />
-          {isSpeaking && (
-            <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#1a2e20] animate-pulse" />
-          )}
+    <div className="flex flex-col p-1.5 hover:bg-mono-50 dark:hover:bg-white/5 rounded-sm transition-colors group">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <Avatar src={avatar} size="sm" />
+            {isSpeaking && (
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#1a2e20] animate-pulse" />
+            )}
+          </div>
+          <div className="flex flex-col">
+            <span className="text-xs font-black text-mono-900 dark:text-white font-noto-sans-arabic leading-tight">{nickname}</span>
+          </div>
         </div>
-        <div className="flex flex-col">
-          <span className="text-xs font-black text-mono-900 dark:text-white font-noto-sans-arabic leading-tight">{nickname}</span>
-        </div>
+
+        <button
+          onClick={onToggle}
+          className={`w-6 h-6 rounded-sm flex items-center justify-center transition-all duration-300 ${isActive
+            ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-600/10 dark:bg-emerald-400/20'
+            : 'bg-mono-200 dark:bg-white/10 text-mono-500 dark:text-white/40'
+            }`}
+        >
+          <span className="material-symbols-outlined text-base" style={{ fontWeight: 300 }}>
+            {isLocal 
+              ? (isActive ? 'mic' : 'mic_off') 
+              : (isActive ? 'volume_up' : 'volume_off')}
+          </span>
+        </button>
       </div>
 
-      <button
-        onClick={onToggle}
-        className={`w-6 h-6 rounded-sm flex items-center justify-center transition-all duration-300 ${isActive
-          ? 'text-emerald-600 dark:text-emerald-400 bg-emerald-600/10 dark:bg-emerald-400/20'
-          : 'bg-mono-200 dark:bg-white/10 text-mono-500 dark:text-white/40'
-          }`}
-      >
-        <span className="material-symbols-outlined text-base" style={{ fontWeight: 300 }}>
-          {isLocal 
-            ? (isActive ? 'mic' : 'mic_off') 
-            : (isActive ? 'volume_up' : 'volume_off')}
-        </span>
-      </button>
+      {/* Volume Slider */}
+      <AnimatePresence>
+        {isActive && volume !== undefined && (
+          <Motion.div
+            initial={{ height: 0, opacity: 0, marginTop: 0 }}
+            animate={{ height: 'auto', opacity: 1, marginTop: 8 }}
+            exit={{ height: 0, opacity: 0, marginTop: 0 }}
+            className="overflow-hidden px-1 pb-1"
+          >
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={volume}
+              onChange={(e) => onVolumeChange(parseInt(e.target.value))}
+              className="w-full h-1 bg-mono-200 dark:bg-white/10 rounded-none appearance-none cursor-pointer accent-emerald-500 transition-all"
+            />
+          </Motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -55,7 +80,7 @@ function PlayerRow({ avatar, nickname, isLocal, isActive, onToggle, isSpeaking }
  */
 function VoiceControls({ matchId, onHelp, onExit }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { userNickname, userAvatar, micEnabled, speakerEnabled, updateProfile } = useUser();
+  const { userNickname, userAvatar, micEnabled, speakerEnabled, micVolume, voiceVolume, updateProfile } = useUser();
   const { opponent } = useMultiplayer();
   const { level: userLevel } = useGame();
   
@@ -83,17 +108,20 @@ function VoiceControls({ matchId, onHelp, onExit }) {
   }, [localMicrophoneTrack, micEnabled]);
 
   // Remote Audio Management
+  const { audioTracks } = useRemoteAudioTracks(remoteUsers);
+
+  // Apply Volume Settings
   useEffect(() => {
-    remoteUsers.forEach(user => {
-      if (user.audioTrack) {
-        if (speakerEnabled) {
-          user.audioTrack.play();
-        } else {
-          user.audioTrack.stop();
-        }
-      }
+    if (localMicrophoneTrack) {
+      localMicrophoneTrack.setVolume(micVolume ?? 100);
+    }
+  }, [localMicrophoneTrack, micVolume]);
+
+  useEffect(() => {
+    audioTracks.forEach(track => {
+      track.setVolume(voiceVolume ?? 100);
     });
-  }, [remoteUsers, speakerEnabled]);
+  }, [audioTracks, voiceVolume]);
 
   // Volume detection for speaking indicators
   useEffect(() => {
@@ -113,6 +141,10 @@ function VoiceControls({ matchId, onHelp, onExit }) {
 
   return (
     <div className="relative pointer-events-auto">
+      {/* Remote Audio Player Components */}
+      {audioTracks.map(track => (
+        <RemoteAudioTrack key={track.getUserId()} track={track} play={speakerEnabled} />
+      ))}
       {/* 1. HAMBURGER TRIGGER */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -182,6 +214,8 @@ function VoiceControls({ matchId, onHelp, onExit }) {
                       isActive={micEnabled}
                       onToggle={() => updateProfile({ mic_enabled: !micEnabled })}
                       isSpeaking={isLocalSpeaking}
+                      volume={micVolume}
+                      onVolumeChange={(val) => updateProfile({ mic_volume: val })}
                     />
 
                     {/* Opponent Row */}
@@ -193,6 +227,8 @@ function VoiceControls({ matchId, onHelp, onExit }) {
                       isActive={speakerEnabled}
                       onToggle={() => updateProfile({ speaker_enabled: !speakerEnabled })}
                       isSpeaking={isOpponentSpeaking}
+                      volume={voiceVolume}
+                      onVolumeChange={(val) => updateProfile({ voice_volume: val })}
                     />
                   </Motion.div>
                 )}

@@ -49,6 +49,7 @@ export const AuthProvider = ({ children }) => {
   
   // 3.3 VOICE SETTINGS: Persistent global states
   const [micEnabled, setMicEnabled] = useState(true);
+  const [micVolume, setMicVolume] = useState(100);
   const [speakerEnabled, setSpeakerEnabled] = useState(true);
   const [voiceVolume, setVoiceVolume] = useState(100);
 
@@ -134,6 +135,7 @@ export const AuthProvider = ({ children }) => {
 
         // 3.4 VOICE SETTINGS SYNC
         setMicEnabled(data.mic_enabled ?? true);
+        setMicVolume(data.mic_volume ?? 100);
         setSpeakerEnabled(data.speaker_enabled ?? true);
         setVoiceVolume(data.voice_volume ?? 100);
 
@@ -308,6 +310,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     if (profileData.mic_enabled !== undefined) setMicEnabled(profileData.mic_enabled);
+    if (profileData.mic_volume !== undefined) setMicVolume(profileData.mic_volume);
     if (profileData.speaker_enabled !== undefined) setSpeakerEnabled(profileData.speaker_enabled);
     if (profileData.voice_volume !== undefined) setVoiceVolume(profileData.voice_volume);
 
@@ -324,6 +327,7 @@ export const AuthProvider = ({ children }) => {
       // 2. Update Voice Settings & Haptic via direct update (as columns are new)
       const directUpdates = {};
       if (profileData.mic_enabled !== undefined) directUpdates.mic_enabled = profileData.mic_enabled;
+      if (profileData.mic_volume !== undefined) directUpdates.mic_volume = profileData.mic_volume;
       if (profileData.speaker_enabled !== undefined) directUpdates.speaker_enabled = profileData.speaker_enabled;
       if (profileData.voice_volume !== undefined) directUpdates.voice_volume = profileData.voice_volume;
       if (profileData.haptic_enabled !== undefined) directUpdates.haptic_enabled = profileData.haptic_enabled;
@@ -368,13 +372,13 @@ export const AuthProvider = ({ children }) => {
     isInKurdistan, setIsInKurdistan, countryCode, setCountryCode,
     profileData,
     ownedAvatars, setOwnedAvatars, hapticEnabled, setHapticEnabled,
-    micEnabled, setMicEnabled, speakerEnabled, setSpeakerEnabled, voiceVolume, setVoiceVolume,
+    micEnabled, setMicEnabled, micVolume, setMicVolume, speakerEnabled, setSpeakerEnabled, voiceVolume, setVoiceVolume,
     lastProfileUpdate, setLastProfileUpdate,
     syncProfile, refreshProfile: syncProfile, updateProfile, handleToggleBlock, checkBlockStatus,
     isProfileLoaded
   }), [
     user, loadingAuth, loading, visualProgress, userNickname, userAvatar, city, isInKurdistan, 
-    countryCode, ownedAvatars, hapticEnabled, micEnabled, speakerEnabled, voiceVolume, syncProfile, 
+    countryCode, ownedAvatars, hapticEnabled, micEnabled, micVolume, speakerEnabled, voiceVolume, syncProfile, 
     updateProfile, handleToggleBlock, checkBlockStatus, profileData, lastProfileUpdate
   ]);
 

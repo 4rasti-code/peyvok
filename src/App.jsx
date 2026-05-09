@@ -171,7 +171,7 @@ export default function App() {
     userNickname, userAvatar, city, isInKurdistan, countryCode,
     ownedAvatars, equippedAvatar, unlockedThemes: _unlockedThemes, currentTheme,
     updateProfile, profileData,
-    micEnabled, speakerEnabled, voiceVolume
+    micEnabled, micVolume, speakerEnabled, voiceVolume
   } = useUser();
 
   const {
@@ -195,7 +195,7 @@ export default function App() {
     processPurchase,
     getFreshWord,
     userRank, refreshRank,
-    setLastNotifiedLevel,
+    setNotifiedLevelDB,
     claimDailyReward: _claimDailyReward,
     updateInventory,
     initializeStatsInDB,
@@ -734,12 +734,13 @@ export default function App() {
 
   // TRIGGER LEVEL UP UI (Standardized)
   useEffect(() => {
-    // Only trigger if authenticated, not on auth screen, and we haven't notified for this level yet
-    if (user && currentView !== 'auth' && level > lastNotifiedLevel) {
+    // Only trigger if authenticated, at the end of a game, and we haven't notified for this level yet
+    const isEndGame = isVictory || isDefeat || isWordFeverResultVisible || multiplayerState === 'game_over';
+    if (user && currentView === 'game' && isEndGame && level > lastNotifiedLevel) {
       requestAnimationFrame(() => setIsLevelingUp(true));
       triggerHaptic([40, 60, 40, 60, 80]);
     }
-  }, [level, user, currentView, lastNotifiedLevel]);
+  }, [level, user, currentView, lastNotifiedLevel, isVictory, isDefeat, isWordFeverResultVisible, multiplayerState]);
 
   // MANDATORY AUTHENTICATION ENFORCEMENT & HEARTBEAT (Online Status)
   useEffect(() => {
@@ -887,12 +888,12 @@ export default function App() {
     }
   }, [currentView, playStartGameSound]);
 
-  // Delay Result Overlay by 7 seconds as requested
+  // Delay Result Overlay by a short amount to allow final word animation to finish
   useEffect(() => {
     if (isVictory || isDefeat || isWordFeverResultVisible) {
       const timer = setTimeout(() => {
         setShowResultOverlay(true);
-      }, 3000);
+      }, 1500);
       return () => clearTimeout(timer);
     } else {
       requestAnimationFrame(() => {
@@ -1670,6 +1671,7 @@ export default function App() {
               updateProfile({ haptic_enabled: !hapticEnabled });
             }}
             micEnabled={micEnabled}
+            micVolume={micVolume}
             speakerEnabled={speakerEnabled}
             voiceVolume={voiceVolume}
             updateProfile={updateProfile}
@@ -1834,9 +1836,8 @@ export default function App() {
           isDark={isSystemDark}
           onClose={() => {
             setIsLevelingUp(false);
-            setLastNotifiedLevel(level); // Sync notified level locally
-            localStorage.setItem('peyvchin_last_notified_level', level.toString());
-            updateInventory({ fils: 500 }); // Bonus reward
+            setNotifiedLevelDB(level); // Sync notified level to DB
+            updateInventory({ fils: 100 }); // Bonus reward
           }}
         />
 

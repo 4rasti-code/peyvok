@@ -881,8 +881,8 @@ export const MultiplayerProvider = ({ children }) => {
         console.log('[Multiplayer] Using local fallback for sequenced words.');
         const localWords = getUnifiedWords();
         const fiveLetterLocal = localWords.filter(w => w.word && w.word.length === 5);
-        // Fallback still does a slice but we can't easily sequence local without a counter
-        const fallback = [...fiveLetterLocal].sort((a,b) => a.word.localeCompare(b.word)).slice(0, 5);
+        // Shuffle local words randomly instead of sorting alphabetically to prevent repetition
+        const fallback = [...fiveLetterLocal].sort(() => Math.random() - 0.5).slice(0, 5);
         selectedWords = fallback.map(w => w.word);
         selectedRiddles = fallback.map(w => w.hint || 'پەیڤێ بدۆزەوە');
       }

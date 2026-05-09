@@ -12,6 +12,7 @@ function SettingsModal({
    hapticEnabled,
    onHapticToggle,
    micEnabled,
+   micVolume,
    speakerEnabled,
    voiceVolume,
    updateProfile,
@@ -142,6 +143,24 @@ function SettingsModal({
                                   />
                                </button>
                             </div>
+
+                            {/* Mic Volume Slider */}
+                            {micEnabled && (
+                               <div className="px-1 py-2 space-y-3">
+                                  <div className="flex items-center justify-between">
+                                     <span className="text-[11px] font-black text-mono-500">قەبارێ مایکرۆفۆنی</span>
+                                     <span className="text-[10px] font-black text-mono-400">{micVolume}%</span>
+                                  </div>
+                                  <input
+                                     type="range"
+                                     min="0"
+                                     max="100"
+                                     value={micVolume}
+                                     onChange={(e) => updateProfile({ mic_volume: parseInt(e.target.value) })}
+                                     className="w-full h-1 bg-mono-100 dark:bg-white/10 rounded-none appearance-none cursor-pointer accent-mono-900 dark:accent-white transition-all"
+                                  />
+                               </div>
+                            )}
 
                             {/* Speaker Toggle */}
                             <div className="flex items-center justify-between p-3 rounded-md border border-mono-100 dark:border-white/5 bg-mono-50/30 dark:bg-white/5 hover:bg-mono-50 dark:hover:bg-white/10 transition-colors group">

@@ -153,12 +153,78 @@ const humanNamesRaw = [
   { word: "شرین", hint: "ناڤێ مرۆڤان", category: "ناڤێ مرۆڤان" }
 ];
 
+const adjectivesWordsRaw = [
+  { word: "باش", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "خراب", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "مەزن", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بچووک", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "درێژ", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "کورت", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "گەرم", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "سار", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "گەنج", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "پیر", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "جوان", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "نەجوان", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "زانا", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "نەزان", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "دەولەمەند", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "هەژار", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "گران", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "ئەرزان", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "سڤک", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "زوو", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "درەنگ", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێدەنگ", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێھێز", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێکار", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێمنەت", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێهۆش", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێباک", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێبێھن", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێبەر", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "تژی", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بەتاڵ", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "شرین", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "تال", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "ترش", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "سوێر", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "جیاواز", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "وەکهەڤ", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "نەرم", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "ڕەق", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "پاک", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "پیس", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "زیرەک", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێوار", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "دلخوەش", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "خەمگین", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێزار", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "ترسنۆک", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "نەترس", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێبار", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێباهی", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێگومان", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێژان", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێڕەنگ", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێبایەخ", hint: "وەسف(هەڤالناڤ)", category: "وەسف(‌هەڤالناڤ)" },
+  { word: "بێبەرامبەر", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێدەستوور", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێزارکەر", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" },
+  { word: "بێمفا", hint: "وەسف(هەڤالناڤ)", category: "وەسف(هەڤالناڤ)" }
+];
+
+const classicAdjectiveNames = adjectivesWordsRaw.filter(n => n.word.length <= 5);
+const hardAdjectiveNames = adjectivesWordsRaw.filter(n => n.word.length > 5);
+
+
 const classicHumanNames = humanNamesRaw.filter(n => n.word.length <= 5);
 const hardHumanNames = humanNamesRaw.filter(n => n.word.length > 5);
 
 // 1. Classic Mode Pool (2-5 letters)
 const classicWords = [
   ...classicHumanNames,
+  ...classicAdjectiveNames,
   ...verbsWords.filter(v => v.word.length >= 2 && v.word.length <= 5),
   { word: "کورد", hint: "نەتەوەیەکێ ئاریە و ل میزۆپۆتامیا دژیت", category: "نەتەوە" },
   { word: "ئاشتی", hint: "دەمێ د ناڤبەرا مرۆڤاندا تەناھی ھەبیت", category: "هەست" },
@@ -367,6 +433,7 @@ const mamakWords = [
 // 3. Hard Words Pool (6-15 letters)
 const hardWords = [
   ...hardHumanNames,
+  ...hardAdjectiveNames,
   ...verbsWords.filter(v => v.word.length >= 6),
   { word: "ڕەوشەنبیر", hint: "کەسێ خودان زانست و تێگەھشتن و ڕەوشت", category: "زانست و مرۆڤ" },
   { word: "حەزژێکرن", hint: "دەمێ مرۆڤ کەسەکی پتر ژ گیانێ خوە دڤێت و حەز دکەت ل نێزیک بیت", category: "هەست" },
@@ -717,6 +784,7 @@ const rawWordList = {
   "باژێڕ": generalPool.filter(w => w.category === "باژێڕ"),
   "مۆزیک": generalPool.filter(w => w.category === "مۆزیک"),
   "ناڤێن مرۆڤان": humanNamesRaw,
+  "وەسف(هەڤالناڤ)": adjectivesWordsRaw,
   "مامک": mamakWords
 };
 
