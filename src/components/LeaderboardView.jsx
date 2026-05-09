@@ -232,8 +232,6 @@ export default function LeaderboardView({ onOpenChat }) {
                       zIndex: isTop3 ? 50 : 1 // Ensure top 3 cards have higher z-index for floating crowns
                     }}
                   >
-                    {/* Left Side Accent Bar (Primary Yellow - Sharp) */}
-                    <div className="absolute left-0 top-0 bottom-0 w-1.5 rounded-l-md bg-primary" />
 
                     {/* Sleek Metallic Rank Number (MINIMALIST) */}
                     <div className="flex items-center justify-center w-10 shrink-0 z-10 relative">
@@ -392,7 +390,6 @@ export default function LeaderboardView({ onOpenChat }) {
                     {/* Info and Name (CENTERED) */}
                     <div className="flex-1 flex justify-center items-center gap-2 min-w-0 mx-2">
                       <span className="font-black text-mono-900 dark:text-mono-50 text-sm tracking-normal uppercase truncate leading-none">{effectiveNickname}</span>
-                      <span className="text-orange-500 text-base shrink-0">🔥</span>
                     </div>
 
                     {/* Shield (RIGHT SIDE) */}
