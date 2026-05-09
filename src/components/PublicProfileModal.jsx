@@ -500,7 +500,7 @@ export default function PublicProfileModal({
              </div>
             </Motion.div>
            );
-        })())}
+        })()}
 
         <div className="w-full space-y-3 mt-auto flex flex-col pt-4">
            {isMe ? (
