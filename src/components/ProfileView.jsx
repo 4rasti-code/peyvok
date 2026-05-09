@@ -363,6 +363,50 @@ export default function ProfileView({ onProfileSave }) {
                      whileTap={{ scale: 0.95 }}
                      onClick={() => { triggerHaptic(10); fileInputRef.current?.click(); }}
                   >
+                     {/* LOOT GLOW / MAGIC BURST (LEGENDARY ONLY) */}
+                     {tier.isLegendary && (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                           <Motion.div 
+                              animate={{ 
+                                 scale: [1, 1.2, 1],
+                                 opacity: [0.3, 0.6, 0.3],
+                                 rotate: [0, 180, 360]
+                              }}
+                              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                              className="absolute w-40 h-40 bg-radial from-cyan-400/30 via-purple-500/10 to-transparent blur-3xl"
+                           />
+                           <Motion.div 
+                              animate={{ 
+                                 scale: [0.8, 1.1, 0.8],
+                                 opacity: [0.2, 0.4, 0.2]
+                              }}
+                              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                              className="absolute w-32 h-32 bg-radial from-white/40 to-transparent blur-2xl"
+                           />
+                           
+                           {/* DIAMOND PARTICLES */}
+                           {[...Array(6)].map((_, i) => (
+                              <Motion.div
+                                 key={i}
+                                 initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                                 animate={{ 
+                                    opacity: [0, 1, 0],
+                                    scale: [0, 1.5, 0],
+                                    x: (i % 2 === 0 ? 1 : -1) * (20 + Math.random() * 40),
+                                    y: - (30 + Math.random() * 50),
+                                    rotate: [0, 360]
+                                 }}
+                                 transition={{ 
+                                    duration: 2 + Math.random() * 2,
+                                    repeat: Infinity,
+                                    delay: i * 0.4
+                                 }}
+                                 className="absolute w-1.5 h-1.5 bg-white rotate-45 shadow-[0_0_8px_white] z-50"
+                              />
+                           ))}
+                        </div>
+                     )}
+
                      {/* Perimeter Progress Ring - Enhanced Visibility */}
                      <div className="absolute inset-0 z-0">
                         <svg className="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
