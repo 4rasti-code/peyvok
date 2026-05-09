@@ -7,16 +7,10 @@ import { supabase } from '../lib/supabase';
 import { FilsIcon } from './CurrencyIcon';
 import CoinAnimation from './CoinAnimation';
 import { toKuDigits } from '../utils/formatters';
-import { getLevelFromXP, getLevelTier } from '../utils/progression';
+import { useGame } from '../context/GameContext';
+import { getLevelTier } from '../utils/progression';
 import { useAudio } from '../context/AudioContext';
 
-const getRankInfo = (level) => {
-  if (level >= 50) return { name: 'ئەفسانە', color: 'text-purple-400', border: 'border-purple-500' };
-  if (level >= 30) return { name: 'پێشەنگ', color: 'text-amber-400', border: 'border-amber-400' };
-  if (level >= 15) return { name: 'پایەبەرز', color: 'text-emerald-400', border: 'border-emerald-500' };
-  if (level >= 5) return { name: 'شارەزا', color: 'text-blue-400', border: 'border-blue-500' };
-  return { name: 'دەستپێکەر', color: 'text-slate-400', border: 'border-slate-500' };
-};
 
 export default function PublicProfileModal({ 
   profile, 
@@ -463,7 +457,7 @@ export default function PublicProfileModal({
              <div className="pt-2 border-t border-white/5">
                 <span className="text-[8px] font-black text-white/30 uppercase  block text-center mb-3">دەستکەڤت و مەدالیا</span>
                 <div className="flex justify-center gap-2 flex-wrap relative">
-                   {medals.map((m, idx) => {
+                   {medals.map((m) => {
                      const isUnlocked = m.condition(displayData);
                      return (
                        <div key={m.id} className="relative">
