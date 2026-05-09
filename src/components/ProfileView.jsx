@@ -459,8 +459,15 @@ export default function ProfileView({ onProfileSave }) {
                {/* 5. Bottom Info Dock */}
                <div className="absolute bottom-0 left-0 right-0 z-40 bg-mono-50/95 dark:bg-mono-900/95 backdrop-blur-xl border-t border-mono-200 dark:border-mono-800 p-3 pt-1 shadow-[0_-10px_20px_rgba(0,0,0,0.1)]" dir="rtl">
                   <div className="flex flex-col items-center mb-2">
-                     <h3 className="text-xl font-black font-rabar text-mono-900 dark:text-mono-50 leading-tight truncate w-full text-center px-4">{draftNickname || 'یاریکەر'}</h3>
-
+                     <h3 
+                        className="text-xl font-black font-rabar leading-tight truncate w-full text-center px-4 transition-all duration-500"
+                        style={{ 
+                           color: tier.stop1,
+                           textShadow: tier.isLegendary ? `0 0 10px ${tier.stop1}80` : 'none'
+                        }}
+                     >
+                        {draftNickname || 'یاریکەر'}
+                     </h3>
                   </div>
 
                   {/* Unified 3-Column Stats Grid */}
