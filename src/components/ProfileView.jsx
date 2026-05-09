@@ -368,21 +368,12 @@ export default function ProfileView({ onProfileSave }) {
                         <div className="absolute inset-0 flex items-center justify-center">
                            <Motion.div 
                               animate={{ 
-                                 scale: [1, 1.2, 1],
-                                 opacity: [0.3, 0.6, 0.3],
-                                 rotate: [0, 180, 360]
+                                 rotate: [0, 360]
                               }}
-                              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                              className="absolute w-40 h-40 bg-radial from-cyan-400/30 via-purple-500/10 to-transparent blur-3xl"
+                              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                              className="absolute w-40 h-40 bg-radial from-cyan-400/20 via-purple-500/5 to-transparent blur-3xl opacity-60"
                            />
-                           <Motion.div 
-                              animate={{ 
-                                 scale: [0.8, 1.1, 0.8],
-                                 opacity: [0.2, 0.4, 0.2]
-                              }}
-                              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                              className="absolute w-32 h-32 bg-radial from-white/40 to-transparent blur-2xl"
-                           />
+                           <div className="absolute w-32 h-32 bg-radial from-white/20 to-transparent blur-2xl opacity-40" />
                            
                            {/* DIAMOND PARTICLES */}
                            {[...Array(6)].map((_, i) => (
@@ -428,17 +419,11 @@ export default function ProfileView({ onProfileSave }) {
                               initial={{ strokeDashoffset: 257.61 }}
                               animate={{ 
                                  strokeDashoffset: 257.61 - (257.61 * (effectiveProgress || 0)),
-                                 filter: tier.isLegendary ? [
-                                    "drop-shadow(0 0 2px #fff)",
-                                    "drop-shadow(0 0 10px #b4fbff)",
-                                    "drop-shadow(0 0 2px #fff)"
-                                 ] : "none"
+                                 filter: tier.isLegendary ? "drop-shadow(0 0 10px #b4fbff)" : "none"
                               }}
                               transition={{ 
-                                 strokeDashoffset: { duration: 1.5, ease: "circOut" },
-                                 filter: { repeat: Infinity, duration: 2, ease: "easeInOut" }
+                                 strokeDashoffset: { duration: 1.5, ease: "circOut" }
                               }}
-                              className={tier.isLegendary ? "animate-pulse" : ""}
                            />
                            <defs>
                               <linearGradient id="avatarProgressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
