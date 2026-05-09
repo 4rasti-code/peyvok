@@ -462,8 +462,7 @@ export default function ProfileView({ onProfileSave }) {
                      <h3 
                         className="text-xl font-black font-rabar leading-tight truncate w-full text-center px-4 transition-all duration-500"
                         style={{ 
-                           color: tier.stop1,
-                           textShadow: tier.isLegendary ? `0 0 10px ${tier.stop1}80` : 'none'
+                           color: tier.stop1
                         }}
                      >
                         {draftNickname || 'یاریکەر'}
