@@ -183,9 +183,9 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
         setNameError('نابیت چ ڤالاهی(سپەیس) دناڤبەرا ناڤێ تەدا هەبیت');
         return;
       }
-      if (raw.length < 3 || raw.length > 15) {
+      if (raw.length < 8 || raw.length > 15) {
         setNameAvailability('invalid');
-        setNameError('کێمترە ژ ٣ پیتان یان زێدەترە ژ ١٥ پیتان');
+        setNameError('کێمترە ژ ٨ پیتان یان زێدەترە ژ ١٥ پیتان');
         return;
       }
       if (!NICKNAME_REGEX.test(raw)) {

@@ -549,8 +549,8 @@ export default function ProfileView({ onProfileSave }) {
                            initial={{ scale: 0.8, opacity: 0 }}
                            animate={{ scale: 1, opacity: 1 }}
                            onClick={handleSave}
-                           disabled={draftNickname.length < 3 || draftNickname.length > 15}
-                           className={`h-12 px-5 rounded-md font-black text-xs whitespace-nowrap transition-all ${draftNickname.length < 3 || draftNickname.length > 15 ? 'bg-mono-200 dark:bg-mono-800 text-mono-400 dark:text-mono-600 cursor-not-allowed' : 'bg-green-600 text-white shadow-lg shadow-green-900/20'}`}
+                           disabled={draftNickname.length < 8 || draftNickname.length > 15}
+                           className={`h-12 px-5 rounded-md font-black text-xs whitespace-nowrap transition-all ${draftNickname.length < 8 || draftNickname.length > 15 ? 'bg-mono-200 dark:bg-mono-800 text-mono-400 dark:text-mono-600 cursor-not-allowed' : 'bg-green-600 text-white shadow-lg shadow-green-900/20'}`}
                         >
                            پاراستن
                         </Motion.button>
@@ -559,8 +559,8 @@ export default function ProfileView({ onProfileSave }) {
                   {!isNicknameLocked && (
                      <div className="w-full text-right px-1 mt-1">
                         <AnimatePresence>
-                           {draftNickname.length > 0 && draftNickname.length < 3 && (
-                              <Motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناسناڤێ تە ژ ٣ پیتان کێمتر بیت</Motion.p>
+                           {draftNickname.length > 0 && draftNickname.length < 8 && (
+                              <Motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناسناڤێ تە ژ ٨ پیتان کێمتر بیت</Motion.p>
                            )}
                            {draftNickname.length > 15 && (
                               <Motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناڤێ تە ژ ١٥ پیتان زێدەتر بیت</Motion.p>
