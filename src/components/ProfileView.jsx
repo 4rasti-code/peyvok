@@ -446,7 +446,10 @@ export default function ProfileView({ onProfileSave }) {
 
                      <div className="relative p-0.5 bg-mono-white dark:bg-mono-950 rounded-full shadow-2xl border-[0.5px] border-mono-200 dark:border-mono-800 z-10">
                         <Avatar src={draftAvatar} size="xl" className="w-26 h-26 rounded-full border border-mono-100 dark:border-mono-800 object-cover" updatedAt={user?.updated_at} />
-                        <div className="absolute bottom-0 right-0 w-9 h-9 bg-[#FF9F1C] text-slate-950 rounded-full border-2 border-white flex items-center justify-center shadow-xl z-50 transition-transform active:scale-90">
+                        <div 
+                           className="absolute bottom-0 right-0 w-9 h-9 text-slate-950 rounded-full border-2 border-white flex items-center justify-center shadow-xl z-50 transition-transform active:scale-90"
+                           style={{ backgroundColor: tier.stop1 }}
+                        >
                            <span className="material-symbols-outlined text-[20px] font-black leading-none">edit</span>
                         </div>
                      </div>
