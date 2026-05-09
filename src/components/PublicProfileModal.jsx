@@ -7,7 +7,7 @@ import { supabase } from '../lib/supabase';
 import { FilsIcon } from './CurrencyIcon';
 import CoinAnimation from './CoinAnimation';
 import { toKuDigits } from '../utils/formatters';
-import { useGame } from '../context/GameContext';
+import { getLevelFromXP, getLevelTier } from '../utils/progression';
 import { useAudio } from '../context/AudioContext';
 
 const getRankInfo = (level) => {
@@ -315,47 +315,86 @@ export default function PublicProfileModal({
         </button>
 
         {/* Level Badge - Reverted to Top Right Corner of Modal */}
-        <div className="absolute top-4 right-5 z-10 scale-125 origin-top-right">
-           <div className="relative w-11 h-12 flex items-center justify-center">
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
-                 <path d="M50 0L95 20V55C95 80 50 115 50 115C50 115 5 80 5 55V20L50 0Z" fill="url(#medalGradientPublic)" stroke="white" strokeWidth="4" strokeOpacity="0.2" />
-                 <defs>
-                    <linearGradient id="medalGradientPublic" x1="50" y1="0" x2="50" y2="115" gradientUnits="userSpaceOnUse">
-                       <stop stopColor={safeLevel >= 10 ? "#FFD700" : "#94a3b8"} />
-                       <stop offset="1" stopColor={safeLevel >= 10 ? "#B8860B" : "#475569"} />
-                    </linearGradient>
-                 </defs>
-              </svg>
-              <div className="relative z-10 flex flex-col items-center justify-center -mt-1.5">
-                 <span className="text-[7.5px] font-black text-slate-950/40 uppercase leading-none mb-0.5">ئاستێ</span>
-                 <span className="text-xl font-black text-slate-950 leading-none">{toKuDigits(safeLevel)}</span>
-              </div>
-           </div>
-        </div>
+        {(() => {
+           const tier = getLevelTier(safeLevel);
+           return (
+             <div className="absolute top-4 right-5 z-10 scale-125 origin-top-right">
+                <div className="relative w-11 h-12 flex items-center justify-center">
+                   <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M50 0L95 20V55C95 80 50 115 50 115C50 115 5 80 5 55V20L50 0Z" fill={`url(#medalGradientPublic-${profile.id})`} stroke="white" strokeWidth="4" strokeOpacity="0.2" />
+                      <defs>
+                         <linearGradient id={`medalGradientPublic-${profile.id}`} x1="50" y1="0" x2="50" y2="115" gradientUnits="userSpaceOnUse">
+                            <stop stopColor={tier.stop1} />
+                            <stop offset="1" stopColor={tier.stop2} />
+                         </linearGradient>
+                      </defs>
+                   </svg>
+                   <div className="relative z-10 flex flex-col items-center justify-center -mt-1.5">
+                      <span className="text-[7.5px] font-black text-slate-950/40 uppercase leading-none mb-0.5">ئاستێ</span>
+                      <span className="text-xl font-black text-slate-950 leading-none">{toKuDigits(safeLevel)}</span>
+                   </div>
+                </div>
+             </div>
+           );
+        })()}
 
         {/* Avatar Section (Centered) */}
-        <div className="relative mb-6 mt-4 flex flex-col items-center">
-          <div className={`w-32 h-32 rounded-full p-1.5 flex items-center justify-center relative ${safeLevel >= 10 ? 'bg-gradient-to-tr from-amber-400 via-yellow-200 to-amber-600' : 'bg-slate-700'}`}>
-             <div className="w-full h-full rounded-full bg-mono-white dark:bg-slate-900 flex items-center justify-center text-6xl border-[4px] border-mono-white dark:border-slate-900 relative">
-                <Avatar 
-                   src={displayData.avatar_url} 
-                   updatedAt={displayData.updated_at} 
-                   size="2xl" 
-                   border={false}
-                />
-             </div>
+        {(() => {
+           const tier = getLevelTier(safeLevel);
+           return (
+              <div className="relative mb-6 mt-4 flex flex-col items-center">
+                <div className="w-32 h-32 rounded-full flex items-center justify-center relative">
+                   {/* XP Progress Ring */}
+                   <div className="absolute inset-[-6px] z-0">
+                      <svg className="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
+                         <circle cx="50" cy="50" r="44" fill="none" className="stroke-mono-200/20 dark:stroke-white/5" strokeWidth="4" />
+                         <Motion.circle
+                            cx="50"
+                            cy="50"
+                            r="44"
+                            fill="none"
+                            stroke={tier.stop1}
+                            strokeWidth="8"
+                            strokeLinecap="butt"
+                            strokeDasharray="276.46"
+                            initial={{ strokeDashoffset: 276.46 }}
+                            animate={{ 
+                               strokeDashoffset: 276.46 - (276.46 * (progressRatio / 100)),
+                               filter: tier.isLegendary ? `drop-shadow(0 0 8px ${tier.stop1})` : "none"
+                            }}
+                            transition={{ duration: 1.5, ease: "circOut" }}
+                         />
+                      </svg>
+                   </div>
 
-             {/* Online Indicator on Avatar Edge */}
-             {isOnline && (
-               <div className="absolute bottom-2 right-2 w-7 h-7 bg-emerald-500 border-4 border-slate-900 rounded-full z-20" />
-             )}
-          </div>
-        </div>
+                   <div className="w-full h-full rounded-full bg-mono-white dark:bg-slate-900 flex items-center justify-center border-[4px] border-mono-white dark:border-slate-900 relative z-10 overflow-hidden">
+                      <Avatar 
+                         src={displayData.avatar_url} 
+                         updatedAt={displayData.updated_at} 
+                         size="2xl" 
+                         border={false}
+                         className="w-full h-full object-cover"
+                      />
+                   </div>
+
+                   {/* Online Indicator on Avatar Edge */}
+                   {isOnline && (
+                     <div className="absolute bottom-2 right-2 w-7 h-7 bg-emerald-500 border-4 border-slate-900 rounded-full z-20" />
+                   )}
+                </div>
+              </div>
+           );
+        })()}
 
         {/* Identity Section */}
          <div className="space-y-1 mb-5 flex flex-col items-center">
             <div className="flex items-center justify-center gap-2">
-               <h2 className="text-2xl font-black text-mono-900 dark:text-white font-rabar">{displayData.nickname}</h2>
+               <h2 
+                 className="text-2xl font-black font-rabar transition-colors duration-500"
+                 style={{ color: getLevelTier(safeLevel).stop1 }}
+               >
+                 {displayData.nickname}
+               </h2>
                <FlagBadge countryCode={displayData.country_code} isInKurdistan={displayData.is_kurdistan} size="sm" />
             </div>
 
@@ -393,29 +432,32 @@ export default function PublicProfileModal({
         </div>
 
         {/* Stats Grid */}
-        {!loading && (
-          <Motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="w-full mb-5 pt-4 border-t border-mono-200 dark:border-white/5 space-y-4"
-          >
-             <div className="w-full relative overflow-hidden px-2">
-                <div className="flex justify-between items-end mb-1.5 relative z-10">
-                   <div className="text-right">
-                     <span className="text-[8px] font-black  uppercase  text-mono-400 dark:text-white/40 block">ئەزموون (XP)</span>
-                     <span className="text-base font-black text-mono-900 dark:text-white ">{displayData.xp || 0}</span>
-                   </div>
-                   <span className="text-[9px] font-black text-mono-300 dark:text-white/20">/ {nextLevelXP}</span>
-                </div>
-                <div className="w-full h-2 bg-mono-100 dark:bg-slate-950 rounded-full overflow-hidden relative z-10">
-                   <Motion.div 
-                     initial={{ width: 0 }}
-                     animate={{ width: `${progressRatio}%` }}
-                     transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                     className="h-full bg-linear-to-r from-amber-600 to-amber-400 rounded-full"
-                   />
-                </div>
-             </div>
+        {!loading && (() => {
+           const tier = getLevelTier(safeLevel);
+           return (
+            <Motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="w-full mb-5 pt-4 border-t border-mono-200 dark:border-white/5 space-y-4"
+            >
+               <div className="w-full relative overflow-hidden px-2">
+                  <div className="flex justify-between items-end mb-1.5 relative z-10">
+                     <div className="text-right">
+                       <span className="text-[8px] font-black  uppercase  text-mono-400 dark:text-white/40 block">ئەزموون (XP)</span>
+                       <span className="text-base font-black text-mono-900 dark:text-white ">{displayData.xp || 0}</span>
+                     </div>
+                     <span className="text-[9px] font-black text-mono-300 dark:text-white/20">/ {nextLevelXP}</span>
+                  </div>
+                  <div className="w-full h-2 bg-mono-100 dark:bg-slate-950 rounded-full overflow-hidden relative z-10 shadow-inner">
+                     <Motion.div 
+                       initial={{ width: 0 }}
+                       animate={{ width: `${progressRatio}%` }}
+                       transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                       className="h-full rounded-full transition-all duration-500"
+                       style={{ background: `linear-gradient(to right, ${tier.stop1}, ${tier.stop2})` }}
+                     />
+                  </div>
+               </div>
 
 
              <div className="pt-2 border-t border-white/5">
