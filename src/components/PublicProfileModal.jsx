@@ -367,7 +367,7 @@ export default function PublicProfileModal({
                       </svg>
                    </div>
 
-                   <div className="w-full h-full rounded-full bg-mono-white dark:bg-slate-900 flex items-center justify-center border-[4px] border-mono-white dark:border-slate-900 relative z-10 overflow-hidden">
+                   <div className="w-full h-full rounded-full bg-mono-white dark:bg-slate-900 flex items-center justify-center border-4 border-mono-white dark:border-slate-900 relative z-10 overflow-hidden">
                       <Avatar 
                          src={displayData.avatar_url} 
                          updatedAt={displayData.updated_at} 
@@ -551,7 +551,7 @@ export default function PublicProfileModal({
               </div>
             ) : relStatus === 'pending_received' ? (
               <div className="flex gap-2 w-full">
-                <button onClick={handleAcceptFriendRequest} className="flex-[2] py-3.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-sm hover:bg-emerald-400 active:scale-95 transition-all flex items-center justify-center gap-2 font-rabar">
+                <button onClick={handleAcceptFriendRequest} className="flex-2 py-3.5 rounded-xl bg-emerald-500 text-slate-950 font-black text-sm hover:bg-emerald-400 active:scale-95 transition-all flex items-center justify-center gap-2 font-rabar">
                   <span className="material-symbols-outlined text-lg">check_circle</span>
                   وەربگرە
                 </button>
@@ -562,7 +562,7 @@ export default function PublicProfileModal({
             ) : (
               <button 
                 onClick={handleSendFriendRequest} 
-                className="w-full py-3.5 rounded-full bg-slate-100 text-slate-950 font-black text-base hover:bg-white active:scale-95 transition-all flex items-center justify-center gap-2 font-rabar font-bold border border-white/20"
+                className="w-full py-3.5 rounded-full bg-slate-100 text-slate-950 font-black text-base hover:bg-white active:scale-95 transition-all flex items-center justify-center gap-2 font-rabar border border-white/20"
               >
                  <span>ببە ھەڤاڵ</span>
                  <span className="material-symbols-outlined text-xl">add</span>
