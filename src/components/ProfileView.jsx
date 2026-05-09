@@ -14,7 +14,7 @@ import { useUser } from '../context/AuthContext';
 import { useGame } from '../context/GameContext';
 import { useAudio } from '../context/AudioContext';
 import FloatingLetterBackground from './FloatingLetterBackground';
-import { getLevelFromXP, getLevelTier } from '../utils/progression';
+import { getLevelFromXP } from '../utils/progression';
 import { getCroppedImg } from '../utils/imageUtils';
 import Cropper from 'react-easy-crop';
 
@@ -382,8 +382,19 @@ export default function ProfileView({ onProfileSave }) {
                               strokeLinecap="butt"
                               strokeDasharray="257.61"
                               initial={{ strokeDashoffset: 257.61 }}
-                              animate={{ strokeDashoffset: 257.61 - (257.61 * (effectiveProgress || 0)) }}
-                              transition={{ duration: 1.5, ease: "circOut" }}
+                              animate={{ 
+                                 strokeDashoffset: 257.61 - (257.61 * (effectiveProgress || 0)),
+                                 filter: tier.isLegendary ? [
+                                    "drop-shadow(0 0 2px #fff)",
+                                    "drop-shadow(0 0 10px #b4fbff)",
+                                    "drop-shadow(0 0 2px #fff)"
+                                 ] : "none"
+                              }}
+                              transition={{ 
+                                 strokeDashoffset: { duration: 1.5, ease: "circOut" },
+                                 filter: { repeat: Infinity, duration: 2, ease: "easeInOut" }
+                              }}
+                              className={tier.isLegendary ? "animate-pulse" : ""}
                            />
                            <defs>
                               <linearGradient id="avatarProgressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
