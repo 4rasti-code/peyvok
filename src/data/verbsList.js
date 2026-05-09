@@ -11,6 +11,17 @@ export const verbsWords = [
     ]
   },
   {
+    "word": "کوشتن",
+    "hint": "کار(چاوگ)",
+    "category": "کار(چاوگ)",
+    "tags": [
+      "classic",
+      "word_fever",
+      "multiplayer",
+      "secret_word"
+    ]
+  },
+  {
     "word": "ڤەخوارن",
     "hint": "کار(چاوگ)",
     "category": "کار(چاوگ)",
