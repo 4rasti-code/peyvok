@@ -366,33 +366,33 @@ export default function ProfileView({ onProfileSave }) {
                      {/* LOOT GLOW / MAGIC BURST (LEGENDARY ONLY) */}
                      {tier.isLegendary && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                           <Motion.div 
-                              animate={{ 
+                           <Motion.div
+                              animate={{
                                  rotate: [0, 360]
                               }}
                               transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
                               className="absolute w-44 h-44 bg-radial from-cyan-400/10 via-purple-500/5 to-transparent blur-2xl opacity-40"
                            />
-                           
+
                            {/* DIAMOND SHARDS PARTICLES - Emitting from edges */}
                            {[...Array(8)].map((_, i) => {
                               const angle = (i * 45) * (Math.PI / 180);
                               const radius = 46; // Emerges from the ring edge
                               const startX = Math.cos(angle) * radius;
                               const startY = Math.sin(angle) * radius;
-                              
+
                               return (
                                  <Motion.div
                                     key={i}
                                     initial={{ opacity: 0, scale: 0, x: startX, y: startY }}
-                                    animate={{ 
+                                    animate={{
                                        opacity: [0, 0.8, 0],
                                        scale: [0.5, 1, 0.2],
                                        x: startX + (Math.cos(angle) * 30),
                                        y: startY + (Math.sin(angle) * 30),
                                        rotate: [0, 180]
                                     }}
-                                    transition={{ 
+                                    transition={{
                                        duration: 3 + Math.random() * 2,
                                        repeat: Infinity,
                                        delay: i * 0.5,
@@ -427,11 +427,11 @@ export default function ProfileView({ onProfileSave }) {
                               strokeLinecap="butt"
                               strokeDasharray="257.61"
                               initial={{ strokeDashoffset: 257.61 }}
-                              animate={{ 
+                              animate={{
                                  strokeDashoffset: 257.61 - (257.61 * (effectiveProgress || 0)),
                                  filter: tier.isLegendary ? "drop-shadow(0 0 10px #b4fbff)" : "none"
                               }}
-                              transition={{ 
+                              transition={{
                                  strokeDashoffset: { duration: 1.5, ease: "circOut" }
                               }}
                            />
@@ -446,7 +446,7 @@ export default function ProfileView({ onProfileSave }) {
 
                      <div className="relative p-0.5 bg-mono-white dark:bg-mono-950 rounded-full shadow-2xl border-[0.5px] border-mono-200 dark:border-mono-800 z-10">
                         <Avatar src={draftAvatar} size="xl" className="w-26 h-26 rounded-full border border-mono-100 dark:border-mono-800 object-cover" updatedAt={user?.updated_at} />
-                        <div 
+                        <div
                            className="absolute bottom-0 right-0 w-9 h-9 text-slate-950 rounded-full border-2 border-white flex items-center justify-center shadow-xl z-50 transition-transform active:scale-90"
                            style={{ backgroundColor: tier.stop1 }}
                         >
@@ -459,9 +459,9 @@ export default function ProfileView({ onProfileSave }) {
                {/* 5. Bottom Info Dock */}
                <div className="absolute bottom-0 left-0 right-0 z-40 bg-mono-50/95 dark:bg-mono-900/95 backdrop-blur-xl border-t border-mono-200 dark:border-mono-800 p-3 pt-1 shadow-[0_-10px_20px_rgba(0,0,0,0.1)]" dir="rtl">
                   <div className="flex flex-col items-center mb-2">
-                     <h3 
+                     <h3
                         className="text-xl font-black font-rabar leading-tight truncate w-full text-center px-4 transition-all duration-500"
-                        style={{ 
+                        style={{
                            color: tier.stop1
                         }}
                      >
@@ -472,11 +472,11 @@ export default function ProfileView({ onProfileSave }) {
                   {/* Unified 3-Column Stats Grid */}
                   <div className="grid grid-cols-3 gap-1.5" dir="ltr">
 
-                     <div 
+                     <div
                         className="flex flex-col items-center justify-center py-1.5 rounded-md border border-white/5 shadow-sm transition-all duration-500 backdrop-blur-md"
-                        style={{ 
-                           backgroundColor: `rgba(${parseInt(tier.stop1.slice(1,3), 16)}, ${parseInt(tier.stop1.slice(3,5), 16)}, ${parseInt(tier.stop1.slice(5,7), 16)}, 0.12)`, 
-                           borderColor: `${tier.stop1}30` 
+                        style={{
+                           backgroundColor: `rgba(${parseInt(tier.stop1.slice(1, 3), 16)}, ${parseInt(tier.stop1.slice(3, 5), 16)}, ${parseInt(tier.stop1.slice(5, 7), 16)}, 0.12)`,
+                           borderColor: `${tier.stop1}30`
                         }}
                      >
                         <span className="text-[9px] font-black uppercase mb-0.5 opacity-60 dark:text-mono-300 text-mono-600">XP سەرجەمێ</span>
@@ -484,12 +484,12 @@ export default function ProfileView({ onProfileSave }) {
                            {isLoading ? <div className="w-6 h-2 bg-mono-100 dark:bg-mono-800 animate-pulse rounded"></div> : toKuDigits(currentXP || 0)}
                         </span>
                      </div>
-                     
-                     <div 
+
+                     <div
                         className="flex flex-col items-center justify-center py-1.5 rounded-md border border-white/5 shadow-sm transition-all duration-500 backdrop-blur-md"
-                        style={{ 
-                           backgroundColor: `rgba(${parseInt(tier.stop1.slice(1,3), 16)}, ${parseInt(tier.stop1.slice(3,5), 16)}, ${parseInt(tier.stop1.slice(5,7), 16)}, 0.22)`, 
-                           borderColor: `${tier.stop1}40` 
+                        style={{
+                           backgroundColor: `rgba(${parseInt(tier.stop1.slice(1, 3), 16)}, ${parseInt(tier.stop1.slice(3, 5), 16)}, ${parseInt(tier.stop1.slice(5, 7), 16)}, 0.22)`,
+                           borderColor: `${tier.stop1}40`
                         }}
                      >
                         <span className="text-[9px] font-black uppercase mb-0.5 opacity-60 dark:text-mono-300 text-mono-600">ڕێزبەندی</span>
@@ -500,7 +500,7 @@ export default function ProfileView({ onProfileSave }) {
 
                      <div
                         className={`flex flex-col items-center justify-center py-1.5 rounded-md border border-white/10 shadow-sm transition-all duration-500 backdrop-blur-md ${isLoading ? 'animate-pulse opacity-50' : ''}`}
-                        style={{ 
+                        style={{
                            backgroundColor: tier.stop1,
                            boxShadow: `0 4px 12px ${tier.stop1}40`
                         }}
@@ -517,153 +517,153 @@ export default function ProfileView({ onProfileSave }) {
 
 
          <div className="flex-1 overflow-y-auto px-4 pb-[max(env(safe-area-inset-bottom),80px)] scrollbar-hide relative z-10 bg-trigger-zone">
-             <Motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pt-2 w-full">
-                     <div className="space-y-2 flex flex-col items-end">
-                        <label htmlFor="profile-nickname" className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1  text-right block w-full mt-1">ناسناڤێ تە</label>
-                        <div className="flex items-center gap-2 w-full">
-                           <div className="relative w-full">
-                              <input
-                                 ref={nicknameInputRef}
-                                 type="text"
-                                 id="profile-nickname"
-                                 name="profile-nickname"
-                                 aria-label="Your nickname"
-                                 value={draftNickname}
-                                 onChange={(e) => setDraftNickname(e.target.value)}
-                                 readOnly={isNicknameLocked}
-                                 maxLength={20}
-                                 className={`w-full h-12 border rounded-md px-4 font-bold font-rabar transition-all pr-12 text-right noise-grain text-[15px] ${isNicknameLocked
-                                    ? 'bg-mono-100 dark:bg-mono-900/50 text-mono-500 dark:text-mono-400 border-mono-200 dark:border-mono-800 cursor-not-allowed'
-                                    : 'bg-mono-white dark:bg-mono-900 text-mono-900 dark:text-mono-50 border-mono-300 dark:border-mono-700 shadow-sm ring-2 ring-primary/20'
-                                    }`}
-                              />
-                              <button
-                                 onClick={() => { triggerHaptic(10); setIsNicknameLocked(false); setTimeout(() => nicknameInputRef.current?.focus(), 50); }}
-                                 className={`absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[20px] transition-colors ${isNicknameLocked ? 'text-mono-400 dark:text-mono-500 hover:text-primary' : 'text-primary'}`}
-                              >
-                                 {isNicknameLocked ? 'edit' : 'edit_square'}
-                              </button>
-                           </div>
-                           {(draftNickname !== userNickname) && draftNickname.trim() && !saveSuccess && (
-                              <Motion.button
-                                 initial={{ scale: 0.8, opacity: 0 }}
-                                 animate={{ scale: 1, opacity: 1 }}
-                                 onClick={handleSave}
-                                 disabled={draftNickname.length < 8 || draftNickname.length > 15}
-                                 className={`h-12 px-5 rounded-md font-black text-xs whitespace-nowrap transition-all ${draftNickname.length < 8 || draftNickname.length > 15 ? 'bg-mono-200 dark:bg-mono-800 text-mono-400 dark:text-mono-600 cursor-not-allowed' : 'bg-green-600 text-white shadow-lg shadow-green-900/20'}`}
-                              >
-                                 پاراستن
-                              </Motion.button>
+            <Motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 pt-2 w-full">
+               <div className="space-y-2 flex flex-col items-end">
+                  <label htmlFor="profile-nickname" className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1  text-right block w-full mt-1">ناسناڤێ تە</label>
+                  <div className="flex items-center gap-2 w-full">
+                     <div className="relative w-full">
+                        <input
+                           ref={nicknameInputRef}
+                           type="text"
+                           id="profile-nickname"
+                           name="profile-nickname"
+                           aria-label="Your nickname"
+                           value={draftNickname}
+                           onChange={(e) => setDraftNickname(e.target.value)}
+                           readOnly={isNicknameLocked}
+                           maxLength={20}
+                           className={`w-full h-12 border rounded-md px-4 font-bold font-rabar transition-all pr-12 text-right noise-grain text-[15px] ${isNicknameLocked
+                              ? 'bg-mono-100 dark:bg-mono-900/50 text-mono-500 dark:text-mono-400 border-mono-200 dark:border-mono-800 cursor-not-allowed'
+                              : 'bg-mono-white dark:bg-mono-900 text-mono-900 dark:text-mono-50 border-mono-300 dark:border-mono-700 shadow-sm ring-2 ring-primary/20'
+                              }`}
+                        />
+                        <button
+                           onClick={() => { triggerHaptic(10); setIsNicknameLocked(false); setTimeout(() => nicknameInputRef.current?.focus(), 50); }}
+                           className={`absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[20px] transition-colors ${isNicknameLocked ? 'text-mono-400 dark:text-mono-500 hover:text-primary' : 'text-primary'}`}
+                        >
+                           {isNicknameLocked ? 'edit' : 'edit_square'}
+                        </button>
+                     </div>
+                     {(draftNickname !== userNickname) && draftNickname.trim() && !saveSuccess && (
+                        <Motion.button
+                           initial={{ scale: 0.8, opacity: 0 }}
+                           animate={{ scale: 1, opacity: 1 }}
+                           onClick={handleSave}
+                           disabled={draftNickname.length < 8 || draftNickname.length > 15}
+                           className={`h-12 px-5 rounded-md font-black text-xs whitespace-nowrap transition-all ${draftNickname.length < 8 || draftNickname.length > 15 ? 'bg-mono-200 dark:bg-mono-800 text-mono-400 dark:text-mono-600 cursor-not-allowed' : 'bg-green-600 text-white shadow-lg shadow-green-900/20'}`}
+                        >
+                           پاراستن
+                        </Motion.button>
+                     )}
+                  </div>
+                  {!isNicknameLocked && (
+                     <div className="w-full text-right px-1 mt-1">
+                        <AnimatePresence>
+                           {draftNickname.length > 0 && draftNickname.length < 8 && (
+                              <Motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناسناڤێ تە ژ ٨ پیتان کێمتر بیت</Motion.p>
                            )}
-                        </div>
-                        {!isNicknameLocked && (
-                           <div className="w-full text-right px-1 mt-1">
-                              <AnimatePresence>
-                                 {draftNickname.length > 0 && draftNickname.length < 8 && (
-                                    <Motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناسناڤێ تە ژ ٨ پیتان کێمتر بیت</Motion.p>
-                                 )}
-                                 {draftNickname.length > 15 && (
-                                    <Motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناڤێ تە ژ ١٥ پیتان زێدەتر بیت</Motion.p>
-                                 )}
-                              </AnimatePresence>
-                           </div>
-                        )}
-                     </div>
-
-                     <div className="space-y-2 flex flex-col items-end">
-                        <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1  text-right block w-full mt-1">ئیمەیڵێ تە (Gmail)</span>
-                        <div className="w-full h-12 bg-mono-white dark:bg-mono-900 border border-mono-300 dark:border-mono-700 rounded-md px-4 flex items-center justify-end font-bold text-mono-500 dark:text-mono-400 text-[14px] noise-grain overflow-hidden mb-1 shadow-sm transition-colors duration-300">
-                           <span className="truncate">{user?.email || 'جیمایڵ نەتایبەتە'}</span>
-                           <span className="material-symbols-outlined text-[20px] mr-3 text-mono-400 dark:text-mono-500">mail</span>
-                        </div>
-                     </div>
-
-                     <div className="space-y-2 flex flex-col items-end">
-                        <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1  text-right block w-full">وەڵات</span>
-                        <div className="flex items-center gap-2 w-full">
-                           <div className="relative w-full">
-                              <button
-                                 id="country-selector"
-                                 ref={flagButtonRef}
-                                 onClick={() => { triggerHaptic(10); setIsFlagBoxOpen(!isFlagBoxOpen); }}
-                                 className={`flex items-center px-4 h-12 rounded-md border transition-all w-full justify-between flex-row-reverse ${isFlagBoxOpen
-                                    ? 'bg-primary border-primary shadow-lg shadow-primary/20'
-                                    : 'bg-mono-white dark:bg-mono-900 border-mono-300 dark:border-mono-700 shadow-sm hover:bg-mono-50 dark:hover:bg-mono-800'
-                                    }`}
-                              >
-                                 <span className={`material-symbols-outlined text-[20px] transition-transform ${isFlagBoxOpen ? 'rotate-180 text-black' : 'text-mono-400 dark:text-mono-500'}`}>expand_more</span>
-                                 <div className="flex items-center gap-3">
-                                    <FlagBadge countryCode={draftCountryCode} isInKurdistan={draftIsInKurdistan} size="xs" />
-                                    <span className={`text-[13px] font-black font-rabar tracking-normal transition-colors ${isFlagBoxOpen ? 'text-black' : 'text-mono-900 dark:text-mono-50'}`}>{selectedCountryName}</span>
-                                 </div>
-                              </button>
-                           </div>
-                           {(draftCountryCode !== countryCode || draftIsInKurdistan !== isInKurdistan) && !saveSuccess && (
-                              <Motion.button initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} onClick={handleSave} className="h-12 px-5 bg-green-600 text-white rounded-md font-black text-xs whitespace-nowrap shadow-lg shadow-green-900/20">پاراستن</Motion.button>
+                           {draftNickname.length > 15 && (
+                              <Motion.p initial={{ opacity: 0, scaleY: 0, transformOrigin: 'top' }} animate={{ opacity: 1, scaleY: 1 }} exit={{ opacity: 0, scaleY: 0 }} className="text-rose-600 dark:text-rose-400 text-[11px] font-black">نابیت ناڤێ تە ژ ١٥ پیتان زێدەتر بیت</Motion.p>
                            )}
-                        </div>
-
-                        {isFlagBoxOpen && createPortal(
-                           <AnimatePresence mode="wait">
-                              <Motion.div ref={flagDropdownRef} initial={{ opacity: 0, y: 8, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.95 }} style={{ position: 'absolute', top: dropdownCoords.top + 6, left: dropdownCoords.left, width: dropdownCoords.width }} className="bg-mono-white dark:bg-mono-900 rounded-xl border border-mono-200 dark:border-mono-800 z-9999 shadow-2xl overflow-hidden noise-grain">
-                                 <div className="p-2 max-h-60 overflow-y-auto no-scrollbar">
-                                    <button onClick={() => { triggerHaptic(10); setDraftIsInKurdistan(true); setIsFlagBoxOpen(false); }} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-mono-100 dark:hover:bg-mono-800 w-full transition-colors">
-                                       <FlagBadge isInKurdistan={true} size="xs" />
-                                       <span className="flex-1 text-left text-[13px] font-bold font-rabar text-mono-900 dark:text-mono-100">کوردستان</span>
-                                       {draftIsInKurdistan && <span className="material-symbols-outlined text-[18px] text-primary">check_circle</span>}
-                                    </button>
-                                    {COUNTRIES.map((country) => (
-                                       <button key={country.code} onClick={() => { triggerHaptic(10); setDraftIsInKurdistan(false); setDraftCountryCode(country.code); setIsFlagBoxOpen(false); }} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-mono-100 dark:hover:bg-mono-800 w-full transition-colors">
-                                          <FlagBadge countryCode={country.code} size="xs" />
-                                          <span className="flex-1 text-left text-[13px] font-bold font-rabar text-mono-900 dark:text-mono-100">{country.name}</span>
-                                          {!draftIsInKurdistan && draftCountryCode === country.code && <span className="material-symbols-outlined text-[18px] text-primary">check_circle</span>}
-                                       </button>
-                                    ))}
-                                 </div>
-                              </Motion.div>
-                           </AnimatePresence>,
-                           document.body
-                        )}
+                        </AnimatePresence>
                      </div>
+                  )}
+               </div>
 
-                     <div className="space-y-4">
-                        <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1 uppercase  text-right block w-full">ھەلبژارتنا ئاڤاتاری</span>
-                        <div className="bg-mono-white dark:bg-mono-900 border border-mono-300 dark:border-mono-700 rounded-md p-4 shadow-sm noise-grain transition-colors duration-300">
-                           <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 gap-4 max-h-60 overflow-y-auto pr-1 scrollbar-hide py-2 justify-items-center">
-                              {AVATARS.map((avatar) => (
-                                 <button
-                                    key={avatar.id}
-                                    onClick={() => { triggerHaptic(10); setDraftAvatar(avatar.id); }}
-                                    className={`w-12 h-12 flex items-center justify-center rounded-full transition-all relative ${draftAvatar === avatar.id
-                                       ? 'bg-primary ring-4 ring-primary/20 scale-110 z-10'
-                                       : 'bg-mono-50 dark:bg-mono-800 border border-mono-200 dark:border-mono-700'
-                                       }`}
-                                 >
-                                    <Avatar src={avatar.id} size="sm" border={false} />
-                                    {draftAvatar === avatar.id && (
-                                       <div className="absolute -bottom-1 -right-1 bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-mono-900 z-20">
-                                          <span className="material-symbols-outlined text-[12px] font-bold">check</span>
-                                       </div>
-                                    )}
+               <div className="space-y-2 flex flex-col items-end">
+                  <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1  text-right block w-full mt-1">ئیمەیڵێ تە (Gmail)</span>
+                  <div className="w-full h-12 bg-mono-white dark:bg-mono-900 border border-mono-300 dark:border-mono-700 rounded-md px-4 flex items-center justify-end font-bold text-mono-500 dark:text-mono-400 text-[14px] noise-grain overflow-hidden mb-1 shadow-sm transition-colors duration-300">
+                     <span className="truncate">{user?.email || 'جیمایڵ نەتایبەتە'}</span>
+                     <span className="material-symbols-outlined text-[20px] mr-3 text-mono-400 dark:text-mono-500">mail</span>
+                  </div>
+               </div>
+
+               <div className="space-y-2 flex flex-col items-end">
+                  <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1  text-right block w-full">وەڵات</span>
+                  <div className="flex items-center gap-2 w-full">
+                     <div className="relative w-full">
+                        <button
+                           id="country-selector"
+                           ref={flagButtonRef}
+                           onClick={() => { triggerHaptic(10); setIsFlagBoxOpen(!isFlagBoxOpen); }}
+                           className={`flex items-center px-4 h-12 rounded-md border transition-all w-full justify-between flex-row-reverse ${isFlagBoxOpen
+                              ? 'bg-primary border-primary shadow-lg shadow-primary/20'
+                              : 'bg-mono-white dark:bg-mono-900 border-mono-300 dark:border-mono-700 shadow-sm hover:bg-mono-50 dark:hover:bg-mono-800'
+                              }`}
+                        >
+                           <span className={`material-symbols-outlined text-[20px] transition-transform ${isFlagBoxOpen ? 'rotate-180 text-black' : 'text-mono-400 dark:text-mono-500'}`}>expand_more</span>
+                           <div className="flex items-center gap-3">
+                              <FlagBadge countryCode={draftCountryCode} isInKurdistan={draftIsInKurdistan} size="xs" />
+                              <span className={`text-[13px] font-black font-rabar tracking-normal transition-colors ${isFlagBoxOpen ? 'text-black' : 'text-mono-900 dark:text-mono-50'}`}>{selectedCountryName}</span>
+                           </div>
+                        </button>
+                     </div>
+                     {(draftCountryCode !== countryCode || draftIsInKurdistan !== isInKurdistan) && !saveSuccess && (
+                        <Motion.button initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} onClick={handleSave} className="h-12 px-5 bg-green-600 text-white rounded-md font-black text-xs whitespace-nowrap shadow-lg shadow-green-900/20">پاراستن</Motion.button>
+                     )}
+                  </div>
+
+                  {isFlagBoxOpen && createPortal(
+                     <AnimatePresence mode="wait">
+                        <Motion.div ref={flagDropdownRef} initial={{ opacity: 0, y: 8, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.95 }} style={{ position: 'absolute', top: dropdownCoords.top + 6, left: dropdownCoords.left, width: dropdownCoords.width }} className="bg-mono-white dark:bg-mono-900 rounded-xl border border-mono-200 dark:border-mono-800 z-9999 shadow-2xl overflow-hidden noise-grain">
+                           <div className="p-2 max-h-60 overflow-y-auto no-scrollbar">
+                              <button onClick={() => { triggerHaptic(10); setDraftIsInKurdistan(true); setIsFlagBoxOpen(false); }} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-mono-100 dark:hover:bg-mono-800 w-full transition-colors">
+                                 <FlagBadge isInKurdistan={true} size="xs" />
+                                 <span className="flex-1 text-left text-[13px] font-bold font-rabar text-mono-900 dark:text-mono-100">کوردستان</span>
+                                 {draftIsInKurdistan && <span className="material-symbols-outlined text-[18px] text-primary">check_circle</span>}
+                              </button>
+                              {COUNTRIES.map((country) => (
+                                 <button key={country.code} onClick={() => { triggerHaptic(10); setDraftIsInKurdistan(false); setDraftCountryCode(country.code); setIsFlagBoxOpen(false); }} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-mono-100 dark:hover:bg-mono-800 w-full transition-colors">
+                                    <FlagBadge countryCode={country.code} size="xs" />
+                                    <span className="flex-1 text-left text-[13px] font-bold font-rabar text-mono-900 dark:text-mono-100">{country.name}</span>
+                                    {!draftIsInKurdistan && draftCountryCode === country.code && <span className="material-symbols-outlined text-[18px] text-primary">check_circle</span>}
                                  </button>
                               ))}
                            </div>
-                        </div>
-                        <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-                     </div>
+                        </Motion.div>
+                     </AnimatePresence>,
+                     document.body
+                  )}
+               </div>
 
-                     {/* Invite Friends Section */}
-                     <div className="bg-mono-50 dark:bg-mono-900/50 p-6 rounded-md border border-mono-200 dark:border-mono-800 flex flex-col items-center text-center noise-grain transition-colors duration-300 mt-8 mb-4">
-                        <div className="w-12 h-12 rounded-md bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4 border border-green-200 dark:border-green-800/30">
-                           <span className="material-symbols-outlined text-2xl text-green-600 dark:text-green-400 font-bold">person_add</span>
-                        </div>
-                        <h4 className="text-base font-bold font-rabar text-mono-900 dark:text-mono-50 mb-1">ھەڤالێن خوە داخواز بکە</h4>
-                        <p className="text-mono-500 dark:text-mono-400 text-[10px] font-bold font-rabar mb-5 leading-relaxed max-w-[200px]">بۆ ھەڤالێ خوە بھنێرە و پێکڤە یاریێ بکەن بۆ بدەستڤەھینانا خەلاتان</p>
-                        <button onClick={() => { triggerHaptic(10); handleInvite(); }} className="w-full bg-green-600 text-white py-2.5 rounded-md font-black font-rabar text-xs hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-green-900/20">
-                           کۆپی کرنا لینکی
-                        </button>
+               <div className="space-y-4">
+                  <span className="text-sm font-medium text-mono-600 dark:text-mono-400 px-1 uppercase  text-right block w-full">ھەلبژارتنا ئاڤاتاری</span>
+                  <div className="bg-mono-white dark:bg-mono-900 border border-mono-300 dark:border-mono-700 rounded-md p-4 shadow-sm noise-grain transition-colors duration-300">
+                     <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-8 gap-4 max-h-60 overflow-y-auto pr-1 scrollbar-hide py-2 justify-items-center">
+                        {AVATARS.map((avatar) => (
+                           <button
+                              key={avatar.id}
+                              onClick={() => { triggerHaptic(10); setDraftAvatar(avatar.id); }}
+                              className={`w-12 h-12 flex items-center justify-center rounded-full transition-all relative ${draftAvatar === avatar.id
+                                 ? 'bg-primary ring-4 ring-primary/20 scale-110 z-10'
+                                 : 'bg-mono-50 dark:bg-mono-800 border border-mono-200 dark:border-mono-700'
+                                 }`}
+                           >
+                              <Avatar src={avatar.id} size="sm" border={false} />
+                              {draftAvatar === avatar.id && (
+                                 <div className="absolute -bottom-1 -right-1 bg-green-500 text-white w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-mono-900 z-20">
+                                    <span className="material-symbols-outlined text-[12px] font-bold">check</span>
+                                 </div>
+                              )}
+                           </button>
+                        ))}
                      </div>
-                  </Motion.div>
+                  </div>
+                  <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+               </div>
+
+               {/* Invite Friends Section */}
+               <div className="bg-mono-50 dark:bg-mono-900/50 p-6 rounded-md border border-mono-200 dark:border-mono-800 flex flex-col items-center text-center noise-grain transition-colors duration-300 mt-8 mb-4">
+                  <div className="w-12 h-12 rounded-md bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4 border border-green-200 dark:border-green-800/30">
+                     <span className="material-symbols-outlined text-2xl text-green-600 dark:text-green-400 font-bold">person_add</span>
+                  </div>
+                  <h4 className="text-base font-bold font-rabar text-mono-900 dark:text-mono-50 mb-1">ھەڤالێن خوە داخواز بکە</h4>
+                  <p className="text-mono-500 dark:text-mono-400 text-[10px] font-bold font-rabar mb-5 leading-relaxed max-w-[200px]">بۆ ھەڤالێ خوە بھنێرە و پێکڤە یاریێ بکەن بۆ بدەستڤەھینانا خەلاتان</p>
+                  <button onClick={() => { triggerHaptic(10); handleInvite(); }} className="w-full bg-green-600 text-white py-2.5 rounded-md font-black font-rabar text-xs hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-green-900/20">
+                     کۆپی کرنا لینکی
+                  </button>
+               </div>
+            </Motion.div>
          </div>
          {isCropModalOpen && createPortal(
             <div className="fixed inset-0 z-10000 flex items-center justify-center p-4 bg-black/90 overflow-hidden" dir="rtl">
