@@ -7,7 +7,7 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
   const x = useSpring(0, springConfig);
   const y = useSpring(0, springConfig);
   const rotate = useSpring(0, springConfig);
-  const opacity = useSpring(0.08, springConfig);
+  const opacity = useSpring(0.15, springConfig);
 
   // Pulse (Fish Reaction) Logic via MotionValue Subscription
   useMotionValueEvent(pulseMV, "change", (latest) => {
@@ -36,14 +36,14 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
       x.set(fleeX);
       y.set(fleeY);
       rotate.set(targetAngle + 90);
-      opacity.set(0.08);
+      opacity.set(0.15);
 
       // Smoothly return
       setTimeout(() => {
         x.set(0);
         y.set(0);
         rotate.set(0);
-        opacity.set(0.08);
+        opacity.set(0.15);
       }, 1200 + Math.random() * 800);
     }
   });
@@ -54,7 +54,7 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
 
   return (
     <Motion.div
-      className="absolute text-mono-900/10 dark:text-mono-100/10 font-bold text-[16px] select-none font-rabar pointer-events-none transition-opacity duration-1000"
+      className="absolute text-mono-900/20 dark:text-mono-100/20 font-bold text-[16px] select-none font-rabar pointer-events-none transition-opacity duration-1000"
       style={{
         left: `${initialX}%`,
         top: `${initialY}%`,

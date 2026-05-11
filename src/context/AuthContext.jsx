@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }) => {
   const [city, setCity] = useState('');
   const [isInKurdistan, setIsInKurdistan] = useState(true);
   const [countryCode, setCountryCode] = useState('IQ');
+  const [lastNicknameUpdate, setLastNicknameUpdate] = useState(null);
   const [lastProfileUpdate, setLastProfileUpdate] = useState(() => Date.now());
   const [ownedAvatars, setOwnedAvatars] = useState(() => {
     const saved = localStorage.getItem('peyvchin_owned_avatars');
@@ -116,6 +117,10 @@ export const AuthProvider = ({ children }) => {
         setCity(prev => prev !== data.city ? (data.city || '') : prev);
         setIsInKurdistan(prev => prev !== data.is_kurdistan ? (data.is_kurdistan ?? true) : prev);
         setCountryCode(prev => prev !== data.country_code ? (data.country_code || 'IQ') : prev);
+        
+        if (data.last_nickname_update) {
+          setLastNicknameUpdate(data.last_nickname_update);
+        }
 
         // 3.1 NEW SCHEMA SYNC: Avatars and Themes are now top-level columns
         setOwnedAvatars(prev => {
@@ -285,6 +290,7 @@ export const AuthProvider = ({ children }) => {
           // Update derived identity states if they changed
           if (payload.new.nickname) setUserNickname(payload.new.nickname);
           if (payload.new.avatar_url) setUserAvatar(payload.new.avatar_url);
+          if (payload.new.last_nickname_update) setLastNicknameUpdate(payload.new.last_nickname_update);
         }
       )
       .subscribe();
@@ -323,6 +329,17 @@ export const AuthProvider = ({ children }) => {
         p_is_in_kurdistan: profileData.is_kurdistan ?? isInKurdistan
       });
       if (rpcError) throw rpcError;
+
+      // Sync metadata to auth.users so it shows up in the Supabase Auth Dashboard
+      if (profileData.nickname !== undefined || profileData.avatar_url !== undefined) {
+        await supabase.auth.updateUser({
+          data: {
+            nickname: profileData.nickname || userNickname,
+            name: profileData.nickname || userNickname,
+            avatar_url: profileData.avatar_url || userAvatar,
+          }
+        });
+      }
 
       // 2. Update Voice Settings & Haptic via direct update (as columns are new)
       const directUpdates = {};
@@ -370,7 +387,7 @@ export const AuthProvider = ({ children }) => {
     user, setUser, loadingAuth, loading, authProgress: visualProgress,
     userNickname, setUserNickname, userAvatar, setUserAvatar, city, setCity,
     isInKurdistan, setIsInKurdistan, countryCode, setCountryCode,
-    profileData,
+    profileData, lastNicknameUpdate,
     ownedAvatars, setOwnedAvatars, hapticEnabled, setHapticEnabled,
     micEnabled, setMicEnabled, micVolume, setMicVolume, speakerEnabled, setSpeakerEnabled, voiceVolume, setVoiceVolume,
     lastProfileUpdate, setLastProfileUpdate,
@@ -379,7 +396,7 @@ export const AuthProvider = ({ children }) => {
   }), [
     user, loadingAuth, loading, visualProgress, userNickname, userAvatar, city, isInKurdistan, 
     countryCode, ownedAvatars, hapticEnabled, micEnabled, micVolume, speakerEnabled, voiceVolume, syncProfile, 
-    updateProfile, handleToggleBlock, checkBlockStatus, profileData, lastProfileUpdate
+    updateProfile, handleToggleBlock, checkBlockStatus, profileData, lastProfileUpdate, lastNicknameUpdate
   ]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

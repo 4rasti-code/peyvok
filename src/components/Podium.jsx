@@ -83,10 +83,10 @@ const PodiumStep = ({ player, rank, delay, onPlayerClick }) => {
          </div>
          
          <div className="px-3 text-center w-full z-10">
-           <p className={`text-[13px] font-black font-rabar text-white truncate leading-tight tracking-tight ${style.textShadow}`}>
+           <p className={`text-[13px] font-black font-rabar text-white truncate leading-tight ${style.textShadow}`}>
              {player?.nickname || 'مێڤان'}
            </p>
-           <p className="text-[10px] font-black font-rabar text-white/20 mt-1 uppercase tracking-widest">
+           <p className="text-[10px] font-black font-rabar text-white/20 mt-1 uppercase">
              {toKuDigits(Math.floor(player?.xp || 0))} XP
            </p>
          </div>

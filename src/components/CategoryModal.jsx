@@ -88,7 +88,7 @@ export default function CategoryModal({ onSelect, isOpen, onClose }) {
                 </span>
               </div>
               
-              <span className="font-black font-rabar text-[16px] text-white tracking-tight text-center leading-none">
+              <span className="font-black font-rabar text-[16px] text-white text-center leading-none">
                 {cat.replace(/_/g, ' ')}
               </span>
             </Motion.button>

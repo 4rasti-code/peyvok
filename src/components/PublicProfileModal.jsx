@@ -403,7 +403,7 @@ export default function PublicProfileModal({
                 />
                 <div className={`relative z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-mono-100 dark:bg-slate-900 border border-mono-200 dark:border-white/10 transition-colors`}>
                   <span className={`material-symbols-outlined text-[15px] ${mastery.color}`}>{mastery.icon}</span>
-                  <span className={`text-[9px] uppercase tracking-widest font-black font-rabar ${mastery.color}`}>{mastery.name}</span>
+                  <span className={`text-[9px] uppercase font-black font-rabar ${mastery.color}`}>{mastery.name}</span>
                 </div>
               </div>
 

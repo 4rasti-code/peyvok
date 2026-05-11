@@ -86,7 +86,7 @@ export default function BottomNav({ currentView, setCurrentView, onSettingsToggl
                  opacity: isActive ? 1 : 0.6
               }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className={`text-[10px] font-black font-rabar whitespace-nowrap uppercase tracking-wider relative z-10 transition-colors duration-300 ${isActive ? 'text-mono-900 dark:text-white' : 'text-mono-500'}`}
+              className={`text-[10px] font-black font-rabar whitespace-nowrap uppercase relative z-10 transition-colors duration-300 ${isActive ? 'text-mono-900 dark:text-white' : 'text-mono-500'}`}
             >
               {tab.label}
             </Motion.span>

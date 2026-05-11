@@ -22,7 +22,7 @@ import Cropper from 'react-easy-crop';
 export default function ProfileView({ onProfileSave }) {
    const {
       user, userNickname, userAvatar,
-      isInKurdistan, countryCode
+      isInKurdistan, countryCode, lastNicknameUpdate
    } = useUser();
 
    const {
@@ -55,6 +55,7 @@ export default function ProfileView({ onProfileSave }) {
    const [zoom, setZoom] = useState(1);
    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
    const [croppedBlob, setCroppedBlob] = useState(null);
+   const [showLockToast, setShowLockToast] = useState(false);
 
    const handleBackgroundClick = (e) => {
       // Pulse on background void clicks
@@ -66,6 +67,31 @@ export default function ProfileView({ onProfileSave }) {
          bgRef.current?.pulse(x, y);
       }
    };
+
+   // Calculate 14-day lock
+   const [daysRemaining, setDaysRemaining] = useState(0);
+   const [isHardLocked, setIsHardLocked] = useState(false);
+
+   useEffect(() => {
+      if (lastNicknameUpdate) {
+         const lastUpdate = new Date(lastNicknameUpdate);
+         const now = new Date();
+         const diffTime = Math.abs(now - lastUpdate);
+         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+         
+         if (diffDays < 14) {
+            setIsHardLocked(true);
+            setDaysRemaining(14 - diffDays);
+            setIsNicknameLocked(true); // force lock UI
+         } else {
+            setIsHardLocked(false);
+            setDaysRemaining(0);
+         }
+      } else {
+         setIsHardLocked(false);
+         setDaysRemaining(0);
+      }
+   }, [lastNicknameUpdate]);
 
    useEffect(() => {
       setDraftNickname(userNickname);
@@ -530,19 +556,43 @@ export default function ProfileView({ onProfileSave }) {
                            aria-label="Your nickname"
                            value={draftNickname}
                            onChange={(e) => setDraftNickname(e.target.value)}
-                           readOnly={isNicknameLocked}
+                           readOnly={isNicknameLocked || isHardLocked}
                            maxLength={20}
-                           className={`w-full h-12 border rounded-md px-4 font-bold font-rabar transition-all pr-12 text-right noise-grain text-[15px] ${isNicknameLocked
+                           className={`w-full h-12 border rounded-md px-4 font-bold font-rabar transition-all pr-12 text-right noise-grain text-[15px] ${isNicknameLocked || isHardLocked
                               ? 'bg-mono-100 dark:bg-mono-900/50 text-mono-500 dark:text-mono-400 border-mono-200 dark:border-mono-800 cursor-not-allowed'
                               : 'bg-mono-white dark:bg-mono-900 text-mono-900 dark:text-mono-50 border-mono-300 dark:border-mono-700 shadow-sm ring-2 ring-primary/20'
                               }`}
                         />
                         <button
-                           onClick={() => { triggerHaptic(10); setIsNicknameLocked(false); setTimeout(() => nicknameInputRef.current?.focus(), 50); }}
-                           className={`absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[20px] transition-colors ${isNicknameLocked ? 'text-mono-400 dark:text-mono-500 hover:text-primary' : 'text-primary'}`}
+                           onClick={() => { 
+                              triggerHaptic(10); 
+                              if (isHardLocked) {
+                                 setShowLockToast(true);
+                                 setTimeout(() => setShowLockToast(false), 3000);
+                                 return;
+                              }
+                              setIsNicknameLocked(false); 
+                              setTimeout(() => nicknameInputRef.current?.focus(), 50); 
+                           }}
+                           className={`absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-[20px] transition-colors ${isNicknameLocked || isHardLocked ? 'text-mono-400 dark:text-mono-500 hover:text-primary' : 'text-primary'} ${isHardLocked ? 'opacity-50 cursor-not-allowed hover:text-mono-400!' : ''}`}
                         >
-                           {isNicknameLocked ? 'edit' : 'edit_square'}
+                           {isHardLocked ? 'lock' : (isNicknameLocked ? 'edit' : 'edit_square')}
                         </button>
+                        <AnimatePresence>
+                           {showLockToast && (
+                              <Motion.div 
+                                 initial={{ opacity: 0, scale: 0.9 }}
+                                 animate={{ opacity: 1, scale: 1 }}
+                                 exit={{ opacity: 0, scale: 0.9 }}
+                                 className="fixed inset-0 z-1000 flex items-center justify-center p-6 pointer-events-none"
+                              >
+                                 <div className="bg-amber-500 text-slate-950 px-6 py-4 rounded-xl font-black font-rabar text-[15px] shadow-2xl whitespace-nowrap flex items-center gap-3 border-2 border-white/30 backdrop-blur-sm pointer-events-auto">
+                                    <span className="material-symbols-outlined text-2xl">lock</span>
+                                    تو نەشێی ناسناڤێ خۆ بگوهۆڕی هەتا {toKuDigits(daysRemaining)} ڕۆژێن دی
+                                 </div>
+                              </Motion.div>
+                           )}
+                        </AnimatePresence>
                      </div>
                      {(draftNickname !== userNickname) && draftNickname.trim() && !saveSuccess && (
                         <Motion.button
@@ -556,7 +606,7 @@ export default function ProfileView({ onProfileSave }) {
                         </Motion.button>
                      )}
                   </div>
-                  {!isNicknameLocked && (
+                  {!isNicknameLocked && !isHardLocked && (
                      <div className="w-full text-right px-1 mt-1">
                         <AnimatePresence>
                            {draftNickname.length > 0 && draftNickname.length < 8 && (

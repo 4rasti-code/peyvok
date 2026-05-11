@@ -148,7 +148,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
                       ? 'ل ھیڤیێ بە، دەروازەیێ فەرمی یێ مۆبایلێ یێ ڤەدبیت...'
                       : 'ل ھیڤیێ بە، کارێ تە دھێتە کرن...'}
                   </h3>
-                  <p className="text-sm font-bold font-rabar text-white/40 uppercase tracking-widest leading-tight">
+                  <p className="text-sm font-bold font-rabar text-white/40 uppercase leading-tight">
                     {activeMethod === 'asiacell' || activeMethod === 'korek' 
                       ? 'In-App Purchase (Carrier Billing)'
                       : 'بتنێ چەند چرکەیان...'}

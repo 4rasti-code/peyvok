@@ -1256,14 +1256,19 @@ export default function App() {
             isDailyAvailable={
               (() => {
                 if (!lastRewardClaimedAt) return true;
-                const now = new Date();
-                const lastClaim = new Date(lastRewardClaimedAt);
-
-                // Compare UTC dates (YYYY-MM-DD) to match server 00:00 UTC reset
-                const lastClaimStr = lastClaim.toISOString().split('T')[0];
-                const todayStr = now.toISOString().split('T')[0];
-
-                return lastClaimStr !== todayStr;
+                try {
+                  const formatter = new Intl.DateTimeFormat('en-CA', { 
+                    timeZone: 'Asia/Baghdad',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                  });
+                  const lastClaimStr = formatter.format(new Date(lastRewardClaimedAt));
+                  const todayStr = formatter.format(new Date());
+                  return lastClaimStr !== todayStr;
+                } catch {
+                  return false;
+                }
               })()
             }
             isDark={isSystemDark}

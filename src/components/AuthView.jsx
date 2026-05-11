@@ -84,12 +84,12 @@ const FloatingInput = ({ label, value, onChange, id, type = 'text', required = f
     <div className="relative w-full text-right">
       <label
         htmlFor={id}
-        className={`block text-[11px] font-black font-rabar mb-1.5 pr-2 uppercase tracking-[0.15em] transition-colors duration-200 ${isFocused ? 'text-emerald-400' : 'text-mono-400 dark:text-white/70 hover:text-mono-900 dark:hover:text-white/90'}`}
+        className={`block text-[11px] font-black font-rabar mb-1.5 pr-2 uppercase transition-colors duration-200 ${isFocused ? 'text-emerald-400' : 'text-mono-400 dark:text-white/70 hover:text-mono-900 dark:hover:text-white/90'}`}
       >
         {label}
       </label>
       <div className={`
-        relative w-full rounded-2xl transition-all duration-300 border flex items-center
+        relative w-full rounded-md transition-all duration-300 border flex items-center
         ${isFocused ? 'bg-mono-100 dark:bg-white/10 border-emerald-500/50 ring-4 ring-emerald-500/10' : 'bg-mono-50 dark:bg-white/5 border-mono-200 dark:border-white/10 hover:border-mono-400 dark:hover:border-white/20'}
         ${isError ? 'border-red-500/50' : ''}
         puzzle-tile overflow-hidden
@@ -110,7 +110,7 @@ const FloatingInput = ({ label, value, onChange, id, type = 'text', required = f
           autoComplete={autoComplete}
           name={name || id}
           aria-label={label}
-          className={`w-full bg-transparent py-2 pr-5 ${suffix ? 'pl-12' : 'pl-5'} font-rabar text-mono-900 dark:text-white text-lg font-bold focus:outline-none transition-all duration-200 caret-emerald-400 relative z-10`}
+          className={`w-full bg-transparent py-1.5 pr-4 ${suffix ? 'pl-10' : 'pl-4'} font-rabar text-mono-900 dark:text-white text-base font-bold focus:outline-none transition-all duration-200 caret-emerald-400 relative z-10`}
           style={{
             appearance: 'none',
             userSelect: 'text',
@@ -554,27 +554,28 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
   return (
     <div
       onClick={handleBackgroundClick}
-      className="flex-1 w-full max-w-lg mx-auto flex flex-col items-center justify-center pt-[env(safe-area-inset-top,24px)] px-6 pb-[env(safe-area-inset-bottom,24px)] h-full animate-in fade-in duration-500 overflow-hidden relative auth-view-container bg-mono-white dark:bg-mono-950 transition-colors"
+      className="flex-1 w-full flex flex-col items-center pt-2 px-4 pb-2 animate-in fade-in duration-500 relative auth-view-container bg-mono-white dark:bg-mono-950 transition-colors"
     >
       <FloatingLetterBackground ref={bgRef} />
 
-      <div className="flex flex-col items-center mb-4 text-center relative z-20">
-        <h1 className="text-5xl font-black font-heading text-mono-900 dark:text-white text-pop  transform hover:scale-110 transition-transform duration-500">پەیڤچن</h1>
-        <div className="w-12 h-0.5 bg-mono-200 dark:bg-white/20 rounded-full mt-4"></div>
-      </div>
+      <div className="w-full max-w-xs mx-auto my-auto flex flex-col items-center relative z-20 py-1">
+        <div className="flex flex-col items-center mb-2 text-center">
+          <h1 className="text-2xl sm:text-5xl font-black font-heading text-mono-900 dark:text-white text-pop transform hover:scale-110 transition-transform duration-500">پەیڤچن</h1>
+          <div className="w-8 h-0.5 bg-emerald-500 rounded-full mt-1 shadow-[0_0_15px_rgba(16,185,129,0.4)]"></div>
+        </div>
 
-      <Motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full px-8 py-5 sm:px-12 sm:py-7 relative z-20 bg-mono-50 dark:bg-mono-900 rounded-[32px] border border-mono-200 dark:border-white/5 shadow-2xl transition-colors duration-500"
-      >
-        <div className="relative z-10 w-full">
+        <Motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full px-4 py-3 sm:px-12 sm:py-6 bg-mono-50 dark:bg-mono-900 rounded-lg border border-mono-200 dark:border-white/5 shadow-2xl transition-colors duration-500"
+        >
+          <div className="relative z-10 w-full">
           {/* 1. LOGIN / SIGNUP FLOW */}
           {!showOtpScreen && recoveryStep === 0 && (
             <>
-              <div className="flex p-0.5 bg-mono-100 dark:bg-mono-950 rounded-2xl border border-mono-200 dark:border-white/10 mb-5 relative z-10">
+              <div className="flex p-0.5 bg-mono-100 dark:bg-mono-950 rounded-md border border-mono-200 dark:border-white/10 mb-5 relative z-10">
                 <Motion.div
-                  className="absolute top-1 bottom-1 bg-[#0095f6] rounded-xl shadow-[0_0_15px_rgba(0,149,246,0.5)]"
+                  className="absolute top-1 bottom-1 bg-[#0095f6] rounded-md shadow-[0_0_15px_rgba(0,149,246,0.5)]"
                   initial={false}
                   animate={{
                     right: isLogin ? '4px' : '50%',
@@ -627,10 +628,10 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   exit={{ opacity: 0, x: isLogin ? 10 : -10 }}
                   className="mb-4"
                 >
-                  <p className="text-[10px] font-black font-rabar text-emerald-400 uppercase tracking-[0.25em] leading-none no-stroke mb-1 text-right">
+                  <p className="text-[10px] font-black font-rabar text-emerald-400 uppercase leading-none no-stroke mb-1 text-right">
                     {isLogin ? 'WELCOME BACK / بخێرھاتی' : 'NEW ACCOUNT / ھەژمارەکا نوی'}
                   </p>
-                  <h2 className="text-2xl font-black font-heading text-mono-900 dark:text-white text-pop uppercase tracking-wide text-right">
+                  <h2 className="text-2xl font-black font-heading text-mono-900 dark:text-white text-pop uppercase text-right">
                     {isLogin ? 'چوونا ژوورێ' : 'تۆمارکرن'}
                   </h2>
                 </Motion.div>
@@ -765,7 +766,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center"
+                      className="p-4 rounded-md bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center"
                     >
                       {error}
                     </Motion.div>
@@ -775,7 +776,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full h-11 bg-[#0095f6] hover:bg-[#1877f2] active:scale-[0.98] text-white rounded-lg font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2 shadow-sm"
+                  className="w-full h-11 bg-[#0095f6] hover:bg-[#1877f2] active:scale-[0.98] text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2 shadow-sm"
                 >
                   {loading ? (
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -785,20 +786,19 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 </button>
               </form>
 
-              {/* Minimal Social Section (ONLY in Login/Signup) */}
-              <div className="mt-12">
-                <div className="flex items-center gap-4 mb-8 text-on-surface/30">
+              <div className="mt-2">
+                <div className="flex items-center gap-4 mb-1 text-on-surface/30">
                   <div className="flex-1 h-px bg-current opacity-20"></div>
-                  <span className="text-[10px] font-bold  uppercase  font-body opacity-60">یان</span>
+                  <span className="text-[8px] font-bold uppercase font-body opacity-60">یان</span>
                   <div className="flex-1 h-px bg-current opacity-20"></div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => handleSocialLogin('google')}
-                    className="h-12 rounded-xl bg-white text-black border border-outline/10 flex items-center justify-center gap-3 hover:bg-gray-50 active:scale-95 transition-all font-bold text-sm shadow-sm"
+                    className="h-7 rounded-md bg-white text-black border border-outline/10 flex items-center justify-center gap-2 hover:bg-gray-50 active:scale-95 transition-all font-bold text-[9px] shadow-sm"
                   >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3" viewBox="0 0 24 24">
                       <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                       <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
                       <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" />
@@ -808,9 +808,9 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   </button>
                   <button
                     onClick={() => handleSocialLogin('facebook')}
-                    className="h-12 rounded-xl bg-[#1877F2] text-white flex items-center justify-center gap-3 hover:bg-[#1877F2]/90 active:scale-95 transition-all font-bold text-sm shadow-sm"
+                    className="h-7 rounded-md bg-[#1877F2] text-white flex items-center justify-center gap-2 hover:bg-[#1877F2]/90 active:scale-95 transition-all font-bold text-[9px] shadow-sm"
                   >
-                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
                       <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
                     </svg>
                     <span>Facebook</span>
@@ -818,8 +818,8 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-col items-center gap-6">
-                <p className="text-[10px] text-on-surface/30 font-bold uppercase text-center tracking-widest max-w-xs leading-relaxed italic">
+              <div className="mt-3 flex flex-col items-center">
+                <p className="text-[8px] text-on-surface/30 font-bold uppercase text-center tracking-widest max-w-xs leading-relaxed italic">
                   ب کۆماربوونێ د ناڤ یاریێدا، تو دشێی نمرێن خۆ پارێزی و پێشبڕکێیێ بکەی.
                 </p>
               </div>
@@ -858,7 +858,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center"
+                      className="p-4 rounded-md bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center"
                     >
                       {error}
                     </Motion.div>
@@ -868,7 +868,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white rounded-lg font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2 shadow-sm"
+                  className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2 shadow-sm"
                 >
                   {loading ? (
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -896,7 +896,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                     if (onVerifyingSignupChange) onVerifyingSignupChange(false);
                     setError(null);
                   }}
-                  className="w-full text-[10px] font-black font-rabar text-white/40 hover:text-white/60 uppercase tracking-widest pt-2"
+                  className="w-full text-[10px] font-black font-rabar text-white/40 hover:text-white/60 uppercase pt-2"
                 >
                   ڤەگەڕیان بۆ پاش
                 </button>
@@ -924,18 +924,18 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 />
                 <AnimatePresence>
                   {error && (
-                    <Motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
+                    <Motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-md bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
                       {error}
                     </Motion.div>
                   )}
                 </AnimatePresence>
-                <button type="submit" disabled={loading} className="w-full h-11 bg-[#0095f6] hover:bg-[#1877f2] text-white rounded-lg font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
+                <button type="submit" disabled={loading} className="w-full h-11 bg-[#0095f6] hover:bg-[#1877f2] text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
                   {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <span>کۆدی بهنێرە</span>}
                 </button>
                 <button type="button" onClick={() => {
                   setRecoveryStep(0);
                   if (onRecoveringChange) onRecoveringChange(false);
-                }} className="w-full text-[10px] font-black font-rabar text-white/40 hover:text-white/60 uppercase tracking-widest pt-2">
+                }} className="w-full text-[10px] font-black font-rabar text-white/40 hover:text-white/60 uppercase pt-2">
                   ڤەگەڕیان بۆ پاش
                 </button>
               </form>
@@ -960,18 +960,18 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 />
                 <AnimatePresence>
                   {error && (
-                    <Motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
+                    <Motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-md bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
                       {error}
                     </Motion.div>
                   )}
                 </AnimatePresence>
-                <button type="submit" disabled={loading} className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
+                <button type="submit" disabled={loading} className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
                   {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <span>پشتڕاستکرن</span>}
                 </button>
                 <button type="button" onClick={() => {
                   setRecoveryStep(0);
                   if (onRecoveringChange) onRecoveringChange(false);
-                }} className="w-full text-[10px] font-black font-rabar text-white/40 hover:text-white/60 uppercase tracking-widest pt-2">
+                }} className="w-full text-[10px] font-black font-rabar text-white/40 hover:text-white/60 uppercase pt-2">
                   ڤەگەڕیان بۆ پاش
                 </button>
               </form>
@@ -1005,53 +1005,55 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 />
                 <AnimatePresence>
                   {error && (
-                    <Motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
+                    <Motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="p-4 rounded-md bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold font-body text-center">
                       {error}
                     </Motion.div>
                   )}
                 </AnimatePresence>
-                <button type="submit" disabled={loading} className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
+                <button type="submit" disabled={loading} className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
                   {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <span>نووکرن</span>}
                 </button>
                 <button type="button" onClick={() => {
                   setRecoveryStep(0);
                   if (onRecoveringChange) onRecoveringChange(false);
-                }} className="w-full text-[10px] font-black font-rabar text-white/40 hover:text-white/60 uppercase tracking-widest pt-2">
+                }} className="w-full text-[10px] font-black font-rabar text-white/40 hover:text-white/60 uppercase pt-2">
                   ڤەگەڕیان بۆ پاش
                 </button>
               </form>
             </div>
           )}
 
-          <div className="mt-8 flex flex-col items-center gap-6">
-            <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface/20">
-              <button
-                type="button"
-                onClick={() => setActivePolicyModal('terms')}
-                className="hover:text-primary transition-colors uppercase"
-              >
-                Terms
-              </button>
-              <span className="w-1 h-1 rounded-full bg-on-surface/5"></span>
-              <button
-                type="button"
-                onClick={() => setActivePolicyModal('privacy')}
-                className="hover:text-primary transition-colors uppercase"
-              >
-                Privacy
-              </button>
-              <span className="w-1 h-1 rounded-full bg-on-surface/5"></span>
-              <button
-                type="button"
-                onClick={() => setActivePolicyModal('deletion')}
-                className="hover:text-primary transition-colors uppercase"
-              >
-                Deletion
-              </button>
-            </div>
-          </div>
         </div>
       </Motion.div>
+
+      <div className="mt-1 mb-1 flex flex-col items-center gap-1 relative z-20">
+        <div className="flex items-center gap-3 text-[9px] font-bold uppercase tracking-widest text-mono-400 dark:text-mono-600">
+          <button
+            type="button"
+            onClick={() => setActivePolicyModal('terms')}
+            className="hover:text-primary transition-colors uppercase"
+          >
+            Terms
+          </button>
+          <span className="w-1.5 h-1.5 rounded-full bg-mono-200 dark:bg-white/5"></span>
+          <button
+            type="button"
+            onClick={() => setActivePolicyModal('privacy')}
+            className="hover:text-primary transition-colors uppercase"
+          >
+            Privacy
+          </button>
+          <span className="w-1.5 h-1.5 rounded-full bg-mono-200 dark:bg-white/5"></span>
+          <button
+            type="button"
+            onClick={() => setActivePolicyModal('deletion')}
+            className="hover:text-primary transition-colors uppercase"
+          >
+            Deletion
+          </button>
+        </div>
+      </div>
+    </div>
 
       <PolicyModal
         isOpen={!!activePolicyModal}

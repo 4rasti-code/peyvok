@@ -16,7 +16,7 @@ const ChartSection = ({ title, dist, maxValue, color, textColor, icon }) => (
   <div className="bg-mono-white dark:bg-mono-900/30 rounded-[6px] border border-mono-200 dark:border-mono-800 p-5 backdrop-blur-sm transition-all duration-300">
     <div className="flex items-center gap-3 mb-5">
       <span className={`material-symbols-outlined ${textColor} text-2xl`} style={{ fontVariationSettings: "'FILL' 1" }}>{icon || 'bar_chart'}</span>
-      <h4 className="text-[11px] font-black text-mono-800 dark:text-mono-200 uppercase tracking-widest font-rabar">{title}</h4>
+      <h4 className="text-[11px] font-black text-mono-800 dark:text-mono-200 uppercase font-rabar">{title}</h4>
     </div>
     <div className="space-y-3">
       {Object.entries(dist).map(([key, value]) => (

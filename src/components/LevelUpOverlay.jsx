@@ -91,7 +91,7 @@ export default function LevelUpOverlay({ isVisible, newLevel, onClose, isDark })
               className="absolute top-[160px] left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-radial from-amber-400/40 via-amber-600/10 to-transparent blur-2xl rounded-full pointer-events-none z-0" 
             />
 
-            <h2 className="text-3xl font-black font-rabar text-mono-900 dark:text-mono-50 mb-8 leading-tight tracking-tight relative z-10 text-center">
+            <h2 className="text-3xl font-black font-rabar text-mono-900 dark:text-mono-50 mb-8 leading-tight relative z-10 text-center">
               پیرۆزە!
             </h2>
 
@@ -135,7 +135,7 @@ export default function LevelUpOverlay({ isVisible, newLevel, onClose, isDark })
               </svg>
               
               <div className="absolute inset-0 flex flex-col items-center justify-center pt-2" dir="rtl">
-                <span className="text-[10px] font-black text-amber-900/80 uppercase tracking-widest leading-none mb-1 drop-shadow-sm">ئاستێ نوی</span>
+                <span className="text-[10px] font-black text-amber-900/80 uppercase leading-none mb-1 drop-shadow-sm">ئاستێ نوی</span>
                 <AnimatePresence mode="popLayout">
                   <Motion.span 
                     key={displayLevel}

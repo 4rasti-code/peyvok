@@ -46,6 +46,7 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
   const [claiming, setClaiming] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [claimedDayInfo, setClaimedDayInfo] = useState(null);
+  const [serverReportedClaimed, setServerReportedClaimed] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -58,17 +59,26 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
   const hasClaimedToday = () => {
     if (!lastRewardClaimedAt) return false;
     
-    const now = new Date();
-    const lastClaim = new Date(lastRewardClaimedAt);
-    
-    // Compare UTC dates (YYYY-MM-DD) to match server 00:00 UTC reset
-    const lastClaimStr = lastClaim.toISOString().split('T')[0];
-    const todayStr = now.toISOString().split('T')[0];
-    
-    return lastClaimStr === todayStr;
+    try {
+      // Force calculation using Kurdistan Timezone (Asia/Baghdad)
+      const formatter = new Intl.DateTimeFormat('en-CA', { 
+        timeZone: 'Asia/Baghdad',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+      
+      const lastClaimStr = formatter.format(new Date(lastRewardClaimedAt));
+      const todayStr = formatter.format(new Date());
+      
+      return lastClaimStr === todayStr;
+    } catch (e) {
+      console.warn("[DailyRewardModal] Date formatting error:", e);
+      return false;
+    }
   };
   
-  const claimedToday = hasClaimedToday();
+  const claimedToday = hasClaimedToday() || serverReportedClaimed;
   const effectiveStreak = (rewardStreak === 7 && !claimedToday) ? 0 : rewardStreak;
   const activeDay = claimedToday ? -1 : (effectiveStreak % 7) + 1;
 
@@ -100,7 +110,11 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
         }, 3500);
       } else {
         const errorMsg = result?.error || "خەلات ناهێتە وەرگرتن، دبیت تو یێ ل هیڤیا دەمێ نوو بی.";
-        alert(errorMsg);
+        if (errorMsg.toLowerCase().includes('already claimed') || errorMsg.includes('claimed today') || errorMsg.includes('بەری نوکە')) {
+          setServerReportedClaimed(true);
+        } else {
+          alert(errorMsg);
+        }
       }
     } catch (err) {
       console.error('[DailyRewardModal] Claim error:', err);
@@ -227,22 +241,18 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
               </div>
 
               <div className="mt-8 flex flex-col gap-3 relative z-10">
-                {/* Only show buttons if already claimed. If not claimed, user MUST click the box above. */}
-                {claimedToday ? (
-                  <>
-                    
-                    <button 
-                      onClick={() => { playBackSfx(); onClose(); }}
-                      className="w-full h-14 flex items-center justify-center rounded-md bg-black dark:bg-white text-white dark:text-black hover:brightness-110 font-black text-sm uppercase tracking-widest transition-all active:scale-95 shadow-lg"
-                    >
-                      داخستن
-                    </button>
-                  </>
-                ) : (
+                {!claimedToday && (
                   <p className="text-center text-mono-400 dark:text-white/30 text-[10px] font-bold uppercase tracking-widest animate-pulse">
                     کلیک ل سەر دیارییا ئەڤرۆ بکە بۆ وەرگرتنێ
                   </p>
                 )}
+                
+                <button 
+                  onClick={() => { playBackSfx(); onClose(); }}
+                  className="w-full h-14 flex items-center justify-center rounded-md bg-black dark:bg-white text-white dark:text-black hover:brightness-110 font-black text-sm uppercase tracking-widest transition-all active:scale-95 shadow-lg"
+                >
+                  داخستن
+                </button>
               </div>
             </Motion.div>
           </Motion.div>
