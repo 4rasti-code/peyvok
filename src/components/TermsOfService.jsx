@@ -216,7 +216,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
 
                     <header className="mb-16 text-center sm:text-start">
                         <h2 className="text-4xl sm:text-5xl font-bold  text-mono-900 dark:text-white mb-4 leading-tight">{current.title}</h2>
-                        <span className="text-mono-600 dark:text-mono-400 font-bold text-sm tracking-wide bg-mono-900 dark:bg-mono-50/10 px-4 py-2 rounded-full border border-mono-200 dark:border-mono-700">{current.subtitle}</span>
+                        <span className="text-mono-50 dark:text-mono-900 font-bold text-[10px] tracking-widest bg-mono-900 dark:bg-mono-50 px-4 py-1.5 rounded-full border border-mono-200 dark:border-mono-700 uppercase">{current.subtitle}</span>
                     </header>
 
                     <p className="text-xl text-mono-700 dark:text-mono-300 mb-16 leading-relaxed font-medium italic border-r-4 border-mono-900 dark:border-mono-50 pr-6">

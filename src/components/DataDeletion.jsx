@@ -157,7 +157,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                     
                     <div className="flex flex-col items-center text-center mb-12">
                         <h2 className="text-4xl md:text-5xl font-bold  mb-4 leading-tight">{t.title}</h2>
-                        <span className="px-4 py-1.5 rounded-full bg-mono-100 dark:bg-mono-800 border border-mono-200 dark:border-mono-700 text-[10px] font-bold  tracking-widest text-mono-900 dark:text-mono-50 uppercase">
+                        <span className="px-4 py-1.5 rounded-full bg-mono-900 dark:bg-mono-50 border border-mono-200 dark:border-mono-700 text-[10px] font-bold tracking-widest text-mono-50 dark:text-mono-900 uppercase">
                             {t.lastUpdated}
                         </span>
                     </div>
