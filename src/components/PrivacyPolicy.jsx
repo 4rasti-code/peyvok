@@ -155,7 +155,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
     const isRTL = lang === 'ku';
 
     return (
-        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-100 selection:bg-mono-900 dark:bg-mono-50/30 selection:text-white font-body p-6 sm:p-12" dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-100 selection:bg-mono-900/30 dark:selection:bg-mono-50/30 selection:text-white font-body p-6 sm:p-12" dir={isRTL ? 'rtl' : 'ltr'}>
             <div className="max-w-4xl mx-auto relative">
                 {/* Header Section */}
                 <div className="flex flex-col sm:flex-row items-center justify-between mb-16 gap-8">
@@ -169,7 +169,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                     <div className="flex bg-mono-50 dark:bg-mono-900/80 backdrop-blur-xl border border-mono-200 dark:border-white/5 rounded-2xl p-1.5 shadow-2xl">
                         <button 
                             onClick={() => setLang('ku')}
-                            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'ku' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-lg shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
+                            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'ku' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-lg shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
                         >
                             <div className="w-5 h-3.5 rounded-[2px] overflow-hidden shadow-sm">
                                 <KurdistanFlag />
@@ -178,7 +178,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                         </button>
                         <button 
                             onClick={() => setLang('en')}
-                            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'en' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-lg shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
+                            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'en' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-lg shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
                         >
                             <div className="w-5 h-3.5 rounded-[2px] overflow-hidden shadow-sm">
                                 <USFlag />
@@ -202,7 +202,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                         <span className="text-mono-600 dark:text-mono-400 font-bold text-sm tracking-wide bg-mono-900 dark:bg-mono-50/10 px-4 py-2 rounded-full border border-mono-200 dark:border-mono-700">{current.subtitle}</span>
                     </header>
 
-                    <p className="text-xl text-mono-700 dark:text-white/70 mb-16 leading-relaxed font-medium italic border-r-4 border-mono-900 dark:border-mono-50 pr-6">
+                    <p className="text-xl text-mono-700 dark:text-mono-300 mb-16 leading-relaxed font-medium italic border-r-4 border-mono-900 dark:border-mono-50 pr-6">
                         {current.intro}
                     </p>
 

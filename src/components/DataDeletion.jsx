@@ -115,7 +115,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
     const t = isKurdish ? content.ku : content.en;
 
     return (
-        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-50 font-body selection:bg-mono-900 dark:bg-mono-50/30 p-4 sm:p-8 md:p-12 relative">
+        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-50 font-body selection:bg-mono-900/30 dark:selection:bg-mono-50/30 p-4 sm:p-8 md:p-12 relative">
             <div className="max-w-4xl mx-auto relative z-10">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6 bg-surface-container/20 backdrop-blur-3xl p-6 rounded-2xl border border-outline/10 shadow-2xl">
@@ -132,7 +132,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                     <div className="flex bg-mono-100 dark:bg-black/40 p-1.5 rounded-2xl border border-mono-200 dark:border-white/5 backdrop-blur-md">
                         <button
                             onClick={() => setIsKurdish(false)}
-                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${!isKurdish ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-xl scale-105 shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
+                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${!isKurdish ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-xl scale-105 shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
                         >
                             <div className="w-5 h-3.5 rounded-[2px] overflow-hidden shadow-sm">
                                 <USFlag />
@@ -141,7 +141,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                         </button>
                         <button
                             onClick={() => setIsKurdish(true)}
-                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${isKurdish ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-xl scale-105 shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
+                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${isKurdish ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-xl scale-105 shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
                         >
                             <span>بەهدینی</span>
                             <div className="w-5 h-3.5 rounded-[2px] overflow-hidden shadow-sm">
