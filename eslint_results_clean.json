@@ -1,0 +1,726 @@
+[
+  {
+    "filePath": "D:\\Peyivcin App\\src\\App.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\AchievementsView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\AuthView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\Avatar.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\BattleResultOverlay.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\BottomNav.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\CategoryModal.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\CoinAnimation.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\CurrencyDecrementEffect.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\CurrencyIcon.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\DailyRewardModal.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\DataDeletion.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\DefeatOverlay.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\DictionaryView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\ExperienceBar.jsx",
+    "messages": [
+      {
+        "ruleId": "react-hooks/exhaustive-deps",
+        "severity": 1,
+        "message": "React Hook useEffect has a missing dependency: 'animatedXP'. Either include it or remove the dependency array.",
+        "line": 52,
+        "column": 6,
+        "nodeType": "ArrayExpression",
+        "endLine": 52,
+        "endColumn": 17,
+        "suggestions": [
+          {
+            "desc": "Update the dependencies array to be: [animatedXP, currentXP]",
+            "fix": {
+              "range": [
+                1912,
+                1923
+              ],
+              "text": "[animatedXP, currentXP]"
+            }
+          }
+        ]
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import React, { useState, useEffect } from 'react';\r\nimport { toKuDigits } from '../utils/formatters';\r\nimport { useGame } from '../context/GameContext';\r\n\r\n/**\r\n * ExperienceBar - High-fidelity 'Aqua Glass' HUD.\r\n * Now fully connected to the Global Game Context and Supabase Sync.\r\n * Features 11 Dynamic Color Tiers (Level 1-100).\r\n */\r\nconst ExperienceBar = () => {\r\n  const { level, currentXP, maxXP, minXPForLevel, progressPercent } = useGame();\r\n  const [animatedXP, setAnimatedXP] = useState(currentXP);\r\n\r\n  // 1. Dynamic Tier Color Logic (Synchronized with RPG system)\r\n  const getTierColors = (lvl) => {\r\n    if (lvl < 5) return { top: '#00F2FE', bottom: '#4FACFE' }; \r\n    if (lvl < 10) return { top: '#FFC837', bottom: '#FF8008' }; \r\n    if (lvl < 20) return { top: '#E2E2E2', bottom: '#999999' }; \r\n    if (lvl < 35) return { top: '#FFDF00', bottom: '#D4AF37' }; \r\n    if (lvl < 50) return { top: '#50C878', bottom: '#228B22' }; \r\n    if (lvl < 75) return { top: '#FF416C', bottom: '#FF4B2B' }; \r\n    return { top: '#E0EAFC', bottom: '#CFDEF3' };\r\n  };\r\n\r\n  const theme = getTierColors(level);\r\n\r\n  // 2. Smooth XP Number Interpolation Hook\r\n  useEffect(() => {\r\n    let animationFrameId;\r\n    const start = animatedXP;\r\n    const end = currentXP;\r\n    \r\n    // Smooth transition\r\n    const duration = 1200; \r\n    const startTime = performance.now();\r\n\r\n    const animate = (currentTime) => {\r\n      const elapsed = currentTime - startTime;\r\n      const progress = Math.min(elapsed / duration, 1);\r\n      const easeOut = progress * (2 - progress);\r\n      setAnimatedXP(Math.floor(start + (end - start) * easeOut));\r\n      \r\n      if (progress < 1) {\r\n        animationFrameId = requestAnimationFrame(animate);\r\n      } else {\r\n        setAnimatedXP(end);\r\n      }\r\n    };\r\n    \r\n    animationFrameId = requestAnimationFrame(animate);\r\n    return () => cancelAnimationFrame(animationFrameId);\r\n  }, [currentXP]);\r\n\r\n  const fillPercentage = progressPercent;\r\n\r\n  return (\r\n    <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0', width: '100%', boxSizing: 'border-box' }}>\r\n      \r\n      {/* 3D Liquid Flow Animation Effects */}\r\n      <style>\r\n        {`\r\n          @keyframes flowWavesGlobal { 0% { background-position: 200% 0; } 100% { background-position: 0% 0; } }\r\n          .liquid-water-global {\r\n            background: linear-gradient(90deg, \r\n              ${theme.bottom} 0%, ${theme.top} 25%, ${theme.bottom} 50%, ${theme.top} 75%, ${theme.bottom} 100%\r\n            );\r\n            background-size: 200% 100%; \r\n            animation: flowWavesGlobal 2.5s linear infinite;\r\n            box-shadow: inset 0 -3px 6px rgba(0,0,0,0.2), inset 0 4px 6px rgba(255,255,255,0.4);\r\n            transform: scaleX(1);\r\n            transform-origin: left;\r\n            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);\r\n          }\r\n        `}\r\n      </style>\r\n\r\n      {/* Slim & Seamless Bar */}\r\n      <div style={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%', maxWidth: '320px', height: '44px', margin: '0 auto' }}>\r\n        <div style={{\r\n            position: 'relative', flexGrow: 1, height: '18px', backgroundColor: 'rgba(0, 0, 0, 0.4)',\r\n            borderRadius: '50px 0 0 50px', border: '1.5px solid rgba(255,255,255,0.2)', borderRight: 'none', \r\n            boxShadow: 'inset 0 4px 6px rgba(0,0,0,0.6)', overflow: 'hidden', marginRight: '14px', \r\n            display: 'flex', alignItems: 'center', justifyContent: 'center'\r\n          }}\r\n        >\r\n          {/* LIQUID WATER FILL */}\r\n          <div className=\"liquid-water-global\" style={{\r\n              position: 'absolute', top: 0, left: 0, height: '100%',\r\n              width: '100%', transform: `scaleX(${fillPercentage / 100})`, zIndex: 1\r\n            }}></div>\r\n\r\n          {/* XP NUMBERS */}\r\n          <span style={{ \r\n            position: 'relative', color: 'white', fontWeight: '900', fontSize: '10px', fontFamily: 'sans-serif', \r\n            zIndex: 2, display: 'inline-block', direction: 'ltr', unicodeBidi: 'bidi-override', textShadow: '0 2px 4px rgba(0,0,0,0.8)' \r\n          }}>\r\n            {`${toKuDigits(animatedXP - minXPForLevel)} / ${toKuDigits(maxXP - minXPForLevel)}`}\r\n          </span>\r\n        </div>\r\n\r\n        {/* DYNAMIC STAR BADGE - Perfectly centered on Y axis */}\r\n        <div style={{\r\n            position: 'absolute', right: '-6px', top: '50%', transform: 'translateY(-50%)',\r\n            width: '44px', height: '44px', zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center',\r\n          }}\r\n        >\r\n          <svg viewBox=\"0 0 100 100\" style={{ position: 'absolute', width: '90%', height: '90%', filter: `drop-shadow(0px 3px 4px ${theme.bottom}66)` }}>\r\n            <defs>\r\n              <linearGradient id=\"globalStarGradient\" x1=\"0%\" y1=\"0%\" x2=\"0%\" y2=\"100%\">\r\n                <stop offset=\"0%\" stopColor={theme.top} />\r\n                <stop offset=\"100%\" stopColor={theme.bottom} />\r\n              </linearGradient>\r\n            </defs>\r\n            <path d=\"M50 15 L59 38 L83 40 L64 56 L69 80 L50 68 L31 80 L36 56 L17 40 L41 38 Z\" fill=\"url(#globalStarGradient)\" stroke=\"url(#globalStarGradient)\" strokeWidth=\"12\" strokeLinejoin=\"round\" />\r\n          </svg>\r\n          \r\n          <span style={{ \r\n            position: 'relative', \r\n            top: '1px',\r\n            color: level >= 80 && level < 90 ? '#FFF' : (level >= 90 ? '#000' : '#FFFFFF'), \r\n            fontWeight: '900', fontSize: '16px', fontFamily: 'sans-serif', zIndex: 11, \r\n            textShadow: (level >= 80 && level < 90) || level >= 100 ? '0 2px 4px rgba(0,0,0,0.4)' : (level >= 90 ? 'none' : '0px 2px 4px rgba(0,0,0,0.6)') \r\n          }}>\r\n            {toKuDigits(level)}\r\n          </span>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  );\r\n};\r\n\r\nexport default ExperienceBar;\r\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\FlagBadge.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\FloatingLetterBackground.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\GameBoard.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\GameOverOverlay.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\GameWrapper.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\GlobalErrorBoundary.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\Grid.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\HowToPlayModal.jsx",
+    "messages": [
+      {
+        "ruleId": "react-hooks/set-state-in-effect",
+        "severity": 2,
+        "message": "Error: Calling setState synchronously within an effect can trigger cascading renders\n\nEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:\n* Update external systems with the latest state from React.\n* Subscribe for updates from some external system, calling setState in a callback function when external state changes.\n\nCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).\n\n  19 |   useEffect(() => {\n  20 |     if (isOpen) {\n> 21 |       setActiveTab(initialMode);\n     |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect\n  22 |     }\n  23 |   }, [isOpen, initialMode]);\n  24 |",
+        "line": 21,
+        "column": 7,
+        "nodeType": null,
+        "endLine": 21,
+        "endColumn": 19
+      }
+    ],
+    "suppressedMessages": [],
+    "errorCount": 1,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "import React, { useState, useEffect } from 'react';\r\nimport { motion as Motion, AnimatePresence } from 'framer-motion';\r\nimport { toKuDigits } from '../utils/formatters';\r\nimport { useAudio } from '../context/AudioContext';\r\n\r\nconst gameModes = [\r\n  { id: 'classic', title: 'کلاسیک' },\r\n  { id: 'multiplayer', title: 'هەڤڕکی' },\r\n  { id: 'mamak', title: 'مامک' },\r\n  { id: 'word_fever', title: 'تایا پەیڤان' },\r\n  { id: 'hard_words', title: 'پەیڤێن دژوار' },\r\n  { id: 'secret_word', title: 'پەیڤا نهێنی' }\r\n];\r\n\r\nexport default function HowToPlayModal({ isOpen, onClose, initialMode = 'classic', isDark = true, showTabs = true }) {\r\n  const [activeTab, setActiveTab] = useState(initialMode);\r\n  const { playTabSound } = useAudio();\r\n\r\n  useEffect(() => {\r\n    if (isOpen) {\r\n      setActiveTab(initialMode);\r\n    }\r\n  }, [isOpen, initialMode]);\r\n\r\n  if (!isOpen) return null;\r\n\r\n  const renderClassicTutorial = () => (\r\n    <div className=\"space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500\">\r\n      <div className=\"space-y-4\">\r\n        <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>ئارمانجا یاریێ:</p>\r\n        <ul className=\"space-y-2\">\r\n          <li className=\"flex gap-2 text-sm leading-relaxed\">\r\n            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>\r\n            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>ئارمانجا یاریێ ئەوە تو پەیڤا ڤەشارتی د {toKuDigits(6)} بزاڤاندا ببینی.</span>\r\n          </li>\r\n          <li className=\"flex gap-2 text-sm leading-relaxed\">\r\n            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>\r\n            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>مۆدێ پەیڤۆک (کلاسیک) ژ وان پەیڤان پێکدهێن ئەوێن کو ژ {toKuDigits(2)} تا {toKuDigits(5)} پیتان پێکدهێن.</span>\r\n          </li>\r\n        </ul>\r\n        <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n          پشتی هەر بزاڤەکێ، ڕەنگێن خانەیان دێ هێنە گوهۆڕین، داکو نیشان بدەت کا پەیڤا تە چەند نیزیکە ژ پەیڤا ڕاست.\r\n        </p>\r\n      </div>\r\n\r\n      <div className=\"space-y-3\">\r\n        {/* Step 1: Correct Position */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-2\">\r\n            {['پ', 'س', 'د', 'ژ', 'ف'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-9 h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${i === 0 ? (isDark ? 'bg-[#538d4e] border-[#538d4e] text-white' : 'bg-[#6aaa64] border-[#6aaa64] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className=\"text-[#538d4e] font-bold\">پ</span> د ناڤ پەیڤێدا هەیە و د خانەیا ڕاست دایە.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Step 2: Wrong Position */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-2\">\r\n            {['ێ', 'م', 'و', 'ی', 'ژ'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-9 h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${(i === 0 || i === 1) ? (isDark ? 'bg-[#b59f3b] border-[#b59f3b] text-white' : 'bg-[#c9b458] border-[#c9b458] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className=\"text-[#b59f3b] font-bold\">ێ</span> و <span className=\"text-[#b59f3b] font-bold\">م</span> د ناڤ پەیڤێدا هەیە، لێ بەلێ یا د خانەیەکا شاشدا.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Step 3: Not in Word */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-2\">\r\n            {['ر', 'ا', 'س', 'ت', 'ی'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-9 h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${i === 0 ? (isDark ? 'bg-[#3a3a3c] border-[#3a3a3c] text-white' : 'bg-[#787c7e] border-[#787c7e] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className={`${isDark ? 'text-white/40' : 'text-slate-600'} font-bold`}>ر</span> د ناڤ پەیڤێدا نینە.\r\n          </p>\r\n        </div>\r\n      </div>\r\n      <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n        پێدڤییە یاریزان وان ئاماژەیان بکاربینن بۆ ڕاستڤەکرن و باشترکرنا بزاڤێن خوە تا کو پەیڤا ڤەشارتی ئاشکرا دکەن. ئارمانجا سەرەکی ئەوە کو د ناڤ شەش بزاڤان دا پەیڤ بهێتە دیتن.\r\n      </p>\r\n    </div>\r\n  );\r\n\r\n  const renderMultiplayerTutorial = () => (\r\n    <div className=\"space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500\">\r\n      <div className=\"space-y-4\">\r\n        <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>ئارمانجا یاریێ:</p>\r\n        <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n          ئارمانجا یاریێ ئەوە تو پەیڤا ڤەشارتی د {toKuDigits(3)} بزاڤان دا ببینی. مۆدێ (هەڤڕکی)، ژ وان پەیڤان پێکدهێن ئەڤێن کو ژ {toKuDigits(5)} پیتان پێکدهێن. هەر بزاڤەک دێ پەیڤەکا {toKuDigits(5)} پیتی بیت.\r\n        </p>\r\n      </div>\r\n\r\n      <div className=\"space-y-3\">\r\n        {/* Step 1: Correct Position */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-2\">\r\n            {['پ', 'س', 'د', 'ژ', 'ف'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-9 h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${i === 0 ? (isDark ? 'bg-[#538d4e] border-[#538d4e] text-white' : 'bg-[#6aaa64] border-[#6aaa64] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className=\"text-[#538d4e] font-bold\">(پ)</span> د ناڤ پەیڤێ دا هەیە و د جهێ خوە یێ ڕاست دایە.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Step 2: Wrong Position */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-2\">\r\n            {['ێ', 'م', 'و', 'ژ', 'ف'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-9 h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${(i === 0 || i === 1) ? (isDark ? 'bg-[#b59f3b] border-[#b59f3b] text-white' : 'bg-[#c9b458] border-[#c9b458] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className=\"text-[#b59f3b] font-bold\">(ێ)</span> و <span className=\"text-[#b59f3b] font-bold\">(م)</span> د ناڤ پەیڤێ دا هەیە، بەلێ یا د جهێ شاشە دایە.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Step 3: Not in Word */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-2\">\r\n            {['ر', 'ا', 'س', 'ت', 'ی'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-9 h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${i === 0 ? (isDark ? 'bg-[#3a3a3c] border-[#3a3a3c] text-white' : 'bg-[#787c7e] border-[#787c7e] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className={`${isDark ? 'text-white/40' : 'text-slate-600'} font-bold`}>(ر)</span> د ناڤ پەیڤێ دا نینە.\r\n          </p>\r\n        </div>\r\n      </div>\r\n\r\n      <div className=\"space-y-4\">\r\n        <h4 className={`text-sm font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>یاسایێن سەرکەفتنێ:</h4>\r\n        <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n          هەر یاریزانەکێ {toKuDigits(2)} خالێن وی ژ خالێن یاریزانێ هەڤڕک زێدەتر بن، ئەو دێ ب سەرکەڤیت. ئەگەر خالێن هەردوو یاریزانان بوونە {toKuDigits(3)} ب {toKuDigits(3)}، ل وی دەمی یاری دێ ب یاکسانبوون هێتە هژمارتن و دێ یاری ب دوماهیک هێت.\r\n        </p>\r\n      </div>\r\n\r\n      <div className=\"space-y-4\">\r\n        <h4 className={`text-sm font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>هەڤڕکییا زیندی:</h4>\r\n        <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n          دەمێ کو یاریزانێ {toKuDigits(1)} پەیڤێ د خانەیان دا دنڤیسیت، ڕاستەوخۆ ل دەف یاریزانێ هەڤڕک دیار دبیت کا یاریزانێ {toKuDigits(1)} گەهشتییە چ قۆناغا نڤێسینێ، لێ پەیڤ دیار نابیت کا یاریزانێ {toKuDigits(1)} چ پیتێ د خانەیێ دا دنڤیسیت. ب تنێ ڕەنگێن پیتا ڕاست ل جهێ ڕاست، پیتا ڕاست ل جهێ شاش، و پیتا کو د پەیڤێ دا نینە، ڕاستەوخۆ ل دەف یاریزانێ هەڤڕک دیار دبیت.\r\n        </p>\r\n      </div>\r\n\r\n      <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n        پێدڤییە یاریزان وان ئاماژەیان بکاربهینن بۆ ڕاستڤەکرن و باشترکرنا بزاڤێن خوە تا کو پەیڤا ڤەشارتی ئاشکرا دکەن. ئارمانجا سەرەکی ئەوە کو د ناڤ {toKuDigits(3)} بزاڤان دا پەیڤ بهێتە دیتن.\r\n      </p>\r\n    </div>\r\n  );\r\n\r\n  const renderMamakTutorial = () => (\r\n    <div className=\"space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500\">\r\n      <div className=\"space-y-4\">\r\n        <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>ئارمانجا یاریێ:</p>\r\n        <ul className=\"space-y-2\">\r\n          <li className=\"flex gap-2 text-sm leading-relaxed\">\r\n            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>\r\n            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>ئارمانجا یاریێ ئەوە تو پەیڤا ڤەشارتی د {toKuDigits(6)} بزاڤان دا ببینی.</span>\r\n          </li>\r\n          <li className=\"flex gap-2 text-sm leading-relaxed\">\r\n            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>\r\n            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>مۆدێ (مامک) ژ وان پەیڤان پێکدهێت ئەڤێن کو ژ {toKuDigits(2)} تا ∞ پیتان پێکدهێن.</span>\r\n          </li>\r\n        </ul>\r\n        <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n          پشتی هەر بزاڤەکێ، ڕەنگێن خانەیان دێ هێنە گوهۆڕین، دا کو نیشان بدەت کا پەیڤا تە چەند نێزیکە ژ پەیڤا ڕاست.\r\n        </p>\r\n      </div>\r\n\r\n      <div className=\"space-y-3\">\r\n        {/* Step 1: Correct Position */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-1.5 sm:gap-2\">\r\n            {['پ', 'س', 'د', 'ژ', 'ف', 'گ'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${i === 0 ? (isDark ? 'bg-[#538d4e] border-[#538d4e] text-white' : 'bg-[#6aaa64] border-[#6aaa64] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className=\"text-[#538d4e] font-bold\">پ</span> د ناڤ پەیڤێدا هەیە و د خانەیا ڕاست دایە.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Step 2: Wrong Position */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-1.5 sm:gap-2\">\r\n            {['د', 'ە', 'گ', 'ر', 'ە', 'ھ'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${(i === 2 || i === 3) ? (isDark ? 'bg-[#b59f3b] border-[#b59f3b] text-white' : 'bg-[#c9b458] border-[#c9b458] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className=\"text-[#b59f3b] font-bold\">گ</span> و <span className=\"text-[#b59f3b] font-bold\">ر</span> د ناڤ پەیڤێدا هەیە، لێ بەلێ یا د خانەیەکا شاشدا.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Step 3: Not in Word */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-1.5 sm:gap-2\">\r\n            {['ئ', 'ا', 'ک', 'ە', 'ھ', 'ی'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${i === 2 ? (isDark ? 'bg-[#3a3a3c] border-[#3a3a3c] text-white' : 'bg-[#787c7e] border-[#787c7e] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className={`${isDark ? 'text-white/40' : 'text-slate-600'} font-bold`}>ک</span> د ناڤ پەیڤێدا نینە.\r\n          </p>\r\n        </div>\r\n      </div>\r\n      <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n        پێدڤییە یاریزان وان ئاماژەیان بکاربینن بۆ ڕاستڤەکرن و باشترکرنا بزاڤێن خوە تا کو پەیڤا ڤەشارتی ئاشکرا دکەن. ئارمانجا سەرەکی ئەوە کو د ناڤ شەش بزاڤان دا پەیڤ بهێتە دیتن.\r\n      </p>\r\n    </div>\r\n  );\r\n\r\n  const renderWordFeverTutorial = () => (\r\n    <div className=\"space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500\">\r\n      <div className=\"space-y-4\">\r\n        <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>ئارمانجا یاریێ:</p>\r\n        <ul className=\"space-y-2\">\r\n          <li className=\"flex gap-2 text-sm leading-relaxed\">\r\n            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>\r\n            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>ئارمانجا یاریێ ئەوە تو پەیڤا ڤەشارتی د {toKuDigits(3)} بزاڤان دا ببینی.</span>\r\n          </li>\r\n          <li className=\"flex gap-2 text-sm leading-relaxed\">\r\n            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>\r\n            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>مۆد (تایا پەیڤان) ژ وان پەیڤان پێکدهێت ئەڤێن کو ژ {toKuDigits(5)} پیتان پێکدهێن، هەروەسا یاریەکا بلەزە و پێدڤییە ژبەری کو {toKuDigits(30)} چرکە ب دوماهیک بهێن تو پەیڤێ ببینی.</span>\r\n          </li>\r\n        </ul>\r\n        <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n          پشتی هەر بزاڤەکێ، ڕەنگێن خانەیان دێ هێنە گوهۆڕین، دا کو نیشان بدەت کا پەیڤا تە چەند نێزیکە ژ پەیڤا ڕاست.\r\n        </p>\r\n      </div>\r\n\r\n      <div className=\"space-y-3\">\r\n        {/* Step 1: Correct Position */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-2\">\r\n            {['پ', 'س', 'د', 'ژ', 'ف'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-9 h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${i === 0 ? (isDark ? 'bg-[#538d4e] border-[#538d4e] text-white' : 'bg-[#6aaa64] border-[#6aaa64] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className=\"text-[#538d4e] font-bold\">پ</span> د ناڤ پەیڤێدا هەیە و د خانەیا ڕاست دایە.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Step 2: Wrong Position */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-2\">\r\n            {['ێ', 'م', 'و', 'ی', 'ژ'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-9 h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${(i === 0 || i === 1) ? (isDark ? 'bg-[#b59f3b] border-[#b59f3b] text-white' : 'bg-[#c9b458] border-[#c9b458] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className=\"text-[#b59f3b] font-bold\">ێ</span> و <span className=\"text-[#b59f3b] font-bold\">م</span> د ناڤ پەیڤێدا هەیە، لێ بەلێ یا د خانەیەکا شاشدا.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Step 3: Not in Word */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-2\">\r\n            {['ر', 'ا', 'س', 'ت', 'ی'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-9 h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${i === 0 ? (isDark ? 'bg-[#3a3a3c] border-[#3a3a3c] text-white' : 'bg-[#787c7e] border-[#787c7e] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className={`${isDark ? 'text-white/40' : 'text-slate-600'} font-bold`}>ر</span> د ناڤ پەیڤێدا نینە.\r\n          </p>\r\n        </div>\r\n      </div>\r\n      <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n        پێدڤییە یاریزان وان ئاماژەیان بکاربینن بۆ ڕاستڤەکرن و باشترکرنا بزاڤێن خوە تا کو پەیڤا ڤەشارتی ئاشکرا دکەن. ئارمانجا سەرەکی ئەوە کو د ناڤ سێ بزاڤان دا پەیڤ بهێتە دیتن.\r\n      </p>\r\n    </div>\r\n  );\r\n\r\n  const renderHardWordsTutorial = () => (\r\n    <div className=\"space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500\">\r\n      <div className=\"space-y-4\">\r\n        <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>ئارمانجا یاریێ:</p>\r\n        <ul className=\"space-y-2\">\r\n          <li className=\"flex gap-2 text-sm leading-relaxed\">\r\n            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>\r\n            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>ئارمانجا یاریێ ئەوە تو پەیڤێن درێژ و دژوار د {toKuDigits(6)} بزاڤان دا ببینی.</span>\r\n          </li>\r\n          <li className=\"flex gap-2 text-sm leading-relaxed\">\r\n            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>\r\n            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>مۆدێ (پەیڤێن دژوار) ژ وان پەیڤان پێکدهێن ئەڤێن کو ژ {toKuDigits(6)} تا ∞ پیتان پێکدهێن.</span>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n\r\n      <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n        پشتی هەر بزاڤەکێ، ڕەنگێن خانەیان دێ هێنە گوهۆڕین، دا کو نیشان بدەت کا پەیڤا تە چەند نێزیکە ژ پەیڤا ڕاست.\r\n      </p>\r\n\r\n      <div className=\"space-y-3\">\r\n        {/* Step 1: Correct Position */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-1.5 sm:gap-2\">\r\n            {['پ', 'س', 'د', 'ژ', 'ف', 'گ'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${i === 0 ? (isDark ? 'bg-[#538d4e] border-[#538d4e] text-white' : 'bg-[#6aaa64] border-[#6aaa64] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className=\"text-[#538d4e] font-bold\">پ</span> د ناڤ پەیڤێدا هەیە و د خانەیا ڕاست دایە.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Step 2: Wrong Position */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-1.5 sm:gap-2\">\r\n            {['د', 'ە', 'گ', 'ر', 'ە', 'ھ'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${(i === 2 || i === 3) ? (isDark ? 'bg-[#b59f3b] border-[#b59f3b] text-white' : 'bg-[#c9b458] border-[#c9b458] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className=\"text-[#b59f3b] font-bold\">گ</span> و <span className=\"text-[#b59f3b] font-bold\">ر</span> د ناڤ پەیڤێدا هەیە، لێ بەلێ یا د خانەیەکا شاشدا.\r\n          </p>\r\n        </div>\r\n\r\n        {/* Step 3: Not in Word */}\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-1.5 sm:gap-2\">\r\n            {['ئ', 'ا', 'ک', 'ە', 'ھ', 'ی'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-none font-black text-base border-2 \r\n                  ${i === 2 ? (isDark ? 'bg-[#3a3a3c] border-[#3a3a3c] text-white' : 'bg-[#787c7e] border-[#787c7e] text-white') : (isDark ? 'bg-[#141414] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-800')}`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n          <p className={`text-xs ${isDark ? 'text-white/50' : 'text-slate-500'}`}>\r\n            پیتا <span className={`${isDark ? 'text-white/40' : 'text-slate-600'} font-bold`}>ک</span> د ناڤ پەیڤێدا نینە.\r\n          </p>\r\n        </div>\r\n      </div>\r\n\r\n      <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n        پێدڤییە یاریزان وان ئاماژەیان بکاربینن بۆ ڕاستڤەکرن و باشترکرنا بزاڤێن خوە تا کو پەیڤا ڤەشارتی ئاشکرا دکەن. ئارمانجا سەرەکی ئەوە کو د ناڤ شەش بزاڤان دا پەیڤ بهێتە دیتن.\r\n      </p>\r\n    </div>\r\n  );\r\n\r\n  const renderSecretWordTutorial = () => (\r\n    <div className=\"space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500\">\r\n      <div className=\"space-y-4\">\r\n        <p className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>ئارمانجا یاریێ:</p>\r\n        <ul className=\"space-y-2\">\r\n          <li className=\"flex gap-2 text-sm leading-relaxed\">\r\n            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>\r\n            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>ئارمانجا یاریێ ئەوە تو پەیڤا نهێنی ب تەنێ د {toKuDigits(1)} بزاڤ دا ببینی.</span>\r\n          </li>\r\n          <li className=\"flex gap-2 text-sm leading-relaxed\">\r\n            <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>\r\n            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>ئەڤ پەیڤە تایبەتە و پشتی هەر {toKuDigits(3)} سەرکەفتنێن کلاسیک دێ بۆ تە ڤەبیت.</span>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n\r\n      <div className=\"space-y-3\">\r\n        <div className=\"space-y-2\">\r\n          <div className=\"flex gap-2\">\r\n            {['؟', '؟', '؟', '؟', '؟'].map((letter, i) => (\r\n              <div\r\n                key={i}\r\n                className={`w-9 h-9 flex items-center justify-center rounded-none font-black text-base border-2 bg-primary/20 border-primary/30 text-primary`}\r\n              >\r\n                {letter}\r\n              </div>\r\n            ))}\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  );\r\n\r\n  const renderGenericTemplate = (modeId) => {\r\n    const mode = gameModes.find(m => m.id === modeId);\r\n    return (\r\n      <div className=\"space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500\">\r\n        <div className=\"flex items-center gap-3\">\r\n          <div className=\"w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center border border-white/10 hover:bg-white/10 transition-colors\">\r\n            <span className=\"material-symbols-outlined text-2xl\">\r\n              {modeId === 'multiplayer' ? 'swords' :\r\n                modeId === 'mamak' ? 'quiz' :\r\n                  modeId === 'word_fever' ? 'bolt' :\r\n                    modeId === 'hard_words' ? 'priority_high' : 'lock'}\r\n            </span>\r\n          </div>\r\n          <h3 className={`text-xl font-black ${isDark ? 'text-white' : 'text-slate-800'}`}>{mode?.title}</h3>\r\n        </div>\r\n\r\n        <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>\r\n          یاسایێن ڤی مۆدێ یاریێ ل ڤێرە دێ هێنە نڤێسین. ڤی مۆدێ تایبەت یاریێ یێ جودایە و پێدڤی ب زیرەکیەکا جودا هەیە.\r\n        </p>\r\n\r\n        <div className={`p-5 rounded-3xl space-y-4 ${isDark ? 'bg-white/5' : 'bg-slate-50'}`}>\r\n          <h4 className={`text-sm font-black uppercase  ${isDark ? 'text-white/40' : 'text-slate-500'}`}>یاسایێن سەرەکی</h4>\r\n          <ul className=\"space-y-2\">\r\n            {[1, 2, 3].map(i => (\r\n              <li key={i} className=\"flex gap-3\">\r\n                <span className=\"text-primary font-black\">{toKuDigits(i)}.</span>\r\n                <p className={`text-sm ${isDark ? 'text-white/70' : 'text-slate-600'}`}>خالا فێربوونێ یا {toKuDigits(i)} ل ڤێرە دێ هێتە دیارکرن بۆ یاریزانی.</p>\r\n              </li>\r\n            ))}\r\n          </ul>\r\n        </div>\r\n      </div>\r\n    );\r\n  };\r\n\r\n  return (\r\n    <AnimatePresence>\r\n      <div className=\"fixed inset-0 z-[1000] flex items-center justify-center p-4\">\r\n        <Motion.div\r\n          initial={{ opacity: 0 }}\r\n          animate={{ opacity: 1 }}\r\n          exit={{ opacity: 0 }}\r\n          onClick={onClose}\r\n          className=\"absolute inset-0 bg-[#000000]/90\"\r\n        />\r\n\r\n        <Motion.div\r\n          initial={{ scale: 0.9, opacity: 0, y: 20 }}\r\n          animate={{ scale: 1, opacity: 1, y: 0 }}\r\n          exit={{ scale: 0.9, opacity: 0, y: 20 }}\r\n          className={`relative w-full max-w-[340px] ${isDark ? 'bg-[#0A0A0A]' : 'bg-white'} overflow-hidden flex flex-col max-h-[90vh] border ${isDark ? 'border-white/10' : 'border-slate-200'} rounded-[2rem]`}\r\n        >\r\n          {/* Header */}\r\n          <div className=\"px-4 pt-4 pb-2 flex flex-col items-center\">\r\n            {showTabs ? (\r\n              <h2 className={`text-lg font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>دێ چاوا یاریێ کەی؟</h2>\r\n            ) : (\r\n              <div className=\"flex flex-col items-center gap-1\">\r\n                <h2 className={`text-2xl font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>\r\n                  {gameModes.find(m => m.id === activeTab)?.title}\r\n                </h2>\r\n              </div>\r\n            )}\r\n          </div>\r\n\r\n          {/* Scrollable Tabs - Conditional */}\r\n          {showTabs && (\r\n            <div className=\"space-y-3\">\r\n              <div className=\"flex overflow-x-auto no-scrollbar gap-2 py-2 px-4 scroll-smooth\">\r\n                {gameModes.map(mode => (\r\n                  <button\r\n                    key={mode.id}\r\n                    onClick={() => { setActiveTab(mode.id); playTabSound(); }}\r\n                    className={`shrink-0 px-6 py-2.5 rounded-[5px] text-sm font-bold transition-all\r\n                      ${activeTab === mode.id\r\n                        ? 'bg-primary text-white shadow-lg shadow-primary/20 scale-105'\r\n                        : (isDark ? 'bg-white/5 text-white/40 hover:bg-white/10' : 'bg-slate-50 text-slate-500 hover:bg-slate-100')}`}\r\n                  >\r\n                    {mode.title}\r\n                  </button>\r\n                ))}\r\n              </div>\r\n            </div>\r\n          )}\r\n\r\n          {/* Content Area */}\r\n          <div className=\"flex-1 overflow-y-auto no-scrollbar p-4\">\r\n            {activeTab === 'classic' ? renderClassicTutorial() :\r\n              activeTab === 'multiplayer' ? renderMultiplayerTutorial() :\r\n                activeTab === 'mamak' ? renderMamakTutorial() :\r\n                  activeTab === 'word_fever' ? renderWordFeverTutorial() :\r\n                    activeTab === 'hard_words' ? renderHardWordsTutorial() :\r\n                      activeTab === 'secret_word' ? renderSecretWordTutorial() :\r\n                        renderGenericTemplate(activeTab)}\r\n          </div>\r\n\r\n          {/* Footer Action */}\r\n          <div className={`p-3 border-t ${isDark ? 'border-white/5' : 'border-slate-100'} flex justify-center`}>\r\n            <button\r\n              onClick={onClose}\r\n              className=\"px-12 h-10 bg-primary text-white rounded-[5px] font-black text-sm active:scale-[0.98] transition-all hover:brightness-110\"\r\n            >\r\n              تێگەهشتم\r\n            </button>\r\n          </div>\r\n        </Motion.div>\r\n      </div>\r\n    </AnimatePresence>\r\n  );\r\n}\r\n\r\n",
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\InfoBar.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\InventoryBar.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\Keyboard.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\KeyboardLanguageModal.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\KurdishSunLoader.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\LeaderboardView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\LevelUpOverlay.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\LobbyView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\MasteryModal.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\MultiplayerGameView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\MultiplayerResultOverlay.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\NotificationsView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\PaymentGatewayModal.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\Podium.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\PrivacyPolicy.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\ProfileView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\PublicProfileModal.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\ResultStats.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\RoundIntro.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\SettingsModal.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\ShopView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\SocialHubView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\StatsView.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\TermsOfService.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\TopAppBar.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\VictoryOverlay.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\VoiceManager.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\components\\WordFeverResultOverlay.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\context\\AudioContext.jsx",
+    "messages": [],
+    "suppressedMessages": [
+      {
+        "ruleId": "react-refresh/only-export-components",
+        "severity": 2,
+        "message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.",
+        "line": 114,
+        "column": 14,
+        "nodeType": "Identifier",
+        "messageId": "namedExport",
+        "endLine": 114,
+        "endColumn": 22,
+        "suppressions": [
+          {
+            "kind": "directive",
+            "justification": ""
+          }
+        ]
+      }
+    ],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\context\\AuthContext.jsx",
+    "messages": [],
+    "suppressedMessages": [
+      {
+        "ruleId": "react-refresh/only-export-components",
+        "severity": 2,
+        "message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.",
+        "line": 405,
+        "column": 14,
+        "nodeType": "Identifier",
+        "messageId": "namedExport",
+        "endLine": 405,
+        "endColumn": 21,
+        "suppressions": [
+          {
+            "kind": "directive",
+            "justification": ""
+          }
+        ]
+      }
+    ],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\context\\GameContext.jsx",
+    "messages": [],
+    "suppressedMessages": [
+      {
+        "ruleId": "react-refresh/only-export-components",
+        "severity": 2,
+        "message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.",
+        "line": 775,
+        "column": 14,
+        "nodeType": "Identifier",
+        "messageId": "namedExport",
+        "endLine": 775,
+        "endColumn": 21,
+        "suppressions": [
+          {
+            "kind": "directive",
+            "justification": ""
+          }
+        ]
+      }
+    ],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\context\\MultiplayerContext.jsx",
+    "messages": [],
+    "suppressedMessages": [
+      {
+        "ruleId": "react-refresh/only-export-components",
+        "severity": 2,
+        "message": "Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.",
+        "line": 966,
+        "column": 14,
+        "nodeType": "Identifier",
+        "messageId": "namedExport",
+        "endLine": 966,
+        "endColumn": 28,
+        "suppressions": [
+          {
+            "kind": "directive",
+            "justification": ""
+          }
+        ]
+      }
+    ],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  },
+  {
+    "filePath": "D:\\Peyivcin App\\src\\main.jsx",
+    "messages": [],
+    "suppressedMessages": [],
+    "errorCount": 0,
+    "fatalErrorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "usedDeprecatedRules": []
+  }
+]

@@ -18,6 +18,7 @@ export default function HowToPlayModal({ isOpen, onClose, initialMode = 'classic
 
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveTab(initialMode);
     }
   }, [isOpen, initialMode]);

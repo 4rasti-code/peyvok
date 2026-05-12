@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback, use
 import { supabase } from '../lib/supabase';
 import { useUser } from './AuthContext';
 import { getLevelFromXP, getLevelData, getRewardForMode } from '../utils/progression';
+import { safeJSONParse } from '../utils/safeParse';
 
 const GameContext = createContext();
 
@@ -51,12 +52,12 @@ export const GameProvider = ({ children }) => {
 
   const [solvedWords, setSolvedWords] = useState(() => {
     const saved = localStorage.getItem('peyvchin_solved_words');
-    return saved ? JSON.parse(saved) : [];
+    return safeJSONParse(saved, [], 'peyvchin_solved_words');
   });
   
   const [playerStats, setPlayerStats] = useState(() => {
     const saved = localStorage.getItem('peyvchin_stats');
-    return saved ? JSON.parse(saved) : {
+    const defaultStats = {
       classic: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } },
       mamak: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } },
       secret_word: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } },
@@ -64,6 +65,7 @@ export const GameProvider = ({ children }) => {
       hard_words: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } },
       battle: { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0, guess_distribution: { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0 } }
     };
+    return safeJSONParse(saved, defaultStats, 'peyvchin_stats');
   });
 
   const isSyncingProgressionRef = useRef(false);

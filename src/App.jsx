@@ -24,6 +24,7 @@ import useMultiplayer from './hooks/useMultiplayer';
 import { calculateLevelRewards, calculateDefeatPenalty } from './utils/gameStatus';
 import useGameLogic from './hooks/useGameLogic';
 import { AVATARS } from './data/avatars';
+import { safeJSONParse } from './utils/safeParse';
 
 import { forceResumeAudio } from './utils/audio';
 import { normalizeKurdishInput } from './utils/textUtils';
@@ -34,8 +35,9 @@ import useThemeDetector from './hooks/useThemeDetector';
 // (common after new deployments where asset hashes change).
 const lazyWithRetry = (componentImport) =>
   lazy(async () => {
-    const pageHasAlreadyBeenReloaded = JSON.parse(
-      window.sessionStorage.getItem('page-has-been-reloaded') || 'false'
+    const pageHasAlreadyBeenReloaded = safeJSONParse(
+      window.sessionStorage.getItem('page-has-been-reloaded'),
+      false
     );
     try {
       const component = await componentImport();

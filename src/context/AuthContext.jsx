@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { supabase } from '../lib/supabase';
+import { safeJSONParse } from '../utils/safeParse';
 
 const AuthContext = createContext();
 
@@ -41,7 +42,7 @@ export const AuthProvider = ({ children }) => {
   const [lastProfileUpdate, setLastProfileUpdate] = useState(() => Date.now());
   const [ownedAvatars, setOwnedAvatars] = useState(() => {
     const saved = localStorage.getItem('peyvchin_owned_avatars');
-    return saved ? JSON.parse(saved) : ['default'];
+    return safeJSONParse(saved, ['default'], 'peyvchin_owned_avatars');
   });
   const [hapticEnabled, setHapticEnabled] = useState(() => {
     const saved = localStorage.getItem('peyvchin_haptic_enabled');
@@ -56,7 +57,7 @@ export const AuthProvider = ({ children }) => {
 
   const [profileData, setProfileData] = useState(() => {
     const cached = localStorage.getItem('peyvchin_cached_profile');
-    return cached ? JSON.parse(cached) : null;
+    return safeJSONParse(cached, null, 'peyvchin_cached_profile');
   });
 
   const isProfileLoaded = useRef(false);
@@ -200,10 +201,12 @@ export const AuthProvider = ({ children }) => {
         const cachedProfile = localStorage.getItem('peyvchin_cached_profile');
         if (cachedProfile) {
           console.log("[AuthContext] Found cached profile, pre-loading...");
-          const data = JSON.parse(cachedProfile);
-          setProfileData(data);
-          setUserNickname(data.nickname || 'یاریزان');
-          setUserAvatar(data.avatar_url || 'default');
+          const data = safeJSONParse(cachedProfile, null, 'peyvchin_cached_profile');
+          if (data) {
+            setProfileData(data);
+            setUserNickname(data.nickname || 'یاریزان');
+            setUserAvatar(data.avatar_url || 'default');
+          }
           // Don't unlock fully yet, we still need to verify session
         }
 
