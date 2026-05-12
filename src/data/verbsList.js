@@ -773,7 +773,7 @@ export const verbsWords = [
     ]
   },
   {
-    "word": "بکارئینان",
+    "word": "بکارهینان",
     "hint": "کار(چاوگ)",
     "category": "کار(چاوگ)",
     "tags": [

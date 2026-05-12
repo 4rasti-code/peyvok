@@ -220,7 +220,7 @@ export default function ProfileView({ onProfileSave }) {
    const handleInvite = () => {
       const shareLink = `${window.location.origin}/play?invite=${user?.id || 'guest'}`;
       navigator.clipboard.writeText(shareLink);
-      alert('لینک ھاتە کۆپیکرن! بۆ ھەڤالێن خوە بفرێژە.');
+      alert('لینک ھاتە کۆپیکرن! بۆ ھەڤالێن خوە بهنێرە.');
    };
 
    const handleSave = async () => {

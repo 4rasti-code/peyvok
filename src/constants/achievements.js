@@ -38,7 +38,7 @@ export const ACHIEVEMENTS_CONFIG = [
   {
     id: 'culture_guardian',
     name: 'پارێزەرێ کەلتووری',
-    description: 'سەرکەفتن د مامکان دا بێی بکارئینانا Skip',
+    description: 'سەرکەفتن د مامکان دا بێی بکارهینانا Skip',
     icon: 'auto_stories',
     statKey: 'riddles_no_skip',
     thresholds: [100, 300, 600, 1000]

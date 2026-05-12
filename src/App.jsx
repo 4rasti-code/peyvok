@@ -849,7 +849,7 @@ export default function App() {
         const errCode = result.error?.code;
         const errMsg = result.error?.message || 'Update failed';
         if (errCode === '23505') {
-          alert('ئەڤ ناڤە یێ ھاتییە بکارئینان، تاقی بکە ناڤەکێ دی بنڤیسی');
+          alert('ئەڤ ناڤە یێ ھاتییە بکارهینان، تاقی بکە ناڤەکێ دی بنڤیسی');
         } else {
           alert(`شاشی: ${errMsg}`);
         }
