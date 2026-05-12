@@ -115,7 +115,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
     const t = isKurdish ? content.ku : content.en;
 
     return (
-        <div className="h-full bg-[#050510] text-[#f0f0f0] font-body selection:bg-primary/30 p-4 sm:p-8 md:p-12 relative">
+        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-50 font-body selection:bg-primary/30 p-4 sm:p-8 md:p-12 relative">
             <div className="max-w-4xl mx-auto relative z-10">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6 bg-surface-container/20 backdrop-blur-3xl p-6 rounded-2xl border border-outline/10 shadow-2xl">
@@ -124,15 +124,15 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                             <span className="material-symbols-outlined text-white text-2xl">delete_sweep</span>
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold font-heading  bg-clip-text text-transparent bg-linear-to-r from-white to-white/60">پەیڤۆک</h1>
+                            <h1 className="text-2xl font-bold font-heading  bg-clip-text text-transparent bg-linear-to-r from-mono-900 to-mono-500 dark:from-white dark:to-white/60">پەیڤۆک</h1>
                             <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary/80">Data Freedom</p>
                         </div>
                     </div>
 
-                    <div className="flex bg-black/40 p-1.5 rounded-2xl border border-white/5 backdrop-blur-md">
+                    <div className="flex bg-mono-100 dark:bg-black/40 p-1.5 rounded-2xl border border-mono-200 dark:border-white/5 backdrop-blur-md">
                         <button
                             onClick={() => setIsKurdish(false)}
-                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${!isKurdish ? 'bg-white text-black shadow-xl scale-105' : 'text-white/40 hover:text-white/70'}`}
+                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${!isKurdish ? 'bg-white text-black shadow-xl scale-105' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
                         >
                             <div className="w-5 h-3.5 rounded-[2px] overflow-hidden shadow-sm">
                                 <USFlag />
@@ -141,7 +141,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                         </button>
                         <button
                             onClick={() => setIsKurdish(true)}
-                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${isKurdish ? 'bg-primary text-white shadow-xl scale-105 shadow-primary/20' : 'text-white/40 hover:text-white/70'}`}
+                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${isKurdish ? 'bg-primary text-white shadow-xl scale-105 shadow-primary/20' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
                         >
                             <span>بەهدینی</span>
                             <div className="w-5 h-3.5 rounded-[2px] overflow-hidden shadow-sm">
@@ -171,11 +171,11 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                             <div className="flex items-center gap-4">
                                 <h3 className="text-2xl font-bold ">{t.section1Title}</h3>
                             </div>
-                            <div className="bg-white/5 border border-white/5 p-8 rounded-[2rem] space-y-4">
+                            <div className="bg-white/5 border border-mono-200 dark:border-white/5 p-8 rounded-[2rem] space-y-4">
                                 <p className="text-text-dim italic">{t.section1Text}</p>
                                 <ul className="space-y-4">
                                     {t.steps.map((step, i) => (
-                                        <li key={i} className="flex items-start gap-4 text-white/80 leading-relaxed">
+                                        <li key={i} className="flex items-start gap-4 text-mono-800 dark:text-white/80 leading-relaxed">
                                             <span className="material-symbols-outlined text-primary text-xl mt-1">check_circle</span>
                                             <span>{step}</span>
                                         </li>
@@ -188,13 +188,13 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                             <div className="flex items-center gap-4">
                                 <h3 className="text-2xl font-bold ">{t.section2Title}</h3>
                             </div>
-                            <div className="bg-white/5 border border-white/5 p-8 rounded-[2rem] space-y-4">
+                            <div className="bg-white/5 border border-mono-200 dark:border-white/5 p-8 rounded-[2rem] space-y-4">
                                 <p className="text-text-dim italic">{t.section2Text}</p>
                                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {t.deletedItems.map((item, i) => (
-                                        <li key={i} className="flex items-center gap-3 bg-black/20 p-4 rounded-2xl border border-white/5">
+                                        <li key={i} className="flex items-center gap-3 bg-mono-50 dark:bg-black/20 p-4 rounded-2xl border border-mono-200 dark:border-white/5">
                                             <span className="material-symbols-outlined text-secondary text-xl">delete</span>
-                                            <span className="text-sm font-bold text-white/80">{item}</span>
+                                            <span className="text-sm font-bold text-mono-800 dark:text-white/80">{item}</span>
                                         </li>
                                     ))}
                                 </ul>
@@ -206,7 +206,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                                 <h3 className="text-2xl font-bold ">{t.section3Title}</h3>
                             </div>
                             <div className="bg-primary/5 border border-primary/10 p-8 rounded-[2rem]">
-                                <p className="text-white/90 leading-relaxed font-medium">
+                                <p className="text-mono-900 dark:text-white/90 leading-relaxed font-medium">
                                     {t.section3Text}
                                 </p>
                             </div>
@@ -216,7 +216,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
 
                 {/* Footer Section */}
                 <div className="mt-16 text-center space-y-8">
-                    <div className="flex flex-wrap items-center justify-center gap-6 text-white/30 font-bold text-xs uppercase tracking-widest">
+                    <div className="flex flex-wrap items-center justify-center gap-6 text-mono-500 dark:text-white/30 font-bold text-xs uppercase tracking-widest">
                         <button onClick={() => handleNavigate('/terms-of-service', 'terms')} className="hover:text-primary transition-colors">Terms of Service</button>
                         <span className="w-1 h-1 rounded-full bg-white/10"></span>
                         <button onClick={() => handleNavigate('/privacy-policy', 'privacy')} className="hover:text-primary transition-colors">Privacy Policy</button>
@@ -232,7 +232,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                         {t.backButton}
                     </button>
 
-                    <footer className="mt-12 text-center text-white/20 text-[10px] font-bold  uppercase tracking-[0.3em] antialiased">
+                    <footer className="mt-12 text-center text-mono-400 dark:text-white/20 text-[10px] font-bold  uppercase tracking-[0.3em] antialiased">
                         © 2026 پەیڤۆک Team • Built for Heritage
                     </footer>
                 </div>
