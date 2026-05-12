@@ -115,24 +115,24 @@ const DataDeletion = ({ onViewChange, onClose }) => {
     const t = isKurdish ? content.ku : content.en;
 
     return (
-        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-50 font-body selection:bg-primary/30 p-4 sm:p-8 md:p-12 relative">
+        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-50 font-body selection:bg-mono-900 dark:bg-mono-50/30 p-4 sm:p-8 md:p-12 relative">
             <div className="max-w-4xl mx-auto relative z-10">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6 bg-surface-container/20 backdrop-blur-3xl p-6 rounded-2xl border border-outline/10 shadow-2xl">
                     <div className="flex items-center gap-4 cursor-pointer" onClick={handleClose}>
-                        <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-primary to-primary-container flex items-center justify-center shadow-lg shadow-primary/20">
+                        <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-mono-800 to-mono-900 dark:from-mono-100 dark:to-mono-200 flex items-center justify-center shadow-lg shadow-black/20 dark:shadow-white/10">
                             <span className="material-symbols-outlined text-white text-2xl">delete_sweep</span>
                         </div>
                         <div>
                             <h1 className="text-2xl font-bold font-heading  bg-clip-text text-transparent bg-linear-to-r from-mono-900 to-mono-500 dark:from-white dark:to-white/60">پەیڤۆک</h1>
-                            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary/80">Data Freedom</p>
+                            <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-mono-700 dark:text-mono-300">Data Freedom</p>
                         </div>
                     </div>
 
                     <div className="flex bg-mono-100 dark:bg-black/40 p-1.5 rounded-2xl border border-mono-200 dark:border-white/5 backdrop-blur-md">
                         <button
                             onClick={() => setIsKurdish(false)}
-                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${!isKurdish ? 'bg-white text-black shadow-xl scale-105' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
+                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${!isKurdish ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-xl scale-105 shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
                         >
                             <div className="w-5 h-3.5 rounded-[2px] overflow-hidden shadow-sm">
                                 <USFlag />
@@ -141,7 +141,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                         </button>
                         <button
                             onClick={() => setIsKurdish(true)}
-                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${isKurdish ? 'bg-primary text-white shadow-xl scale-105 shadow-primary/20' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
+                            className={`px-6 py-2.5 rounded-xl text-xs font-bold  transition-all duration-500 flex items-center gap-2 ${isKurdish ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-xl scale-105 shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
                         >
                             <span>بەهدینی</span>
                             <div className="w-5 h-3.5 rounded-[2px] overflow-hidden shadow-sm">
@@ -153,11 +153,11 @@ const DataDeletion = ({ onViewChange, onClose }) => {
 
                 {/* Main Content Area */}
                 <div className="bg-surface-container/10 backdrop-blur-2xl border border-outline/10 rounded-3xl p-8 md:p-16 shadow-3xl relative overflow-hidden group">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-primary/40 to-transparent" />
+                    <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-mono-500/40 to-transparent" />
                     
                     <div className="flex flex-col items-center text-center mb-12">
                         <h2 className="text-4xl md:text-5xl font-bold  mb-4 leading-tight">{t.title}</h2>
-                        <span className="px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-bold  tracking-widest text-primary uppercase">
+                        <span className="px-4 py-1.5 rounded-full bg-mono-100 dark:bg-mono-800 border border-mono-200 dark:border-mono-700 text-[10px] font-bold  tracking-widest text-mono-900 dark:text-mono-50 uppercase">
                             {t.lastUpdated}
                         </span>
                     </div>
@@ -176,7 +176,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                                 <ul className="space-y-4">
                                     {t.steps.map((step, i) => (
                                         <li key={i} className="flex items-start gap-4 text-mono-800 dark:text-white/80 leading-relaxed">
-                                            <span className="material-symbols-outlined text-primary text-xl mt-1">check_circle</span>
+                                            <span className="material-symbols-outlined text-mono-900 dark:text-mono-50 text-xl mt-1">check_circle</span>
                                             <span>{step}</span>
                                         </li>
                                     ))}
@@ -205,7 +205,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                             <div className="flex items-center gap-4">
                                 <h3 className="text-2xl font-bold ">{t.section3Title}</h3>
                             </div>
-                            <div className="bg-primary/5 border border-primary/10 p-8 rounded-[2rem]">
+                            <div className="bg-mono-50 dark:bg-mono-900 border border-mono-100 dark:border-mono-800 p-8 rounded-[2rem]">
                                 <p className="text-mono-900 dark:text-white/90 leading-relaxed font-medium">
                                     {t.section3Text}
                                 </p>
@@ -217,16 +217,16 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                 {/* Footer Section */}
                 <div className="mt-16 text-center space-y-8">
                     <div className="flex flex-wrap items-center justify-center gap-6 text-mono-500 dark:text-white/30 font-bold text-xs uppercase tracking-widest">
-                        <button onClick={() => handleNavigate('/terms-of-service', 'terms')} className="hover:text-primary transition-colors">Terms of Service</button>
+                        <button onClick={() => handleNavigate('/terms-of-service', 'terms')} className="hover:text-mono-900 dark:hover:text-mono-50 transition-colors">Terms of Service</button>
                         <span className="w-1 h-1 rounded-full bg-white/10"></span>
-                        <button onClick={() => handleNavigate('/privacy-policy', 'privacy')} className="hover:text-primary transition-colors">Privacy Policy</button>
+                        <button onClick={() => handleNavigate('/privacy-policy', 'privacy')} className="hover:text-mono-900 dark:hover:text-mono-50 transition-colors">Privacy Policy</button>
                         <span className="w-1 h-1 rounded-full bg-white/10"></span>
-                        <button onClick={() => handleNavigate('/data-deletion', 'deletion')} className="text-primary hover:text-white transition-colors">Data Deletion</button>
+                        <button onClick={() => handleNavigate('/data-deletion', 'deletion')} className="text-mono-900 dark:text-mono-50 hover:text-white transition-colors">Data Deletion</button>
                     </div>
 
                     <button 
                         onClick={handleClose}
-                        className="bg-primary text-white px-10 py-5 rounded-2xl font-black  text-sm uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto pt-4 mt-8"
+                        className="bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 px-10 py-5 rounded-2xl font-black  text-sm uppercase tracking-[0.2em] shadow-xl shadow-black/20 dark:shadow-white/10 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto pt-4 mt-8"
                     >
                         <span className="material-symbols-outlined text-xl">arrow_back</span>
                         {t.backButton}

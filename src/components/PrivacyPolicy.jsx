@@ -155,7 +155,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
     const isRTL = lang === 'ku';
 
     return (
-        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-100 selection:bg-primary/30 selection:text-white font-body p-6 sm:p-12" dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-100 selection:bg-mono-900 dark:bg-mono-50/30 selection:text-white font-body p-6 sm:p-12" dir={isRTL ? 'rtl' : 'ltr'}>
             <div className="max-w-4xl mx-auto relative">
                 {/* Header Section */}
                 <div className="flex flex-col sm:flex-row items-center justify-between mb-16 gap-8">
@@ -169,7 +169,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                     <div className="flex bg-mono-50 dark:bg-mono-900/80 backdrop-blur-xl border border-mono-200 dark:border-white/5 rounded-2xl p-1.5 shadow-2xl">
                         <button 
                             onClick={() => setLang('ku')}
-                            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'ku' ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
+                            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'ku' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-lg shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
                         >
                             <div className="w-5 h-3.5 rounded-[2px] overflow-hidden shadow-sm">
                                 <KurdistanFlag />
@@ -178,7 +178,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                         </button>
                         <button 
                             onClick={() => setLang('en')}
-                            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'en' ? 'bg-primary text-white shadow-lg shadow-primary/30' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
+                            className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'en' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 shadow-lg shadow-black/20 dark:shadow-white/10' : 'text-mono-500 dark:text-white/40 hover:text-mono-700 dark:text-white/70'}`}
                         >
                             <div className="w-5 h-3.5 rounded-[2px] overflow-hidden shadow-sm">
                                 <USFlag />
@@ -195,14 +195,14 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                     animate={{ opacity: 1, y: 0 }}
                     className="bg-mono-50 dark:bg-mono-900/50 backdrop-blur-2xl border border-mono-200 dark:border-white/5 rounded-3xl p-10 sm:p-20 shadow-[0_20px_80px_rgba(0,0,0,0.4)] relative"
                 >
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-primary/50 to-transparent opacity-30"></div>
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-mono-500/50 to-transparent opacity-30"></div>
 
                     <header className="mb-16 text-center sm:text-start">
                         <h2 className="text-4xl sm:text-5xl font-bold  text-mono-900 dark:text-white mb-4 leading-tight">{current.title}</h2>
-                        <span className="text-primary/70 font-bold text-sm tracking-wide bg-primary/10 px-4 py-2 rounded-full border border-primary/20">{current.subtitle}</span>
+                        <span className="text-mono-600 dark:text-mono-400 font-bold text-sm tracking-wide bg-mono-900 dark:bg-mono-50/10 px-4 py-2 rounded-full border border-mono-200 dark:border-mono-700">{current.subtitle}</span>
                     </header>
 
-                    <p className="text-xl text-mono-700 dark:text-white/70 mb-16 leading-relaxed font-medium italic border-r-4 border-primary pr-6">
+                    <p className="text-xl text-mono-700 dark:text-white/70 mb-16 leading-relaxed font-medium italic border-r-4 border-mono-900 dark:border-mono-50 pr-6">
                         {current.intro}
                     </p>
 
@@ -217,14 +217,14 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                                     <ul className="space-y-4 pr-12">
                                         {section.list.map((item, i) => (
                                             <li key={i} className="flex items-start gap-4 text-mono-600 dark:text-white/50 group">
-                                                <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 transition-transform group-hover:scale-150"></div>
+                                                <div className="w-1.5 h-1.5 rounded-full bg-mono-900 dark:bg-mono-50 mt-2.5 transition-transform group-hover:scale-150"></div>
                                                 <span className="flex-1">{item}</span>
                                             </li>
                                         ))}
                                     </ul>
                                 )}
                                 {section.email && (
-                                    <a href={`mailto:${section.email}`} className="inline-block mt-4 text-primary font-bold  text-xl hover:text-white transition-colors border-b-2 border-primary/20 pb-1">
+                                    <a href={`mailto:${section.email}`} className="inline-block mt-4 text-mono-900 dark:text-mono-50 font-bold  text-xl hover:text-white transition-colors border-b-2 border-mono-300 dark:border-mono-600 pb-1">
                                         {section.email}
                                     </a>
                                 )}
@@ -236,11 +236,11 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                 {/* Footer */}
                 <div className="mt-16 text-center space-y-8">
                     <div className="flex flex-wrap items-center justify-center gap-6 text-mono-500 dark:text-white/30 font-bold text-xs uppercase tracking-widest">
-                        <button onClick={() => handleNavigate('/terms-of-service', 'terms')} className="hover:text-primary transition-colors">Terms of Service</button>
+                        <button onClick={() => handleNavigate('/terms-of-service', 'terms')} className="hover:text-mono-900 dark:hover:text-mono-50 transition-colors">Terms of Service</button>
                         <span className="w-1 h-1 rounded-full bg-white/10"></span>
-                        <button onClick={() => handleNavigate('/privacy-policy', 'privacy')} className="text-primary hover:text-white transition-colors">Privacy Policy</button>
+                        <button onClick={() => handleNavigate('/privacy-policy', 'privacy')} className="text-mono-900 dark:text-mono-50 hover:text-white transition-colors">Privacy Policy</button>
                         <span className="w-1 h-1 rounded-full bg-white/10"></span>
-                        <button onClick={() => handleNavigate('/data-deletion', 'deletion')} className="hover:text-primary transition-colors">Data Deletion</button>
+                        <button onClick={() => handleNavigate('/data-deletion', 'deletion')} className="hover:text-mono-900 dark:hover:text-mono-50 transition-colors">Data Deletion</button>
                     </div>
                     
                     <button 
@@ -248,7 +248,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                             playBackSfx();
                             handleClose();
                         }}
-                        className="bg-primary text-white px-10 py-5 rounded-2xl font-black  text-sm uppercase tracking-[0.2em] shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto pt-4 mt-8"
+                        className="bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 px-10 py-5 rounded-2xl font-black  text-sm uppercase tracking-[0.2em] shadow-xl shadow-black/20 dark:shadow-white/10 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto pt-4 mt-8"
                     >
                         <span className="material-symbols-outlined text-xl">arrow_back</span>
                         {lang === 'ku' ? 'ڤەگەڕە' : 'Back to Game'}
