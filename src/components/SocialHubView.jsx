@@ -652,7 +652,7 @@ export default function SocialHubView({
       console.error("Failed to send message:", err);
       const errorMsg = err.message || "ئاریشەکا نەدیار";
       const errorCode = err.code || "unknown";
-      alert(`ئاریشەیەک د ھنارتنا نامەیێ دا ھەبوو:\n\nMessage: ${errorMsg}\nCode: ${errorCode}\n\nتکایە دڵنیابە کو دەستھەڵاتێن Supabase دروستن.`);
+      alert(`ئاریشەیەک د ھنارتنا نامەیێ دا ھەبوو:\n\nMessage: ${errorMsg}\nCode: ${errorCode}\n\nهێڤییە دڵنیابە کو دەستھەڵاتێن Supabase دروستن.`);
       // On failure, we could restore the message to the box
       setNewMessage(msgContent);
     }
