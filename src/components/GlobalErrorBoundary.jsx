@@ -60,7 +60,7 @@ class GlobalErrorBoundary extends React.Component {
             <h1 style={{ fontWeight: '900', fontSize: '32px', marginBottom: '15px' }}>ئاریشەیەک چێ بوو!</h1>
             <p style={{ color: '#94a3b8', fontSize: '16px', lineHeight: '1.6', marginBottom: '40px' }}>
               ببورە، ھندەک ئاریشەیێن تەکنیکی د دەستپێکرنا یاریێ دا ھەبوون. <br/>
-              تکایە پێکۆلێ بکە و پەیجێ نوو بکەوە.
+              تکایە پێکۆلێ بکە و پەیجێ نوو بکە.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
