@@ -800,7 +800,7 @@ export const MultiplayerProvider = ({ children }) => {
     matchmakingTimeoutRef.current = setTimeout(() => {
       if (stateRef.current === 'searching' || stateRef.current === 'waiting') {
         setMultiplayerState('idle'); 
-        alert("چو یاریزان نەهاتە دیتن ل ڤێ گاڤێ. پشتى دەمەکێ دى تاقی بکە.");
+        alert("چ یاریزان نەهاتە دیتن ل ڤێ گاڤێ. پشتى دەمەکێ دى تاقی بکە.");
       }
     }, 60000);
 

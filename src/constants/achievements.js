@@ -14,7 +14,7 @@ export const ACHIEVEMENTS_CONFIG = [
   {
     id: 'flawless_words',
     name: 'پەیڤێن بێ خەلەتی',
-    description: 'سەرکەفتن بێ چو هاریکارییەکێ (Hints)',
+    description: 'سەرکەفتن بێ چ هاریکارییەکێ (Hints)',
     icon: 'verified',
     statKey: 'flawless_wins',
     thresholds: [50, 250, 500, 1000]
