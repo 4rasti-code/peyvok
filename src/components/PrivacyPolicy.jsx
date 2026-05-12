@@ -215,7 +215,6 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                         {current.sections.map((section, idx) => (
                             <section key={idx} className="relative">
                                 <h3 className="text-2xl font-bold  text-white mb-6 flex items-center gap-4">
-                                    <span className="w-8 h-8 rounded-lg bg-primary/20 text-primary flex items-center justify-center text-sm">{idx + 1}</span>
                                     {section.title}
                                 </h3>
                                 <p className="text-white/60 leading-relaxed text-lg mb-6">{section.text}</p>

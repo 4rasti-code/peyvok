@@ -169,7 +169,6 @@ const DataDeletion = ({ onViewChange, onClose }) => {
 
                         <section className="space-y-6 animate-in slide-in-from-bottom-4 duration-700">
                             <div className="flex items-center gap-4">
-                                <span className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold  text-sm">1</span>
                                 <h3 className="text-2xl font-bold ">{t.section1Title}</h3>
                             </div>
                             <div className="bg-white/5 border border-white/5 p-8 rounded-[2rem] space-y-4">
@@ -187,7 +186,6 @@ const DataDeletion = ({ onViewChange, onClose }) => {
 
                         <section className="space-y-6 animate-in slide-in-from-bottom-4 delay-100 duration-700">
                             <div className="flex items-center gap-4">
-                                <span className="w-8 h-8 rounded-full bg-secondary text-white flex items-center justify-center font-bold  text-sm">2</span>
                                 <h3 className="text-2xl font-bold ">{t.section2Title}</h3>
                             </div>
                             <div className="bg-white/5 border border-white/5 p-8 rounded-[2rem] space-y-4">
@@ -205,7 +203,6 @@ const DataDeletion = ({ onViewChange, onClose }) => {
 
                         <section className="space-y-6 animate-in slide-in-from-bottom-4 delay-200 duration-700">
                             <div className="flex items-center gap-4">
-                                <span className="w-8 h-8 rounded-full bg-white/10 text-white flex items-center justify-center font-bold  text-sm">3</span>
                                 <h3 className="text-2xl font-bold ">{t.section3Title}</h3>
                             </div>
                             <div className="bg-primary/5 border border-primary/10 p-8 rounded-[2rem]">
