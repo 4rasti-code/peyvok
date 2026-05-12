@@ -1,6 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { supabase } from '../lib/supabase';
 import { useUser } from './AuthContext';
 import { 
   playPopSfx, 
@@ -25,8 +24,7 @@ import {
   stopSearchingSfx,
   setBackgroundMusicVolume,
   startBackgroundMusic, 
-  stopBackgroundMusic, 
-  setSfxVolume
+  stopBackgroundMusic
 } from '../utils/audio';
 
 const AudioContext = createContext();

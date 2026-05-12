@@ -744,7 +744,7 @@ const wordFeverWords = [
 const generalPool = [...classicWords, ...hardWords];
 
 export const gameWordLists = {
-  "پەیڤچن کلاسیک": classicWords,
+  "پەیڤۆک کلاسیک": classicWords,
   "مامک": mamakWords,
   "پەیڤێن دژوار": hardWords,
   "تایا پەیڤان": wordFeverWords,
@@ -805,17 +805,17 @@ export function getUnifiedWords() {
 }
 
 export function getRandomWordFromCategory(category, _level = 1, solvedWords = [], gameMode = 'classic') {
-  let modeKey = "پەیڤچن کلاسیک";
+  let modeKey = "پەیڤۆک کلاسیک";
   switch (gameMode) {
     case 'mamak': modeKey = "مامک"; break;
     case 'hard_words': modeKey = "پەیڤێن دژوار"; break;
     case 'word_fever': modeKey = "تایا پەیڤان"; break;
     case 'secret_word': modeKey = "پەیڤا نەهێنی"; break;
     case 'multiplayer': modeKey = "هەڤڕکی"; break;
-    default: modeKey = "پەیڤچن کلاسیک";
+    default: modeKey = "پەیڤۆک کلاسیک";
   }
 
-  let pool = gameWordLists[modeKey] || gameWordLists["پەیڤچن کلاسیک"];
+  let pool = gameWordLists[modeKey] || gameWordLists["پەیڤۆک کلاسیک"];
 
   // --- ENFORCE MODE RULES (Word Lengths) ---
   if (gameMode === 'classic') {

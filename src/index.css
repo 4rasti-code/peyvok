@@ -142,9 +142,17 @@ body,
   max-width: 100vw;
   background-color: var(--color-mono-white);
   color: var(--color-mono-900);
-  touch-action: none;
+  touch-action: manipulation;
   overscroll-behavior: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+input, textarea {
+  user-select: text;
+  -webkit-user-select: text;
 }
 
 html.dark,

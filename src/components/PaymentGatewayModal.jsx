@@ -164,7 +164,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-2xl font-black font-rabar text-white">دەستخۆش! کڕینا تە سەرکەفت.</h3>
-                  <p className="text-sm font-bold font-rabar text-white/40">سوپاس بۆ پشتەڤانیا تە بۆ ئەپێ پەیڤچن</p>
+                  <p className="text-sm font-bold font-rabar text-white/40">سوپاس بۆ پشتەڤانیا تە بۆ ئەپێ پەیڤۆک</p>
                 </div>
                 <button 
                   onClick={onClose}

@@ -35,7 +35,7 @@ export default function HowToPlayModal({ isOpen, onClose, initialMode = 'classic
           </li>
           <li className="flex gap-2 text-sm leading-relaxed">
             <span className={isDark ? 'text-white/40' : 'text-slate-400'}>•</span>
-            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>مۆدێ پەیڤچن (کلاسیک) ژ وان پەیڤان پێکدهێن ئەوێن کو ژ {toKuDigits(2)} تا {toKuDigits(5)} پیتان پێکدهێن.</span>
+            <span className={isDark ? 'text-white/70' : 'text-slate-700'}>مۆدێ پەیڤۆک (کلاسیک) ژ وان پەیڤان پێکدهێن ئەوێن کو ژ {toKuDigits(2)} تا {toKuDigits(5)} پیتان پێکدهێن.</span>
           </li>
         </ul>
         <p className={`text-sm leading-relaxed ${isDark ? 'text-white/70' : 'text-slate-600'}`}>

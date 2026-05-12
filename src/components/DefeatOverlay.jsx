@@ -168,7 +168,7 @@ const DefeatOverlay = ({
                     triggerHaptic(10);
                     const grid = generateWordleGrid(guesses, solvedWord);
                     const result = await shareGameResult({
-                      title: 'من نەشیا ڤێ پەیڤێ بدۆزم د پەیڤچن دا! 💔',
+                      title: 'من نەشیا ڤێ پەیڤێ بدۆزم د پەیڤۆک دا! 💔',
                       grid: grid
                     });
                     

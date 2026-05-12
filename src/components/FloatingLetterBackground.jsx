@@ -70,7 +70,7 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
   );
 });
 
-const chars = ['ط¦ط§', 'ط¨', 'ظ¾', 'طھ', 'ط¬', 'ط¯', 'ع•', 'ط²', 'ع¤', 'عµ', 'غ†', 'غژ', 'ع¯', 'ع†', 'عک', 'ظ‡ظ€'];
+const chars = ['ئا', 'ب', 'پ', 'ت', 'ج', 'چ', 'د', 'ڕ', 'ز', 'ژ', 'ڤ', 'ڵ', 'ۆ', 'ێ', 'گ', 'هـ'];
 
 const FloatingLetterBackground = forwardRef((props, ref) => {
   const pulseMV = useMotionValue(null);
@@ -92,7 +92,7 @@ const FloatingLetterBackground = forwardRef((props, ref) => {
   }));
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-5 bg-white dark:bg-black transition-colors duration-500">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-5 bg-white dark:bg-black transition-colors duration-500">
       <style>
         {`
           @keyframes drift {

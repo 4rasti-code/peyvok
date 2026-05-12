@@ -13,12 +13,14 @@ const CurrencyDecrementEffect = ({ value, currency, children, className = "", re
   const [changes, setChanges] = useState([]);
   const [isSettled, setIsSettled] = useState(false);
   const prevValue = useRef(null);
-  const componentMountTime = useRef(Date.now());
+  const [componentMountTime] = useState(() => Date.now());
 
   // View Transition Stabilization: Reset settling period when navigation occurs
   useEffect(() => {
-    setIsSettled(false);
-    setChanges([]); // Clear any pending animations when moving between views
+    setTimeout(() => {
+      setIsSettled(false);
+      setChanges([]); // Clear any pending animations when moving between views
+    }, 0);
     const timer = setTimeout(() => setIsSettled(true), 2000); // Extended 2s silence window for initial syncs
     return () => clearTimeout(timer);
   }, [resetKey]);
@@ -36,7 +38,7 @@ const CurrencyDecrementEffect = ({ value, currency, children, className = "", re
     // 2. GHOST GUARD: Ignore drops from common initialization defaults (1000, 50, 5)
     // unless they happen much later in the session.
     const isInitializationDrop = (previousNumericValue === 1000 || previousNumericValue === 50 || previousNumericValue === 5) 
-                               && (Date.now() - componentMountTime.current < 5000);
+                               && (Date.now() - componentMountTime < 5000);
 
     // 3. Only trigger if the change is a real decrease and we are settled and NOT a ghost drop
     if (numericValue < previousNumericValue && !isInitializationDrop) {
@@ -44,7 +46,7 @@ const CurrencyDecrementEffect = ({ value, currency, children, className = "", re
       
       // Safety: Ignore unrealistic drops (> 300) during the first 5s of mounting OR while not settled
       // This prevents "Ghost -895" when jumping from high defaults to real low balances
-      if ((diff > 300 && (Date.now() - componentMountTime.current < 5000)) || !isSettled) {
+      if ((diff > 300 && (Date.now() - componentMountTime < 5000)) || !isSettled) {
         prevValue.current = value;
         return;
       }
@@ -54,7 +56,9 @@ const CurrencyDecrementEffect = ({ value, currency, children, className = "", re
       // Play sound effect
       playCoinSfx();
       
-      setChanges(prev => [...prev.slice(-2), { id, diff }]);
+      setTimeout(() => {
+        setChanges(prev => [...prev.slice(-2), { id, diff }]);
+      }, 0);
       
       // Auto-cleanup
       const timer = setTimeout(() => {
@@ -63,7 +67,7 @@ const CurrencyDecrementEffect = ({ value, currency, children, className = "", re
       return () => clearTimeout(timer);
     }
     prevValue.current = value;
-  }, [value, isSettled]);
+  }, [value, isSettled, componentMountTime]);
 
   const IconComponent = () => {
     const props = { className: "w-5 h-5", size: 20 };

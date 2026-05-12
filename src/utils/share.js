@@ -59,12 +59,12 @@ export const generateWordleGrid = (guesses, targetWord) => {
  * @returns {Promise<boolean>} True if shared/copied, false otherwise.
  */
 export const shareGameResult = async ({ title, grid }) => {
-  const fullText = `${title}\n\n${grid}\n\nپەیڤچن: یارییا پەیڤان ب کوردی\npeyivcin.vercel.app`;
+  const fullText = `${title}\n\n${grid}\n\nپەیڤۆک: یارییا پەیڤان ب کوردی\npeyvok.vercel.app`;
 
   if (navigator.share) {
     try {
       await navigator.share({
-        title: 'ئەنجامێ من د پەیڤچن دا',
+        title: 'ئەنجامێ من د پەیڤۆک دا',
         text: fullText,
       });
       return true;

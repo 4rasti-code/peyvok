@@ -64,11 +64,11 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
         en: {
             title: "Privacy Policy",
             subtitle: "Last Updated: April 2, 2026",
-            intro: "At پەیڤچن, we are committed to protecting your privacy and security. This Privacy Policy outlines how we handle your personal information when you use our application.",
+            intro: "At پەیڤۆک, we are committed to protecting your privacy and security. This Privacy Policy outlines how we handle your personal information when you use our application.",
             sections: [
                 {
                     title: "1. Information We Collect",
-                    text: "When you use پەیڤچن, we may collect the following information:",
+                    text: "When you use پەیڤۆک, we may collect the following information:",
                     list: [
                         "Public profile information (Name, Profile Picture) from Facebook or Google.",
                         "Email address provided during sign-in.",
@@ -94,7 +94,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                     text: "You have the right to access, edit, or delete your information at any time. Specifically for Facebook users:",
                     list: [
                         "To delete game activity, go to your Facebook profile > Settings & Privacy > Settings > Apps and Websites.",
-                        "Find 'پەیڤچن App' and click 'Remove'.",
+                        "Find 'پەیڤۆک App' and click 'Remove'.",
                         "Alternatively, you can email us at support@peyvchin.com to request full account and data deletion."
                     ]
                 },
@@ -108,11 +108,11 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
         ku: {
             title: "ڕێبازا پاراستنا نھێنیێ",
             subtitle: "دووماھیک نویژەنکرن: ٢ نیسان، ۲۰۲٦",
-            intro: "ئەم ل پەیڤچن ھەمی ھەولەکێ ددەین بۆ پاراستنا تایبەتمەندیا تە. ئەڤ ڕێبازە دیار دکەت کا ئەم چەوا پێزانینێن تە یێن کەسی بنکار دئینین دەما تو یارییا مە بەکار دھینی.",
+            intro: "ئەم ل پەیڤۆک ھەمی ھەولەکێ ددەین بۆ پاراستنا تایبەتمەندیا تە. ئەڤ ڕێبازە دیار دکەت کا ئەم چەوا پێزانینێن تە یێن کەسی بنکار دئینین دەما تو یارییا مە بەکار دھینی.",
             sections: [
                 {
                     title: "١. ئەو پێزانینێن ئەم کۆم دکەین",
-                    text: "دەما تو پەیڤچن بەکار دھینی، دبیت ئەڤ پێزانینە بھێنە کۆمکرن:",
+                    text: "دەما تو پەیڤۆک بەکار دھینی، دبیت ئەڤ پێزانینە بھێنە کۆمکرن:",
                     list: [
                         "پێزانینێن گشتی یێن پڕۆفایلی (ناڤ، وێنە) ژ فەیسبووکی یان گووگڵی.",
                         "ئیمەیڵا ھاتیە پێشکێشکرن دەما چوونەژوورێ.",
@@ -138,7 +138,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                     text: "مافێ تە ھەیە ل ھەر دەمەکی پێزانینێن خۆ ببینی، دەستکاری بکەی، یان ژی ببەی. تایبەت بۆ بەکارھێنەرێن فەیسبووکی:",
                     list: [
                         "بۆ ژێبرنا چالاکیێن یاریێ، ھەرە د ناڤ پڕۆفایلێ خۆ یێ فەیسبووکی > Settings & Privacy > Settings > Apps and Websites.",
-                        "پەیڤچن (پەیڤچن App) بببینە و کلیک بکە ل سەر Remove.",
+                        "پەیڤۆک (پەیڤۆک App) بببینە و کلیک بکە ل سەر Remove.",
                         "یان ژی تو دشێی ئیمەیڵەکێ بۆ مە بنێری ل سەر support@peyvchin.com بۆ داخوازکرنا ژێبرنا ئێکجارە یا ئەکاونتی و ھەمی داتایێن یاریێ."
                     ]
                 },
@@ -166,7 +166,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-bold   text-white mb-1">پەیڤچن</h1>
+                            <h1 className="text-4xl font-bold   text-white mb-1">پەیڤۆک</h1>
                             <p className="text-text-dim/60 text-xs font-bold uppercase tracking-[0.2em]">Heritage Reborn</p>
                         </div>
                     </div>
@@ -259,7 +259,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                         <span className="material-symbols-outlined text-xl">arrow_back</span>
                         {lang === 'ku' ? 'ڤەگەڕە' : 'Back to Game'}
                     </button>
-                    <p className="mt-8 text-[10px] text-white/10 uppercase font-bold   italic">&copy; 2026 پەیڤچن App. All Rights Reserved.</p>
+                    <p className="mt-8 text-[10px] text-white/10 uppercase font-bold   italic">&copy; 2026 پەیڤۆک App. All Rights Reserved.</p>
                 </div>
             </div>
 

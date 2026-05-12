@@ -163,7 +163,7 @@ const LobbyView = React.memo(({
             >
               <div className="relative z-10 flex items-center justify-between px-8 h-full">
                 <div className="flex flex-col items-start text-right">
-                  <h3 className="text-xl font-black font-heading text-amber-950">پەیڤچن</h3>
+                  <h3 className="text-xl font-black font-heading text-amber-950">پەیڤۆک</h3>
                   <span className="text-[9px] font-medium font-rabar uppercase  text-amber-900/80 leading-none">کلاسیک</span>
                 </div>
                 <div className="flex items-center justify-center">

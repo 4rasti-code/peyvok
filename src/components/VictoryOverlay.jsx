@@ -192,7 +192,7 @@ const VictoryOverlay = ({
                     triggerHaptic(10);
                     const grid = generateWordleGrid(guesses, solvedWord);
                     const result = await shareGameResult({
-                      title: 'تە سەرکەفتن ئینا د پەیڤچن دا! 🎉',
+                      title: 'تە سەرکەفتن ئینا د پەیڤۆک دا! 🎉',
                       grid: grid
                     });
                     

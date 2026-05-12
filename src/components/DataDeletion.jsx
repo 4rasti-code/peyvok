@@ -65,12 +65,12 @@ const DataDeletion = ({ onViewChange, onClose }) => {
         en: {
             title: "Data Deletion Instructions",
             lastUpdated: "Last Updated: April 2, 2026",
-            intro: "At پەیڤچن, we respect your privacy and provide a simple way to request the deletion of your personal data associated with our Facebook login and game platform.",
+            intro: "At پەیڤۆک, we respect your privacy and provide a simple way to request the deletion of your personal data associated with our Facebook login and game platform.",
             section1Title: "1. How to Request Data Deletion",
-            section1Text: "To delete your data from پەیڤچن, you can follow these steps:",
+            section1Text: "To delete your data from پەیڤۆک, you can follow these steps:",
             steps: [
                 "Open your Facebook profile and go to 'Settings & Privacy' > 'Settings'.",
-                "Look for 'Apps and Websites' and find 'پەیڤچن'.",
+                "Look for 'Apps and Websites' and find 'پەیڤۆک'.",
                 "Click the 'Remove' button.",
                 "Alternatively, you can send an email to support@peyvcin.com with the subject 'Data Deletion Request' and include your User ID or the email associated with your account."
             ],
@@ -89,12 +89,12 @@ const DataDeletion = ({ onViewChange, onClose }) => {
         ku: {
             title: "ڕێنمایێن ژێبرنا داتایان",
             lastUpdated: "دووماھیک نووژەنکرن: ٢ نیسان، ٢٠٢٦",
-            intro: "ل پەیڤچن، ئەم ڕێزێ ل تایبەتمەندیا تە دگرین و ڕێگەکا ب ساناھی دابین دکەین بۆ داخوازکرنا ژێبرنا داتایێن تە یێن کەسی یێن کو ب پەیڤچن و فەیسبووکی ڤە گرێداینە.",
+            intro: "ل پەیڤۆک، ئەم ڕێزێ ل تایبەتمەندیا تە دگرین و ڕێگەکا ب ساناھی دابین دکەین بۆ داخوازکرنا ژێبرنا داتایێن تە یێن کەسی یێن کو ب پەیڤۆک و فەیسبووکی ڤە گرێداینە.",
             section1Title: "١. چەوا داخوازا ژێبرنا داتایان بکەی",
-            section1Text: "بۆ ژێبرنا داتایێن خوە ژ پەیڤچن، تو دشێی ڤان پێنگاڤان پەیڕەو بکەی:",
+            section1Text: "بۆ ژێبرنا داتایێن خوە ژ پەیڤۆک، تو دشێی ڤان پێنگاڤان پەیڕەو بکەی:",
             steps: [
                 "پرۆفایلێ خوە یێ فەیسبووکی ڤەکە و ھەڕە 'Settings & Privacy' پاشان 'Settings'.",
-                "ل 'Apps and Websites' بگەڕی و 'پەیڤچن' ببینە.",
+                "ل 'Apps and Websites' بگەڕی و 'پەیڤۆک' ببینە.",
                 "کلیکێ ل سەر دوگمەیا 'Remove' بکە.",
                 "یان ژی، تو دشێی ئیمەیلەکێ بۆ support@peyvcin.com بفرێی ب ناڤونیشانێ 'Data Deletion Request' و ناسنامەیا خوە (User ID) یان ئیمەیلا خوە تێدا بنڤێسی."
             ],
@@ -124,7 +124,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                             <span className="material-symbols-outlined text-white text-2xl">delete_sweep</span>
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold font-heading  bg-clip-text text-transparent bg-linear-to-r from-white to-white/60">پەیڤچن</h1>
+                            <h1 className="text-2xl font-bold font-heading  bg-clip-text text-transparent bg-linear-to-r from-white to-white/60">پەیڤۆک</h1>
                             <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-primary/80">Data Freedom</p>
                         </div>
                     </div>
@@ -236,7 +236,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                     </button>
 
                     <footer className="mt-12 text-center text-white/20 text-[10px] font-bold  uppercase tracking-[0.3em] antialiased">
-                        © 2026 پەیڤچن Team • Built for Heritage
+                        © 2026 پەیڤۆک Team • Built for Heritage
                     </footer>
                 </div>
             </div>

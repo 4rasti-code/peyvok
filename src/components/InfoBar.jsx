@@ -11,7 +11,6 @@ export default function InfoBar({
   maxGuesses = 6,
   fils = 0,
   currentXP = 0,
-  level = 1,
   minXP = 0,
   maxXP = 100,
   timeLeft = 30,

@@ -275,6 +275,13 @@ export default function ShopView({ fils, derhem, dinar: _dinar, magnetCount, hin
           )}
         </AnimatePresence>
       </Motion.div>
+
+      {/* Store Compliance Virtual Currency Disclaimer */}
+      <div className="relative z-20 mt-6 px-4 py-3 bg-mono-100/50 dark:bg-mono-900/50 border border-mono-200 dark:border-mono-800 rounded-md text-center shadow-inner">
+        <p className="text-[9px] sm:text-[10px] font-bold text-mono-500 dark:text-mono-400 leading-relaxed max-w-sm mx-auto">
+          فلس، درهەم، و دینار دراڤێن خەیالی یێن ناڤ یاریێ نە و چ بهایەکێ ڕاستەقینە یان مادی نینە. ئەڤ یارییە چ پەیوەندی ب قومارێ و گۆڕینا دراڤی ب پارێ ڕاستەقینە ڤە نینە.
+        </p>
+      </div>
     </div>
 
       <PaymentGatewayModal 

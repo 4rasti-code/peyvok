@@ -84,7 +84,7 @@ const FloatingInput = ({ label, value, onChange, id, type = 'text', required = f
     <div className="relative w-full text-right">
       <label
         htmlFor={id}
-        className={`block text-[11px] font-black font-rabar mb-1.5 pr-2 uppercase transition-colors duration-200 ${isFocused ? 'text-emerald-400' : 'text-mono-400 dark:text-white/70 hover:text-mono-900 dark:hover:text-white/90'}`}
+        className={`block text-[11px] sm:text-[10px] font-black font-rabar mb-1.5 sm:mb-1 pr-2 uppercase transition-colors duration-200 ${isFocused ? 'text-emerald-400' : 'text-mono-400 dark:text-white/70 hover:text-mono-900 dark:hover:text-white/90'}`}
       >
         {label}
       </label>
@@ -110,7 +110,7 @@ const FloatingInput = ({ label, value, onChange, id, type = 'text', required = f
           autoComplete={autoComplete}
           name={name || id}
           aria-label={label}
-          className={`w-full bg-transparent py-1.5 pr-4 ${suffix ? 'pl-10' : 'pl-4'} font-rabar text-mono-900 dark:text-white text-base font-bold focus:outline-none transition-all duration-200 caret-emerald-400 relative z-10`}
+          className={`w-full bg-transparent py-1.5 sm:py-1 pr-4 ${suffix ? 'pl-10' : 'pl-4'} font-rabar text-mono-900 dark:text-white text-base sm:text-sm font-bold focus:outline-none transition-all duration-200 caret-emerald-400 relative z-10`}
           style={{
             appearance: 'none',
             userSelect: 'text',
@@ -539,6 +539,25 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
     }
   };
 
+  const handleGuestLogin = async () => {
+    try {
+      playTabSound();
+      triggerHaptic(10);
+      setLoading(true);
+      setError(null);
+      const { data, error } = await supabase.auth.signInAnonymously();
+      if (error) throw error;
+      
+      if (data.user && data.session) {
+        onAuthSuccess(data.user, 'مێهڤان');
+      }
+    } catch (err) {
+      playAlertSfx();
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
   const bgRef = useRef(null);
 
   const handleBackgroundClick = (e) => {
@@ -554,26 +573,25 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
   return (
     <div
       onClick={handleBackgroundClick}
-      className="flex-1 w-full flex flex-col items-center pt-2 px-4 pb-2 animate-in fade-in duration-500 relative auth-view-container bg-mono-white dark:bg-mono-950 transition-colors"
+      className="flex-1 w-full h-full flex flex-col items-center sm:justify-center overflow-y-auto sm:overflow-hidden no-scrollbar p-4 sm:p-4 animate-in fade-in duration-500 relative auth-view-container bg-mono-white dark:bg-mono-950 transition-colors"
     >
       <FloatingLetterBackground ref={bgRef} />
 
-      <div className="w-full max-w-xs mx-auto my-auto flex flex-col items-center relative z-20 py-1">
-        <div className="flex flex-col items-center mb-2 text-center">
-          <h1 className="text-2xl sm:text-5xl font-black font-heading text-mono-900 dark:text-white text-pop transform hover:scale-110 transition-transform duration-500">پەیڤچن</h1>
-          <div className="w-8 h-0.5 bg-emerald-500 rounded-full mt-1 shadow-[0_0_15px_rgba(16,185,129,0.4)]"></div>
+      <div className="w-full max-w-[360px] sm:max-w-[380px] flex flex-col items-center relative z-20 shrink-0 mb-4 mt-[10vh] sm:mt-0">
+        <div className="flex flex-col items-center mb-3 text-center">
+          <h1 className="text-4xl sm:text-4xl font-black font-heading text-mono-900 dark:text-white text-pop transform hover:scale-110 transition-transform duration-500">پەیڤۆک</h1>
         </div>
 
         <Motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full px-4 py-3 sm:px-12 sm:py-6 bg-mono-50 dark:bg-mono-900 rounded-lg border border-mono-200 dark:border-white/5 shadow-2xl transition-colors duration-500"
+          className="w-full px-4 py-3 sm:px-8 sm:py-5 bg-mono-50 dark:bg-mono-900 rounded-lg border border-mono-200 dark:border-white/5 shadow-2xl transition-colors duration-500"
         >
           <div className="relative z-10 w-full">
           {/* 1. LOGIN / SIGNUP FLOW */}
           {!showOtpScreen && recoveryStep === 0 && (
             <>
-              <div className="flex p-0.5 bg-mono-100 dark:bg-mono-950 rounded-md border border-mono-200 dark:border-white/10 mb-5 relative z-10">
+              <div className="flex p-0.5 bg-mono-100 dark:bg-mono-950 rounded-md border border-mono-200 dark:border-white/10 mb-4 relative z-10">
                 <Motion.div
                   className="absolute top-1 bottom-1 bg-[#0095f6] rounded-md shadow-[0_0_15px_rgba(0,149,246,0.5)]"
                   initial={false}
@@ -589,7 +607,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                     playTabSound();
                     setIsLogin(true);
                   }}
-                  className={`flex-1 relative z-10 py-3 text-sm font-black font-rabar transition-colors duration-300 ${isLogin ? 'text-white' : 'text-mono-500 dark:text-white/40 hover:text-mono-900 dark:hover:text-white/60'}`}
+                  className={`flex-1 relative z-10 py-2 text-sm font-black font-rabar transition-colors duration-300 ${isLogin ? 'text-white' : 'text-mono-500 dark:text-white/40 hover:text-mono-900 dark:hover:text-white/60'}`}
                 >
                   چوونا ژوورێ
                 </button>
@@ -599,7 +617,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                     playTabSound();
                     setIsLogin(false);
                   }}
-                  className={`flex-1 relative z-10 py-3 text-sm font-black font-rabar transition-colors duration-300 ${!isLogin ? 'text-white' : 'text-mono-500 dark:text-white/40 hover:text-mono-900 dark:hover:text-white/60'}`}
+                  className={`flex-1 relative z-10 py-2 text-sm font-black font-rabar transition-colors duration-300 ${!isLogin ? 'text-white' : 'text-mono-500 dark:text-white/40 hover:text-mono-900 dark:hover:text-white/60'}`}
                 >
                   تۆمارکرن
                 </button>
@@ -628,16 +646,13 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   exit={{ opacity: 0, x: isLogin ? 10 : -10 }}
                   className="mb-4"
                 >
-                  <p className="text-[10px] font-black font-rabar text-emerald-400 uppercase leading-none no-stroke mb-1 text-right">
-                    {isLogin ? 'WELCOME BACK / بخێرھاتی' : 'NEW ACCOUNT / ھەژمارەکا نوی'}
-                  </p>
                   <h2 className="text-2xl font-black font-heading text-mono-900 dark:text-white text-pop uppercase text-right">
                     {isLogin ? 'چوونا ژوورێ' : 'تۆمارکرن'}
                   </h2>
                 </Motion.div>
               </AnimatePresence>
 
-              <form onSubmit={handleAuth} className="space-y-4" autoComplete="off">
+              <form onSubmit={handleAuth} className="space-y-3" autoComplete="off">
                 {!isLogin && (
                   <div className="grid grid-cols-1 gap-5">
                     <div className="space-y-2">
@@ -776,7 +791,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full h-11 bg-[#0095f6] hover:bg-[#1877f2] active:scale-[0.98] text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2 shadow-sm"
+                  className="w-full h-10 sm:h-9 bg-[#0095f6] hover:bg-[#1877f2] active:scale-[0.98] text-white rounded-md font-bold font-rabar text-sm sm:text-xs transition-all flex items-center justify-center gap-2 mt-1 shadow-sm"
                 >
                   {loading ? (
                     <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -793,12 +808,12 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   <div className="flex-1 h-px bg-current opacity-20"></div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="flex flex-col gap-2">
                   <button
                     onClick={() => handleSocialLogin('google')}
-                    className="h-7 rounded-md bg-white text-black border border-outline/10 flex items-center justify-center gap-2 hover:bg-gray-50 active:scale-95 transition-all font-bold text-[9px] shadow-sm"
+                    className="h-9 sm:h-8 rounded-md bg-white text-black border border-outline/10 flex items-center justify-center gap-2 hover:bg-gray-50 active:scale-95 transition-all font-bold text-[11px] sm:text-xs shadow-sm"
                   >
-                    <svg className="w-3 h-3" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24">
                       <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
                       <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
                       <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" />
@@ -808,19 +823,37 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   </button>
                   <button
                     onClick={() => handleSocialLogin('facebook')}
-                    className="h-7 rounded-md bg-[#1877F2] text-white flex items-center justify-center gap-2 hover:bg-[#1877F2]/90 active:scale-95 transition-all font-bold text-[9px] shadow-sm"
+                    className="h-9 sm:h-8 rounded-md bg-[#1877F2] text-white flex items-center justify-center gap-2 hover:bg-[#1877F2]/90 active:scale-95 transition-all font-bold text-[11px] sm:text-xs shadow-sm"
                   >
-                    <svg className="w-3 h-3 fill-current" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
                       <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
                     </svg>
                     <span>Facebook</span>
+                  </button>
+                  <button
+                    onClick={() => handleSocialLogin('apple')}
+                    className="h-9 sm:h-8 rounded-md bg-black dark:bg-white text-white dark:text-black flex items-center justify-center gap-2 hover:bg-black/80 dark:hover:bg-white/90 active:scale-95 transition-all font-bold text-[11px] sm:text-xs shadow-sm"
+                  >
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
+                      <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.15 2.67.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.52-1.46 3.01-2.53 4.08zM12.03 7.25C11.64 4.03 14.36 1 17.07 1c.5 3.32-2.92 6.64-5.04 6.25z"/>
+                    </svg>
+                    <span>Apple</span>
                   </button>
                 </div>
               </div>
 
               <div className="mt-3 flex flex-col items-center">
-                <p className="text-[8px] text-on-surface/30 font-bold uppercase text-center tracking-widest max-w-xs leading-relaxed italic">
-                  ب کۆماربوونێ د ناڤ یاریێدا، تو دشێی نمرێن خۆ پارێزی و پێشبڕکێیێ بکەی.
+                <button
+                  type="button"
+                  onClick={handleGuestLogin}
+                  disabled={loading}
+                  className="w-full h-9 sm:h-8 mb-3 bg-mono-100 dark:bg-white/10 border border-mono-200 dark:border-white/5 hover:bg-mono-200 dark:hover:bg-white/20 text-mono-700 dark:text-white rounded-md font-bold font-rabar text-[11px] sm:text-xs transition-all flex items-center justify-center gap-2"
+                >
+                  <span className="material-symbols-outlined text-[16px]">person_outline</span>
+                  <span>یاریکرن وەکو مێهڤان</span>
+                </button>
+                <p className="text-[10px] text-mono-500 dark:text-white/40 font-bold text-center max-w-xs leading-relaxed mt-2">
+                  ب تۆماربوونێ د ناڤ یاریێدا، تو دشێی نمرێن خۆ پارێزی و پێشبڕکێیێ بکەی.
                 </p>
               </div>
             </>
@@ -1026,7 +1059,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
         </div>
       </Motion.div>
 
-      <div className="mt-1 mb-1 flex flex-col items-center gap-1 relative z-20">
+      <div className="mt-1 flex flex-col items-center gap-1 relative z-20 mb-8 sm:mb-0">
         <div className="flex items-center gap-3 text-[9px] font-bold uppercase tracking-widest text-mono-400 dark:text-mono-600">
           <button
             type="button"

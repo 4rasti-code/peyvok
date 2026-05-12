@@ -1220,9 +1220,9 @@ export default function App() {
   );
 
   return (
-    <div className="flex flex-col h-dvh max-h-dvh w-full items-center bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 md:bg-mono-white dark:md:bg-mono-black transition-colors duration-500 font-noto-sans-arabic" dir="rtl">
+    <div className="flex flex-col h-dvh max-h-dvh w-full items-center justify-center bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 md:bg-mono-white dark:md:bg-mono-black transition-colors duration-500 font-noto-sans-arabic" dir="rtl">
       <Analytics />
-      <div className={`flex-1 flex flex-col w-full max-w-screen-sm md:max-w-[960px] mx-auto relative overflow-hidden bg-mono-white dark:bg-mono-950 md:shadow-[0_0_80px_rgba(0,0,0,0.4)] transition-colors duration-500`}>
+      <div className={`flex-1 flex flex-col w-full max-w-screen-sm md:max-w-[960px] md:max-h-[1080px] mx-auto relative overflow-hidden bg-mono-white dark:bg-mono-950 md:shadow-[0_0_80px_rgba(0,0,0,0.4)] transition-colors duration-500`}>
         {/* Panic Overlay for Word Fever Mode Critical Time */}
         {gameMode === 'word_fever' && currentView === 'game' && timeLeft <= 10 && !isVictory && (
           <div className="panic-overlay" />
