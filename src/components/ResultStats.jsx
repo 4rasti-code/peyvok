@@ -73,7 +73,7 @@ export default function ResultStats({ profileData, playerStats, gameMode, curren
 
       {/* Guess Distribution Section */}
       <div className="w-full">
-        <h3 className="text-[11px] font-black text-mono-400 dark:text-mono-500 uppercase ] mb-4 text-center">دابەشکرنا هەوڵدانان</h3>
+        <h3 className="text-[11px] font-black text-mono-400 dark:text-mono-500 uppercase ] mb-4 text-center">دابەشکرنا پێکۆلان</h3>
         <div className="flex flex-col gap-1.5 w-full max-w-[280px] mx-auto">
           {Object.entries(fullDist).map(([key, val]) => (
             <GuessBar 

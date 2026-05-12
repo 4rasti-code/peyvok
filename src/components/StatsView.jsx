@@ -196,7 +196,7 @@ export default function StatsView({
           {/* 3. Global Distribution Chart */}
           <Motion.div variants={itemVariants}>
             <ChartSection 
-              title="دابەشکرنا هەوڵدانان (گشتی)" 
+              title="دابەشکرنا پێکۆلان (گشتی)" 
               dist={globalDist} 
               maxValue={maxGlobalDist} 
               color="bg-primary" 

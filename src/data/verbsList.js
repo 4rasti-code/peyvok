@@ -2205,15 +2205,6 @@ export const verbsWords = [
     ]
   },
   {
-    "word": "ھەولدان",
-    "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
-  },
-  {
     "word": "پێکۆڵکرن",
     "hint": "کار(چاوگ)",
     "category": "کار(چاوگ)",

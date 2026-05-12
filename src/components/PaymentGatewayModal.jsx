@@ -188,7 +188,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
                   onClick={() => setStep('methods')}
                   className="w-full py-4 rounded-2xl bg-white/10 text-white font-black font-rabar text-lg hover:bg-white/20 transition-all"
                 >
-                  دیسا ھەوڵ بدە
+                  دیسا پێکۆلێ بکە
                 </button>
               </div>
             )}
