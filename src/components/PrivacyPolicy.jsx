@@ -162,25 +162,25 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  <div className="flex items-center gap-6 group cursor-pointer" onClick={handleClose}>
  <div>
  <h1 className="text-4xl font-bold text-mono-900 dark:text-white mb-1">پەیڤۆک</h1>
- <p className="text-text-dim/60 text-xs font-bold uppercase tracking-[0.2em]">Heritage Reborn</p>
+ <p className="text-text-dim/60 text-xs font-bold uppercase tracking">Heritage Reborn</p>
  </div>
  </div>
 
  <div className="flex bg-mono-50 dark:bg-mono-900/80 backdrop-blur-xl border border-mono-200 dark:border-white/5 rounded-2xl p-1.5 ">
  <button 
  onClick={() => setLang('ku')}
- className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'ku' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 dark:' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
+ className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'ku' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 ' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
  >
- <div className="w-5 h-3.5 rounded-[2px] overflow-hidden ">
+ <div className="w-5 h-3.5 rounded overflow-hidden ">
  <KurdistanFlag />
  </div>
  <span>بەهدینی</span>
  </button>
  <button 
  onClick={() => setLang('en')}
- className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'en' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 dark:' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
+ className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'en' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 ' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
  >
- <div className="w-5 h-3.5 rounded-[2px] overflow-hidden ">
+ <div className="w-5 h-3.5 rounded overflow-hidden ">
  <USFlag />
  </div>
  <span>English</span>
@@ -193,13 +193,13 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  key={lang}
  initial={{ opacity: 0, y: 30 }}
  animate={{ opacity: 1, y: 0 }}
- className="bg-mono-50 dark:bg-mono-900/50 backdrop-blur-2xl border border-mono-200 dark:border-white/5 rounded-3xl p-10 sm:p-20 -[0_20px_80px_rgba(0,0,0,0.4)] relative"
+ className="bg-mono-50 dark:bg-mono-900/50 backdrop-blur-2xl border border-mono-200 dark:border-white/5 rounded-3xl p-10 sm:p-20 relative"
  >
  <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-mono-500/50 to-transparent opacity-30"></div>
 
  <header className="mb-16 text-center sm:text-start">
  <h2 className="text-4xl sm:text-5xl font-bold text-mono-900 dark:text-white mb-4 leading-tight">{current.title}</h2>
- <span className="text-mono-50 dark:text-mono-900 font-bold text-[10px] tracking-widest bg-mono-900 dark:bg-mono-50 px-4 py-1.5 rounded-full border border-mono-200 dark:border-mono-700 uppercase">{current.subtitle}</span>
+ <span className="text-mono-50 dark:text-mono-900 font-bold text tracking-widest bg-mono-900 dark:bg-mono-50 px-4 py-1.5 rounded-full border border-mono-200 dark:border-mono-700 uppercase">{current.subtitle}</span>
  </header>
 
  <p className="text-xl text-mono-700 dark:text-mono-300 mb-16 leading-relaxed font-medium italic border-r-4 border-mono-900 dark:border-mono-50 pr-6">
@@ -248,12 +248,12 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  playBackSfx();
  handleClose();
  }}
- className="bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] dark: hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto pt-4 mt-8"
+ className="bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto pt-4 mt-8"
  >
  <span className="material-symbols-outlined text-xl">arrow_back</span>
  {lang === 'ku' ? 'ڤەگەڕە' : 'Back to Game'}
  </button>
- <p className="mt-8 text-[10px] text-mono-300 dark:text-white/10 uppercase font-bold italic">&copy; 2026 پەیڤۆک App. All Rights Reserved.</p>
+ <p className="mt-8 text text-mono-300 dark:text-white/10 uppercase font-bold italic">&copy; 2026 پەیڤۆک App. All Rights Reserved.</p>
  </div>
  </div>
 

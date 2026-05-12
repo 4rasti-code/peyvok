@@ -120,31 +120,31 @@ const DataDeletion = ({ onViewChange, onClose }) => {
  {/* Header Section */}
  <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6 bg-surface-container/20 backdrop-blur-3xl p-6 rounded-2xl border border-outline/10 ">
  <div className="flex items-center gap-4 cursor-pointer" onClick={handleClose}>
- <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-mono-800 to-mono-900 dark:from-mono-100 dark:to-mono-200 flex items-center justify-center dark:">
+ <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-mono-800 to-mono-900 dark:from-mono-100 dark:to-mono-200 flex items-center justify-center ">
  <span className="material-symbols-outlined text-white text-2xl">delete_sweep</span>
  </div>
  <div>
  <h1 className="text-2xl font-bold font-heading bg-clip-text text-transparent bg-linear-to-r from-mono-900 to-mono-500 dark:from-white dark:to-white/60">پەیڤۆک</h1>
- <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-mono-700 dark:text-mono-300">Data Freedom</p>
+ <p className="text uppercase font-bold tracking text-mono-700 dark:text-mono-300">Data Freedom</p>
  </div>
  </div>
 
  <div className="flex bg-mono-100 dark:bg-black/40 p-1.5 rounded-2xl border border-mono-200 dark:border-white/5 backdrop-blur-md">
  <button
  onClick={() => setIsKurdish(false)}
- className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all duration-500 flex items-center gap-2 ${!isKurdish ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 scale-105 dark:' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
+ className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all duration-500 flex items-center gap-2 ${!isKurdish ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 scale-105 ' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
  >
- <div className="w-5 h-3.5 rounded-[2px] overflow-hidden ">
+ <div className="w-5 h-3.5 rounded overflow-hidden ">
  <USFlag />
  </div>
  English
  </button>
  <button
  onClick={() => setIsKurdish(true)}
- className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all duration-500 flex items-center gap-2 ${isKurdish ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 scale-105 dark:' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
+ className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all duration-500 flex items-center gap-2 ${isKurdish ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 scale-105 ' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
  >
  <span>بەهدینی</span>
- <div className="w-5 h-3.5 rounded-[2px] overflow-hidden ">
+ <div className="w-5 h-3.5 rounded overflow-hidden ">
  <KurdistanFlag />
  </div>
  </button>
@@ -157,7 +157,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
  
  <div className="flex flex-col items-center text-center mb-12">
  <h2 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">{t.title}</h2>
- <span className="px-4 py-1.5 rounded-full bg-mono-900 dark:bg-mono-50 border border-mono-200 dark:border-mono-700 text-[10px] font-bold tracking-widest text-mono-50 dark:text-mono-900 uppercase">
+ <span className="px-4 py-1.5 rounded-full bg-mono-900 dark:bg-mono-50 border border-mono-200 dark:border-mono-700 text font-bold tracking-widest text-mono-50 dark:text-mono-900 uppercase">
  {t.lastUpdated}
  </span>
  </div>
@@ -171,7 +171,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
  <div className="flex items-center gap-4">
  <h3 className="text-2xl font-bold ">{t.section1Title}</h3>
  </div>
- <div className="bg-white/5 border border-mono-200 dark:border-white/5 p-8 rounded-[2rem] space-y-4">
+ <div className="bg-white/5 border border-mono-200 dark:border-white/5 p-8 rounded space-y-4">
  <p className="text-text-dim italic">{t.section1Text}</p>
  <ul className="space-y-4">
  {t.steps.map((step, i) => (
@@ -188,7 +188,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
  <div className="flex items-center gap-4">
  <h3 className="text-2xl font-bold ">{t.section2Title}</h3>
  </div>
- <div className="bg-white/5 border border-mono-200 dark:border-white/5 p-8 rounded-[2rem] space-y-4">
+ <div className="bg-white/5 border border-mono-200 dark:border-white/5 p-8 rounded space-y-4">
  <p className="text-text-dim italic">{t.section2Text}</p>
  <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
  {t.deletedItems.map((item, i) => (
@@ -205,7 +205,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
  <div className="flex items-center gap-4">
  <h3 className="text-2xl font-bold ">{t.section3Title}</h3>
  </div>
- <div className="bg-mono-50 dark:bg-mono-900 border border-mono-100 dark:border-mono-800 p-8 rounded-[2rem]">
+ <div className="bg-mono-50 dark:bg-mono-900 border border-mono-100 dark:border-mono-800 p-8 rounded">
  <p className="text-mono-900 dark:text-white/90 leading-relaxed font-medium">
  {t.section3Text}
  </p>
@@ -226,13 +226,13 @@ const DataDeletion = ({ onViewChange, onClose }) => {
 
  <button 
  onClick={handleClose}
- className="bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] dark: hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto pt-4 mt-8"
+ className="bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto pt-4 mt-8"
  >
  <span className="material-symbols-outlined text-xl">arrow_back</span>
  {t.backButton}
  </button>
 
- <footer className="mt-12 text-center text-mono-400 dark:text-white/20 text-[10px] font-bold uppercase tracking-[0.3em] antialiased">
+ <footer className="mt-12 text-center text-mono-400 dark:text-white/20 text font-bold uppercase tracking antialiased">
  © 2026 پەیڤۆک Team • Built for Heritage
  </footer>
  </div>
