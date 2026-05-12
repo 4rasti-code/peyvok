@@ -96,7 +96,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
                 "پرۆفایلێ خوە یێ فەیسبووکی ڤەکە و ھەڕە 'Settings & Privacy' پاشان 'Settings'.",
                 "ل 'Apps and Websites' بگەڕی و 'پەیڤۆک' ببینە.",
                 "کلیکێ ل سەر دوگمەیا 'Remove' بکە.",
-                "یان ژی، تو دشێی ئیمەیلەکێ بۆ support@peyvcin.com بفرێی ب ناڤونیشانێ 'Data Deletion Request' و ناسنامەیا خوە (User ID) یان ئیمەیلا خوە تێدا بنڤێسی."
+                "یان ژی، تو دشێی ئیمەیلەکێ بۆ support@peyvcin.com بهنێری ب ناڤونیشانێ 'Data Deletion Request' و ناسنامەیا خوە (User ID) یان ئیمەیلا خوە تێدا بنڤێسی."
             ],
             section2Title: "٢. کیژ داتای دێ ھێنە ژێبرن؟",
             section2Text: "پشتی کو داخوازا ژێبرنێ دھێتە جێبەجێکرن، ئەڤ زانیاریێن خوارێ دێ ب ئێکجاری ژ سێرڤەرێن مە ھێنە ڕەشکرن:",
