@@ -593,7 +593,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
  <>
  <div className="flex p-0.5 bg-mono-100 dark:bg-mono-950 rounded-md border border-mono-200 dark:border-white/10 mb-4 relative z-10">
  <Motion.div
- className="absolute top-1 bottom-1 bg-[#0095f6] rounded-md shadow-[0_0_15px_rgba(0,149,246,0.5)] "
+ className="absolute top-1 bottom-1 bg-[#0095f6] rounded-md"
  initial={false}
  animate={{
  right: isLogin ? '4px' : '50%',
