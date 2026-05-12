@@ -593,7 +593,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
  <>
  <div className="flex p-0.5 bg-mono-100 dark:bg-mono-950 rounded-md border border-mono-200 dark:border-white/10 mb-4 relative z-10">
  <Motion.div
- className="absolute top-1 bottom-1 bg-[#0095f6] rounded-md "
+ className="absolute top-1 bottom-1 bg-[#0095f6] rounded-md shadow-[0_0_15px_rgba(0,149,246,0.5)] "
  initial={false}
  animate={{
  right: isLogin ? '4px' : '50%',
@@ -791,7 +791,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
  <button
  type="submit"
  disabled={loading}
- className="w-full h-10 sm:h-9 bg-[#0095f6] hover:bg-[#1877f2] active:scale-[0.98] text-white rounded-md font-bold font-rabar text-sm sm:text-xs transition-all flex items-center justify-center gap-2 mt-1 "
+ className="w-full h-10 sm:h-9 bg-[#0095f6] hover:bg-[#1877f2] active:scale-[0.98] text-white rounded-md font-bold font-rabar text-sm sm:text-xs transition-all flex items-center justify-center gap-2 mt-1 shadow-sm "
  >
  {loading ? (
  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-md animate-spin"></div>
@@ -811,7 +811,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
  <div className="flex flex-col gap-2">
  <button
  onClick={() => handleSocialLogin('google')}
- className="h-9 sm:h-8 rounded-md bg-white text-black border border-outline/10 flex items-center justify-center gap-2 hover:bg-gray-50 active:scale-95 transition-all font-bold text-[11px] sm:text-xs "
+ className="h-9 sm:h-8 rounded-md bg-white text-black border border-outline/10 flex items-center justify-center gap-2 hover:bg-gray-50 active:scale-95 transition-all font-bold text-[11px] sm:text-xs shadow-sm "
  >
  <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24">
  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -823,7 +823,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
  </button>
  <button
  onClick={() => handleSocialLogin('facebook')}
- className="h-9 sm:h-8 rounded-md bg-[#1877F2] text-white flex items-center justify-center gap-2 hover:bg-[#1877F2]/90 active:scale-95 transition-all font-bold text-[11px] sm:text-xs "
+ className="h-9 sm:h-8 rounded-md bg-[#1877F2] text-white flex items-center justify-center gap-2 hover:bg-[#1877F2]/90 active:scale-95 transition-all font-bold text-[11px] sm:text-xs shadow-sm "
  >
  <svg className="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
  <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
@@ -832,7 +832,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
  </button>
  <button
  onClick={() => handleSocialLogin('apple')}
- className="h-9 sm:h-8 rounded-md bg-black dark:bg-white text-white dark:text-black flex items-center justify-center gap-2 hover:bg-black/80 dark:hover:bg-white/90 active:scale-95 transition-all font-bold text-[11px] sm:text-xs "
+ className="h-9 sm:h-8 rounded-md bg-black dark:bg-white text-white dark:text-black flex items-center justify-center gap-2 hover:bg-black/80 dark:hover:bg-white/90 active:scale-95 transition-all font-bold text-[11px] sm:text-xs shadow-sm "
  >
  <svg className="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
  <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.15 2.67.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.52-1.46 3.01-2.53 4.08zM12.03 7.25C11.64 4.03 14.36 1 17.07 1c.5 3.32-2.92 6.64-5.04 6.25z"/>
@@ -901,7 +901,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
  <button
  type="submit"
  disabled={loading}
- className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2 "
+ className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2 shadow-sm "
  >
  {loading ? (
  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-md animate-spin"></div>
