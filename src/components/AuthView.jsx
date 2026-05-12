@@ -853,7 +853,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   <span>یاریکرن وەکو مێهڤان</span>
                 </button>
                 <p className="text-[10px] text-mono-500 dark:text-white/40 font-bold text-center max-w-xs leading-relaxed mt-2">
-                  ب تۆماربوونێ د ناڤ یاریێدا، تو دشێی نمرێن خۆ پارێزی و پێشبڕکێیێ بکەی.
+                  ب تۆماربوونێ د ناڤ یاریێدا، تو دشێی نمرێن خوە پارێزی و پێشبڕکێیێ بکەی.
                 </p>
               </div>
             </>
@@ -868,7 +868,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                 </h2>
                 <p className="text-xs font-black font-rabar text-white/70 leading-relaxed">
                   {isUnverifiedLogin
-                    ? "تە هێشتا ئیمێلێ خۆ پشتڕاست نەکرییە. مە کۆدەکێ نوی بۆ تە فرێکر، ژ کەرەما خۆ ل ڤێرە بنڤێسە."
+                    ? "تە هێشتا ئیمێلێ خوە پشتڕاست نەکرییە. مە کۆدەکێ نوی بۆ تە فرێکر، ژ کەرەما خوە ل ڤێرە بنڤێسە."
                     : "مە کۆدەکێ ٦ ژمارەیی هنارت بۆ ئیمێلێ تە. ژ کەرەما خوە کۆدی ل ڤێرە بنڤێیسە دا کو هەژمارا تە چالاک ببیت."
                   }
                 </p>
@@ -943,7 +943,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
               <div className="text-right space-y-2">
                 <h2 className="text-2xl font-black font-heading text-white">گۆڕینا پەیڤا نهێنی</h2>
                 <p className="text-xs font-black font-rabar text-white/70 leading-relaxed">
-                  ئیمەیڵێ خۆ بنڤیسە دا کو کۆدەکێ پشتڕاستکرنێ بۆ تە بهنێرین.
+                  ئیمەیڵێ خوە بنڤیسە دا کو کۆدەکێ پشتڕاستکرنێ بۆ تە بهنێرین.
                 </p>
               </div>
               <form onSubmit={handleRequestReset} className="space-y-4">

@@ -992,7 +992,7 @@ export default function SocialHubView({
                     <span className="material-symbols-outlined text-6xl text-mono-400">forum</span>
                     <div className="text-center">
                       <div className="font-black text-lg text-mono-900 dark:text-mono-50">ھیچ نامەیەک نینە</div>
-                      <div className="text-xs font-bold font-rabar text-mono-500">دەستپێبکە ب نڤێسینا نامەیەکێ بۆ ھەڤالێن خۆ</div>
+                      <div className="text-xs font-bold font-rabar text-mono-500">دەستپێبکە ب نڤێسینا نامەیەکێ بۆ ھەڤالێن خوە</div>
                     </div>
                     <button
                       onClick={() => setActiveTab('friends')}

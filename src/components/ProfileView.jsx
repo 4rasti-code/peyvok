@@ -220,7 +220,7 @@ export default function ProfileView({ onProfileSave }) {
    const handleInvite = () => {
       const shareLink = `${window.location.origin}/play?invite=${user?.id || 'guest'}`;
       navigator.clipboard.writeText(shareLink);
-      alert('لینک ھاتە کۆپیکرن! بۆ ھەڤالێن خۆ بفرێژە.');
+      alert('لینک ھاتە کۆپیکرن! بۆ ھەڤالێن خوە بفرێژە.');
    };
 
    const handleSave = async () => {
@@ -588,7 +588,7 @@ export default function ProfileView({ onProfileSave }) {
                               >
                                  <div className="bg-amber-500 text-slate-950 px-6 py-4 rounded-xl font-black font-rabar text-[15px] shadow-2xl whitespace-nowrap flex items-center gap-3 border-2 border-white/30 backdrop-blur-sm pointer-events-auto">
                                     <span className="material-symbols-outlined text-2xl">lock</span>
-                                    تو نەشێی ناسناڤێ خۆ بگوهۆڕی هەتا {toKuDigits(daysRemaining)} ڕۆژێن دی
+                                    تو نەشێی ناسناڤێ خوە بگوهۆڕی هەتا {toKuDigits(daysRemaining)} ڕۆژێن دی
                                  </div>
                               </Motion.div>
                            )}
