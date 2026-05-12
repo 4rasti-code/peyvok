@@ -77,8 +77,8 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                     ]
                 },
                 {
-                    title: "2. How We Use Facebook Data",
-                    text: "If you choose to sign in via Facebook, we only access information you explicitly permit. We use this data to:",
+                    title: "2. How We Use Facebook, Google, and Apple Data",
+                    text: "If you choose to sign in via Facebook, Google, or Apple, we only access information you explicitly permit. We use this data to:",
                     list: [
                         "Create your unique game profile.",
                         "Display your name and country on the global leaderboards.",
@@ -91,9 +91,9 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                 },
                 {
                     title: "4. Your Rights and Data Deletion",
-                    text: "You have the right to access, edit, or delete your information at any time. Specifically for Facebook users:",
+                    text: "You have the right to access, edit, or delete your information at any time. Specifically for Facebook, Google, or Apple users:",
                     list: [
-                        "To delete game activity, go to your Facebook profile > Settings & Privacy > Settings > Apps and Websites.",
+                        "To delete game activity, go to your Facebook, Google, or Apple profile > Settings & Privacy > Settings > Apps and Websites.",
                         "Find 'پەیڤۆک App' and click 'Remove'.",
                         "Alternatively, you can email us at support@peyvchin.com to request full account and data deletion."
                     ]
@@ -121,8 +121,8 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                     ]
                 },
                 {
-                    title: "٢. چەوا ئەم داتایێن فەیسبۆکی بکار دهینین",
-                    text: "ئەگەر تە ھەلبژارت ب ڕێیا فەیسبۆکی بچی د ژوورڤە، ئەم ب تنێ دەستەکا مە ل سەر وان پێزانینان ھەیە کو تە ڕێپێدان پێ دایە. ئەم ڤان داتایان بکار دهینین بۆ:",
+                    title: "٢. چەوا ئەم داتایێن فەیسبۆک، گۆگل و ئەپڵی بکار دهینین",
+                    text: "ئەگەر تە ھەلبژارت ب ڕێیا فەیسبۆکی، گۆگلی یان ئەپڵی بچی د ژوورڤە، ئەم ب تنێ دەستەکا مە ل سەر وان پێزانینان ھەیە کو تە ڕێپێدان پێ دایە. ئەم ڤان داتایان بکار دهینین بۆ:",
                     list: [
                         "دروستکرنا پڕۆفایلێ تە یێ تایبەت د ناڤ یاریێدا.",
                         "پێشاندانا ناڤ و وەلاتێ تە د لیستا جیھانی یا سەرکەفتیاندا.",
@@ -135,9 +135,9 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                 },
                 {
                     title: "٤. مافێن تە و ژێبرنا داتایان",
-                    text: "مافێ تە ھەیە ل ھەر دەمەکی پێزانینێن خوە ببینی، دەستکاری بکەی، یان ژی ببەی. تایبەت بۆ بکارھێنەرێن فەیسبۆکی:",
+                    text: "مافێ تە ھەیە ل ھەر دەمەکی پێزانینێن خوە ببینی، دەستکاری بکەی، یان ژی ببەی. تایبەت بۆ بکارھێنەرێن فەیسبۆک، گۆگل یان ئەپڵی:",
                     list: [
-                        "بۆ ژێبرنا چالاکیێن یاریێ، ھەرە د ناڤ پڕۆفایلێ خوە یێ فەیسبۆکی > Settings & Privacy > Settings > Apps and Websites.",
+                        "بۆ ژێبرنا چالاکیێن یاریێ، ھەرە د ناڤ پڕۆفایلێ خوە یێ فەیسبۆکی، گۆگلی یان ئەپڵی > Settings & Privacy > Settings > Apps and Websites.",
                         "پەیڤۆک (پەیڤۆک App) بببینە و کلیک بکە ل سەر Remove.",
                         "یان ژی تو دشێی ئیمەیڵەکێ بۆ مە بهنێری ل سەر support@peyvchin.com بۆ داخوازکرنا ژێبرنا ئێکجارە یا هژمارێ و ھەمی داتایێن یاریێ."
                     ]

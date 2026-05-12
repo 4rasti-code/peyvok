@@ -65,11 +65,11 @@ const DataDeletion = ({ onViewChange, onClose }) => {
         en: {
             title: "Data Deletion Instructions",
             lastUpdated: "Last Updated: April 2, 2026",
-            intro: "At پەیڤۆک, we respect your privacy and provide a simple way to request the deletion of your personal data associated with our Facebook login and game platform.",
+            intro: "At پەیڤۆک, we respect your privacy and provide a simple way to request the deletion of your personal data associated with our Facebook, Google, or Apple login and game platform.",
             section1Title: "1. How to Request Data Deletion",
             section1Text: "To delete your data from پەیڤۆک, you can follow these steps:",
             steps: [
-                "Open your Facebook profile and go to 'Settings & Privacy' > 'Settings'.",
+                "Open your Facebook, Google, or Apple profile and go to 'Settings & Privacy' > 'Settings'.",
                 "Look for 'Apps and Websites' and find 'پەیڤۆک'.",
                 "Click the 'Remove' button.",
                 "Alternatively, you can send an email to support@peyvcin.com with the subject 'Data Deletion Request' and include your User ID or the email associated with your account."
@@ -89,11 +89,11 @@ const DataDeletion = ({ onViewChange, onClose }) => {
         ku: {
             title: "ڕێنمایێن ژێبرنا داتایان",
             lastUpdated: "دووماھیک نووژەنکرن: ٢ نیسان، ٢٠٢٦",
-            intro: "ل پەیڤۆک، ئەم ڕێزێ ل تایبەتمەندیا تە دگرین و ڕێکەکا ب ساناھی دابین دکەین بۆ داخوازکرنا ژێبرنا داتایێن تە یێن کەسی یێن کو ب پەیڤۆک و فەیسبۆکی ڤە گرێداینە.",
+            intro: "ل پەیڤۆک، ئەم ڕێزێ ل تایبەتمەندیا تە دگرین و ڕێکەکا ب ساناھی دابین دکەین بۆ داخوازکرنا ژێبرنا داتایێن تە یێن کەسی یێن کو ب پەیڤۆک و فەیسبۆک، گۆگل، یان ئەپڵی ڤە گرێداینە.",
             section1Title: "١. چەوا داخوازا ژێبرنا داتایان بکەی",
             section1Text: "بۆ ژێبرنا داتایێن خوە ژ پەیڤۆک، تو دشێی ڤان پێنگاڤان پەیڕەو بکەی:",
             steps: [
-                "پرۆفایلێ خوە یێ فەیسبۆکی ڤەکە و ھەڕە 'Settings & Privacy' پاشان 'Settings'.",
+                "پرۆفایلێ خوە یێ فەیسبۆکی، گۆگلی یان ئەپڵی ڤەکە و ھەڕە 'Settings & Privacy' پاشان 'Settings'.",
                 "ل 'Apps and Websites' بگەڕی و 'پەیڤۆک' ببینە.",
                 "کلیکێ ل سەر دوگمەیا 'Remove' بکە.",
                 "یان ژی، تو دشێی ئیمەیلەکێ بۆ support@peyvcin.com بهنێری ب ناڤونیشانێ 'Data Deletion Request' و ناسنامەیا خوە (User ID) یان ئیمەیلا خوە تێدا بنڤێسی."
