@@ -111,7 +111,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
  {
  title: "8. Changes to Terms",
  text: "We reserve the right to modify these terms at any time. We will notify you of major changes through the application.",
- email: "support@peyvchin.com"
+ email: "support@peyvokgame.com"
  }
  ]
  },
@@ -164,7 +164,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
  {
  title: "٨. گوھۆڕینا مەرجان",
  text: "مە ماف ھەیە ل ھەر دەمەکی ڤان مەرجان بگوھۆڕین. ئەم دێ تە ژ گوھۆڕینێن مەزن ئاگەھدار کەین.",
- email: "support@peyvchin.com"
+ email: "support@peyvokgame.com"
  }
  ]
  }

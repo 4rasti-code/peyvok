@@ -84,7 +84,7 @@ import { colorsToEmojiGrid } from './utils/share';
 
 
 
-const PEYVCIN_VERSION = '2.0.0';
+const PEYVOK_VERSION = '2.0.0';
 
 // Audio logic handled via GameContext useGame()
 

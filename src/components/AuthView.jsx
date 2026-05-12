@@ -44,7 +44,7 @@ const COUNTRIES = [
   { name: 'ژاپۆن', code: 'JP', flag: '🇯🇵' },
 ];
 
-const RESERVED_WORDS = ['admin', 'peyvcin', 'official', 'support', 'moderator', 'staff', 'peyv', 'super', 'root'];
+const RESERVED_WORDS = ['admin', 'peyvok', 'official', 'support', 'moderator', 'staff', 'peyv', 'super', 'root'];
 const NICKNAME_REGEX = /^[a-zA-Z0-9_\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]{8,15}$/;
 
 const KurdistanFlag = () => (
@@ -662,7 +662,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                         value={nickname}
                         onChange={(e) => setNickname(e.target.value)}
                         required
-                        name="peyvcin_reg_user"
+                        name="peyvok_reg_user"
                         autoComplete="off"
                         isError={nameAvailability === 'taken' || nameAvailability === 'invalid'}
                       />
@@ -699,7 +699,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  name="peyvcin_auth_email"
+                  name="peyvok_auth_email"
                   autoComplete="off"
                 />
 
@@ -708,7 +708,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   id="auth-password"
                   type={showPassword ? 'text' : 'password'}
                   value={password}
-                  name="peyvcin_auth_pass"
+                  name="peyvok_auth_pass"
                   autoComplete={isLogin ? "current-password" : "new-password"}
                   onChange={(e) => {
                     setPassword(e.target.value);
@@ -753,7 +753,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
-                      name="peyvcin_reg_confirm"
+                      name="peyvok_reg_confirm"
                       autoComplete="new-password"
                     />
 

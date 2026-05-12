@@ -95,13 +95,13 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  list: [
  "To delete game activity, go to your Facebook, Google, or Apple profile > Settings & Privacy > Settings > Apps and Websites.",
  "Find 'پەیڤۆک App' and click 'Remove'.",
- "Alternatively, you can email us at support@peyvchin.com to request full account and data deletion."
+ "Alternatively, you can email us at support@peyvokgame.com to request full account and data deletion."
  ]
  },
  {
  title: "5. Contact Us",
  text: "If you have any questions or concerns regarding this policy, please contact us at:",
- email: "support@peyvchin.com"
+ email: "support@peyvokgame.com"
  }
  ]
  },
@@ -139,13 +139,13 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  list: [
  "بۆ ژێبرنا چالاکیێن یاریێ، ھەرە د ناڤ پڕۆفایلێ خوە یێ فەیسبۆکی، گۆگلی یان ئەپڵی > Settings & Privacy > Settings > Apps and Websites.",
  "پەیڤۆک (پەیڤۆک App) بببینە و کلیک بکە ل سەر Remove.",
- "یان ژی تو دشێی ئیمەیڵەکێ بۆ مە بهنێری ل سەر support@peyvchin.com بۆ داخوازکرنا ژێبرنا ئێکجارە یا هژمارێ و ھەمی داتایێن یاریێ."
+ "یان ژی تو دشێی ئیمەیڵەکێ بۆ مە بهنێری ل سەر support@peyvokgame.com بۆ داخوازکرنا ژێبرنا ئێکجارە یا هژمارێ و ھەمی داتایێن یاریێ."
  ]
  },
  {
  title: "٥. پەیوەندی ب مە بکە",
  text: "ئەگەر تە ھەر پسیارەک یان تێبینیەک ھەبیت ل سەر ڤێ ڕێبازێ، ھیڤییە پەیوەندیێ ب مە بکەی ب ڕێیا:",
- email: "support@peyvchin.com"
+ email: "support@peyvokgame.com"
  }
  ]
  }

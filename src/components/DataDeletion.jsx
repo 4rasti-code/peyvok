@@ -72,7 +72,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
  "Open your Facebook, Google, or Apple profile and go to 'Settings & Privacy' > 'Settings'.",
  "Look for 'Apps and Websites' and find 'پەیڤۆک'.",
  "Click the 'Remove' button.",
- "Alternatively, you can send an email to support@peyvcin.com with the subject 'Data Deletion Request' and include your User ID or the email associated with your account."
+ "Alternatively, you can send an email to support@peyvokgame.com with the subject 'Data Deletion Request' and include your User ID or the email associated with your account."
  ],
  section2Title: "2. What Data is Deleted?",
  section2Text: "Once a deletion request is processed, the following information will be permanently removed from our servers:",
@@ -96,7 +96,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
  "پرۆفایلێ خوە یێ فەیسبۆکی، گۆگلی یان ئەپڵی ڤەکە و ھەڕە 'Settings & Privacy' پاشان 'Settings'.",
  "ل 'Apps and Websites' بگەڕی و 'پەیڤۆک' ببینە.",
  "کلیکێ ل سەر دوگمەیا 'Remove' بکە.",
- "یان ژی، تو دشێی ئیمەیلەکێ بۆ support@peyvcin.com بهنێری ب ناڤونیشانێ 'Data Deletion Request' و ناسنامەیا خوە (User ID) یان ئیمەیلا خوە تێدا بنڤێسی."
+ "یان ژی، تو دشێی ئیمەیلەکێ بۆ support@peyvokgame.com بهنێری ب ناڤونیشانێ 'Data Deletion Request' و ناسنامەیا خوە (User ID) یان ئیمەیلا خوە تێدا بنڤێسی."
  ],
  section2Title: "٢. کیژان زانیاری دێ هێنە ژێبرن؟",
  section2Text: "پشتی کو داخوازا ژێبرنێ دھێتە جێبەجێکرن، ئەڤ زانیاریێن خوارێ دێ ب ئێکجاری ژ سێرڤەرێن مە ھێنە ڕەشکرن:",
