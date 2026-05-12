@@ -70,7 +70,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                     title: "1. Information We Collect",
                     text: "When you use پەیڤۆک, we may collect the following information:",
                     list: [
-                        "Public profile information (Name, Profile Picture) from Facebook or Google.",
+                        "Public profile information (Name, Profile Picture) from Facebook, Google, or Apple.",
                         "Email address provided during sign-in.",
                         "Game data (scores, level, and virtual rewards) to maintain your ranking on the leaderboard.",
                         "Device information (language, device type)."

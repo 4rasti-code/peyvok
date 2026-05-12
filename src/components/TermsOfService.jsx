@@ -81,7 +81,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                 },
                 {
                     title: "3. User Accounts",
-                    text: "You are responsible for maintaining the confidentiality of your login credentials (via Facebook or Google).",
+                    text: "You are responsible for maintaining the confidentiality of your login credentials (via Facebook, Google, or Apple).",
                     list: [
                         "You are responsible for all activities occurring under your account.",
                         "Notify us immediately of any unauthorized access."
@@ -105,13 +105,13 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                     text: "پەیڤۆک provides its services 'as is'. We are not responsible for technical glitches, data loss, or server downtime. Our total liability shall not exceed the amount you paid to use the service (if any)."
                 },
                 {
-                    title: "7. Changes to Terms",
-                    text: "We reserve the right to modify these terms at any time. We will notify you of major changes through the application.",
-                    email: "support@peyvchin.com"
+                    title: "7. Virtual Currency",
+                    text: "Any in-game currency (e.g., Fils, Derhem, Dinar) or rewards provided in پەیڤۆک are purely virtual. They have no real-world monetary value, cannot be exchanged for real money, and are used exclusively for in-game entertainment."
                 },
                 {
-                    title: "8. Virtual Currency",
-                    text: "Any in-game currency (e.g., Fils, Derhem, Dinar) or rewards provided in پەیڤۆک are purely virtual. They have no real-world monetary value, cannot be exchanged for real money, and are used exclusively for in-game entertainment."
+                    title: "8. Changes to Terms",
+                    text: "We reserve the right to modify these terms at any time. We will notify you of major changes through the application.",
+                    email: "support@peyvchin.com"
                 }
             ]
         },
