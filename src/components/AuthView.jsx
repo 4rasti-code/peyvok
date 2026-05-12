@@ -68,10 +68,10 @@ const KurdistanFlag = () => (
 );
 
 const FlagIcon = ({ code, isKurdistan, size = 'w-10 h-10' }) => {
-  if (isKurdistan) return <div className={`${size} overflow-hidden rounded-sm`}><KurdistanFlag /></div>;
+  if (isKurdistan) return <div className={`${size} overflow-hidden rounded-md`}><KurdistanFlag /></div>;
   const url = `https://purecatamphetamine.github.io/country-flag-icons/3x2/${code.toUpperCase()}.svg`;
   return (
-    <div className={`${size} overflow-hidden rounded-sm bg-black/5`}>
+    <div className={`${size} overflow-hidden rounded-md bg-black/5`}>
       <img src={url} alt={code} className="w-full h-full object-cover" />
     </div>
   );
@@ -130,7 +130,7 @@ const FloatingInput = ({ label, value, onChange, id, type = 'text', required = f
       {isFocused && (
         <Motion.div
           layoutId="input-glow"
-          className="absolute inset-0 bg-emerald-500/10 blur-2xl -z-10 rounded-3xl"
+          className="absolute inset-0 bg-emerald-500/10 blur-2xl -z-10 rounded-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         />
@@ -585,7 +585,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
         <Motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full px-4 py-3 sm:px-8 sm:py-5 bg-mono-50 dark:bg-mono-900 rounded-lg border border-mono-200 dark:border-white/5 shadow-2xl transition-colors duration-500"
+          className="w-full px-4 py-3 sm:px-8 sm:py-5 bg-mono-50 dark:bg-mono-900 rounded-md border border-mono-200 dark:border-white/5 shadow-2xl transition-colors duration-500"
         >
           <div className="relative z-10 w-full">
           {/* 1. LOGIN / SIGNUP FLOW */}
@@ -630,7 +630,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
-                    className="mb-6 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold font-rabar text-center flex flex-col items-center gap-2"
+                    className="mb-6 p-4 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold font-rabar text-center flex flex-col items-center gap-2"
                   >
                     <span className="material-symbols-outlined text-xl">check_circle</span>
                     <p>هەژمار ب سەرکەفتیانە هاتە تۆمارکرن</p>
@@ -794,7 +794,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   className="w-full h-10 sm:h-9 bg-[#0095f6] hover:bg-[#1877f2] active:scale-[0.98] text-white rounded-md font-bold font-rabar text-sm sm:text-xs transition-all flex items-center justify-center gap-2 mt-1 shadow-sm"
                 >
                   {loading ? (
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-md animate-spin"></div>
                   ) : (
                     <span>{isLogin ? 'چوونا ژوورێ' : 'تۆمارکرن'}</span>
                   )}
@@ -904,7 +904,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2 shadow-sm"
                 >
                   {loading ? (
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-md animate-spin"></div>
                   ) : (
                     <span>پشتڕاستکرن</span>
                   )}
@@ -963,7 +963,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   )}
                 </AnimatePresence>
                 <button type="submit" disabled={loading} className="w-full h-11 bg-[#0095f6] hover:bg-[#1877f2] text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
-                  {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <span>کۆدی بهنێرە</span>}
+                  {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-md animate-spin" /> : <span>کۆدی بهنێرە</span>}
                 </button>
                 <button type="button" onClick={() => {
                   setRecoveryStep(0);
@@ -999,7 +999,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   )}
                 </AnimatePresence>
                 <button type="submit" disabled={loading} className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
-                  {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <span>پشتڕاستکرن</span>}
+                  {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-md animate-spin" /> : <span>پشتڕاستکرن</span>}
                 </button>
                 <button type="button" onClick={() => {
                   setRecoveryStep(0);
@@ -1044,7 +1044,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                   )}
                 </AnimatePresence>
                 <button type="submit" disabled={loading} className="w-full h-11 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md font-bold font-rabar text-sm transition-all flex items-center justify-center gap-2 mt-2">
-                  {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <span>نووکرن</span>}
+                  {loading ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-md animate-spin" /> : <span>نووکرن</span>}
                 </button>
                 <button type="button" onClick={() => {
                   setRecoveryStep(0);
@@ -1068,7 +1068,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
           >
             Terms
           </button>
-          <span className="w-1.5 h-1.5 rounded-full bg-mono-200 dark:bg-white/5"></span>
+          <span className="w-1.5 h-1.5 rounded-md bg-mono-200 dark:bg-white/5"></span>
           <button
             type="button"
             onClick={() => setActivePolicyModal('privacy')}
@@ -1076,7 +1076,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
           >
             Privacy
           </button>
-          <span className="w-1.5 h-1.5 rounded-full bg-mono-200 dark:bg-white/5"></span>
+          <span className="w-1.5 h-1.5 rounded-md bg-mono-200 dark:bg-white/5"></span>
           <button
             type="button"
             onClick={() => setActivePolicyModal('deletion')}
@@ -1137,7 +1137,7 @@ const PolicyModal = ({ isOpen, onClose, type, onViewChange }) => {
                 playBackSfx();
                 onClose();
               }}
-              className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors"
+              className="w-10 h-10 rounded-md bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors"
             >
               <span className="material-symbols-outlined text-white text-2xl">close</span>
             </button>

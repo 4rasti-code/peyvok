@@ -166,10 +166,10 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  </div>
  </div>
 
- <div className="flex bg-mono-50 dark:bg-mono-900/80 backdrop-blur-xl border border-mono-200 dark:border-white/5 rounded-2xl p-1.5 ">
+ <div className="flex bg-mono-50 dark:bg-mono-900/80 backdrop-blur-xl border border-mono-200 dark:border-white/5 rounded-md p-1.5 ">
  <button 
  onClick={() => setLang('ku')}
- className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'ku' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 ' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
+ className={`flex items-center gap-2.5 px-6 py-2.5 rounded-md transition-all duration-300 font-bold text-sm ${lang === 'ku' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 ' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
  >
  <div className="w-5 h-3.5 rounded overflow-hidden ">
  <KurdistanFlag />
@@ -178,7 +178,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  </button>
  <button 
  onClick={() => setLang('en')}
- className={`flex items-center gap-2.5 px-6 py-2.5 rounded-xl transition-all duration-300 font-bold text-sm ${lang === 'en' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 ' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
+ className={`flex items-center gap-2.5 px-6 py-2.5 rounded-md transition-all duration-300 font-bold text-sm ${lang === 'en' ? 'bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 ' : 'text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-mono-50'}`}
  >
  <div className="w-5 h-3.5 rounded overflow-hidden ">
  <USFlag />
@@ -193,13 +193,13 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  key={lang}
  initial={{ opacity: 0, y: 30 }}
  animate={{ opacity: 1, y: 0 }}
- className="bg-mono-50 dark:bg-mono-900/50 backdrop-blur-2xl border border-mono-200 dark:border-white/5 rounded-3xl p-10 sm:p-20 relative"
+ className="bg-mono-50 dark:bg-mono-900/50 backdrop-blur-2xl border border-mono-200 dark:border-white/5 rounded-md p-10 sm:p-20 relative"
  >
  <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-mono-500/50 to-transparent opacity-30"></div>
 
  <header className="mb-16 text-center sm:text-start">
  <h2 className="text-4xl sm:text-5xl font-bold text-mono-900 dark:text-white mb-4 leading-tight">{current.title}</h2>
- <span className="text-mono-50 dark:text-mono-900 font-bold text tracking-widest bg-mono-900 dark:bg-mono-50 px-4 py-1.5 rounded-full border border-mono-200 dark:border-mono-700 uppercase">{current.subtitle}</span>
+ <span className="text-mono-50 dark:text-mono-900 font-bold text tracking-widest bg-mono-900 dark:bg-mono-50 px-4 py-1.5 rounded-md border border-mono-200 dark:border-mono-700 uppercase">{current.subtitle}</span>
  </header>
 
  <p className="text-xl text-mono-700 dark:text-mono-300 mb-16 leading-relaxed font-medium italic border-r-4 border-mono-900 dark:border-mono-50 pr-6">
@@ -217,7 +217,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  <ul className="space-y-4 pr-12">
  {section.list.map((item, i) => (
  <li key={i} className="flex items-start gap-4 text-mono-600 dark:text-white/50 group">
- <div className="w-1.5 h-1.5 rounded-full bg-mono-900 dark:bg-mono-50 mt-2.5 transition-transform group-hover:scale-150"></div>
+ <div className="w-1.5 h-1.5 rounded-md bg-mono-900 dark:bg-mono-50 mt-2.5 transition-transform group-hover:scale-150"></div>
  <span className="flex-1">{item}</span>
  </li>
  ))}
@@ -237,9 +237,9 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  <div className="mt-16 text-center space-y-8">
  <div className="flex flex-wrap items-center justify-center gap-6 text-mono-500 dark:text-white/30 font-bold text-xs uppercase tracking-widest">
  <button onClick={() => handleNavigate('/terms-of-service', 'terms')} className="hover:text-mono-900 dark:hover:text-mono-50 transition-colors">Terms of Service</button>
- <span className="w-1 h-1 rounded-full bg-white/10"></span>
+ <span className="w-1 h-1 rounded-md bg-white/10"></span>
  <button onClick={() => handleNavigate('/privacy-policy', 'privacy')} className="text-mono-900 dark:text-mono-50 hover:text-white transition-colors">Privacy Policy</button>
- <span className="w-1 h-1 rounded-full bg-white/10"></span>
+ <span className="w-1 h-1 rounded-md bg-white/10"></span>
  <button onClick={() => handleNavigate('/data-deletion', 'deletion')} className="hover:text-mono-900 dark:hover:text-mono-50 transition-colors">Data Deletion</button>
  </div>
  
@@ -248,7 +248,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
  playBackSfx();
  handleClose();
  }}
- className="bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto pt-4 mt-8"
+ className="bg-mono-900 text-mono-50 dark:bg-mono-50 dark:text-mono-900 px-10 py-5 rounded-md font-black text-sm uppercase tracking hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 mx-auto pt-4 mt-8"
  >
  <span className="material-symbols-outlined text-xl">arrow_back</span>
  {lang === 'ku' ? 'ڤەگەڕە' : 'Back to Game'}
