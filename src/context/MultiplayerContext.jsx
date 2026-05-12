@@ -1,41 +1,67 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useMotionValue } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 import { getUnifiedWords } from '../data/wordList';
 import { triggerHaptic } from '../utils/haptics';
 import { useGame } from './GameContext';
+import { useUser } from './AuthContext';
+import { useAudio } from './AudioContext';
 
 const MultiplayerContext = createContext();
 
 export const MultiplayerProvider = ({ children }) => {
+  const { user, userNickname } = useUser();
   const { 
-    user, 
     startSearchingSound, 
     stopSearchingSound, 
-    playStartGameSound 
-  } = useGame();
-  const [multiplayerState, setMultiplayerState] = useState('idle'); // 'idle', 'searching', 'waiting', 'playing', 'game_over'
-  const [matchmakingTime, setMatchmakingTime] = useState(0);
+    playStartGameSound: _playStartGameSound,
+    playRewardSound 
+  } = useAudio();
+  const { syncProgressToDatabase, applyPenalty } = useGame();
+  const [multiplayerState, setMultiplayerState] = useState('idle');
+  const [MatchmakingTime, setMatchmakingTime] = useState(0);
   const [activeMatch, setActiveMatch] = useState(null);
   const [matchId, setMatchId] = useState(null);
   const [opponent, setOpponent] = useState(null);
-  const [lastMatchResult, setLastMatchResult] = useState(null);
-  const [matchResultTrigger, setMatchResultTrigger] = useState(0);
+  const [LastMatchResult, setLastMatchResult] = useState(null);
+  const [MatchResultTrigger, setMatchResultTrigger] = useState(0);
 
   // New Game State
   const [opponentGuesses, setOpponentGuesses] = useState([]);
   const [scores, setScores] = useState({ p1: 0, p2: 0 });
-  const [currentWordIndex, setCurrentWordIndex] = useState(1);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [isRoundWinner, setIsRoundWinner] = useState(false);
   const [winnerNickname, setWinnerNickname] = useState('');
   const [roundMessage, setRoundMessage] = useState('');
-  const [forfeitStatus, setForfeitStatus] = useState(null); // 'pending', 'confirmed'
-  const [forfeitCountdown, setForfeitCountdown] = useState(30);
+  const [forfeitStatus, setForfeitStatus] = useState(null); 
+  const [forfeitCountdown, setForfeitCountdown] = useState(10);
+  const [isForfeitWin, setIsForfeitWin] = useState(false);
+  const [MatchReward, setMatchReward] = useState(null);
+
+  const setMultiplayerStateGuarded = useCallback((next) => {
+    setMultiplayerState(prev => prev !== next ? next : prev);
+  }, []);
+
+  const setActiveMatchGuarded = useCallback((next) => {
+    setActiveMatch(prev => {
+       if (!prev && !next) return null;
+       if (prev && next && prev.id === next.id && prev.status === next.status && prev.current_word_index === next.current_word_index && prev.p1_score === next.p1_score && prev.p2_score === next.p2_score) return prev;
+       return next;
+    });
+  }, []);
+
+  const setOpponentGuarded = useCallback((next) => {
+    setOpponent(prev => {
+       if (!prev && !next) return null;
+       if (prev?.id === next?.id) return prev;
+       return next;
+    });
+  }, []);
   const forfeitTimerRef = useRef(null);
   const countdownIntervalRef = useRef(null);
-
   const [opponentLiveStatuses, setOpponentLiveStatuses] = useState([]);
-  const [opponentLiveCursor, setOpponentLiveCursor] = useState(0);
+  const opponentLiveCursor = useMotionValue(0);
 
   const stateRef = useRef(multiplayerState);
   const wordIndexRef = useRef(currentWordIndex);
@@ -44,6 +70,10 @@ export const MultiplayerProvider = ({ children }) => {
   const matchIdRef = useRef(matchId);
   const channelRef = useRef(null);
   const matchmakingTimeoutRef = useRef(null);
+  const _handshakeTimerRef = useRef(null);
+  const isFetchingOpponentRef = useRef(false);
+  const isPollingRef = useRef(false);
+  const _isFetchingMatchRef = useRef(false);
   const safeClearMatchmakingTimeout = useCallback(() => {
     if (matchmakingTimeoutRef.current) {
       clearTimeout(matchmakingTimeoutRef.current);
@@ -57,6 +87,23 @@ export const MultiplayerProvider = ({ children }) => {
   useEffect(() => { opponentRef.current = opponent; }, [opponent]);
   useEffect(() => { matchIdRef.current = matchId; }, [matchId]);
 
+  // UNIFIED AUDIO CONTROLLER: Sync searching SFX with state
+  useEffect(() => {
+    if (multiplayerState === 'playing' || multiplayerState === 'idle' || multiplayerState === 'game_over') {
+      try {
+        stopSearchingSound();
+      } catch (e) {
+        console.warn("[Multiplayer] Audio: Failed to stop searching SFX", e);
+      }
+    } else if (multiplayerState === 'searching' || multiplayerState === 'waiting') {
+      try {
+        startSearchingSound();
+      } catch (e) {
+        console.warn("[Multiplayer] Audio: Failed to start searching SFX", e);
+      }
+    }
+  }, [multiplayerState, stopSearchingSound, startSearchingSound]);
+
   // TIMER ENGINE: Tracks seconds while searching or waiting
   useEffect(() => {
     let interval;
@@ -67,11 +114,11 @@ export const MultiplayerProvider = ({ children }) => {
           // 2.2 DEEP FETCH FALLBACK: If stuck for 12s, force a manual record check
           if (next === 12 && stateRef.current !== 'playing') {
             const mId = matchIdRef.current;
-            if (mId) {
+            if (mId && typeof mId === 'string' && mId !== 'undefined') {
               supabase.from('online_matches').select('*').eq('id', mId).maybeSingle().then(({ data }) => {
                 if (data && (data.player2_id || data.status === 'playing')) {
                   console.log('[Multiplayer] Deep check found match state change! Force sync.');
-                  setActiveMatch(prevMatch => ({ ...prevMatch, ...data }));
+                  setActiveMatchGuarded(data);
                 }
               });
             }
@@ -83,9 +130,9 @@ export const MultiplayerProvider = ({ children }) => {
       setMatchmakingTime(0);
     }
     return () => clearInterval(interval);
-  }, [multiplayerState]);
+  }, [multiplayerState, setActiveMatchGuarded]);
 
-  const broadcastGuess = (colors, isWin = false) => {
+  const broadcastGuess = useCallback((colors, isWin = false) => {
     if (!channelRef.current || !user?.id) return;
 
     channelRef.current.send({
@@ -93,9 +140,9 @@ export const MultiplayerProvider = ({ children }) => {
       event: 'GUESS_SUBMITTED',
       payload: { senderId: user.id, colors, isWin }
     });
-  };
+  }, [user?.id]);
 
-  const broadcastLiveAction = (statuses, cursorIndex) => {
+  const broadcastLiveAction = useCallback((statuses, cursorIndex) => {
     if (!channelRef.current || !user?.id) return;
     
     channelRef.current.send({
@@ -103,9 +150,9 @@ export const MultiplayerProvider = ({ children }) => {
       event: 'LIVE_SYNC',
       payload: { senderId: user.id, statuses, cursorIndex }
     });
-  };
+  }, [user?.id]);
 
-  const submitGuess = async (colors, isWin) => {
+  const submitGuess = useCallback(async (colors, isWin) => {
     if (!matchId || !activeMatch) return;
     broadcastGuess(colors, isWin);
 
@@ -124,66 +171,94 @@ export const MultiplayerProvider = ({ children }) => {
     }
 
     if (isWin) {
+      const p1Score = activeMatch.p1_score || 0;
+      const p2Score = activeMatch.p2_score || 0;
+      const myNewScore = isP1 ? p1Score + 1 : p2Score + 1;
       const currentIdx = activeMatch.current_word_index || 0;
-      const updates = { [isP1 ? 'p1_score' : 'p2_score']: (isP1 ? activeMatch.p1_score : activeMatch.p2_score) + 1 };
+      
+      broadcastLiveAction([], 0);
+      
+      // 1. Prepare update data for immediate advancement
+      const scoreDiff = Math.abs(myNewScore - (isP1 ? p2Score : p1Score));
+      const totalWords = activeMatch.words?.length || 5;
+      
+      // VICTORY CONDITION: Lead by 2 points OR reach the end of words
+      const isWinByLead = scoreDiff >= 2;
+      const isWordsExhausted = (currentIdx + 1 >= totalWords);
+      const isMatchEnd = isWinByLead || isWordsExhausted;
+      
+      const updateData = {
+        [isP1 ? 'p1_score' : 'p2_score']: myNewScore,
+        p1_failed: false,
+        p2_failed: false,
+        p1_colors: [],
+        p2_colors: []
+      };
 
-      // Clear colors for next round
-      updates.p1_colors = [];
-      updates.p2_colors = [];
-
-      if (currentIdx >= 2) {
-        updates.status = 'finished';
-        setMultiplayerState('game_over');
+      if (isMatchEnd) {
+        updateData.status = 'finished';
       } else {
-        updates.current_word_index = currentIdx + 1;
+        updateData.current_word_index = currentIdx + 1;
       }
 
-      await supabase.from('online_matches').update(updates).eq('id', matchId);
+      // 2. ADVANCE BOTH IMMEDIATELY (No delay for Win path as requested)
+      await supabase.from('online_matches').update(updateData).eq('id', activeMatch.id);
+
+      setIsRoundWinner(true);
+      setWinnerNickname(userNickname);
       triggerHaptic([50, 50, 100]);
     }
-  };
+  }, [matchId, activeMatch, broadcastGuess, broadcastLiveAction, user?.id, userNickname]);
 
-  const submitFailure = async () => {
+  const submitFailure = useCallback(async () => {
     if (!matchId || !activeMatch) return;
-    
-    // Clear live feedback upon failure
     broadcastLiveAction([], 0);
-
     const isP1 = activeMatch.player1_id === user?.id;
     const currentIdx = activeMatch.current_word_index || 0;
+    const p1Score = activeMatch.p1_score || 0;
+    const p2Score = activeMatch.p2_score || 0;
     
-    // 1. Mark as failed locally (Ghost Grid update)
     const updates = { 
-      [isP1 ? 'p1_colors' : 'p2_colors']: [...(isP1 ? activeMatch.p1_colors : activeMatch.p2_colors || []), ["#334155","#334155","#334155","#334155","#334155"]] // Placeholder colors for failure
+      [isP1 ? 'p1_colors' : 'p2_colors']: [...(isP1 ? activeMatch.p1_colors : activeMatch.p2_colors || []), ["#334155","#334155","#334155","#334155","#334155"]],
+      [isP1 ? 'p1_failed' : 'p2_failed']: true
     };
 
-    // 2. Check if opponent already failed OR if we are the last ones to fail
-    const oppColors = isP1 ? activeMatch.p2_colors : activeMatch.p1_colors;
-    const oppFailed = oppColors && (oppColors.length >= 3); // MaxRows is 3
+    // 1. Mark myself as failed
+    await supabase.from('online_matches').update(updates).eq('id', matchId);
 
-    if (oppFailed) {
-      // Both failed: 0 points for both, next round
-      updates.p1_colors = [];
-      updates.p2_colors = [];
-      if (currentIdx >= 2) {
-        updates.status = 'finished';
-        setMultiplayerState('game_over');
-      } else {
-        updates.current_word_index = currentIdx + 1;
+    // 2. FUNDAMENTAL CHECK: Fetch latest opponent state
+    const { data: latest } = await supabase.from('online_matches').select('*').eq('id', activeMatch.id).single();
+    if (latest) {
+      const otherWonRound = isP1 ? (latest.p2_score > p2Score) : (latest.p1_score > p1Score);
+      const otherIsDone = isP1 ? (latest.p2_failed || otherWonRound) : (latest.p1_failed || otherWonRound);
+
+      if (otherIsDone) {
+        const scoreDiff = Math.abs(latest.p1_score - latest.p2_score);
+        const isMatchEnd = scoreDiff >= 2 || (currentIdx + 1 >= (latest.words?.length || 5));
+        
+        const nextRoundData = {
+          current_word_index: currentIdx + 1,
+          p1_failed: false,
+          p2_failed: false,
+          p1_colors: [],
+          p2_colors: []
+        };
+        if (isMatchEnd) nextRoundData.status = 'finished';
+
+        // ADVANCE BOTH IMMEDIATELY (No delay as requested)
+        await supabase.from('online_matches').update(nextRoundData).eq('id', activeMatch.id);
       }
     }
+    triggerHaptic([100, 50, 100]);
+  }, [matchId, activeMatch, broadcastLiveAction, user?.id]);
 
-    await supabase.from('online_matches').update(updates).eq('id', matchId);
-  };
-
-  const { setFils, addXP, playCoinSound } = useGame();
-
-  const triggerForfeitVictory = async () => {
+  const triggerForfeitVictory = useCallback(async () => {
     const mId = matchId || matchIdRef.current;
     if (!mId) return;
 
     try {
       setForfeitStatus('confirmed');
+      setIsForfeitWin(true);
       const isP1 = activeMatch?.player1_id === user?.id;
       
       // 1. Update DB immediately
@@ -192,19 +267,22 @@ export const MultiplayerProvider = ({ children }) => {
         // Award the win to the remaining player by setting score 
         // Or just let the result logic handle it
       };
-      // To ensure victory, we make sure current player has more points or we just set result
-      if (isP1) updates.p1_score = 3; else updates.p2_score = 3;
+      // To ensure victory, we make sure current player has a 3-0 lead
+      if (isP1) {
+        updates.p1_score = 3;
+        updates.p2_score = 0;
+      } else {
+        updates.p2_score = 3;
+        updates.p1_score = 0;
+      }
 
       await supabase.from('online_matches').update(updates).eq('id', mId);
-
-      // 2. Award Rewards
-      const coinReward = 100;
-      const xpReward = 150;
-      setFils(prev => prev + coinReward);
-      addXP(xpReward);
+      
+      // Standardized DB Reward Sync (Battle Reward: 1 Dinar, 100 XP)
+      const rewardData = await syncProgressToDatabase(5, 'battle');
+      if (rewardData) setMatchReward(rewardData);
       // Trigger reward sound
-      const { playRewardSound } = useGame();
-      try { playRewardSound(); } catch(e) {}
+      try { playRewardSound(); } catch(_e) { /* Audio context failure */ }
 
       // 3. UI Update with specific disconnect message
       setLastMatchResult('victory');
@@ -217,111 +295,218 @@ export const MultiplayerProvider = ({ children }) => {
       }
 
       // Transition out of playing state
-      setMultiplayerState('game_over');
+      setMultiplayerStateGuarded('game_over');
     } catch (err) {
       console.error('[Multiplayer] Forfeit handling failed:', err);
     }
-  };
-
-  const resetMatchResultTrigger = () => {
+  }, [matchId, activeMatch?.player1_id, user?.id, syncProgressToDatabase, playRewardSound, setMultiplayerStateGuarded]);
+  
+  const ResetMatchResultTrigger = useCallback(() => {
     setMatchResultTrigger(0);
     setLastMatchResult(null);
-  };
-
-  const fetchOpponentProfile = useCallback(async (opponentId) => {
-    if (!opponentId) return null;
-    if (opponentRef.current?.id === opponentId) return opponentRef.current;
-
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('id, nickname, avatar_url')
-      .eq('id', opponentId)
-      .maybeSingle();
-
-    if (error) return null;
-
-    if (data) {
-      setOpponent(data);
-      setActiveMatch(prev => prev ? ({
-        ...prev,
-        opp_nickname: data.nickname,
-        opp_avatar_url: data.avatar_url
-      }) : null);
-    }
-    return data;
+    setIsForfeitWin(false);
   }, []);
+
+  const fetchOpponentProfile = useCallback(async (opponentId, signal = null) => {
+    if (!opponentId || opponentId === 'undefined' || isFetchingOpponentRef.current) return null;
+    
+    try {
+      isFetchingOpponentRef.current = true;
+      let query = supabase
+        .from('profiles')
+        .select('id, nickname, avatar_url, updated_at, xp')
+        .eq('id', opponentId);
+      
+      if (signal) query = query.abortSignal(signal);
+      
+      const { data, error } = await query.maybeSingle();
+
+      if (error) throw error;
+      if (data) {
+        setOpponentGuarded(data);
+        return data;
+      }
+      return null;
+    } catch (err) {
+      if (err.name === 'AbortError' || err.message?.includes('Abort')) return null;
+      console.warn('[Multiplayer] Failed to fetch opponent profile:', err);
+      return null;
+    } finally {
+      isFetchingOpponentRef.current = false;
+    }
+  }, [setOpponentGuarded]);
+
+  const clearForfeitLogic = useCallback(() => {
+    if (forfeitTimerRef.current) {
+      clearTimeout(forfeitTimerRef.current);
+      forfeitTimerRef.current = null;
+    }
+    if (countdownIntervalRef.current) {
+      clearInterval(countdownIntervalRef.current);
+      countdownIntervalRef.current = null;
+    }
+  }, []);
+
+  const startGracePeriod = useCallback(() => {
+    setForfeitStatus('pending');
+    setForfeitCountdown(10);
+    
+    clearForfeitLogic();
+
+    // Start countdown interval
+    countdownIntervalRef.current = setInterval(() => {
+      setForfeitCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(countdownIntervalRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    forfeitTimerRef.current = setTimeout(() => {
+      console.log('[Multiplayer] Grace period expired, triggering forfeit.');
+      triggerForfeitVictory();
+    }, 10000);
+  }, [triggerForfeitVictory, clearForfeitLogic]);
 
   const cancelMatch = useCallback(async () => {
     const idToCancel = matchId || matchIdRef.current;
     try {
-      if (idToCancel && multiplayerState !== 'playing' && multiplayerState !== 'game_over') {
-        await supabase.from('online_matches').delete().eq('id', idToCancel);
-      }
-      if (status === 'finished') {
-        console.log('[Multiplayer] Match marked as FINISHED in DB.');
-        setMultiplayerState('game_over');
-        
-        // Stop any active forfeit timers
-        if (forfeitTimerRef.current) {
-          clearTimeout(forfeitTimerRef.current);
-          forfeitTimerRef.current = null;
+      if (idToCancel) {
+          const isP1 = activeMatch?.player1_id === user?.id;
+          const updates = { status: 'finished' };
+          // Award the win to the OTHER player and reset the leaver's score
+          if (isP1) {
+            updates.p2_score = 3;
+            updates.p1_score = 0;
+          } else {
+            updates.p1_score = 3;
+            updates.p2_score = 0;
+          }
+
+          await supabase.from('online_matches').update(updates).eq('id', idToCancel);
+          console.log('[Multiplayer] Match marked as FINISHED in DB via Cancel.');
+
+          if (multiplayerState === 'playing') {
+            applyPenalty(10, 25); // Very light penalty for leaving mid-game
+          }
+        } else {
+          // If just searching/waiting, delete the record
+          await supabase.from('online_matches').delete().eq('id', idToCancel);
+          console.log('[Multiplayer] Match DELETED from DB via Cancel.');
         }
-        setForfeitStatus(null);
-        return;
-      }
     } catch (err) {
-      console.warn('[Multiplayer] Cancel deletion failed:', err);
+      console.warn('[Multiplayer] Cancel/Cleanup failed:', err);
     } finally {
       setMatchId(null);
-      setActiveMatch(null);
-      setOpponent(null);
-      setMultiplayerState('idle');
+      setActiveMatchGuarded(null);
+      setOpponentGuarded(null);
+      setMultiplayerStateGuarded('idle');
       setMatchmakingTime(0);
       setOpponentGuesses([]);
       setScores({ p1: 0, p2: 0 });
-      setCurrentWordIndex(1);
+      setCurrentWordIndex(0);
       setForfeitStatus(null);
+      setMatchResultTrigger(0);
+      setLastMatchResult(null);
+      setMatchReward(null);
+      
       if (forfeitTimerRef.current) {
         clearTimeout(forfeitTimerRef.current);
         forfeitTimerRef.current = null;
       }
-      stopSearchingSound(false);
+
+      if (channelRef.current) {
+        supabase.removeChannel(channelRef.current);
+        channelRef.current = null;
+      }
+
+      // STOP SEARCHING SOUND
+      try { 
+        stopSearchingSound(false); 
+      } catch (e) {
+        console.warn("Failed to stop searching sound:", e);
+      }
     }
-  }, [matchId, multiplayerState, stopSearchingSound]);
+  }, [matchId, multiplayerState, stopSearchingSound, setActiveMatchGuarded, setMultiplayerStateGuarded, setOpponentGuarded, activeMatch?.player1_id, applyPenalty, user?.id]);
 
   // 1. POLLING FALLBACK: Detect player join automatically
   useEffect(() => {
-    if ((multiplayerState !== 'waiting' && multiplayerState !== 'searching') || !matchId) return;
+    const isSearching = multiplayerState === 'waiting' || multiplayerState === 'searching';
+    if (!isSearching || !matchId) return;
+
+    const controller = new AbortController();
 
     const pollInterval = setInterval(async () => {
-      const { data: match } = await supabase
-        .from('online_matches')
-        .select('*')
-        .eq('id', matchId)
-        .maybeSingle();
+      if (isPollingRef.current) return;
+      
+      try {
+        isPollingRef.current = true;
+        const { data: match } = await supabase
+          .from('online_matches')
+          .select('*')
+          .eq('id', matchId)
+          .abortSignal(controller.signal)
+          .maybeSingle();
 
-      if (match && (match.player2_id || match.status === 'playing') && stateRef.current !== 'playing' && stateRef.current !== 'game_over') {
-        console.log('[Multiplayer] Polling Fallback found opponent! Syncing.');
-        setActiveMatch(prev => ({ ...prev, ...match }));
-        clearInterval(pollInterval);
+        if (match && (match.player2_id || match.status === 'playing') && stateRef.current !== 'playing' && stateRef.current !== 'game_over') {
+          console.log('[Multiplayer] Polling Fallback found opponent! Syncing.');
+          setActiveMatchGuarded(match);
+          clearInterval(pollInterval);
+        }
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        console.warn('[Multiplayer] Polling error:', err);
+      } finally {
+        isPollingRef.current = false;
       }
-    }, 1500);
+    }, 2000);
 
-    return () => clearInterval(pollInterval);
-  }, [multiplayerState, matchId]);
+    return () => {
+      clearInterval(pollInterval);
+      controller.abort();
+    };
+  }, [multiplayerState, matchId, setActiveMatchGuarded]);
 
   // 2. REALTIME SUBSCRIPTION
   useEffect(() => {
-    if (!matchId) return;
+    if (!matchId || matchId === 'undefined') return;
+    console.log('[Multiplayer] Constructing subscription filter for:', matchId);
 
     const channel = supabase
       .channel(`match_room_${matchId}`)
       .on(
         'postgres_changes',
-        { event: 'UPDATE', schema: 'public', table: 'online_matches', filter: `id=eq.${matchId}` },
+        { event: '*', schema: 'public', table: 'online_matches', filter: `id=eq.${matchId}` },
         (payload) => {
+          if (payload.eventType === 'DELETE') {
+            console.log('[Multiplayer] Match record deleted (cancelled by opponent).');
+            // Give the UI time to show the result or just avoid abrupt pop-out
+            setTimeout(() => {
+              setMultiplayerStateGuarded('idle');
+              setActiveMatchGuarded(null);
+              setOpponentGuarded(null);
+            }, 10000);
+            return;
+          }
+
           const updatedMatch = payload.new;
-          setActiveMatch(prev => prev ? { ...prev, ...updatedMatch } : updatedMatch);
+          if (!updatedMatch) return;
+
+          setActiveMatchGuarded(updatedMatch);
+
+          // 2.1 DIRECT HANDSHAKE RESOLUTION: If we are Host and a Joiner just claimed the room
+          const isP1 = updatedMatch.player1_id === user?.id;
+          if (isP1 && updatedMatch.player2_id && stateRef.current !== 'playing' && stateRef.current !== 'game_over') {
+            console.log('[Multiplayer] Realtime found Joiner! Resolving handshake...');
+            fetchOpponentProfile(updatedMatch.player2_id).then(prof => {
+              if (prof) {
+                setMultiplayerStateGuarded('playing');
+                triggerHaptic([50, 50, 100]);
+              }
+            });
+          }
         }
       )
       .on(
@@ -348,7 +533,7 @@ export const MultiplayerProvider = ({ children }) => {
           const data = payload.payload || payload;
           if (user?.id && data.senderId && data.senderId !== user.id) {
             setOpponentLiveStatuses(data.statuses || []);
-            setOpponentLiveCursor(data.cursorIndex || 0);
+            opponentLiveCursor.set(data.cursorIndex || 0);
           }
         }
       )
@@ -366,7 +551,7 @@ export const MultiplayerProvider = ({ children }) => {
           forfeitTimerRef.current = null;
           countdownIntervalRef.current = null;
           setForfeitStatus(null);
-          setForfeitCountdown(30);
+          setForfeitCountdown(10);
         }
 
         // 2. DISCONNECT DETECTION (Fallback): If we are playing but opponent is missing from sync
@@ -403,118 +588,125 @@ export const MultiplayerProvider = ({ children }) => {
       channelRef.current = null;
       clearForfeitLogic();
     };
-  }, [matchId, user?.id]);
-
-  const clearForfeitLogic = useCallback(() => {
-    if (forfeitTimerRef.current) {
-      clearTimeout(forfeitTimerRef.current);
-      forfeitTimerRef.current = null;
-    }
-    if (countdownIntervalRef.current) {
-      clearInterval(countdownIntervalRef.current);
-      countdownIntervalRef.current = null;
-    }
-  }, []);
-
-  const startGracePeriod = useCallback(() => {
-    setForfeitStatus('pending');
-    setForfeitCountdown(30);
-    
-    clearForfeitLogic();
-
-    // Start countdown interval
-    countdownIntervalRef.current = setInterval(() => {
-      setForfeitCountdown(prev => {
-        if (prev <= 1) {
-          clearInterval(countdownIntervalRef.current);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    forfeitTimerRef.current = setTimeout(() => {
-      console.log('[Multiplayer] Grace period expired, triggering forfeit.');
-      triggerForfeitVictory();
-    }, 30000);
-  }, [triggerForfeitVictory, clearForfeitLogic]);
+  }, [matchId, user?.id, clearForfeitLogic, fetchOpponentProfile, opponentLiveCursor, setActiveMatchGuarded, setMultiplayerStateGuarded, startGracePeriod, setOpponentGuarded]);
 
   // 2.5 APP STATE VISIBILITY HANDLER (Clinical Recovery)
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
-        console.log('[Multiplayer] App returned to foreground, forcing re-sync...');
+        if (!user?.id) return; // Guard against unauthenticated syncs
+        console.log('[Multiplayer] App returned to foreground, checking sync...');
         // Force re-initialize supabase connection if dropped
         if (supabase.realtime && !supabase.realtime.isConnected()) {
           supabase.realtime.connect();
-        }
-        // Force channel re-subscription if missing
-        if (matchIdRef.current && !channelRef.current) {
-          console.log('[Multiplayer] Missing channel on return, re-triggering subscription...');
-          // This will be caught by the matchId useEffect
         }
       }
     };
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, []);
+  }, [user?.id]);
 
-  // 3. SYNC EFFECT: Silent Auto-Handshake
   useEffect(() => {
     if (!activeMatch || !user?.id) return;
 
     const verifyAndStart = async () => {
-      if ((multiplayerState === 'waiting' || multiplayerState === 'searching') && activeMatch.player2_id) {
-        const oppId = activeMatch.player2_id === user.id ? activeMatch.player1_id : activeMatch.player2_id;
-        const oppProfile = await fetchOpponentProfile(oppId);
+      try {
+        if (activeMatch.player1_id && activeMatch.player2_id) {
+          if (opponent) {
+            if (multiplayerState !== 'playing' && multiplayerState !== 'game_over' && multiplayerState !== 'found') {
+              setMultiplayerState('found');
+              setTimeout(() => setMultiplayerState(prev => prev === 'found' ? 'playing' : prev), 2000);
+            }
+          } else {
+            console.warn("[Multiplayer] Handshake: Waiting for opponent profile...");
+            const isP1 = activeMatch.player1_id === user.id;
+            const oppId = isP1 ? activeMatch.player2_id : activeMatch.player1_id;
+            
+            const { data: opponentProfile, error } = await supabase
+              .from('profiles')
+              .select('*')
+              .eq('id', oppId)
+              .single();
 
-        if (!oppProfile) {
-          console.error('[Multiplayer] Silent Handshake Failed: Invalid Profile.');
-          await cancelMatch();
-          return;
+            if (error || !opponentProfile) {
+              setMultiplayerState('syncing'); 
+            } else {
+              setOpponent(opponentProfile);
+              setMultiplayerState('found');
+              setTimeout(() => setMultiplayerState(prev => prev === 'found' ? 'playing' : prev), 2000);
+            }
+          }
+        } else {
+          if (multiplayerState !== 'waiting' && multiplayerState !== 'searching') {
+            setMultiplayerState('waiting');
+          }
         }
-
-        // Match found! Stop searching audio immediately and play "Found" SFX
-        stopSearchingSound(true);
-        playStartGameSound();
-
-        // Snappy Handshake: Reduced from 4s to 1.5s for faster transition
-        setTimeout(() => {
-          // IMPORTANT: Only proceed if the user hasn't cancelled since then
-          setMultiplayerState(prev => {
-            if (prev === 'idle') return prev; 
-            return 'playing';
-          });
-          triggerHaptic([50, 50, 100]);
-        }, 1500);
+      } catch (err) {
+        console.error("[Multiplayer] Handshake verification failed:", err);
+        setMultiplayerState('syncing');
       }
     };
-    verifyAndStart();
 
+    verifyAndStart();
+  }, [activeMatch, opponent, user?.id, multiplayerState]);
+  
+  // 4. GAME SYNC EFFECT: Handle round transitions and match results
+  useEffect(() => {
+    if (!activeMatch || !user?.id) return;
+    
+    const isP1 = activeMatch.player1_id === user.id;
+
+    // --- 4.1 DETECT ROUND TRANSITION ---
     if (activeMatch.current_word_index !== undefined && activeMatch.current_word_index !== wordIndexRef.current) {
       const newIndex = activeMatch.current_word_index || 0;
+      const wasTie = (activeMatch.p1_score === scoresRef.current.p1 && activeMatch.p2_score === scoresRef.current.p2);
+
       setCurrentWordIndex(newIndex);
       setOpponentGuesses([]);
       setIsRoundWinner(false);
       setWinnerNickname('');
-      setRoundMessage('');
+      
+      if (wasTie && newIndex > 0) {
+        setRoundMessage('ROUND_DRAW');
+      } else {
+        setRoundMessage(`ROUND ${newIndex + 1}`);
+      }
+      setTimeout(() => setRoundMessage(''), 4000);
     }
 
-    if (activeMatch.status === 'finished' && multiplayerState !== 'idle' && multiplayerState !== 'game_over') {
-      const isP1 = activeMatch.player1_id === user.id;
-      const myScore = isP1 ? activeMatch.p1_score : activeMatch.p2_score;
-      const oppScore = isP1 ? activeMatch.p2_score : activeMatch.p1_score;
-      
-      let result = 'draw';
-      if (myScore > oppScore) result = 'victory';
-      else if (myScore < oppScore) result = 'defeat';
-      
-      console.log(`[Multiplayer] Match finished! Result: ${result}. Syncing state.`);
-      setLastMatchResult(result);
-      setMatchResultTrigger(prev => prev + 1);
-      
-      // Transition to game_over to signify it's time for overlays
-      setMultiplayerState('game_over');
+    // --- 4.3 UPDATE LOCAL REFS (DO THIS LAST) ---
+    wordIndexRef.current = activeMatch.current_word_index || 0;
+    scoresRef.current = { p1: activeMatch.p1_score || 0, p2: activeMatch.p2_score || 0 };
+    setScores(scoresRef.current);
+
+    if (activeMatch.status === 'finished' && multiplayerState !== 'idle') {
+      // Logic for anyone who didn't trigger the game_over state locally (e.g. the loser)
+      if (multiplayerState !== 'game_over' || LastMatchResult === null) {
+        const myScore = isP1 ? activeMatch.p1_score : activeMatch.p2_score;
+        const oppScore = isP1 ? activeMatch.p2_score : activeMatch.p1_score;
+        
+        let result = 'draw';
+        if (myScore - oppScore >= 2) result = 'victory';
+        else if (oppScore - myScore >= 2) result = 'defeat';
+        else result = 'draw';
+        
+        console.log(`[Multiplayer] Sync found finished match. Scores: ${myScore}-${oppScore}. Result: ${result}.`);
+        setLastMatchResult(result);
+        setMatchResultTrigger(prev => prev + 1);
+        setMultiplayerStateGuarded('game_over');
+
+        // SYNC REWARDS TO DATABASE
+        if (result === 'victory') {
+          const isFlawless = myScore === 3 && oppScore === 0;
+          syncProgressToDatabase(10, 'battle', { isPvPFlawless: isFlawless }).then(rewardData => {
+            if (rewardData) setMatchReward(rewardData);
+          });
+        } else if (result === 'draw') {
+          syncProgressToDatabase(10, 'battle_draw').then(rewardData => {
+            if (rewardData) setMatchReward(rewardData);
+          });
+        }
+      }
     }
 
     if (activeMatch.p1_score !== scoresRef.current.p1 || activeMatch.p2_score !== scoresRef.current.p2) {
@@ -522,16 +714,16 @@ export const MultiplayerProvider = ({ children }) => {
     }
 
     // NEW: Sync Opponent Colors from DB if missing in local state
-    const isP1 = activeMatch.player1_id === user.id;
     const oppColors = isP1 ? activeMatch.p2_colors : activeMatch.p1_colors;
     if (oppColors && Array.isArray(oppColors) && oppColors.length > opponentGuesses.length) {
       setOpponentGuesses(oppColors);
     }
-  }, [activeMatch, user?.id, multiplayerState, fetchOpponentProfile, opponentGuesses.length, cancelMatch]);
+  }, [activeMatch, user?.id, multiplayerState, opponentGuesses.length, LastMatchResult, setMultiplayerStateGuarded, syncProgressToDatabase]);
 
-  // 4. MOUNT-TIME RECOVERY EFFECT
+  // 5. MOUNT-TIME RECOVERY EFFECT
   useEffect(() => {
     if (!user?.id || multiplayerState !== 'idle') return;
+    const controller = new AbortController();
 
     const recoverActiveMatch = async () => {
       console.log('[Multiplayer] Checking for active match sessions to recover...');
@@ -542,23 +734,35 @@ export const MultiplayerProvider = ({ children }) => {
           .or(`player1_id.eq.${user.id},player2_id.eq.${user.id}`)
           .eq('status', 'playing')
           .order('created_at', { ascending: false })
+          .abortSignal(controller.signal)
           .limit(1)
           .maybeSingle();
 
         if (error) throw error;
 
         if (data) {
+          // 4.1 EXPIRATION CHECK: If match is older than 15 minutes, auto-finish it
+          const createdAt = new Date(data.created_at);
+          const now = new Date();
+          const diffInMinutes = (now - createdAt) / (1000 * 60);
+
+          if (diffInMinutes > 15) {
+            console.log('[Multiplayer] Found stale match (15m+). Auto-finishing in DB.');
+            await supabase.from('online_matches').update({ status: 'finished' }).eq('id', data.id);
+            return; // Stay in idle
+          }
+
           console.log('[Multiplayer] Recovering active match:', data.id);
           const oppId = data.player1_id === user.id ? data.player2_id : data.player1_id;
           
           setMatchId(data.id);
-          setActiveMatch(data);
+          setActiveMatchGuarded(data);
           
           if (oppId) {
             await fetchOpponentProfile(oppId);
           }
           
-          setMultiplayerState('playing');
+          setMultiplayerStateGuarded('playing');
           triggerHaptic([100, 50]);
         }
       } catch (err) {
@@ -567,10 +771,11 @@ export const MultiplayerProvider = ({ children }) => {
     };
 
     recoverActiveMatch();
-  }, [user?.id]);
+    return () => controller.abort();
+  }, [user?.id, fetchOpponentProfile, multiplayerState, setActiveMatchGuarded, setMultiplayerStateGuarded]);
 
   // UNIFIED ONE-CLICK MATCHMAKING
-  const startMatchmaking = async () => {
+  const startMatchmaking = useCallback(async () => {
     if (!user?.id) return;
 
     console.log('[Multiplayer] ONE-CLICK: Searching for rooms...');
@@ -583,11 +788,12 @@ export const MultiplayerProvider = ({ children }) => {
       supabase.realtime.disconnect();
       supabase.realtime.connect();
     }
-
-    setMultiplayerState('searching');
+    
+    setMultiplayerStateGuarded('searching');
     setMatchmakingTime(0);
     setOpponent(null);
     setOpponentGuesses([]);
+    setMatchReward(null);
 
     // 2. HARD TIMEOUT FALLBACK (60 Seconds)
     safeClearMatchmakingTimeout();
@@ -637,12 +843,19 @@ export const MultiplayerProvider = ({ children }) => {
           safeClearMatchmakingTimeout();
           console.log('[Multiplayer] JOINER: Claim SUCCESS! Handshaking with Host:', joinedMatch.player1_id);
           
-          const hostProfile = await fetchOpponentProfile(joinedMatch.player1_id);
-          if (!hostProfile) throw new Error('Identity verification failed');
-
           setMatchId(joinedMatch.id);
           setActiveMatch(joinedMatch);
           setCurrentWordIndex(joinedMatch.current_word_index || 0);
+
+          // DIRECT JOINER RESOLUTION: Fetch Host profile and transition immediately
+          const hostProfile = await fetchOpponentProfile(joinedMatch.player1_id);
+          if (hostProfile) {
+            setMultiplayerStateGuarded('playing');
+            triggerHaptic([50, 50, 100]);
+          } else {
+            // Fallback to syncing if profile fetch is slow
+            setMultiplayerStateGuarded('syncing');
+          }
           return;
         } else {
           console.warn('[Multiplayer] JOINER: Claim failed (someone else got it?). Falling back to Host.');
@@ -655,17 +868,21 @@ export const MultiplayerProvider = ({ children }) => {
       let selectedRiddles = [];
 
       try {
-        const { data: randomSample, error: wordError } = await supabase.from('words').select('word, definition').limit(20);
-        if (!wordError && randomSample?.length >= 3) {
-          const shuffled = randomSample.sort(() => 0.5 - Math.random());
-          selectedWords = shuffled.slice(0, 3).map(e => e.word);
-          selectedRiddles = shuffled.slice(0, 3).map(e => e.definition || 'No riddle');
+        const { data: sequencedWords, error: wordError } = await supabase
+          .rpc('get_multiplayer_words_sequenced');
+          
+        if (!wordError && sequencedWords?.length > 0) {
+          selectedWords = sequencedWords.map(e => e.word);
+          selectedRiddles = sequencedWords.map(e => e.hint || 'No riddle');
         } else {
-          throw new Error('Fallback');
+          throw new Error('DB Sequenced Fetch Error or Empty');
         }
-      } catch {
+      } catch (_) {
+        console.log('[Multiplayer] Using local fallback for sequenced words.');
         const localWords = getUnifiedWords();
-        const fallback = [...localWords].sort(() => 0.5 - Math.random()).slice(0, 3);
+        const fiveLetterLocal = localWords.filter(w => w.word && w.word.length === 5);
+        // Shuffle local words randomly instead of sorting alphabetically to prevent repetition
+        const fallback = [...fiveLetterLocal].sort(() => Math.random() - 0.5).slice(0, 5);
         selectedWords = fallback.map(w => w.word);
         selectedRiddles = fallback.map(w => w.hint || 'پەیڤێ بدۆزەوە');
       }
@@ -686,61 +903,61 @@ export const MultiplayerProvider = ({ children }) => {
       if (newMatch) {
         console.log('[Multiplayer] HOST: Success! Created Match ID:', newMatch.id, 'Words:', newMatch.words?.[0]);
         setMatchId(newMatch.id);
-        setActiveMatch(newMatch);
-        setMultiplayerState('waiting');
+        setActiveMatchGuarded(newMatch);
+        setMultiplayerStateGuarded('waiting');
       }
 
     } catch (error) {
       console.error('[Multiplayer] Matchmaking Failed:', error);
       safeClearMatchmakingTimeout();
-      try { stopSearchingSound(false); } catch(e) {}
-      setMultiplayerState('idle');
+      try { stopSearchingSound(false); } catch(_e) { /* Ignore audio stop failures */ }
+      setMultiplayerStateGuarded('idle');
     }
-  };
+  }, [user?.id, startSearchingSound, stopSearchingSound, safeClearMatchmakingTimeout, fetchOpponentProfile, setActiveMatchGuarded, setMultiplayerStateGuarded]);
 
 
+
+  const value = useMemo(() => ({
+    multiplayerState,
+    MatchmakingTime,
+    activeMatch,
+    opponent,
+    setMultiplayerState,
+    startMatchmaking,
+    cancelMatch,
+    submitGuess,
+    submitFailure,
+    broadcastGuess,
+    opponentGuesses,
+    scores,
+    currentRound: currentWordIndex,
+    isRoundWinner,
+    MatchResultTrigger,
+    LastMatchResult,
+    MatchReward,
+    ResetMatchResultTrigger,
+    winnerNickname,
+    roundMessage,
+    fetchOpponentProfile,
+    forfeitStatus,
+    forfeitCountdown,
+    triggerForfeitVictory,
+    broadcastLiveAction,
+    opponentLiveStatuses,
+    opponentLiveCursor,
+    isForfeitWin
+  }), [
+    multiplayerState, MatchmakingTime, activeMatch, opponent, setMultiplayerState,
+    startMatchmaking, cancelMatch, submitGuess, submitFailure, broadcastGuess,
+    opponentGuesses, scores, currentWordIndex, isRoundWinner, MatchResultTrigger,
+    LastMatchResult, MatchReward, ResetMatchResultTrigger, winnerNickname,
+    roundMessage, fetchOpponentProfile, forfeitStatus, forfeitCountdown,
+    triggerForfeitVictory, broadcastLiveAction, opponentLiveStatuses,
+    opponentLiveCursor, isForfeitWin
+  ]);
 
   return (
-    <MultiplayerContext.Provider value={{
-      multiplayerState,
-      matchmakingTime,
-      activeMatch,
-      opponent,
-      setMultiplayerState,
-      startMatchmaking,
-      cancelMatch: () => {
-        // Full clean logic for manually returning to lobby
-        setMultiplayerState('idle');
-        setMatchId(null);
-        setActiveMatch(null);
-        setOpponent(null);
-        setLastMatchResult(null);
-        setMatchResultTrigger(0);
-        if (channelRef.current) {
-          supabase.removeChannel(channelRef.current);
-          channelRef.current = null;
-        }
-      },
-      submitGuess,
-      submitFailure,
-      broadcastGuess,
-      opponentGuesses,
-      scores,
-      currentRound: currentWordIndex,
-      isRoundWinner,
-      matchResultTrigger,
-      lastMatchResult,
-      resetMatchResultTrigger,
-      winnerNickname,
-      roundMessage,
-      fetchOpponentProfile,
-      forfeitStatus,
-      forfeitCountdown,
-      triggerForfeitVictory,
-      broadcastLiveAction,
-      opponentLiveStatuses,
-      opponentLiveCursor
-    }}>
+    <MultiplayerContext.Provider value={value}>
       {children}
     </MultiplayerContext.Provider>
   );

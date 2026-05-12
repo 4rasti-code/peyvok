@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   daily_streak INTEGER DEFAULT 0,
   
   -- Currencies
-  shayi INTEGER DEFAULT 100,  -- Adjusted: 1000 -> 100
-  dirham INTEGER DEFAULT 50,
+  fils INTEGER DEFAULT 100,  -- Adjusted: 1000 -> 100
+  derhem INTEGER DEFAULT 50,
   dinar INTEGER DEFAULT 0,
   
   -- Inventory

@@ -6,7 +6,7 @@ import React from 'react';
  * 
  * 1. Fils (Bronze - Marwanid Eagle)
  * 2. Derhem (Silver - Square-in-Circle Seljuk style)
- * 3. Zer (Gold - Ayyubid Concentric Dinar)
+ * 3. Dinar (Gold - Ayyubid Concentric Dinar)
  */
 
 // Shared "Hammered" coin base with irregular hand-struck edges
@@ -100,7 +100,7 @@ export const DerhemIcon = ({ className = "w-5 h-5", size = 24 }) => (
   </svg>
 );
 
-export const ZerIcon = ({ className = "w-5 h-5", size = 24 }) => (
+export const DinarIcon = ({ className = "w-5 h-5", size = 24 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
     <HammeredBase fill="#B8860B" stroke="#846506" />
     {/* Concentric Ayyubid Rings */}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { toKuDigits } from '../utils/formatters';
 
-export default function InventoryBar({ 
+const InventoryBar = ({ 
   magnetCount, 
   hintCount, 
   skipCount, 
@@ -11,82 +11,125 @@ export default function InventoryBar({
   hintTaps = 0,
   hintLimit = 3,
   magnetUsedInRound = false,
+  skipsUsedInRound = 0,
+  skipLimit = 1,
   isShop = false,
   className = ""
-}) {
-  const Item = ({ icon, color, count, onClick, disabled, glowColor, hideCount = false }) => (
-    <button 
-      onClick={onClick}
-      disabled={disabled}
-      className={`flex items-center gap-2 group transition-all ${disabled ? 'opacity-20 grayscale cursor-not-allowed' : 'hover:scale-110 active:scale-90'} ${isShop ? 'cursor-default' : ''}`}
-    >
-      <span 
-        className={`material-symbols-outlined text-[22px] ${color} drop-shadow-[0_0_8px_${glowColor}]`} 
-        style={{ fontVariationSettings: "'FILL' 1" }}
-      >
-        {icon}
-      </span>
-      {!hideCount && (
-        <span className={`text-[13px] font-black pt-0.5 ${disabled ? 'text-slate-300' : 'text-slate-500'}`}>
-          {toKuDigits(count || 0)}
-        </span>
-      )}
-    </button>
-  );
+}) => {
+  const countColor = "text-mono-950 dark:text-mono-100";
+  const sepColor = "bg-mono-200 dark:bg-white/10";
+  const disabledIconColor = "text-mono-300 dark:text-mono-700";
 
   return (
-    <div className={`flex items-center justify-center ${className}`}>
-      <div className="bg-white/95 backdrop-blur-xl border border-slate-200 px-4 py-1.5 rounded-md flex items-center gap-5 shadow-sm">
+    <div className={`flex items-center justify-center h-[52px] ${className}`}>
+      <div className="flex items-center gap-10 py-1 px-4 h-full">
         
-        {/* Hint (Bulb) */}
-        <div className="relative group/hint">
-          <Item 
-            icon="lightbulb" 
-            color={hintTaps >= hintLimit ? "text-slate-500" : "text-amber-500"} 
-            glowColor={hintTaps >= hintLimit ? "transparent" : "rgba(245,158,11,0.5)"}
-            count={hintCount}
+        {/* Hint Item */}
+        <div className="flex items-center gap-3">
+          <button 
             onClick={onHint}
-            disabled={!isShop && (hintTaps >= hintLimit || hintLimit === 0)}
-          />
-          {!isShop && hintLimit > 0 && (
-            <div className={`absolute -top-11 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-lg text-[11px] font-black tabular-nums transition-all border shadow-2xl backdrop-blur-2xl flex items-center justify-center whitespace-nowrap min-w-[36px] ${
-              hintTaps >= hintLimit 
-                ? "bg-red-500/10 text-red-400 border-red-500/20" 
-                : "bg-amber-500/15 text-amber-400 border-amber-500/30"
-            }`}>
-              <span className="opacity-80 scale-90 mr-1">💡</span>
-              <span className="px-1">{toKuDigits(hintTaps)}</span>
-              <span className="opacity-30">/</span>
-              <span className="px-1">{toKuDigits(hintLimit)}</span>
+            disabled={!isShop && (hintTaps >= hintLimit || hintLimit === 0 || (hintCount || 0) <= 0)}
+            className="flex items-center gap-2 group transition-all active:scale-90"
+            id="btn-hint"
+            name="btn-hint"
+            aria-label="Use Hint"
+          >
+            <span 
+              className={`material-symbols-outlined text-[24px] 
+                ${(!isShop && (hintTaps >= hintLimit || (hintCount || 0) <= 0)) ? disabledIconColor : "text-amber-500"}`} 
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              lightbulb
+            </span>
+            
+            <div className="flex flex-col leading-none">
+              {isShop && (
+                <span className={`text-[15px] font-black ${countColor}`}>
+                  {toKuDigits(hintCount || 0)}
+                </span>
+              )}
+              {!isShop && hintLimit > 0 && (
+                <span className={`text-[15px] font-black ${(hintTaps >= hintLimit || (hintCount || 0) <= 0) ? 'text-red-400/50' : countColor}`}>
+                  {toKuDigits(Math.max(0, (hintCount || 0) <= 0 ? 0 : hintLimit - hintTaps))}
+                </span>
+              )}
             </div>
-          )}
+          </button>
         </div>
 
-        <div className="w-[1px] h-4 bg-slate-200" />
+        <div className={`w-[1px] h-4 ${sepColor}`} />
 
-        {/* Magnet (Magic Wand) */}
-        <Item 
-          icon="magic_button" 
-          color="text-purple-500" 
-          glowColor="rgba(168,85,247,0.5)"
-          count={magnetCount}
-          onClick={onMagnet}
-          disabled={!isShop && magnetUsedInRound}
-        />
+        {/* Magnet Item */}
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={onMagnet}
+            disabled={!isShop && (magnetUsedInRound || (magnetCount || 0) <= 0)}
+            className="flex items-center gap-2 group transition-all active:scale-90"
+            id="btn-magnet"
+            name="btn-magnet"
+            aria-label="Use Magnet"
+          >
+            <span 
+              className={`material-symbols-outlined text-[24px] 
+                ${(!isShop && (magnetUsedInRound || (magnetCount || 0) <= 0)) ? disabledIconColor : "text-purple-400"}`} 
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              auto_fix_high
+            </span>
+            
+            <div className="flex flex-col leading-none">
+              {isShop && (
+                <span className={`text-[15px] font-black ${countColor}`}>
+                  {toKuDigits(magnetCount || 0)}
+                </span>
+              )}
+              {!isShop && (
+                <span className={`text-[15px] font-black ${(magnetUsedInRound || (magnetCount || 0) <= 0) ? 'text-red-400/50' : countColor}`}>
+                  {toKuDigits((magnetUsedInRound || (magnetCount || 0) <= 0) ? 0 : 1)}
+                </span>
+              )}
+            </div>
+          </button>
+        </div>
 
-        <div className="w-[1px] h-4 bg-slate-200" />
+        <div className={`w-[1px] h-4 ${sepColor}`} />
 
-        {/* Skip (Fast Forward) */}
-        <Item 
-          icon="fast_forward" 
-          color="text-blue-500" 
-          glowColor="rgba(59,130,246,0.5)"
-          count={skipCount}
-          onClick={onSkip}
-          hideCount={!isShop}
-        />
+        {/* Skip Item */}
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={onSkip}
+            disabled={!isShop && (skipsUsedInRound >= skipLimit || (skipCount || 0) <= 0)}
+            className="flex items-center gap-2 group transition-all active:scale-90"
+            id="btn-skip"
+            name="btn-skip"
+            aria-label="Use Skip"
+          >
+            <span 
+              className={`material-symbols-outlined text-[24px] 
+                ${(!isShop && (skipsUsedInRound >= skipLimit || (skipCount || 0) <= 0)) ? disabledIconColor : "text-blue-400"}`} 
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              fast_forward
+            </span>
+            
+            <div className="flex flex-col leading-none">
+              {isShop && (
+                <span className={`text-[15px] font-black ${countColor}`}>
+                  {toKuDigits(skipCount || 0)}
+                </span>
+              )}
+              {!isShop && skipLimit > 0 && (
+                <span className={`text-[15px] font-black ${(skipsUsedInRound >= skipLimit || (skipCount || 0) <= 0) ? 'text-red-400/50' : countColor}`}>
+                  {toKuDigits(Math.max(0, (skipCount || 0) <= 0 ? 0 : skipLimit - skipsUsedInRound))}
+                </span>
+              )}
+            </div>
+          </button>
+        </div>
 
       </div>
     </div>
   );
-}
+};
+
+export default React.memo(InventoryBar);

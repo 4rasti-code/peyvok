@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 
 const PAYMENT_METHODS = [
   { id: 'fib', name: 'First Iraqi Bank (FIB)', logo: 'https://fib.iq/wp-content/themes/FIB/assets/images/header-mobile-logo.svg', category: 'bank' },
@@ -36,7 +36,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-2000 flex items-center justify-center p-4">
-        <motion.div 
+        <Motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -44,7 +44,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
           className="absolute inset-0 bg-black/60 backdrop-blur-xl"
         />
         
-        <motion.div 
+        <Motion.div 
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -66,7 +66,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
               <div className="space-y-6">
                 {/* Item Summary */}
                 <div className="p-4 rounded-2xl bg-white/5 border border-white/5 text-right">
-                  <span className="text-[10px] font-bold text-white/40 uppercase tracking-wider block mb-1">کڕینا نوی</span>
+                  <span className="text-[10px] font-bold text-white/40 uppercase  block mb-1">کڕینا نوی</span>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-black font-rabar text-primary">
                       ${item?.usd || '4.99'} / {(item?.iqd || 7500).toLocaleString('ku-IQ')} د.ع
@@ -101,7 +101,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 px-2">
                        <div className="h-px flex-1 bg-white/5" />
-                       <span className="text-[10px] font-black font-rabar text-white/30 uppercase tracking-widest">کارتا مۆبایلێ</span>
+                       <span className="text-[10px] font-black font-rabar text-white/30 uppercase">کارتا مۆبایلێ</span>
                        <div className="h-px flex-1 bg-white/5" />
                     </div>
                     <div className="grid grid-cols-2 gap-3">
@@ -148,7 +148,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
                       ? 'ل ھیڤیێ بە، دەروازەیێ فەرمی یێ مۆبایلێ یێ ڤەدبیت...'
                       : 'ل ھیڤیێ بە، کارێ تە دھێتە کرن...'}
                   </h3>
-                  <p className="text-sm font-bold font-rabar text-white/40 uppercase tracking-widest leading-tight">
+                  <p className="text-sm font-bold font-rabar text-white/40 uppercase leading-tight">
                     {activeMethod === 'asiacell' || activeMethod === 'korek' 
                       ? 'In-App Purchase (Carrier Billing)'
                       : 'بتنێ چەند چرکەیان...'}
@@ -164,7 +164,7 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
                 </div>
                 <div className="space-y-2">
                   <h3 className="text-2xl font-black font-rabar text-white">دەستخۆش! کڕینا تە سەرکەفت.</h3>
-                  <p className="text-sm font-bold font-rabar text-white/40">سوپاس بۆ پشتەڤانیا تە بۆ ئەپێ پەیڤچن</p>
+                  <p className="text-sm font-bold font-rabar text-white/40">سوپاس بۆ پشتەڤانیا تە بۆ ئەپێ پەیڤۆک</p>
                 </div>
                 <button 
                   onClick={onClose}
@@ -193,8 +193,9 @@ export default function PaymentGatewayModal({ isOpen, onClose, item, onComplete 
               </div>
             )}
           </div>
-        </motion.div>
+        </Motion.div>
       </div>
     </AnimatePresence>
   );
 }
+

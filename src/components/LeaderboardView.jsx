@@ -1,24 +1,43 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { AVATARS, DEFAULT_AVATAR } from '../data/avatars';
 import Avatar from './Avatar';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { motion as Motion, AnimatePresence, LayoutGroup } from 'framer-motion';
 import PublicProfileModal from './PublicProfileModal';
 import { FilsIcon } from './CurrencyIcon';
 import { triggerHaptic } from '../utils/haptics';
 import { toKuDigits } from '../utils/formatters';
+import { useUser } from '../context/AuthContext';
 import { useGame } from '../context/GameContext';
-import { getLevelFromXP } from '../utils/progression';
+import { useAudio } from '../context/AudioContext';
+import { getLevelFromXP, getLevelTier } from '../utils/progression';
 import FloatingLetterBackground from './FloatingLetterBackground';
 
-export default function LeaderboardView({ userId, userLevel, userXP, userFils, userNickname = "تو", userAvatar = 'default', isInKurdistan = true, countryCode = 'IQ', lastProfileUpdate, onOpenChat }) {
-  const { 
+export default function LeaderboardView({ onOpenChat }) {
+  const {
+    user,
+    userNickname,
+    userAvatar,
+    _countryCode,
+    _isInKurdistan,
+    lastProfileUpdate,
     handleToggleBlock: toggleBlockInContext,
-    playTabSound
+    loadingAuth
+  } = useUser();
+
+  const {
+    currentXP: userXP,
+    level: _userLevel,
+    fils: _userFils,
+    useGameLoading: _useGameLoading
   } = useGame();
+
+  const userId = user?.id;
+  const { playTabSound } = useAudio();
   const [leaders, setLeaders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userRank, setUserRank] = useState('--');
+  const [error, setError] = useState(null);
+  const [_userRank, setUserRank] = useState('--');
   const [view, setView] = useState('global');
   const [selectedPlayer, setSelectedPlayer] = useState(null);
 
@@ -35,7 +54,7 @@ export default function LeaderboardView({ userId, userLevel, userXP, userFils, u
   };
 
   const handleToggleBlock = async (currentStatus) => {
-    if (!selectedPlayer || !userId) return;
+    if (!selectedPlayer || !userId || userId === 'undefined') return;
     const success = await toggleBlockInContext(selectedPlayer.id, currentStatus);
     if (success) {
       if (!currentStatus) alert("یاریزان ھاتە بلۆککرن!");
@@ -44,13 +63,18 @@ export default function LeaderboardView({ userId, userLevel, userXP, userFils, u
     }
   };
 
-  const fetchData = async () => {
-    if (!userId) return;
+  const fetchData = useCallback(async () => {
+    // 1. HARDENED GUARD: Reject invalid, undefined, or loading states
+    if (loadingAuth || !userId || userId === 'undefined' || userId.length < 5) {
+      setLoading(false);
+      return;
+    }
     setLoading(true);
-    
+    setError(null);
+
     try {
       let leaderData = [];
-      
+
       if (view === 'friends') {
         // 1. Get all accepted friendships
         const { data: friendships, error: fError } = await supabase
@@ -58,9 +82,9 @@ export default function LeaderboardView({ userId, userLevel, userXP, userFils, u
           .select('*')
           .or(`user_id.eq.${userId},friend_id.eq.${userId}`)
           .eq('status', 'accepted');
-          
+
         if (fError) throw fError;
-        
+
         // 2. Map to a list of IDs including current user
         const friendIds = [userId];
         friendships.forEach(f => {
@@ -68,14 +92,14 @@ export default function LeaderboardView({ userId, userLevel, userXP, userFils, u
           friendIds.push(f.friend_id);
         });
         const uniqueIds = [...new Set(friendIds)];
-        
+
         // 3. Fetch profiles for those IDs
         const { data, error: pError } = await supabase
           .from('profiles')
           .select('*')
           .in('id', uniqueIds)
           .order('xp', { ascending: false });
-          
+
         if (pError) throw pError;
         leaderData = data || [];
       } else {
@@ -85,81 +109,80 @@ export default function LeaderboardView({ userId, userLevel, userXP, userFils, u
           .select('*')
           .order('xp', { ascending: false })
           .limit(20);
-          
+
         if (leaderError) throw leaderError;
         leaderData = data || [];
       }
-      
+
       setLeaders(leaderData);
 
       // Rank calculation: Count users with more XP
-      const { count, error: rankError } = await supabase
-        .from('profiles')
-        .select('*', { count: 'exact', head: true })
-        .gt('xp', userXP);
+      if (typeof userXP === 'number' && !isNaN(userXP)) {
+        const { count, error: rankError } = await supabase
+          .from('profiles')
+          .select('*', { count: 'exact', head: true })
+          .gt('xp', userXP);
 
-      if (!rankError) setUserRank(count + 1);
+        if (!rankError) setUserRank(count + 1);
+      }
     } catch (err) {
       console.warn("Leaderboard fetch error:", err);
+      setError(true);
     } finally {
       setLoading(false);
     }
-  };
+  }, [loadingAuth, userId, view, userXP]);
 
   useEffect(() => {
     fetchData();
-    const channel = supabase
-      .channel('leaderboard-realtime')
-      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'profiles' }, () => fetchData())
-      .subscribe();
 
     const handleFocus = () => fetchData();
     window.addEventListener('focus', handleFocus);
 
     return () => {
-      supabase.removeChannel(channel);
       window.removeEventListener('focus', handleFocus);
     };
-  }, [userXP, lastProfileUpdate, view, userId]);
+  }, [view, userId, fetchData]);
 
 
   return (
-    <div 
+    <div
       onClick={handleBackgroundClick}
-      className="w-full max-w-full px-4 md:px-6 pb-56 h-full relative animate-in fade-in duration-700 bg-[#020617] overflow-x-hidden pt-[calc(env(safe-area-inset-top,24px)+32px)] md:pt-20 text-right bg-trigger-zone"
+      className="w-full max-w-full px-4 md:px-6 pb-56 h-full relative animate-in fade-in duration-700 bg-mono-50 dark:bg-mono-900 overflow-x-hidden pt-[calc(env(safe-area-inset-top,24px)+32px)] md:pt-20 text-right bg-trigger-zone transition-colors"
     >
       <FloatingLetterBackground ref={bgRef} />
 
       <div className="relative z-10">
         <div className="flex flex-col items-center mb-10 max-w-md mx-auto text-center">
           <span className="material-symbols-outlined text-4xl text-primary mb-2.5 drop-shadow-lg">leaderboard</span>
-          <h2 className="text-5xl font-black font-rabar tracking-tighter italic uppercase" style={{ color: 'rgb(203, 213, 225)' }}>رێزبەندی</h2>
+          <h2 className="text-5xl font-black font-rabar  italic uppercase text-mono-900 dark:text-mono-300 transition-colors duration-500">رێزبەندی</h2>
         </div>
 
         {/* Top Tab Swapper - Synced Card Style */}
-        <div className="flex p-1 rounded-md border mb-10 w-full max-w-xs mx-auto relative z-30 shadow-sm transition-all overflow-"
-             style={{ backgroundColor: 'rgb(203, 213, 225)', borderColor: 'rgba(255, 255, 255, 0.2)' }}>
+        <div className="flex p-1 rounded-md border mb-10 w-full max-w-xs mx-auto relative z-30 shadow-sm transition-all overflow-hidden bg-mono-100 dark:bg-mono-950 border-mono-200 dark:border-mono-800 duration-300">
           {['global', 'friends'].map((tab) => {
             const isActive = view === tab;
             return (
               <button
                 key={tab}
-                onClick={() => { 
-                    triggerHaptic(10); 
-                    playTabSound();
-                    setView(tab); 
+                onClick={() => {
+                  triggerHaptic(10);
+                  playTabSound();
+                  setView(tab);
                 }}
-                className={`flex-1 py-2.5 px-4 rounded-md font-black text-sm transition-all duration-300 relative z-10 ${isActive ? 'text-white' : 'text-slate-400 hover:text-slate-600'
+                className={`flex-1 py-2.5 px-4 rounded-md font-black text-sm transition-all duration-300 relative z-10 ${isActive
+                  ? 'text-mono-50 dark:text-mono-50'
+                  : 'text-mono-500 hover:text-mono-900 dark:text-mono-400 dark:hover:text-mono-100'
                   }`}
               >
                 {isActive && (
-                  <motion.div
+                  <Motion.div
                     layoutId="activeTabIndicator"
-                    className="absolute inset-0 bg-slate-800 rounded-md shadow-sm"
+                    className="absolute inset-0 bg-mono-900 dark:bg-mono-800 rounded-sm shadow-sm"
                     transition={{ type: "spring", bounce: 0.1, duration: 0.4 }}
                   />
                 )}
-                <span className="relative z-20 uppercase tracking-widest font-rabar">
+                <span className="relative z-20 uppercase tracking-normal font-rabar">
                   {tab === 'global' ? 'جیھانی' : 'ھەڤال'}
                 </span>
               </button>
@@ -169,7 +192,7 @@ export default function LeaderboardView({ userId, userLevel, userXP, userFils, u
 
         <AnimatePresence mode="wait">
           {!loading ? (
-            <motion.div 
+            <Motion.div
               key={view}
               variants={{
                 hidden: { opacity: 0 },
@@ -193,7 +216,7 @@ export default function LeaderboardView({ userId, userLevel, userXP, userFils, u
                 const effectiveXP = isMe ? userXP : player.xp;
 
                 return (
-                  <motion.div
+                  <Motion.div
                     key={player.id}
                     variants={{
                       hidden: { opacity: 0, y: 15, scale: 0.98 },
@@ -204,74 +227,202 @@ export default function LeaderboardView({ userId, userLevel, userXP, userFils, u
                     whileHover={{ scale: 1.01, backgroundColor: 'rgba(255, 255, 255, 0.05)' }}
                     whileTap={{ scale: 0.99 }}
                     onClick={() => { triggerHaptic(10); setSelectedPlayer({ ...player, avatar_url: effectiveAvatar, nickname: effectiveNickname, xp: effectiveXP }); }}
-                    className={`flex flex-row items-center justify-between p-2.5 px-5 rounded-md border relative overflow- transition-all cursor-pointer shadow-sm`}
-                    style={{ 
-                      backgroundColor: 'rgb(203, 213, 225)',
-                      borderColor: 'rgba(255, 255, 255, 0.2)',
-                      boxShadow: 'rgba(148, 163, 184, 0.4) 0px 10px 20px -5px'
+                    className={`flex flex-row items-center justify-between p-2.5 px-5 rounded-md border relative transition-all cursor-pointer shadow-sm bg-mono-white dark:bg-mono-800 border-mono-200 dark:border-mono-700 duration-300`}
+                    style={{
+                      zIndex: isTop3 ? 50 : 1 // Ensure top 3 cards have higher z-index for floating crowns
                     }}
                   >
-                      {/* Left Side Accent Bar (Primary Yellow - Sharp) */}
-                      <div className="absolute left-0 top-3 bottom-3 w-1.5 rounded-r-[2px] bg-primary" />
 
-                      {/* Sleek Metallic Rank Number (MINIMALIST) */}
-                      <div className="flex items-center justify-center w-10 shrink-0 z-10">
-                         <span className={`text-2xl font-black italic tracking-tighter ${
-                             rank === 1 ? 'text-[#92400e]' :
-                             rank === 2 ? 'text-[#334155]' :
-                             rank === 3 ? 'text-[#7c2d12]' :
-                             'text-[#0f172a]'
-                         }`}>
-                            {toKuDigits(rank)}
-                         </span>
-                      </div>
+                    {/* Sleek Metallic Rank Number (MINIMALIST) */}
+                    <div className="flex items-center justify-center w-10 shrink-0 z-10 relative">
+                      {rank <= 3 && (
+                        <Motion.div
+                          initial={{ y: 0, rotate: rank === 1 ? -5 : rank === 2 ? 5 : 0 }}
+                          animate={{
+                            y: [-2, 2, -2],
+                            rotate: rank === 1 ? [-5, 5, -5] : rank === 2 ? [5, -5, 5] : [-3, 3, -3]
+                          }}
+                          transition={{ repeat: Infinity, duration: rank === 1 ? 4 : rank === 2 ? 4.5 : 5, ease: "easeInOut" }}
+                          className={`absolute -top-7 left-1/2 -translate-x-1/2 z-30 pointer-events-none`}
+                        >
+                          <div className="relative w-9 h-9 flex items-center justify-center">
+                            <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_3px_6px_rgba(0,0,0,0.3)]">
+                              <defs>
+                                <linearGradient id={`refGold-${player.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                                  <stop offset="0%" stopColor="#FFD54F" />
+                                  <stop offset="50%" stopColor="#FFC107" />
+                                  <stop offset="100%" stopColor="#FFA000" />
+                                </linearGradient>
+                                <linearGradient id={`refSilver-${player.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                                  <stop offset="0%" stopColor="#F8FAFC" />
+                                  <stop offset="50%" stopColor="#CBD5E1" />
+                                  <stop offset="100%" stopColor="#94A3B8" />
+                                </linearGradient>
+                                <linearGradient id={`refBronze-${player.id}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                                  <stop offset="0%" stopColor="#FFCC80" />
+                                  <stop offset="50%" stopColor="#FB8C00" />
+                                  <stop offset="100%" stopColor="#E65100" />
+                                </linearGradient>
+                              </defs>
 
-                      {/* Avatar Section */}
-                      <div className="flex items-center gap-3 z-10 px-1">
-                         {/* Clean Avatar (No Borders) */}
-                         <div className="w-12 h-12 rounded-full overflow-hidden shadow-sm bg-slate-100 shrink-0">
-                           <Avatar
-                             src={effectiveAvatar}
-                             updatedAt={isMe ? lastProfileUpdate : player.updated_at}
-                             size="full"
-                             className="rounded-full object-cover w-full h-full"
-                             border={false}
-                           />
-                         </div>
-                      </div>
+                              {/* Dual-Band Base */}
+                              <path
+                                d="M15 85 Q50 90 85 85 L85 75 Q50 80 15 75 Z"
+                                fill={rank === 1 ? "#FF8F00" : rank === 2 ? "#475569" : "#BF360C"}
+                                stroke="#3E2723" strokeWidth="2"
+                              />
+                              <path
+                                d="M15 75 Q50 80 85 75 L85 68 Q50 73 15 68 Z"
+                                fill={rank === 1 ? `url(#refGold-${player.id})` : rank === 2 ? `url(#refSilver-${player.id})` : `url(#refBronze-${player.id})`}
+                                stroke="#3E2723" strokeWidth="2"
+                              />
 
-                      {/* Info and Name (CENTERED) */}
-                      <div className="flex-1 flex justify-center items-center gap-2 min-w-0 mx-2">
-                         <span className="font-black text-slate-800 text-sm tracking-tighter uppercase truncate leading-none">{effectiveNickname}</span>
-                         <span className="text-orange-500 text-base shrink-0">🔥</span>
-                      </div>
+                              {/* 5-Point Crown Body (matching reference shape) */}
+                              <path
+                                d="M15 68 Q50 73 85 68 L95 40 L75 55 L50 20 L25 55 L5 40 Z"
+                                fill={rank === 1 ? `url(#refGold-${player.id})` : rank === 2 ? `url(#refSilver-${player.id})` : `url(#refBronze-${player.id})`}
+                                stroke="#3E2723" strokeWidth="2"
+                              />
 
-                      {/* Shield (RIGHT SIDE) */}
-                      <div className="flex items-center shrink-0 pr-1">
-                         <div className="relative w-10 h-12 flex items-center justify-center shrink-0">
-                            <svg className="absolute inset-0 w-full h-full drop-shadow-md" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
-                               <path d="M50 0L95 20V55C95 80 50 115 50 115C50 115 5 80 5 55V20L50 0Z" fill={`url(#medalGradient-${player.id})`} stroke="white" strokeWidth="4" strokeOpacity="0.2" />
-                               <defs>
-                                  <linearGradient id={`medalGradient-${player.id}`} x1="50" y1="0" x2="50" y2="115" gradientUnits="userSpaceOnUse">
-                                     <stop stopColor="#FFD700" />
-                                     <stop offset="1" stopColor="#B8860B" />
-                                  </linearGradient>
-                               </defs>
+                              {/* Central Diamond Gem (Purple) with Shine Animation */}
+                              <Motion.path
+                                d="M50 45 L58 55 L50 65 L42 55 Z"
+                                fill={rank === 1 ? "#7E57C2" : rank === 2 ? "#3B82F6" : "#EF4444"}
+                                stroke="#3E2723" strokeWidth="1.5"
+                                animate={{
+                                  filter: ["brightness(1)", "brightness(1.5)", "brightness(1)"],
+                                }}
+                                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                              />
+
+                              {/* Glowing Highlight for Diamond */}
+                              <Motion.path
+                                d="M50 48 L54 55 L50 62 L46 55 Z"
+                                fill="white" fillOpacity="0.4"
+                                animate={{ opacity: [0.2, 0.6, 0.2] }}
+                                transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                              />
+
+                              {/* 5 Beads on Points (Teal) with Shine */}
+                              {[
+                                { cx: 5, cy: 40, r: 5 },
+                                { cx: 25, cy: 55, r: 4 },
+                                { cx: 50, cy: 20, r: 6 },
+                                { cx: 75, cy: 55, r: 4 },
+                                { cx: 95, cy: 40, r: 5 }
+                              ].map((b, i) => (
+                                <g key={i}>
+                                  <Motion.circle
+                                    cx={b.cx} cy={b.cy} r={b.r}
+                                    fill="#4DD0E1" stroke="#3E2723" strokeWidth="1.5"
+                                    animate={{ filter: ["brightness(1)", "brightness(1.3)", "brightness(1)"] }}
+                                    transition={{ repeat: Infinity, duration: 2, delay: i * 0.2 }}
+                                  />
+                                  <Motion.circle
+                                    cx={b.cx - b.r / 3} cy={b.cy - b.r / 3} r={b.r / 4}
+                                    fill="white" fillOpacity="0.6"
+                                    animate={{ opacity: [0.4, 0.9, 0.4] }}
+                                    transition={{ repeat: Infinity, duration: 2, delay: i * 0.2 }}
+                                  />
+                                </g>
+                              ))}
+
+                              {/* Small Decorative Beads on Body */}
+                              <circle cx="30" cy="62" r="2.5" fill="#4DD0E1" stroke="#3E2723" strokeWidth="1" />
+                              <circle cx="40" cy="64" r="2.5" fill="#4DD0E1" stroke="#3E2723" strokeWidth="1" />
+                              <circle cx="60" cy="64" r="2.5" fill="#4DD0E1" stroke="#3E2723" strokeWidth="1" />
+                              <circle cx="70" cy="62" r="2.5" fill="#4DD0E1" stroke="#3E2723" strokeWidth="1" />
+
+                              {/* Highlight Reflections */}
+                              <path d="M50 25 L50 40" stroke="white" strokeWidth="2" strokeOpacity="0.3" strokeLinecap="round" />
                             </svg>
-                             <div className="relative z-10 flex flex-col items-center justify-center -mt-1 w-full scale-[0.85]">
-                                <span className="text-[7px] font-black text-slate-950/40 uppercase leading-none mb-0.5">ئاست</span>
-                                <span className="text-xl font-black text-slate-950 leading-none drop-shadow-sm">{toKuDigits(getLevelFromXP(effectiveXP))}</span>
-                             </div>
-                         </div>
+                          </div>
+                        </Motion.div>
+                      )}
+                      <span className={`text-2xl font-black italic tracking-normal relative z-10 ${rank === 1 ? 'text-[#92400e]' :
+                        rank === 2 ? 'text-mono-500 dark:text-mono-300' :
+                          rank === 3 ? 'text-[#7c2d12]' :
+                            'text-mono-900 dark:text-mono-50'
+                        }`}>
+                        {toKuDigits(rank)}
+                      </span>
+                    </div>
+
+                    {/* Avatar Section */}
+                    <div className="flex items-center gap-3 z-10 px-1">
+                      <div className="relative w-12 h-12 flex items-center justify-center">
+                        {/* XP Progress Ring */}
+                        <div className="absolute inset-[-4px] z-0">
+                          <svg className="w-full h-full -rotate-90 overflow-visible" viewBox="0 0 100 100">
+                             <circle cx="50" cy="50" r="44" fill="none" className="stroke-mono-200/20 dark:stroke-white/5" strokeWidth="4" />
+                             <Motion.circle
+                                cx="50"
+                                cy="50"
+                                r="44"
+                                fill="none"
+                                stroke={getLevelTier(getLevelFromXP(effectiveXP)).stop1}
+                                strokeWidth="8"
+                                strokeLinecap="butt"
+                                strokeDasharray="276.46"
+                                initial={{ strokeDashoffset: 276.46 }}
+                                animate={{ 
+                                   strokeDashoffset: 276.46 - (276.46 * (player.xp_progress || 0.7)), // Fallback progress for visual
+                                   filter: getLevelTier(getLevelFromXP(effectiveXP)).isLegendary ? `drop-shadow(0 0 5px ${getLevelTier(getLevelFromXP(effectiveXP)).stop1})` : "none"
+                                }}
+                                transition={{ duration: 1.5, ease: "circOut" }}
+                             />
+                          </svg>
+                        </div>
+
+                        {/* Clean Avatar */}
+                        <div className="w-10 h-10 rounded-full overflow-hidden shadow-sm bg-mono-100 dark:bg-white/5 shrink-0 relative z-10 border border-mono-200 dark:border-white/10">
+                          <Avatar
+                            src={effectiveAvatar}
+                            updatedAt={isMe ? lastProfileUpdate : player.updated_at}
+                            size="full"
+                            className="rounded-full object-cover w-full h-full"
+                            border={false}
+                          />
+                        </div>
                       </div>
-                    </motion.div>
-                  );
-                })}
-            </motion.div>
+                    </div>
+
+                    {/* Info and Name (CENTERED) */}
+                    <div className="flex-1 flex justify-center items-center gap-2 min-w-0 mx-2">
+                      <span className="font-black text-mono-900 dark:text-mono-50 text-sm tracking-normal uppercase truncate leading-none">{effectiveNickname}</span>
+                    </div>
+
+                    {/* Shield (RIGHT SIDE) */}
+                    <div className="flex items-center shrink-0 pr-1">
+                      <div className="relative w-10 h-12 flex items-center justify-center shrink-0">
+                        <svg className="absolute inset-0 w-full h-full drop-shadow-md" viewBox="0 0 100 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M50 0L95 20V55C95 80 50 115 50 115C50 115 5 80 5 55V20L50 0Z" fill={`url(#medalGradient-${player.id})`} stroke="white" strokeWidth="4" strokeOpacity="0.2" />
+                          <defs>
+                            <linearGradient id={`medalGradient-${player.id}`} x1="50" y1="0" x2="50" y2="115" gradientUnits="userSpaceOnUse">
+                              <stop stopColor="#FFD700" />
+                              <stop offset="1" stopColor="#B8860B" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                        <div className="relative z-10 flex flex-col items-center justify-center -mt-1 w-full scale-[0.85]">
+                          <span className="text-[7px] font-black text-mono-900/40 dark:text-mono-950/40 uppercase leading-none mb-0.5">ئاست</span>
+                          <span className="text-xl font-black text-mono-900 dark:text-mono-50 leading-none drop-shadow-sm">{toKuDigits(getLevelFromXP(effectiveXP))}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Motion.div>
+                );
+              })}
+            </Motion.div>
+          ) : error ? (
+            <div className="flex flex-col items-center justify-center py-48 gap-4">
+              <span className="material-symbols-outlined text-4xl text-red-500/50">cloud_off</span>
+              <span className="font-black text-mono-400 font-rabar">کێشەیەک د پەیوەندیێ دا هەیە</span>
+            </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-48 gap-4">
-              <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-              <span className="font-black text-slate-700 uppercase text-[10px] tracking-widest">LOADING...</span>
+              <div className="w-10 h-10 border-2 border-mono-200 dark:border-primary border-t-transparent rounded-full animate-spin"></div>
+              <span className="font-black text-mono-400 dark:text-mono-700 uppercase text-[10px] tracking-widest">LOADING...</span>
             </div>
           )}
         </AnimatePresence>
@@ -287,3 +438,5 @@ export default function LeaderboardView({ userId, userLevel, userXP, userFils, u
     </div>
   );
 }
+
+

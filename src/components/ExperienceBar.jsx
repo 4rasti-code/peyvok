@@ -8,41 +8,30 @@ import { useGame } from '../context/GameContext';
  * Features 11 Dynamic Color Tiers (Level 1-100).
  */
 const ExperienceBar = () => {
-  const { level, currentXP, maxXP } = useGame();
+  const { level, currentXP, maxXP, minXPForLevel, progressPercent } = useGame();
   const [animatedXP, setAnimatedXP] = useState(currentXP);
 
-  // 1. Dynamic Tier Color Logic (Synchronized with 100-Level RPG system)
+  // 1. Dynamic Tier Color Logic (Synchronized with RPG system)
   const getTierColors = (lvl) => {
-    if (lvl < 10) return { top: '#00F2FE', bottom: '#4FACFE' };  // 1-9: Aqua
-    if (lvl < 20) return { top: '#FFC837', bottom: '#FF8008' };  // 10-19: Orange
-    if (lvl < 30) return { top: '#E2E2E2', bottom: '#999999' };  // 20-29: Silver
-    if (lvl < 40) return { top: '#FFDF00', bottom: '#D4AF37' };  // 30-39: Gold
-    if (lvl < 50) return { top: '#50C878', bottom: '#228B22' };  // 40-49: Emerald
-    if (lvl < 60) return { top: '#FF416C', bottom: '#FF4B2B' };  // 50-59: Ruby
-    if (lvl < 70) return { top: '#9B30FF', bottom: '#551A8B' };  // 60-69: Amethyst
-    if (lvl < 80) return { top: '#0575E6', bottom: '#021B79' };  // 70-79: Sapphire
-    if (lvl < 90) return { top: '#434343', bottom: '#000000' };  // 80-89: Onyx (Dark)
-    if (lvl < 100) return { top: '#f857a6', bottom: '#ff5858' }; // 90-99: Plasma
-    return { top: '#E0EAFC', bottom: '#CFDEF3' };                // 100: Cosmic Diamond
+    if (lvl < 5) return { top: '#00F2FE', bottom: '#4FACFE' }; 
+    if (lvl < 10) return { top: '#FFC837', bottom: '#FF8008' }; 
+    if (lvl < 20) return { top: '#E2E2E2', bottom: '#999999' }; 
+    if (lvl < 35) return { top: '#FFDF00', bottom: '#D4AF37' }; 
+    if (lvl < 50) return { top: '#50C878', bottom: '#228B22' }; 
+    if (lvl < 75) return { top: '#FF416C', bottom: '#FF4B2B' }; 
+    return { top: '#E0EAFC', bottom: '#CFDEF3' };
   };
 
   const theme = getTierColors(level);
 
-  // 2. Smooth XP Number Interpoloation Hook
+  // 2. Smooth XP Number Interpolation Hook
   useEffect(() => {
     let animationFrameId;
     const start = animatedXP;
     const end = currentXP;
     
-    // Reset animation if start and end are too far apart (e.g. on mount/load)
-    if (Math.abs(start - end) > maxXP * 0.5) {
-      setAnimatedXP(end);
-      return;
-    }
-
-    if (start === end) return;
-
-    const duration = 1200; // Cinematic reward duration
+    // Smooth transition
+    const duration = 1200; 
     const startTime = performance.now();
 
     const animate = (currentTime) => {
@@ -60,10 +49,9 @@ const ExperienceBar = () => {
     
     animationFrameId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrameId);
-  }, [currentXP, maxXP]);
+  }, [currentXP]);
 
-  const isMaxLevel = level >= 100;
-  const fillPercentage = isMaxLevel ? 100 : Math.min(100, Math.max(0, (animatedXP / maxXP) * 100));
+  const fillPercentage = progressPercent;
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '10px 0', width: '100%', boxSizing: 'border-box' }}>
@@ -78,18 +66,16 @@ const ExperienceBar = () => {
             );
             background-size: 200% 100%; 
             animation: flowWavesGlobal 2.5s linear infinite;
-            /* Inner 3D Glass Tube Shading */
             box-shadow: inset 0 -3px 6px rgba(0,0,0,0.2), inset 0 4px 6px rgba(255,255,255,0.4);
-            border-radius: 50px 0 0 50px;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: scaleX(1);
+            transform-origin: left;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
           }
         `}
       </style>
 
-      {/* Slim & Seamless Bar (Parent: 44px Height for Star room, Bar: 18px) */}
+      {/* Slim & Seamless Bar */}
       <div style={{ position: 'relative', display: 'flex', alignItems: 'center', width: '100%', maxWidth: '320px', height: '44px', margin: '0 auto' }}>
-        
-        {/* BAR CONTAINER WITH SEAMLESS JOINT - Fixed 18px height */}
         <div style={{
             position: 'relative', flexGrow: 1, height: '18px', backgroundColor: 'rgba(0, 0, 0, 0.4)',
             borderRadius: '50px 0 0 50px', border: '1.5px solid rgba(255,255,255,0.2)', borderRight: 'none', 
@@ -100,15 +86,15 @@ const ExperienceBar = () => {
           {/* LIQUID WATER FILL */}
           <div className="liquid-water-global" style={{
               position: 'absolute', top: 0, left: 0, height: '100%',
-              width: fillPercentage + '%', zIndex: 1
+              width: '100%', transform: `scaleX(${fillPercentage / 100})`, zIndex: 1
             }}></div>
 
-          {/* XP NUMBERS - Locally formatted, LTR forced */}
+          {/* XP NUMBERS */}
           <span style={{ 
             position: 'relative', color: 'white', fontWeight: '900', fontSize: '10px', fontFamily: 'sans-serif', 
             zIndex: 2, display: 'inline-block', direction: 'ltr', unicodeBidi: 'bidi-override', textShadow: '0 2px 4px rgba(0,0,0,0.8)' 
           }}>
-            {isMaxLevel ? 'ئاستێ دوماھییێ 🔥' : `${toKuDigits(animatedXP)} / ${toKuDigits(maxXP)}`}
+            {`${toKuDigits(animatedXP - minXPForLevel)} / ${toKuDigits(maxXP - minXPForLevel)}`}
           </span>
         </div>
 

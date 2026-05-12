@@ -53,7 +53,7 @@ BEGIN
   -- Atomic update for all currencies and progression
   UPDATE profiles
   SET 
-    shayi = shayi + v_final_reward,
+    fils = fils + v_final_reward,
     xp = xp + p_xp_amount,
     level = CASE WHEN p_game_mode = 'classic' THEN level + 1 ELSE level END,
     mamak_level = CASE WHEN p_game_mode = 'mamak' AND p_completed_level = v_current_level THEN v_current_level + 1 ELSE mamak_level END,
@@ -79,7 +79,7 @@ SELECT
   level AS classic_level,
   mamak_level,
   hard_words_level,
-  shayi AS fils,
+  fils,
   xp,
   (level + mamak_level + hard_words_level + word_fever_level) as total_rank_score
 FROM profiles
@@ -95,7 +95,7 @@ BEGIN
   INSERT INTO public.profiles (
     id, 
     nickname, 
-    shayi, 
+    fils, 
     magnets, 
     hints, 
     skips,

@@ -9,6 +9,7 @@ export const normalizeKurdishInput = (input) => {
     .normalize('NFC')
     .replace(/ك/g, 'ک')
     .replace(/[يى]/g, 'ی')
+    .replace(/ة/g, 'ە')
     .replace(/ه/g, 'ھ')
     .replace(/[\u200B-\u200D\uFEFF\u00A0]/g, ''); // Remove zero-width spaces
 };

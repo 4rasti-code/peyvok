@@ -1,59 +1,34 @@
-import React, { useMemo, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
-import { motion, useSpring, useMotionValue, useTransform, animate } from 'framer-motion';
+import React, { forwardRef, useImperativeHandle, memo, useState } from 'react';
+import { motion as Motion, useSpring, useMotionValue, useMotionValueEvent } from 'framer-motion';
 
-const FloatingLetter = ({ char, initialX, initialY, pulsePos }) => {
+const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
   // Movement springs - Low stiffness, High damping for "liquid" feel
-  const springConfig = { damping: 35, stiffness: 12 };
+  const springConfig = { damping: 40, stiffness: 15 };
   const x = useSpring(0, springConfig);
   const y = useSpring(0, springConfig);
   const rotate = useSpring(0, springConfig);
-  const opacity = useSpring(0.12, springConfig); // Slightly more opacity for bigger letters
+  const opacity = useSpring(0.15, springConfig);
 
-  // Persistent drift animation (Organic Sway)
-  useEffect(() => {
-    const controlsX = animate(x, [0, 15, -15, 0], {
-      duration: 12 + Math.random() * 8,
-      repeat: Infinity,
-      ease: "easeInOut"
-    });
-    const controlsY = animate(y, [0, -25, 25, 0], {
-      duration: 15 + Math.random() * 10,
-      repeat: Infinity,
-      ease: "easeInOut"
-    });
-    const controlsRot = animate(rotate, [0, 8, -8, 0], {
-      duration: 10 + Math.random() * 5,
-      repeat: Infinity,
-      ease: "easeInOut"
-    });
-
-    return () => {
-      controlsX.stop();
-      controlsY.stop();
-      controlsRot.stop();
-    };
-  }, []);
-
-  // Pulse (Fish Reaction) Logic
-  useEffect(() => {
-    if (!pulsePos) return;
+  // Pulse (Fish Reaction) Logic via MotionValue Subscription
+  useMotionValueEvent(pulseMV, "change", (latest) => {
+    if (!latest) return;
 
     // Relative coordinates
     const nx = initialX / 100;
     const ny = initialY / 100;
-    
-    const dx = nx - pulsePos.x;
-    const dy = ny - pulsePos.y;
+
+    const dx = nx - latest.x;
+    const dy = ny - latest.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     // If within interaction range
-    if (distance < 0.45) {
-      const force = (1 - distance / 0.45);
-      
+    if (distance < 0.4) {
+      const force = (1 - distance / 0.4);
+
       // Calculate flee vector
-      const fleeX = (dx / distance) * force * 130; 
-      const fleeY = (dy / distance) * force * 130;
-      
+      const fleeX = (dx / distance) * force * 100;
+      const fleeY = (dy / distance) * force * 100;
+
       // Calculate rotation - "face" away from the click
       const targetAngle = Math.atan2(dy, dx) * (180 / Math.PI);
 
@@ -61,74 +36,88 @@ const FloatingLetter = ({ char, initialX, initialY, pulsePos }) => {
       x.set(fleeX);
       y.set(fleeY);
       rotate.set(targetAngle + 90);
-      opacity.set(0.35);
+      opacity.set(0.15);
 
       // Smoothly return
-      const timer = setTimeout(() => {
+      setTimeout(() => {
         x.set(0);
         y.set(0);
         rotate.set(0);
-        opacity.set(0.12);
-      }, 1500 + Math.random() * 1000);
-
-      return () => clearTimeout(timer);
+        opacity.set(0.15);
+      }, 1200 + Math.random() * 800);
     }
-  }, [pulsePos]);
+  });
+
+  // Unique animation delay for organic feel - using state for purity
+  const [delay] = useState(() => `${Math.random() * -20}s`);
+  const [duration] = useState(() => `${45 + Math.random() * 30}s`);
 
   return (
-    <motion.div
-      className="absolute text-white font-black text-[14px] select-none font-rabar pointer-events-none"
-      style={{ 
-        left: `${initialX}%`, 
+    <Motion.div
+      className="absolute text-mono-900/20 dark:text-mono-100/20 font-bold text-[16px] select-none font-rabar pointer-events-none transition-opacity duration-1000"
+      style={{
+        left: `${initialX}%`,
         top: `${initialY}%`,
         x,
         y,
         rotate,
-        opacity
+        opacity,
+        animation: `drift ${duration} ease-in-out ${delay} infinite alternate`
       }}
     >
       {char}
-    </motion.div>
+    </Motion.div>
   );
-};
+});
+
+const chars = ['ئا', 'ب', 'پ', 'ت', 'ج', 'چ', 'د', 'ڕ', 'ز', 'ژ', 'ڤ', 'ڵ', 'ۆ', 'ێ', 'گ', 'هـ'];
 
 const FloatingLetterBackground = forwardRef((props, ref) => {
-  const [pulsePos, setPulsePos] = React.useState(null);
-  
-  const chars = ['ئا', 'ب', 'پ', 'ت', 'ج', 'د', 'ڕ', 'ز', 'ڤ', 'ڵ', 'ۆ', 'ێ', 'گ', 'چ', 'ژ', 'هـ'];
-  
-  // Adjusted density for medium small letters (40 letters)
-  const letters = useMemo(() => {
-    return [...Array(40)].map((_, i) => ({
+  const pulseMV = useMotionValue(null);
+
+  // Use useState lazy initialization for purity
+  const [letters] = useState(() => {
+    return [...Array(20)].map((_, i) => ({
       id: i,
       char: chars[i % chars.length],
-      x: 2 + Math.random() * 96,
-      y: 2 + Math.random() * 96
+      x: 5 + Math.random() * 90,
+      y: 5 + Math.random() * 90
     }));
-  }, []);
+  });
 
-  // Expose pulse method
   useImperativeHandle(ref, () => ({
     pulse: (px, py) => {
-      setPulsePos({ x: px, y: py, t: Date.now() });
+      pulseMV.set({ x: px, y: py, t: Date.now() });
     }
   }));
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 bg-[#020617]">
-      <div className="absolute inset-0 bg-linear-to-b from-transparent via-blue-500/5 to-transparent pointer-none" />
-      
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-5 bg-white dark:bg-black transition-colors duration-500">
+      <style>
+        {`
+          @keyframes drift {
+            0% { transform: translate(0px, 0px) rotate(0deg); }
+            33% { transform: translate(15px, -10px) rotate(4deg); }
+            66% { transform: translate(-10px, 15px) rotate(-4deg); }
+            100% { transform: translate(5px, 5px) rotate(2deg); }
+          }
+        `}
+      </style>
+      <div className="absolute inset-0 bg-linear-to-b from-transparent via-mono-500/5 dark:via-white/5 to-transparent pointer-none" />
+
       {letters.map((letter) => (
         <FloatingLetter
           key={letter.id}
           char={letter.char}
           initialX={letter.x}
           initialY={letter.y}
-          pulsePos={pulsePos}
+          pulseMV={pulseMV}
         />
       ))}
     </div>
   );
 });
 
-export default FloatingLetterBackground;
+export default memo(FloatingLetterBackground);
+
+

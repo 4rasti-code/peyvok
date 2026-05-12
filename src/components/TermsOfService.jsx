@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion as Motion } from 'framer-motion';
 import { playBackSfx } from '../utils/audio';
 import { useNavigate } from 'react-router-dom';
 
@@ -65,15 +65,15 @@ const TermsOfService = ({ onViewChange, onClose }) => {
         en: {
             title: "Terms of Service",
             subtitle: "Last Updated: April 2, 2026",
-            intro: "Welcome to پەیڤچن. By accessing or using our application, you agree to be bound by these Terms of Service. Please read them carefully.",
+            intro: "Welcome to پەیڤۆک. By accessing or using our application, you agree to be bound by these Terms of Service. Please read them carefully.",
             sections: [
                 {
                     title: "1. Acceptance of Terms",
-                    text: "By creating an account or using any part of the پەیڤچن platform, you confirm that you have read, understood, and agreed to these terms. If you do not agree, you must not use our services."
+                    text: "By creating an account or using any part of the پەیڤۆک platform, you confirm that you have read, understood, and agreed to these terms. If you do not agree, you must not use our services."
                 },
                 {
                     title: "2. License to Use",
-                    text: "We grant you a non-exclusive, non-transferable, revocable license to use پەیڤچن for personal, non-commercial entertainment purposes only.",
+                    text: "We grant you a non-exclusive, non-transferable, revocable license to use پەیڤۆک for personal, non-commercial entertainment purposes only.",
                     list: [
                         "You may not reverse engineer or modify the game files.",
                         "Commercial use of our logos and assets is strictly prohibited."
@@ -89,7 +89,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                 },
                 {
                     title: "4. Intellectual Property",
-                    text: "All content within پەیڤچن, including logos, graphics, word lists, and software, is the exclusive property of پەیڤچن and its creators, protected by international copyright laws."
+                    text: "All content within پەیڤۆک, including logos, graphics, word lists, and software, is the exclusive property of پەیڤۆک and its creators, protected by international copyright laws."
                 },
                 {
                     title: "5. Prohibited Conduct",
@@ -102,7 +102,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                 },
                 {
                     title: "6. Limitation of Liability",
-                    text: "پەیڤچن provides its services 'as is'. We are not responsible for technical glitches, data loss, or server downtime. Our total liability shall not exceed the amount you paid to use the service (if any)."
+                    text: "پەیڤۆک provides its services 'as is'. We are not responsible for technical glitches, data loss, or server downtime. Our total liability shall not exceed the amount you paid to use the service (if any)."
                 },
                 {
                     title: "7. Changes to Terms",
@@ -114,15 +114,15 @@ const TermsOfService = ({ onViewChange, onClose }) => {
         ku: {
             title: "مەرجێن بکارئینانێ",
             subtitle: "دووماھیک نویژەنکرن: ٢ نیسان، ٢٠٢٦",
-            intro: "بخێر بێی بۆ پەیڤچن. ب چوونە ژوور یان بکارئینانا ڤێ یاریێ، تو ڕازی دبی کو پابەندی ڤان مەرج و ڕێسایان بی. ھیڤییە ب ھووری بخوینە.",
+            intro: "بخێر بێی بۆ پەیڤۆک. ب چوونە ژوور یان بکارئینانا ڤێ یاریێ، تو ڕازی دبی کو پابەندی ڤان مەرج و ڕێسایان بی. ھیڤییە ب ھووری بخوینە.",
             sections: [
                 {
                     title: "١. پەژراندنا مەرجان",
-                    text: "ب دروستکرنا ئەکاونتی یان بکارئینانا ھەر پشکەکا پەیڤچن، تو پشتڕاست دکەی کو تە ئەڤ مەرجە خواندینە، تێگەھشتی، و پێ ڕازی بی. ئەگەر تو پێ ڕازی نەبی، نادروستە خزمەتگوزاریێن مە بکاربینی."
+                    text: "ب دروستکرنا ئەکاونتی یان بکارئینانا ھەر پشکەکا پەیڤۆک، تو پشتڕاست دکەی کو تە ئەڤ مەرجە خواندینە، تێگەھشتی، و پێ ڕازی بی. ئەگەر تو پێ ڕازی نەبی، نادروستە خزمەتگوزاریێن مە بکاربینی."
                 },
                 {
                     title: "٢. مۆڵەتا بکارھێنەران",
-                    text: "ئەم مۆڵەتەکا نە-تایبەت و سنووردار ددەینە تە کو پەیڤچن بکاربینی ب تنێ بۆ مەبەستێن کەسی و نەک بۆ کارێن بازرگانی.",
+                    text: "ئەم مۆڵەتەکا نە-تایبەت و سنووردار ددەینە تە کو پەیڤۆک بکاربینی ب تنێ بۆ مەبەستێن کەسی و نەک بۆ کارێن بازرگانی.",
                     list: [
                         "تو نیشێی فایلێن یاریێ کۆپی بکەی یان دەستکاری بکەی.",
                         "بکارئینانا بازرگانی ژ لۆگۆ و ناڤ و نیشانێن یاریێ قەدەغەیە بێی ڕێپێدان."
@@ -138,7 +138,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                 },
                 {
                     title: "٤. مافێن خاوەنداریێ",
-                    text: "ھەمی ناڤەرۆکا پەیڤچن، ژ لۆگۆ، گرافیک، لیستێن پەیڤان، و پڕۆگرامان، مافێ تایبەت یێ پەیڤچن و خودانانە و ژ لایێ یاسا نێڤدەولەتیڤە پاراستیە."
+                    text: "ھەمی ناڤەرۆکا پەیڤۆک، ژ لۆگۆ، گرافیک، لیستێن پەیڤان، و پڕۆگرامان، مافێ تایبەت یێ پەیڤۆک و خودانانە و ژ لایێ یاسا نێڤدەولەتیڤە پاراستیە."
                 },
                 {
                     title: "٥. کارێن قەدەغەکری",
@@ -151,7 +151,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                 },
                 {
                     title: "٦. سنووردارکرنا بەرپرسیاریێ",
-                    text: "پەیڤچن خزمەتگوزاریێن خۆ پێشکێش دکەت ب ڤی ڕەنگی یێ ھەی. ئەم بەرپرس نینین ژ چو کێشێن تەکنیکی، ژ دەستچوونا داتایان، یان ڕاگرتنا سێرڤەران."
+                    text: "پەیڤۆک خزمەتگوزاریێن خۆ پێشکێش دکەت ب ڤی ڕەنگی یێ ھەی. ئەم بەرپرس نینین ژ چو کێشێن تەکنیکی، ژ دەستچوونا داتایان، یان ڕاگرتنا سێرڤەران."
                 },
                 {
                     title: "٧. گوھۆڕینا مەرجان",
@@ -176,7 +176,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-bold  tracking-tight text-white mb-1">پەیڤچن</h1>
+                            <h1 className="text-4xl font-bold   text-white mb-1">پەیڤۆک</h1>
                             <p className="text-text-dim/60 text-xs font-bold uppercase tracking-[0.2em]">Heritage Reborn</p>
                         </div>
                     </div>
@@ -203,7 +203,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                     </div>
                 </div>
 
-                <motion.div 
+                <Motion.div 
                     key={lang}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -246,7 +246,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                             </section>
                         ))}
                     </div>
-                </motion.div>
+                </Motion.div>
 
                 {/* Footer */}
                 <div className="mt-16 text-center space-y-8">
@@ -268,7 +268,7 @@ const TermsOfService = ({ onViewChange, onClose }) => {
                         <span className="material-symbols-outlined text-xl">arrow_back</span>
                         {lang === 'ku' ? 'ڤەگەڕە' : 'Back to Game'}
                     </button>
-                    <p className="mt-8 text-[10px] text-white/10 uppercase font-bold  tracking-widest italic">&copy; 2026 پەیڤچن App. All Rights Reserved.</p>
+                    <p className="mt-8 text-[10px] text-white/10 uppercase font-bold   italic">&copy; 2026 پەیڤۆک App. All Rights Reserved.</p>
                 </div>
             </div>
 
@@ -286,3 +286,5 @@ const TermsOfService = ({ onViewChange, onClose }) => {
 };
 
 export default TermsOfService;
+
+

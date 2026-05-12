@@ -1,123 +1,217 @@
-import React, { memo, useState, useEffect, useLayoutEffect } from 'react';
+import React, { memo, useState, useEffect, useMemo, useRef } from 'react';
 import { STATUS } from '../data/constants';
-import { motion } from 'framer-motion';
+import { motion as Motion, useTransform } from 'framer-motion';
 
-const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isNewHint, isFocused, isSecretMode, isMobile, hideLetters = false, flipDelay = 0 }) => {
+const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isHinted, isFocused, isSecretMode, hideLetters = false, flipDelay = 0, isFocusedMV = null, index = 0, isDark = true, rowIndex = 0, gridId = 'main' }) => {
   
-  let bgColor = 'bg-[#1e293b] border-2 border-white/5 shadow-xl';
-  let textColor = 'text-white';
-  let extraClasses = '';
-
-  const showStatus = (!isCurrent && status !== STATUS.NONE) || isRevealed;
-  
-  // SPECIAL: If we have a status but no char (Live Masked Mode), treat it as showStatus
+  // 🎨 COLORS BASED ON THEME (isDark)
+  const showStatus = (!isCurrent && status !== STATUS.NONE) || isRevealed || isHinted;
   const isMaskedLive = isCurrent && hideLetters && status !== STATUS.NONE;
   const isFlipped = showStatus && !isMaskedLive;
 
-  if ((showStatus || isMaskedLive) && (status === STATUS.CORRECT || isRevealed)) {
-    bgColor = 'bg-[#10b981] border-none shadow-[0_8px_20px_rgba(16,185,129,0.4)]';
-    textColor = 'text-white';
-  } else if ((showStatus || isMaskedLive) && (status === STATUS.WRONG_POS)) {
-    bgColor = 'bg-[#f59e0b] border-none shadow-[0_8px_20px_rgba(245,158,11,0.4)]';
-    textColor = 'text-white';
-  } else if ((showStatus || isMaskedLive) && status === STATUS.INCORRECT) {
-    bgColor = 'bg-[#334155] border-none opacity-40 grayscale';
-    textColor = 'text-white/30';
-  } else if (isFocused) {
-    bgColor = 'bg-[#1e293b] border-[#10b981] shadow-[0_0_20px_rgba(16,185,129,0.4)]';
-    extraClasses = 'z-20 scale-105 border-[3px]';
-    textColor = 'text-white';
-  } else if (char && isCurrent) {
-    bgColor = 'bg-[#1e293b] border-white/10 z-10 shadow-lg';
-    textColor = 'text-white';
-  }
+  // Neutral background before flip (Empty/Active Row)
+  const neutralBg = isDark ? 'bg-transparent border-2 border-[#373737]' : 'bg-white border-2 border-[#E5E5E5]';
+  const neutralText = isDark ? 'text-white' : 'text-black';
+
+  // Determine target colors (for the back side)
+  let targetBg = neutralBg;
   
-  if (isNewHint) extraClasses += ' animate-hint-glow';
+  if (isDark) {
+    if ((showStatus || isMaskedLive) && (status === STATUS.CORRECT || isRevealed || isHinted)) {
+      targetBg = 'bg-[#538d4e] border-2 border-[#538d4e]';
+    } else if ((showStatus || isMaskedLive) && (status === STATUS.WRONG_POS)) {
+      targetBg = 'bg-[#b59f3b] border-2 border-[#b59f3b]';
+    } else if ((showStatus || isMaskedLive) && status === STATUS.INCORRECT) {
+      targetBg = 'bg-[#262626] border-2 border-[#262626]';
+    } else if (char && isCurrent) {
+      targetBg = 'bg-white/30 border-2 border-white/50';
+    } else if (isFocused) {
+      targetBg = 'bg-transparent border-2 border-white/50';
+    }
+  } else {
+    if ((showStatus || isMaskedLive) && (status === STATUS.CORRECT || isRevealed || isHinted)) {
+      targetBg = 'bg-[#6aaa64] border-2 border-[#6aaa64]';
+    } else if ((showStatus || isMaskedLive) && (status === STATUS.WRONG_POS)) {
+      targetBg = 'bg-[#c9b458] border-2 border-[#c9b458]';
+    } else if ((showStatus || isMaskedLive) && status === STATUS.INCORRECT) {
+      targetBg = 'bg-[#D4D4D4] border-2 border-[#D4D4D4]';
+    } else if (char && isCurrent) {
+      targetBg = 'bg-white border-2 border-[#878a8c]';
+    } else if (isFocused) {
+      targetBg = 'bg-white border-2 border-[#878a8c]';
+    }
+  }
+
+  // 🎨 HOOKS
+  const dummyMV = { get: () => -1, onChange: () => (() => {}), on: () => (() => {}) };
+  const safeMV = isFocusedMV || dummyMV;
+  const mvOpacity = useTransform(safeMV, (val) => (val === index ? 1 : 0));
 
   const shouldHideText = (isSecretMode || hideLetters) && !showStatus;
 
+  // Determine what to show on the front side (typing state)
+  let activeFrontBg = neutralBg;
+  
+  if (isMaskedLive) {
+    // APPLY REAL-TIME STATUS COLORS TO FRONT SIDE FOR MASKED TYPING
+    if (status === STATUS.CORRECT) {
+      activeFrontBg = isDark ? 'bg-[#538d4e] border-2 border-[#538d4e]' : 'bg-[#6aaa64] border-2 border-[#6aaa64]';
+    } else if (status === STATUS.WRONG_POS) {
+      activeFrontBg = isDark ? 'bg-[#b59f3b] border-2 border-[#b59f3b]' : 'bg-[#c9b458] border-2 border-[#c9b458]';
+    } else if (status === STATUS.INCORRECT) {
+      activeFrontBg = isDark ? 'bg-[#262626] border-2 border-[#262626]' : 'bg-[#D4D4D4] border-2 border-[#D4D4D4]';
+    }
+  } else if (char && isCurrent) {
+    activeFrontBg = isDark ? 'bg-white/30 border-2 border-white' : 'bg-white border-2 border-mono-900';
+  }
+
   return (
-    <motion.div 
+    <Motion.div 
       initial={false}
-      animate={isFlipped ? { rotateY: 360 } : {}}
-      transition={{ duration: 0.6, delay: flipDelay / 1000 }}
-      className={`${bgColor} ${extraClasses} forced-tile rounded-[12px] transition-[transform,background-color,border-color] duration-150 transform relative overflow-hidden  items-center justify-center`}
+      style={{ 
+        perspective: '1000px',
+        width: 'var(--tile-size)',
+        height: 'var(--tile-size)',
+        minWidth: 'var(--min-tile-size)',
+        minHeight: 'var(--min-tile-size)',
+        aspectRatio: '1 / 1'
+      }} 
+      className="shrink-0"
+      id={`cell-${gridId}-${rowIndex}-${index}`}
+      aria-label={`Row ${rowIndex + 1} Letter ${index + 1}: ${char || 'Empty'}`}
     >
-      <span 
-        className={`font-bold font-heading ${textColor} select-none leading-none block ${(shouldHideText || hideLetters) ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
-        style={{ 
-          fontSize: 'clamp(1.2rem, 4.5vw, 2.5rem)',
-          lineHeight: 1
+      <Motion.div 
+        initial={false}
+        animate={{ 
+          rotateX: isFlipped ? 180 : 0,
+          y: 0,
+          scale: isCurrent ? (char ? [1, 1.05, 1] : [1, 0.95, 1]) : 1
         }}
+        transition={{ 
+          rotateX: { duration: 0.5, delay: flipDelay / 1000 },
+          scale: { duration: 0.15, times: [0, 0.5, 1] }
+        }}
+        style={{ transformStyle: 'preserve-3d', position: 'relative', width: '100%', height: '100%' }}
+        className="rounded-none items-center justify-center flex"
       >
-        {char}
-      </span>
-      {shouldHideText && (char || isMaskedLive) && (
-         <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-2.5 h-2.5 rounded-full bg-white/40 animate-pulse" />
-         </div>
-      )}
-    </motion.div>
+        {/* Front Side (Typing/Neutral) */}
+        <div 
+          style={{ backfaceVisibility: 'hidden', position: 'absolute', inset: 0 }}
+          className={`${activeFrontBg} z-10 flex items-center justify-center`}
+        >
+           <span className={`font-extralight ${neutralText} select-none`} style={{ fontSize: wordLength > 8 ? '0.9rem' : '1.1rem' }}>
+             {(isMaskedLive || (isSecretMode && char)) ? '•' : char}
+           </span>
+        </div>
+
+        {/* Back Side */}
+        <div 
+          style={{ 
+            backfaceVisibility: 'hidden', 
+            position: 'absolute', 
+            inset: 0, 
+            transform: 'rotateX(180deg)' 
+          }}
+          className={`${targetBg} z-20 flex items-center justify-center`}
+        >
+           <span 
+            className={`font-bold text-white select-none leading-none block ${(shouldHideText || hideLetters) ? 'opacity-0' : 'opacity-100'}`}
+            style={{ 
+              fontSize: wordLength > 8 ? '0.9rem' : '1.1rem',
+              lineHeight: 1
+            }}
+          >
+            {char}
+          </span>
+        </div>
+
+        {/* Focused State Indicator */}
+        <Motion.div 
+          className={`absolute inset-0 border-2 ${isDark ? 'border-white/20' : 'border-slate-300'} z-30 pointer-events-none`}
+          style={{ 
+            opacity: isFocusedMV ? mvOpacity : 0
+          }}
+        />
+      </Motion.div>
+    </Motion.div>
   );
 }, (prev, next) => {
   return prev.char === next.char &&
          prev.status === next.status &&
          prev.isFocused === next.isFocused &&
+         prev.isFocusedMV === next.isFocusedMV &&
          prev.isCurrent === next.isCurrent &&
          prev.isRevealed === next.isRevealed &&
-         prev.isNewHint === next.isNewHint &&
+         prev.isHinted === next.isHinted &&
          prev.isSecretMode === next.isSecretMode &&
+         prev.isDark === next.isDark &&
          prev.hideLetters === next.hideLetters;
 });
 
-const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, revealedIndices, lastHintIndex, isMobile, isShaking, isSecretMode, hideLetters = false, forcedStatuses = null, gap = '8px', forcedFocusIndex = null }) => {
-  const activeClass = isCurrent ? 'ring-2 ring-primary/50 shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)] bg-primary/5' : '';
+const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, revealedIndices, hintIndices = [], isShaking, isSecretMode, hideLetters = false, forcedStatuses = null, gap = '8px', forcedFocusIndex = null, isDark = true, rowIndex = 0, gridId = 'main' }) => {
+  const activeClass = '';
 
   // PRE-CALCULATE CONSTANTS for the row maps
   const guessArr = Array.isArray(guess) ? guess : (typeof guess === 'string' ? guess.split('') : []);
   const firstEmptyIndex = guessArr.findIndex(c => c === '');
-  const actualFocusIndex = forcedFocusIndex !== null ? forcedFocusIndex : (firstEmptyIndex === -1 ? wordLength - 1 : firstEmptyIndex);
+  
+  const isMV = forcedFocusIndex && typeof forcedFocusIndex === 'object' && forcedFocusIndex.get;
+  const actualFocusIndex = isMV ? null : (forcedFocusIndex !== null ? forcedFocusIndex : (firstEmptyIndex === 0 ? -1 : (firstEmptyIndex === -1 ? wordLength - 1 : firstEmptyIndex - 1)));
+
+  const rowRef = useRef(null);
+  
+  useEffect(() => {
+    if (isShaking > 0 && rowRef.current) {
+      const el = rowRef.current;
+      el.classList.remove('shake-anim');
+      void el.offsetWidth; // Force reflow
+      el.classList.add('shake-anim');
+    }
+  }, [isShaking]);
 
   return (
     <div 
-      className={`transition-all duration-300 ${activeClass} ${isShaking ? 'shake-anim' : ''} flex items-center justify-center`}
+      ref={rowRef}
+      className={`transition-all duration-300 ${activeClass} flex items-center justify-center`}
       dir="rtl"
       style={{ 
-        gap: 'clamp(4px, 1vw, 8px)',
-        width: 'auto',
-        overflowX: 'auto',
-        direction: 'rtl'
+        gap: gap,
+        width: '100%',
+        justifyContent: 'center'
       }}
     >
       {Array.from({ length: wordLength }).map((_, i) => {
         let char = guessArr[i] || '';
         let status = STATUS.NONE;
         let isRevealed = (revealedIndices || []).includes(i);
-        let isNewHint = i === lastHintIndex;
+        let isHinted = isCurrent && (hintIndices || []).includes(i);
         
-        const isFocused = isCurrent && i === actualFocusIndex;
-
+        const isFocused = !isMV && isCurrent && i === actualFocusIndex;
+        
         if (forcedStatuses) {
           status = forcedStatuses[i] || STATUS.NONE;
         } else if (!isCurrent && guessArr.length > 0) {
-          // Only calculate status for SUBMITTED rows (prevents lag during typing)
           status = getLetterStatus(guess, i);
         }
 
         return (
           <Tile 
-            key={i} 
+            key={`cell-${gridId}-${rowIndex}-${i}`} 
             char={char} 
             isCurrent={isCurrent}
             status={status}
             wordLength={wordLength}
             isRevealed={isRevealed}
-            isNewHint={isNewHint}
+            isHinted={isHinted}
             isFocused={isFocused}
-            isMobile={isMobile}
+            isFocusedMV={isMV ? forcedFocusIndex : null}
+            index={i}
+            rowIndex={rowIndex}
             isSecretMode={isSecretMode}
             hideLetters={hideLetters}
-            flipDelay={isCurrent ? 0 : i * 60}
+            flipDelay={isCurrent ? 0 : i * 100}
+            isDark={isDark}
+            gridId={gridId}
           />
         );
       })}
@@ -132,79 +226,68 @@ const Row = memo(({ guess, wordLength, getLetterStatus = () => '', isCurrent, re
          prev.isShaking === next.isShaking &&
          prev.isSecretMode === next.isSecretMode &&
          prev.wordLength === next.wordLength &&
+         prev.isDark === next.isDark &&
          prev.forcedFocusIndex === next.forcedFocusIndex &&
          JSON.stringify(prev.forcedStatuses) === JSON.stringify(next.forcedStatuses) &&
          prev.revealedIndices?.length === next.revealedIndices?.length &&
-         prev.lastHintIndex === next.lastHintIndex;
+         prev.hintIndices?.length === next.hintIndices?.length;
 });
 
-const Grid = memo(({ guesses = [], currentGuess = [], wordLength = 0, getLetterStatus, revealedIndices = [], lastHintIndex = -1, maxRows = 6, isSecretMode = false, comboGlow = false, isShaking = false, hideLetters = false, opponentStatuses = [], compact = false, activeRowIndex = null, opponentLiveStatuses = [], opponentLiveCursor = null }) => {
-  if (wordLength === 0) return null;
-
-  const rows = [...guesses];
-  while (rows.length < maxRows) {
-    rows.push(null);
-  }
-
+const Grid = memo(({ guesses = [], currentGuess = [], wordLength = 0, getLetterStatus, revealedIndices = [], hintIndices = [], maxRows = 6, isSecretMode = false, isShaking = false, hideLetters = false, opponentStatuses = [], compact = false, activeRowIndex = null, opponentLiveStatuses = [], opponentLiveCursor = null, isDark = true, gridId = 'main' }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 1024);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // AGGRESSIVE SCALING LOGIC: Fit 6 rows of 58px tiles into any viewport height
-  const [gridScale, setGridScale] = useState(1);
-  useLayoutEffect(() => {
-    const calculateScale = () => {
-      if (!isMobile) return 1;
-      
-      const horizontalSpace = window.innerWidth - 32;
-      const verticalSpace = window.innerHeight * 0.38; // Account for floating keyboard margins
-      
-      const contentWidth = (wordLength * 58) + ((wordLength - 1) * 8);
-      const contentHeight = (maxRows * 58) + ((maxRows - 1) * 8);
-      
-      const hScale = horizontalSpace / contentWidth;
-      const vScale = verticalSpace / contentHeight;
-      
-      setGridScale(Math.min(1, hScale, vScale));
-    };
-    
-    calculateScale();
-    window.addEventListener('resize', calculateScale);
-    return () => window.removeEventListener('resize', calculateScale);
-  }, [wordLength, maxRows, isMobile]);
+  // 📐 MEMOIZED DIMENSIONS: Calculated once per wordLength change
+  const gridStyle = useMemo(() => {
+    if (wordLength === 0) return {};
 
-  const finalGap = compact ? '6px' : (isMobile ? '8px' : '12px');
-  const tileSize = compact ? 'clamp(38px, 9vw, 42px)' : 'clamp(45px, 12vw, 60px)';
+    const gapValue = compact ? 4 : (wordLength > 10 ? 2 : (wordLength > 7 ? 4 : (isMobile ? 6 : 10)));
+    const minTileSizeVal = wordLength > 10 ? '16px' : (wordLength > 8 ? '22px' : '28px');
+    
+    // Calculate size using CSS clamp for responsiveness
+    const vwSize = `((90vw - ${(wordLength - 1) * gapValue}px) / ${wordLength})`;
+    const tileSize = compact 
+      ? `clamp(16px, min(3.8vh, ${vwSize}), 34px)` 
+      : `clamp(${minTileSizeVal}, min(5.5vh, ${vwSize}), 54px)`;
+
+    return {
+      '--tile-size': tileSize,
+      '--tile-gap': `${gapValue}px`,
+      '--min-tile-size': compact ? '16px' : minTileSizeVal,
+      gap: `${gapValue}px`,
+      gridTemplateRows: `repeat(${maxRows}, auto)`,
+    };
+  }, [wordLength, maxRows, compact, isMobile]);
+
+  if (wordLength === 0) return (
+    <div className="w-full flex-1 min-h-[300px] flex items-center justify-center" />
+  );
+
+  const rows = [...guesses];
+  while (rows.length < maxRows) {
+    rows.push(null);
+  }
 
   return (
-    <div className={`w-full flex-1 min-h-0 flex flex-col items-center justify-center py-1 sm:py-2 overflow- relative`} dir="rtl">
-      <style>
-        {`
-          .forced-tile {
-            width: ${tileSize} !important;
-            height: ${tileSize} !important;
-            min-width: ${compact ? '38px' : '45px'} !important;
-            min-height: ${compact ? '38px' : '45px'} !important;
-            aspect-ratio: 1 / 1 !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            flex-shrink: 0 !important;
-          }
-        `}
-      </style>
+    <div 
+      className="w-full flex-1 min-h-0 flex flex-col items-center justify-center py-1 relative overflow-visible" 
+      dir="rtl"
+      style={gridStyle}
+    >
       <div 
-        className={`p-1 sm:p-2 mx-auto animate-in zoom-in-95 duration-700 transition-all origin-center ${comboGlow ? 'shadow-[0_0_40px_rgba(168,85,247,0.3)]' : ''}`} 
+        className="p-1 sm:p-2 mx-auto animate-in zoom-in-95 duration-700 transition-all origin-center" 
         style={{ 
           width: 'auto',
-          transform: `scale(${gridScale})`,
-          maxHeight: compact ? '22vh' : '45vh',
+          maxWidth: '100%',
+          maxHeight: '100%',
           display: 'grid',
-          gridTemplateRows: `repeat(${maxRows}, auto)`, 
-          gap: finalGap,
+          gridTemplateRows: gridStyle.gridTemplateRows,
+          gap: gridStyle.gap,
           justifyContent: 'center',
           alignContent: 'center',
           justifyItems: 'center',
@@ -216,7 +299,6 @@ const Grid = memo(({ guesses = [], currentGuess = [], wordLength = 0, getLetterS
             const isCurrent = activeRowIndex !== null ? i === activeRowIndex : i === guesses.length;
             if (i >= maxRows) return null;
 
-            // Map numeric statuses to STATUS constants if this is the live row
             let forcedStatuses = opponentStatuses[i] || null;
             if (isCurrent && opponentLiveStatuses && opponentLiveStatuses.length > 0) {
               forcedStatuses = opponentLiveStatuses.map(code => {
@@ -229,27 +311,45 @@ const Grid = memo(({ guesses = [], currentGuess = [], wordLength = 0, getLetterS
             
             return (
               <Row 
-                key={i} 
+                key={`row-${gridId}-${i}`} 
                 guess={isCurrent ? currentGuess : (guess || '')} 
                 wordLength={wordLength}
                 getLetterStatus={getLetterStatus}
                 isCurrent={isCurrent}
                 revealedIndices={isCurrent ? revealedIndices : []}
-                lastHintIndex={lastHintIndex}
+                hintIndices={isCurrent ? hintIndices : []}
                 isMobile={isMobile}
-                isShaking={isCurrent && isShaking}
+                isShaking={isCurrent ? isShaking : 0}
                 isSecretMode={isSecretMode}
                 hideLetters={hideLetters}
                 forcedStatuses={forcedStatuses}
                 forcedFocusIndex={isCurrent ? opponentLiveCursor : null}
-                gap={finalGap}
+                gap={gridStyle.gap}
+                isDark={isDark}
+                gridId={gridId}
+                rowIndex={i}
               />
             );
           })}
       </div>
     </div>
   );
+}, (prev, next) => {
+  return JSON.stringify(prev.guesses) === JSON.stringify(next.guesses) &&
+         prev.currentGuess?.join('') === next.currentGuess?.join('') &&
+         prev.wordLength === next.wordLength &&
+         prev.maxRows === next.maxRows &&
+         prev.activeRowIndex === next.activeRowIndex &&
+         prev.isDark === next.isDark &&
+         JSON.stringify(prev.opponentStatuses) === JSON.stringify(next.opponentStatuses) &&
+         JSON.stringify(prev.opponentLiveStatuses) === JSON.stringify(next.opponentLiveStatuses) &&
+         prev.opponentLiveCursor === next.opponentLiveCursor &&
+         prev.isShaking === next.isShaking &&
+         prev.targetWord === next.targetWord &&
+         prev.revealedIndices?.length === next.revealedIndices?.length &&
+         prev.hintIndices?.length === next.hintIndices?.length;
 });
 
 export default Grid;
+
 

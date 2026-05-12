@@ -1,206 +1,222 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 
-function SettingsModal({ 
-   isOpen, 
-   onClose, 
-   currentTheme, 
-   onThemeChange, 
-   appSfxVolume, 
+function SettingsModal({
+   isOpen,
+   onClose,
+   appSfxVolume,
    onAppSfxVolumeChange,
    bgMusicVolume,
    onBgMusicVolumeChange,
    hapticEnabled,
    onHapticToggle,
-   user,
+   micEnabled,
+   micVolume,
+   speakerEnabled,
+   voiceVolume,
+   updateProfile,
    onLogout,
    onPlaySound
- }) {
+}) {
    if (!isOpen) return null;
-
-   // Rasasi / Emerald Palette
-   const palette = {
-      bg: '#020617',      // Deep Nocturnal Blue
-      card: 'rgb(203, 213, 225)', // Light Slate / Blue-Gray
-      accent: '#10b981',  // Emerald Green
-      dark: '#1e293b',    // Slate 800
-      text: '#ffffff',    // White for headers
-      labels: '#0f172a'   // Deep Slate for card text
-   };
 
    return (
       <AnimatePresence>
          {isOpen && (
-            <motion.div 
+            <Motion.div
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
                exit={{ opacity: 0 }}
-               className="fixed inset-0 z-100 flex items-center justify-center px-4 bg-[#020617]/90 backdrop-blur-xl p-4"
+               className="fixed inset-0 z-100 flex items-center justify-center px-4 bg-mono-white/80 dark:bg-mono-950/80 backdrop-blur-md p-4 transition-colors duration-500"
                onClick={onClose}
             >
-               <motion.div 
-                  initial={{ scale: 0.9, y: 30 }}
-                  animate={{ scale: 1, y: 0 }}
-                  exit={{ scale: 0.9, y: 30 }}
-                  style={{ backgroundColor: palette.bg }}
-                  className="w-full max-w-[360px] rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.8)] border border-white/10 overflow-hidden relative font-rabar"
+               <Motion.div
+                  initial={{ scale: 0.98, opacity: 0, y: 10 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.98, opacity: 0, y: 10 }}
+                  className="w-full max-w-[340px] rounded-lg overflow-hidden relative font-rabar bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-white/10 transition-colors duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_40px_rgba(0,0,0,0.3)]"
                   onClick={e => e.stopPropagation()}
+                  dir="rtl"
                >
-                  {/* Rasasi Header */}
-                  <div className="p-5 border-b border-white/5 flex items-center justify-between relative z-10">
-                     <button 
+                  {/* Compact Header */}
+                  <div className="p-6 pb-2 flex items-center justify-between">
+                     <h2 className="text-xl font-black text-mono-900 dark:text-white">ڕێکخستن</h2>
+                     <button
                         onClick={onClose}
-                        className="w-10 h-10 rounded-sm bg-[#1e293b] flex items-center justify-center text-[#10b981] hover:brightness-125 transition-all shadow-lg active:scale-90 border border-white/10"
+                        className="w-8 h-8 rounded-md bg-mono-50 dark:bg-white/5 flex items-center justify-center text-mono-500 dark:text-mono-400 hover:text-mono-900 dark:hover:text-white transition-all active:scale-90 border border-mono-100 dark:border-white/10"
                      >
-                        <span className="material-symbols-outlined text-lg font-black">close</span>
+                        <span className="material-symbols-outlined text-lg">close</span>
                      </button>
-                     <div className="flex flex-col items-end">
-                        <span className="material-symbols-outlined text-[#10b981] text-xl mb-0.5">settings</span>
-                        <h2 className="text-xl font-black italic tracking-tighter uppercase leading-none" style={{ color: palette.card }}>ڕێکخستن</h2>
+                  </div>
+
+                   <div className="p-6 pt-2 space-y-4 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                      {/* 1. SOUND EFFECTS SECTION */}
+                      <div className="p-4 rounded-md bg-mono-50/50 dark:bg-white/5 border border-mono-100 dark:border-white/5 space-y-4">
+                         <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2.5">
+                               <div className="w-8 h-8 rounded-md bg-mono-50 dark:bg-white/10 flex items-center justify-center border border-mono-100 dark:border-white/5">
+                                  <span className="material-symbols-outlined text-base text-mono-600 dark:text-mono-400">
+                                     {appSfxVolume > 0 ? 'volume_up' : 'volume_off'}
+                                  </span>
+                               </div>
+                               <span className="text-[14px] font-black text-mono-800 dark:text-mono-200">کارتێکەرێن دەنگی</span>
+                            </div>
+                            <span className="text-[10px] font-black text-mono-400 tabular-nums bg-mono-50 dark:bg-white/5 px-2 py-0.5 rounded-md border border-mono-100 dark:border-white/5">
+                               {appSfxVolume}%
+                            </span>
+                         </div>
+                         <div className="px-1">
+                            <input
+                               type="range"
+                               min="0"
+                               max="100"
+                               value={appSfxVolume}
+                               onChange={(e) => onAppSfxVolumeChange(parseInt(e.target.value))}
+                               className="w-full h-1 bg-mono-100 dark:bg-white/10 rounded-none appearance-none cursor-pointer accent-mono-900 dark:accent-white transition-all"
+                            />
+                         </div>
+                      </div>
+
+                      {/* 2. APP TOGGLES GROUP */}
+                      <div className="p-4 rounded-md bg-mono-50/50 dark:bg-white/5 border border-mono-100 dark:border-white/5 grid gap-2.5">
+                         {/* Music Toggle */}
+                         <div className="flex items-center justify-between p-3 rounded-md border border-mono-100 dark:border-white/5 bg-mono-50/30 dark:bg-white/5 hover:bg-mono-50 dark:hover:bg-white/10 transition-colors group">
+                            <div className="flex items-center gap-3">
+                               <span className="material-symbols-outlined text-lg text-mono-400 dark:text-mono-500 group-hover:text-mono-900 dark:group-hover:text-white transition-colors">
+                                  {bgMusicVolume > 0 ? 'music_note' : 'music_off'}
+                               </span>
+                               <span className="text-[13px] font-black text-mono-800 dark:text-mono-200">مۆزیکا پاشبنەمایی</span>
+                            </div>
+                            <button
+                               onClick={() => { triggerHaptic(10); onBgMusicVolumeChange(bgMusicVolume > 0 ? 0 : 10); }}
+                               className={`w-10 h-5 rounded-sm p-1 transition-all duration-300 relative ${bgMusicVolume > 0 ? 'bg-green-600/20' : 'bg-red-600/20'}`}
+                            >
+                               <Motion.div
+                                  animate={{ x: bgMusicVolume > 0 ? -20 : 0 }}
+                                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                  className={`w-3 h-3 rounded-sm ${bgMusicVolume > 0 ? 'bg-green-600' : 'bg-red-600'} shadow-sm`}
+                               />
+                            </button>
+                         </div>
+
+                         {/* Haptic Toggle */}
+                         <div className="flex items-center justify-between p-3 rounded-md border border-mono-100 dark:border-white/5 bg-mono-50/30 dark:bg-white/5 hover:bg-mono-50 dark:hover:bg-white/10 transition-colors group">
+                            <div className="flex items-center gap-3">
+                               <span className="material-symbols-outlined text-lg text-mono-400 dark:text-mono-500 group-hover:text-mono-900 dark:group-hover:text-white transition-colors">vibration</span>
+                               <span className="text-[13px] font-black text-mono-800 dark:text-mono-200">لەرزین</span>
+                            </div>
+                            <button
+                               onClick={() => { triggerHaptic(10); onHapticToggle(); }}
+                               className={`w-10 h-5 rounded-sm p-1 transition-all duration-300 relative ${hapticEnabled ? 'bg-green-600/20' : 'bg-red-600/20'}`}
+                            >
+                               <Motion.div
+                                  animate={{ x: hapticEnabled ? -20 : 0 }}
+                                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                  className={`w-3 h-3 rounded-sm ${hapticEnabled ? 'bg-green-600' : 'bg-red-600'} shadow-sm`}
+                               />
+                            </button>
+                         </div>
+                      </div>
+
+                      {/* 3. VOICE CHAT SECTION */}
+                      <div className="p-4 rounded-md bg-mono-50/50 dark:bg-white/5 border border-mono-100 dark:border-white/5 space-y-4">
+                         <h3 className="text-[10px] font-black uppercase tracking-widest text-mono-400">دەنگێ ڕاستەوخۆ (Live Voice)</h3>
+                         
+                         <div className="grid gap-2.5">
+                            {/* Mic Toggle */}
+                            <div className="flex items-center justify-between p-3 rounded-md border border-mono-100 dark:border-white/5 bg-mono-50/30 dark:bg-white/5 hover:bg-mono-50 dark:hover:bg-white/10 transition-colors group">
+                               <div className="flex items-center gap-3">
+                                  <span className={`material-symbols-outlined text-lg transition-colors ${micEnabled ? 'text-mono-900 dark:text-white' : 'text-mono-400'}`}>
+                                     {micEnabled ? 'mic' : 'mic_off'}
+                                  </span>
+                                  <span className="text-[13px] font-black text-mono-800 dark:text-mono-200">دەنگکێش</span>
+                               </div>
+                               <button
+                                  onClick={() => { triggerHaptic(10); updateProfile({ mic_enabled: !micEnabled }); }}
+                                  className={`w-10 h-5 rounded-sm p-1 transition-all duration-300 relative ${micEnabled ? 'bg-green-600/20' : 'bg-red-600/20'}`}
+                               >
+                                  <Motion.div
+                                     animate={{ x: micEnabled ? -20 : 0 }}
+                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                     className={`w-3 h-3 rounded-sm ${micEnabled ? 'bg-green-600' : 'bg-red-600'} shadow-sm`}
+                                  />
+                               </button>
+                            </div>
+
+                            {/* Mic Volume Slider */}
+                            {micEnabled && (
+                               <div className="px-1 py-2 space-y-3">
+                                  <div className="flex items-center justify-between">
+                                     <span className="text-[11px] font-black text-mono-500">قەبارێ مایکرۆفۆنی</span>
+                                     <span className="text-[10px] font-black text-mono-400">{micVolume}%</span>
+                                  </div>
+                                  <input
+                                     type="range"
+                                     min="0"
+                                     max="100"
+                                     value={micVolume}
+                                     onChange={(e) => updateProfile({ mic_volume: parseInt(e.target.value) })}
+                                     className="w-full h-1 bg-mono-100 dark:bg-white/10 rounded-none appearance-none cursor-pointer accent-mono-900 dark:accent-white transition-all"
+                                  />
+                               </div>
+                            )}
+
+                            {/* Speaker Toggle */}
+                            <div className="flex items-center justify-between p-3 rounded-md border border-mono-100 dark:border-white/5 bg-mono-50/30 dark:bg-white/5 hover:bg-mono-50 dark:hover:bg-white/10 transition-colors group">
+                               <div className="flex items-center gap-3">
+                                  <span className={`material-symbols-outlined text-lg transition-colors ${speakerEnabled ? 'text-mono-900 dark:text-white' : 'text-mono-400'}`}>
+                                     {speakerEnabled ? 'volume_up' : 'volume_off'}
+                                  </span>
+                                  <span className="text-[13px] font-black text-mono-800 dark:text-mono-200">بلندگۆ</span>
+                               </div>
+                               <button
+                                  onClick={() => { triggerHaptic(10); updateProfile({ speaker_enabled: !speakerEnabled }); }}
+                                  className={`w-10 h-5 rounded-sm p-1 transition-all duration-300 relative ${speakerEnabled ? 'bg-green-600/20' : 'bg-red-600/20'}`}
+                               >
+                                  <Motion.div
+                                     animate={{ x: speakerEnabled ? -20 : 0 }}
+                                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                     className={`w-3 h-3 rounded-sm ${speakerEnabled ? 'bg-green-600' : 'bg-red-600'} shadow-sm`}
+                                  />
+                               </button>
+                            </div>
+
+                            {/* Voice Volume Slider */}
+                            {speakerEnabled && (
+                               <div className="px-1 py-2 space-y-3">
+                                  <div className="flex items-center justify-between">
+                                     <span className="text-[11px] font-black text-mono-500">قەبارێ دەنگی</span>
+                                     <span className="text-[10px] font-black text-mono-400">{voiceVolume}%</span>
+                                  </div>
+                                  <input
+                                     type="range"
+                                     min="0"
+                                     max="100"
+                                     value={voiceVolume}
+                                     onChange={(e) => updateProfile({ voice_volume: parseInt(e.target.value) })}
+                                     className="w-full h-1 bg-mono-100 dark:bg-white/10 rounded-none appearance-none cursor-pointer accent-mono-900 dark:accent-white transition-all"
+                                  />
+                               </div>
+                            )}
+                         </div>
+                      </div>
+
+                     {/* Compact Logout Button */}
+                     <button
+                        onClick={() => { triggerHaptic(15); onPlaySound?.(); onLogout(); }}
+                        className="w-full h-11 rounded-md font-black text-[12px] transition-all active:scale-95 flex items-center justify-center gap-2.5 bg-red-500/5 text-red-500 hover:bg-red-500/10 border border-red-500/10 mt-2"
+                     >
+                        <span className="material-symbols-outlined text-lg">logout</span>
+                        دەرکەفتن ژ ھەژمارێ
+                     </button>
+
+                     <div className="pt-2 flex flex-col items-center gap-1 opacity-20">
+                        <p className="text-[8px] font-black tracking-[0.4em] uppercase text-mono-400">Peyvçîn v2.0</p>
                      </div>
                   </div>
-
-                  <div className="p-5 space-y-4 max-h-[70vh] overflow-y-auto custom-scrollbar relative z-10">
-                    
-                    {/* Audio Section */}
-                    <div className="space-y-3">
-                       {/* App Sounds Card */}
-                       <div 
-                          style={{ backgroundColor: palette.card }}
-                          className="rounded-sm p-3.5 shadow-sm border border-white/20"
-                       >
-                          <div className="flex items-center justify-between mb-1.5">
-                             <div className="flex items-center gap-2">
-                                <span className="material-symbols-outlined text-lg font-black" style={{ color: palette.accent }}>
-                                   {appSfxVolume > 0 ? 'volume_up' : 'volume_off'}
-                                </span>
-                                <span className="text-xs font-black uppercase tracking-tight" style={{ color: palette.labels }}>دەنگێن ئەپی</span>
-                             </div>
-                             <span className="text-[10px] font-black px-2 py-0.5 rounded-sm bg-[#1e293b] text-white tabular-nums shadow-sm">{appSfxVolume}%</span>
-                          </div>
-                          <input 
-                             type="range" 
-                             min="0" 
-                             max="100" 
-                             value={appSfxVolume} 
-                             onChange={(e) => onAppSfxVolumeChange(parseInt(e.target.value))}
-                             className="w-full h-1.5 rounded-none appearance-none cursor-pointer focus:outline-none"
-                             style={{
-                                background: `linear-gradient(to left, ${palette.accent} 0%, ${palette.accent} ${appSfxVolume}%, #94a3b8 ${appSfxVolume}%, #94a3b8 100%)`
-                             }}
-                          />
-                       </div>
-
-                       {/* Music Card */}
-                       <div 
-                          style={{ backgroundColor: palette.card }}
-                          className="rounded-sm p-3.5 shadow-sm border border-white/20"
-                       >
-                          <div className="flex items-center justify-between">
-                             <div className="flex items-center gap-2">
-                                <span className="material-symbols-outlined text-lg font-black" style={{ color: palette.accent }}>
-                                   {bgMusicVolume > 0 ? 'music_note' : 'music_off'}
-                                </span>
-                                <span className="text-xs font-black uppercase tracking-tight" style={{ color: palette.labels }}>دەنگێ مۆزیکێ</span>
-                             </div>
-                             
-                             <button 
-                                onClick={() => onBgMusicVolumeChange(bgMusicVolume > 0 ? 0 : 10)}
-                                className={`w-12 h-7 rounded-sm p-1 transition-all duration-300 relative shrink-0 shadow-inner ${
-                                   bgMusicVolume > 0 ? 'bg-[#1e293b]' : 'bg-red-500/10'
-                                }`}
-                             >
-                                <motion.div 
-                                   animate={{ x: bgMusicVolume > 0 ? -20 : 0 }}
-                                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                   className={`w-5 h-5 rounded-sm shadow-md flex items-center justify-center ${
-                                      bgMusicVolume > 0 ? 'bg-[#10b981]' : 'bg-red-500'
-                                   }`}
-                                >
-                                   {bgMusicVolume > 0 && <div className="w-1 h-1 rounded-full bg-emerald-950" />}
-                                </motion.div>
-                             </button>
-                          </div>
-                       </div>
-
-                       {/* Haptic Row */}
-                       <div 
-                          style={{ backgroundColor: palette.card }}
-                          className="rounded-sm p-2.5 px-4 flex items-center justify-between border border-white/20 shadow-sm"
-                       >
-                          <div className="flex items-center gap-2.5">
-                             <div className="w-8 h-8 rounded-sm bg-slate-100/50 flex items-center justify-center shrink-0">
-                                <span className="material-symbols-outlined text-lg font-black" style={{ color: palette.accent }}>vibration</span>
-                             </div>
-                             <span className="text-xs font-black uppercase tracking-tight" style={{ color: palette.labels }}>لەرزینا ئەپی</span>
-                          </div>
-                          <button 
-                             onClick={onHapticToggle}
-                             className={`w-12 h-7 rounded-sm p-1 transition-all duration-300 relative shrink-0 shadow-inner ${
-                                hapticEnabled ? 'bg-[#1e293b]' : 'bg-red-500/10'
-                             }`}
-                          >
-                             <motion.div 
-                                animate={{ x: hapticEnabled ? -20 : 0 }}
-                                transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                className={`w-5 h-5 rounded-sm shadow-md flex items-center justify-center ${
-                                   hapticEnabled ? 'bg-[#10b981]' : 'bg-red-500'
-                                }`}
-                             >
-                                {hapticEnabled && <div className="w-1 h-1 rounded-full bg-emerald-950" />}
-                             </motion.div>
-                          </button>
-                       </div>
-                    </div>
-
-                    {/* Theme Section */}
-                    <div className="space-y-3 pt-1">
-                       <span className="text-[9px] font-black uppercase tracking-[0.2em] px-2 opacity-40 italic" style={{ color: palette.card }}>ڕووکار</span>
-                       <div className="grid grid-cols-2 gap-2.5">
-                          {[
-                            { id: 'default', name: 'سادە', color: '#1e293b' },
-                            { id: 'zakho_nights', name: 'زاخۆ', color: '#1a1c2c' }
-                          ].map(theme => (
-                            <button
-                              key={theme.id}
-                              onClick={() => { triggerHaptic(10); onPlaySound?.(); onThemeChange(theme.id); }}
-                              style={{ 
-                                 backgroundColor: currentTheme === theme.id ? palette.dark : palette.card,
-                                 borderColor: currentTheme === theme.id ? palette.accent : 'transparent'
-                              }}
-                              className={`p-3 rounded-sm border-2 transition-all duration-300 flex flex-col items-center gap-1.5 group shadow-sm hover:scale-[1.02] ${
-                                 currentTheme === theme.id ? 'z-20' : 'z-10'
-                              }`}
-                            >
-                              <div 
-                                 style={{ backgroundColor: theme.color }}
-                                 className="w-7 h-7 rounded-sm mb-0.5 shadow-inner border border-white/10 transition-transform group-hover:rotate-6" 
-                              />
-                              <span className={`text-[9px] font-black uppercase tracking-widest ${
-                                 currentTheme === theme.id ? 'text-white' : 'text-slate-900'
-                              }`}>
-                                {theme.name}
-                              </span>
-                            </button>
-                          ))}
-                       </div>
-                    </div>
-
-                    {/* Logout Bar */}
-                    <button
-                      onClick={() => { onPlaySound?.(); onLogout(); }}
-                      className="w-full h-14 rounded-sm font-black text-xs transition-all active:scale-95 flex items-center justify-center gap-2.5 shadow-lg mt-1 border border-white/10 font-heading"
-                      style={{ backgroundColor: palette.dark, color: '#ef4444' }}
-                    >
-                       <span className="material-symbols-outlined font-black text-lg">logout</span>
-                       دەرکەفتن ژ ھەژمارێ
-                    </button>
-
-                    <p className="text-center text-[8px] font-black tracking-[0.4em] uppercase opacity-20 pt-1 italic" style={{ color: palette.card }}>Peyvçîn v2.0</p>
-                  </div>
-               </motion.div>
-            </motion.div>
+               </Motion.div>
+            </Motion.div>
          )}
       </AnimatePresence>
    );

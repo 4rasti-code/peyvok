@@ -1,5 +1,6 @@
+import process from 'node:process';
 import { createClient } from '@supabase/supabase-js'
-import dotenv from 'dotenv'
+
 import path from 'path'
 import fs from 'fs'
 
@@ -28,7 +29,7 @@ async function checkSchema() {
   if (pError) {
     console.error("Profiles table error:", pError.message);
   } else {
-    console.log("Profiles table confirmed with xp/level columns: ✅");
+    console.log(`Profiles table confirmed (Found ${profiles?.length || 0} sample): ✅`);
   }
 
   // Check online_matches table
@@ -40,8 +41,9 @@ async function checkSchema() {
   if (mError) {
     console.error("Online_matches table error:", (mError.message || mError));
   } else {
-    console.log("Online_matches table confirmed: ✅");
+    console.log(`Online_matches table confirmed (Found ${matches?.length || 0} sample): ✅`);
   }
 }
 
 checkSchema();
+

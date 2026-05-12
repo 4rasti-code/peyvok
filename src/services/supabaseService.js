@@ -24,7 +24,7 @@ export const fetchUserProfile = async (userId) => {
 export const fetchLeaderboard = async (limit = 100) => {
   const { data, error } = await supabase
     .from('profiles')
-    .select('id, nickname, avatar_url, level, xp, city, country_code, is_kurdistan, shayi, dirham, dinar, daily_streak')
+    .select('id, nickname, avatar_url, level, xp, city, country_code, is_kurdistan, fils, derhem, dinar, daily_streak')
     .order('level', { ascending: false })
     .order('xp', { ascending: false })
     .limit(limit);
