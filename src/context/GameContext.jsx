@@ -676,7 +676,7 @@ export const GameProvider = ({ children }) => {
         setRewardStreak(data.streak);
         setLastRewardClaimedAt(new Date().toISOString());
         
-        await syncProfile();
+        await syncProfile(user.id, null, true);
         return { success: true, rewards: data.rewards, streak: data.streak };
       }
 

@@ -71,18 +71,18 @@ export const AuthProvider = ({ children }) => {
   const isSyncingRef = useRef(false);
   const lastSyncTimeRef = useRef(0);
 
-  const syncProfile = useCallback(async (userId, onProfileLoaded) => {
+  const syncProfile = useCallback(async (userId, onProfileLoaded, force = false) => {
     const activeUserId = userId || authStateRef.current.user?.id;
     if (!activeUserId || activeUserId === 'undefined' || typeof activeUserId !== 'string' || activeUserId.length < 5) return;
     
     // 1. LOBBYING GUARD: Prevent rapid fire calls
     const now = Date.now();
-    if (now - lastSyncTimeRef.current < 2000) {
+    if (!force && now - lastSyncTimeRef.current < 2000) {
       return;
     }
 
     // 2. CONCURRENCY GUARD: Prevent overlapping requests
-    if (isSyncingRef.current) {
+    if (!force && isSyncingRef.current) {
       return;
     }
 
