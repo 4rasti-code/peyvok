@@ -160,11 +160,6 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
                 {/* Header Section */}
                 <div className="flex flex-col sm:flex-row items-center justify-between mb-16 gap-8">
                     <div className="flex items-center gap-6 group cursor-pointer" onClick={handleClose}>
-                        <div className="w-16 h-16 rounded-lg bg-linear-to-br from-primary to-primary-container p-0.5 shadow-xl transition-all group-hover:scale-105 active:scale-95 shadow-primary/20">
-                            <div className="w-full h-full bg-[#0F0F1A] rounded-[1.4rem] flex items-center justify-center overflow-">
-                                <span className="text-3xl font-bold  text-primary">P</span>
-                            </div>
-                        </div>
                         <div>
                             <h1 className="text-4xl font-bold   text-white mb-1">پەیڤۆک</h1>
                             <p className="text-text-dim/60 text-xs font-bold uppercase tracking-[0.2em]">Heritage Reborn</p>
