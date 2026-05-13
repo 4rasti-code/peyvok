@@ -3,6 +3,7 @@ import { motion as Motion, AnimatePresence } from 'framer-motion';
 import Avatar from './Avatar';
 import { triggerHaptic } from '../utils/haptics';
 import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
+import ResultStats from './ResultStats';
 
 const AnimatedNumber = ({ value, prefix = "" }) => {
   const [displayValue, setDisplayValue] = useState(0);
@@ -160,6 +161,14 @@ export default function MultiplayerResultOverlay({
               </div>
             </Motion.div>
           )}
+
+          {/* Unified Stats Section */}
+          <ResultStats 
+            profileData={{ games_played: 0, games_won: 0 }} // Minimal fallback
+            playerStats={rewards?.playerStats}
+            gameMode="battle"
+            currentGuessCount={-1}
+          />
 
           {/* Action Buttons Removed per User Request */}
           <div className="mt-4">

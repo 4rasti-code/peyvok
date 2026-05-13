@@ -104,67 +104,47 @@ export const AuthProvider = ({ children }) => {
 
       if (error) {
         if (error.code === 'PGRST116') {
-          console.log("[AuthContext] No profile found.");
+          console.warn("[AuthContext] No profile found. Attempting client-side self-heal for:", activeUserId);
+          
+          // ATTEMPT SELF-HEAL: Create a basic profile record if it's missing
+          // This happens if the DB trigger fails during signup.
+          const { data: newData, error: insertError } = await supabase
+            .from('profiles')
+            .insert([{
+              id: activeUserId,
+              nickname: authStateRef.current.user?.user_metadata?.nickname || 'یاریکەر',
+              avatar_url: 'default',
+              fils: 100,
+              derhem: 10,
+              dinar: 5,
+              magnets: 3,
+              hints: 3,
+              skips: 3,
+              inventory: { owned_avatars: ["default"], unlocked_themes: ["default"], solved_words: [] },
+              haptic_enabled: true,
+              mic_enabled: false,
+              speaker_enabled: true,
+              voice_volume: 1.0,
+              mic_volume: 1.0
+            }])
+            .select()
+            .single();
+
+          if (insertError) {
+            console.error("[AuthContext] Self-heal failed:", insertError.message);
+            throw insertError;
+          }
+          
+          if (newData) {
+            console.log("[AuthContext] Self-heal successful!");
+            // Use the newly created data and continue as normal
+            return handleProfileData(newData, onProfileLoaded);
+          }
         }
         throw error;
       }
-
       if (data) {
-        // 3. ATOMIC STATE UPDATES: Batch updates to minimize re-renders
-        // We only set state if the values actually changed to prevent propagation
-        
-        setUserNickname(prev => prev !== data.nickname ? (data.nickname || 'یاریزان') : prev);
-        setUserAvatar(prev => prev !== data.avatar_url ? (data.avatar_url || 'default') : prev);
-        setCity(prev => prev !== data.city ? (data.city || '') : prev);
-        setIsInKurdistan(prev => prev !== data.is_kurdistan ? (data.is_kurdistan ?? true) : prev);
-        setCountryCode(prev => prev !== data.country_code ? (data.country_code || 'IQ') : prev);
-        
-        if (data.last_nickname_update) {
-          setLastNicknameUpdate(data.last_nickname_update);
-        }
-
-        // 3.1 NEW SCHEMA SYNC: Avatars and Themes are now top-level columns
-        setOwnedAvatars(prev => {
-          const next = Array.isArray(data.owned_avatars) ? data.owned_avatars : ['default'];
-          return JSON.stringify(prev) !== JSON.stringify(next) ? next : prev;
-        });
-        
-        
-        const haptic = data.haptic_enabled ?? true;
-        setHapticEnabled(prev => {
-          if (prev !== haptic) {
-            localStorage.setItem('peyvchin_haptic_enabled', haptic.toString());
-            return haptic;
-          }
-          return prev;
-        });
-
-        // 3.4 VOICE SETTINGS SYNC
-        setMicEnabled(data.mic_enabled ?? true);
-        setMicVolume(data.mic_volume ?? 100);
-        setSpeakerEnabled(data.speaker_enabled ?? true);
-        setVoiceVolume(data.voice_volume ?? 100);
-
-
-        // 3.2 INVENTORY SELF-HEAL: REMOVED direct update due to potential trigger mismatch.
-        // The user should run the database repair script instead.
-        if (Array.isArray(data.inventory)) {
-          console.warn("[AuthContext] Corrupt inventory detected (Array instead of Object). Please run the DB repair script.");
-        }
-
-        // Update Cache
-        localStorage.setItem('peyvchin_cached_profile', JSON.stringify(data));
-        
-        // CRITICAL: Deep comparison to prevent Context Value thrashing
-        setProfileData(prev => {
-           if (!prev && !data) return null;
-           if (prev && data && prev.xp === data.xp && prev.fils === data.fils && prev.updated_at === data.updated_at) {
-             return prev;
-           }
-           return data;
-        });
-
-        if (onProfileLoaded) onProfileLoaded(data);
+        return handleProfileData(data, onProfileLoaded);
       }
     } catch (err) {
       console.warn("[AuthContext] Sync Note:", err.message);
@@ -175,6 +155,51 @@ export const AuthProvider = ({ children }) => {
       setLoading(false);
     }
   }, []);
+
+  // Helper to process profile data consistently
+  const handleProfileData = (data, onProfileLoaded) => {
+    setUserNickname(prev => prev !== data.nickname ? (data.nickname || 'یاریزان') : prev);
+    setUserAvatar(prev => prev !== data.avatar_url ? (data.avatar_url || 'default') : prev);
+    setCity(prev => prev !== data.city ? (data.city || '') : prev);
+    setIsInKurdistan(prev => prev !== data.is_kurdistan ? (data.is_kurdistan ?? true) : prev);
+    setCountryCode(prev => prev !== data.country_code ? (data.country_code || 'IQ') : prev);
+    
+    if (data.last_nickname_update) {
+      setLastNicknameUpdate(data.last_nickname_update);
+    }
+
+    setOwnedAvatars(prev => {
+      const next = Array.isArray(data.owned_avatars) ? data.owned_avatars : ['default'];
+      return JSON.stringify(prev) !== JSON.stringify(next) ? next : prev;
+    });
+    
+    const haptic = data.haptic_enabled ?? true;
+    setHapticEnabled(prev => {
+      if (prev !== haptic) {
+        localStorage.setItem('peyvchin_haptic_enabled', haptic.toString());
+        return haptic;
+      }
+      return prev;
+    });
+
+    setMicEnabled(data.mic_enabled ?? true);
+    setMicVolume(data.mic_volume ?? 100);
+    setSpeakerEnabled(data.speaker_enabled ?? true);
+    setVoiceVolume(data.voice_volume ?? 100);
+
+    localStorage.setItem('peyvchin_cached_profile', JSON.stringify(data));
+    
+    setProfileData(prev => {
+       if (!prev && !data) return null;
+       if (prev && data && prev.xp === data.xp && prev.fils === data.fils && prev.updated_at === data.updated_at) {
+         return prev;
+       }
+       return data;
+    });
+
+    if (onProfileLoaded) onProfileLoaded(data);
+    return data;
+  };
 
   // MANDATORY SESSION RECOVERY & AUTH LISTENER
   useEffect(() => {

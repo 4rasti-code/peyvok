@@ -1,32 +1,28 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { motion as Motion } from 'framer-motion';
 import { triggerHaptic } from '../utils/haptics';
 import { useAudio } from '../context/AudioContext';
-import { toKuDigits } from '../utils/formatters';
 import { normalizeKurdishInput } from '../utils/textUtils';
 
-export default function DictionaryView({ solvedWords, wordList, highlightWord, onBack }) {
+const toKuDigits = (n) => {
+  const ku = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+  return n.toString().replace(/\d/g, d => ku[d]);
+};
+
+export default function DictionaryView({ onBack, solvedWords = [], allWordsWithCategories = [], highlightWord }) {
   const { playTabSound } = useAudio();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
-  // Flatten word list with categories
-  const allWordsWithCategories = useMemo(() => {
-    const flat = [];
-    Object.entries(wordList).forEach(([cat, words]) => {
-      words.forEach(wordObj => {
-        flat.push({ ...wordObj, category: cat });
-      });
-    });
-    return flat;
-  }, [wordList]);
-
-  // Normalization helper for Kurdish text
-  const normalizeKurdish = (text) => {
-    if (!text) return '';
-    return normalizeKurdishInput(text)
-      .replace(/_/g, ' ')
-      .trim()
+  const normalizeKurdish = (str) => {
+    if (!str) return '';
+    return str
+      .replace(/ێ/g, 'ی')
+      .replace(/ۆ/g, 'و')
+      .replace(/ڕ/g, 'ر')
+      .replace(/ڵ/g, 'ل')
+      .replace(/ە/g, 'ه')
+      .replace(/\s+/g, '')
       .toLowerCase();
   };
 
@@ -34,33 +30,57 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
   const discoveredWords = useMemo(() => {
     const cleanedSearch = normalizeKurdishInput(searchTerm);
     
-    // 1. Start with words from our master list that are solved
-    const wordsFromList = allWordsWithCategories
-      .filter(item => {
-        const normItemWord = normalizeKurdishInput(item.word);
-        return solvedWords.some(sw => normalizeKurdishInput(sw) === normItemWord);
+    // 1. Get metadata for all solved words
+    const myWords = (solvedWords || [])
+      .map(sw => {
+        const wordData = allWordsWithCategories.find(
+          w => normalizeKurdishInput(w.word).toLowerCase().trim() === normalizeKurdishInput(sw).toLowerCase().trim()
+        );
+        
+        // Final taxonomy protection: Ensure category is official
+        const officialCats = new Set(allWordsWithCategories.map(w => w.category));
+        let finalCategory = wordData?.category || 'هەمەجۆر';
+        if (!officialCats.has(finalCategory)) {
+          finalCategory = 'هەمەجۆر';
+        }
+
+        // Fallback for words not in master list (from old sessions or multiplayer)
+        return wordData 
+          ? { ...wordData, category: finalCategory }
+          : { word: sw, hint: 'پەیڤەکا نوی یا هاتییە دیتن', category: 'هەمەجۆر' };
       });
 
-    // 2. Add words that are solved but NOT in our master list (e.g. newly discovered words from server)
-    const listWordsSet = new Set(allWordsWithCategories.map(w => normalizeKurdishInput(w.word)));
-    const externalSolvedWords = solvedWords
-      .filter(sw => !listWordsSet.has(normalizeKurdishInput(sw)))
-      .map(sw => ({ word: sw, hint: 'پەیڤەکا نوى یا هاتییە دیتن', category: 'پەیڤێن من' }));
+    // 2. Remove duplicates
+    const uniqueSolved = Array.from(
+      new Map(myWords.map(item => [normalizeKurdishInput(item.word).toLowerCase(), item])).values()
+    );
 
-    const combined = [...wordsFromList, ...externalSolvedWords];
-
-    return combined
-      .filter(item => activeCategory === 'All' || item.category === activeCategory || (activeCategory === 'پەیڤێن من' && item.category === 'پەیڤێن من'))
+    // 3. Apply Category and Search Filter
+    return uniqueSolved
       .filter(item => {
+        if (activeCategory === 'All') return true;
+        return item.category === activeCategory;
+      })
+      .filter(item => {
+        if (!cleanedSearch) return true;
+        const searchNorm = normalizeKurdish(cleanedSearch);
         const cleanedWord = normalizeKurdish(item.word);
         const cleanedHint = normalizeKurdish(item.hint);
-        return cleanedWord.includes(cleanedSearch) || cleanedHint.includes(cleanedSearch);
+        return cleanedWord.includes(searchNorm) || cleanedHint.includes(searchNorm);
       });
   }, [allWordsWithCategories, solvedWords, activeCategory, searchTerm]);
 
-  const categories = ['All', ...Object.keys(wordList), 'پەیڤێن من'];
+  const categories = useMemo(() => {
+    // Only build tabs from the master word list's categories
+    const cats = new Set();
+    allWordsWithCategories.forEach(w => {
+      if (w.category) cats.add(w.category);
+    });
+    // Ensure "بها" or any other ghost category is NOT included
+    return ['All', ...Array.from(cats).sort()];
+  }, [allWordsWithCategories]);
 
-  // Highlight the word that was just solved
+  // Highlight logic
   useEffect(() => {
     if (!highlightWord) return;
     const timer = setTimeout(() => {
@@ -96,7 +116,7 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
       </div>
 
       <div className="w-full max-w-lg flex-1 flex flex-col px-6 pt-6 pb-20">
-        {/* Minimal Search Bar */}
+        {/* Search Bar */}
         <div className="relative group mb-6">
           <input
             type="text"
@@ -110,7 +130,7 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
           </span>
         </div>
 
-        {/* Minimal Pill Categories */}
+        {/* Categories */}
         <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 mb-8">
           {categories.map(cat => {
             const isActive = activeCategory === cat;
@@ -130,7 +150,7 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
           })}
         </div>
 
-        {/* Minimal Word Cards */}
+        {/* Word Cards */}
         <div className="flex flex-col gap-4">
           {discoveredWords.length > 0 ? (
             discoveredWords.map((item, idx) => (
@@ -166,5 +186,3 @@ export default function DictionaryView({ solvedWords, wordList, highlightWord, o
     </div>
   );
 }
-
-

@@ -15,7 +15,7 @@ import Keyboard from './components/Keyboard';
 import CategoryModal from './components/CategoryModal';
 import BottomNav from './components/BottomNav';
 import LobbyView from './components/LobbyView';
-import { wordList, gameWordLists } from './data/wordList';
+import { gameWordLists, allWordsWithCategories } from './data/wordList';
 import { STATUS } from './data/constants';
 import { getLocalDateString as _getLocalDateString } from './utils/formatters';
 import KurdishSunLoader from './components/KurdishSunLoader';
@@ -222,6 +222,8 @@ export default function App() {
         // Suppress "already initialized" error which happens in StrictMode or re-mounts
         if (err.message?.includes('already initialized')) {
           console.warn("🔔 [OneSignal] Already initialized, skipping.");
+        } else if (err.message?.includes('Can only be used on')) {
+          console.warn("🔔 [OneSignal] Domain mismatch (Update Site URL in OneSignal Dashboard):", err.message);
         } else {
           console.error("🔔 [OneSignal] Initialization failed:", err);
         }
@@ -331,7 +333,7 @@ export default function App() {
   const [category, setCategory] = useState('');
   const [currentWordCategory, setCurrentWordCategory] = useState('');
 
-  const [, setStartTime] = useState(0);
+  const [startTime, setStartTime] = useState(0);
   const [, setRewardAmount] = useState(0);
   const [rewardAmountXp, setRewardAmountXp] = useState(0);
   const [magnetDisabledKeys, setMagnetDisabledKeys] = useState([]);
@@ -344,6 +346,7 @@ export default function App() {
   const [timeLeft, setTimeLeft] = useState(30);
   const [, setIsDailyActive] = useState(false);
   const [isSuccessSplash, setIsSuccessSplash] = useState(false);
+  const [currentSolveTime, setCurrentSolveTime] = useState(0);
 
   // Results & UI State
   const [victoryBreakdown, setVictoryBreakdown] = useState({
@@ -464,8 +467,11 @@ export default function App() {
       setRewardAmount(breakdown.awardAmount);
       setRewardAmountXp(breakdown.xpAdded);
 
-      // --- CALCULATE SCORE FOR STATS ---
+      // --- CALCULATE SCORE & DURATION ---
       let score = 0;
+      const solveTimeMs = Date.now() - startTime;
+      setCurrentSolveTime(solveTimeMs);
+
       const maxRows = gMode === 'secret_word' ? 1 : (gMode === 'word_fever' ? 3 : 6);
 
       if (gMode === 'word_fever') {
@@ -496,7 +502,8 @@ export default function App() {
           hintsUsed: hintTaps,
           skipsUsed: skipsUsedInRound,
           attempts: finalGuesses.length,
-          isWin: true
+          isWin: true,
+          durationMs: solveTimeMs
         }
       );
       // Extra verification from server if needed
@@ -519,7 +526,7 @@ export default function App() {
         });
       }
     }
-  }, [syncProgressToDatabase, updateInventory, incrementSecretWordProgress, resetSecretWordProgress, feverStreak, magnetsUsedInRound, hintTaps, skipsUsedInRound]); // Stable dependencies
+  }, [syncProgressToDatabase, updateInventory, incrementSecretWordProgress, resetSecretWordProgress, feverStreak, magnetsUsedInRound, hintTaps, skipsUsedInRound, startTime]); // Stable dependencies
 
   const onWinHandler = useCallback((finalGuesses, winWord, winMode) => {
     const { hapticEnabled: hEnabled } = gameRefs.current;
@@ -707,7 +714,7 @@ export default function App() {
     const alphabet = 'ئابپت جچحخد ڕزژسشعغفقکگ لڵمنوۆھەیێ'.replace(/\s/g, '').split('');
     const targetSet = new Set(tWord.split(''));
     const incorrect = alphabet.filter(char => !targetSet.has(char) && !mDisabled.includes(char));
-    const toDisable = incorrect.sort(() => 0.5 - Math.random()).slice(0, 5);
+    const toDisable = incorrect.sort(() => 0.5 - Math.random()).slice(0, 3);
 
     setMagnetDisabledKeys(prev => [...prev, ...toDisable]);
     setMagnetsUsedInRound(prev => prev + 1);
@@ -931,6 +938,7 @@ export default function App() {
     setCurrentWordCategory(wordObj.category || '');
     setRevealedIndices([]);
     setStartTime(Date.now());
+    setCurrentSolveTime(0);
     setHintTaps(0);
     setMagnetsUsedInRound(0);
     setMagnetDisabledKeys([]);
@@ -964,14 +972,23 @@ export default function App() {
 
   const handleNextGame = useCallback(async () => {
     const { gameMode: gMode, category: currCat } = gameRefs.current;
+    
+    // Immediate state cleanup to prevent UI flickering and timer race conditions
+    setIsVictory(false);
+    setIsDefeat(false);
+    setIsWordFeverResultVisible(false);
+    
+    // Safety for Word Fever: reset time immediately to prevent "fail" re-trigger
+    if (gMode === 'word_fever') setTimeLeft(30);
+
     const wordObj = await getFreshWord(gMode, currCat);
 
     if (wordObj) {
       resetBoard(wordObj);
     } else {
-      setCurrentView('lobby');
+      handleGoHome();
     }
-  }, [resetBoard, getFreshWord]);
+  }, [resetBoard, getFreshWord, setIsVictory, setIsDefeat, setIsWordFeverResultVisible, setTimeLeft, handleGoHome]);
 
   const _handleForfeit = useCallback(() => {
     playPopSound();
@@ -997,6 +1014,8 @@ export default function App() {
       } else {
         // Time has expired
         requestAnimationFrame(() => {
+          setLastSolvedWord(targetWord);
+          setFeverStreak(0);
           setIsDefeat(true); // Lock the board
           setWordFeverResultType('fail');
           setIsWordFeverResultVisible(true);
@@ -1004,7 +1023,7 @@ export default function App() {
       }
     }
     return () => clearInterval(timer);
-  }, [currentView, gameMode, isVictory, isWordFeverResultVisible, timeLeft, setIsDefeat]);
+  }, [currentView, gameMode, isVictory, isWordFeverResultVisible, timeLeft, setIsDefeat, targetWord, setLastSolvedWord, setFeverStreak, setWordFeverResultType, setIsWordFeverResultVisible]);
 
   // Word Fever Reward & Penalty Effect
   useEffect(() => {
@@ -1325,28 +1344,28 @@ export default function App() {
                 stopBGM();
                 triggerHaptic(10);
                 setIsDailyActive(false);
-                selectCategory('generalWordPool', 'classic'); // Direct start with Unified Pool
+                selectCategory('ھەموو', 'classic'); 
               }}
               onStartHardWords={() => {
                 playTabSound();
                 stopBGM();
                 triggerHaptic(10);
                 setIsDailyActive(true);
-                selectCategory('generalWordPool', 'hard_words'); // Filtered by length internally
+                selectCategory('ھەموو', 'hard_words'); 
               }}
               onStartWordFever={() => {
                 playTabSound();
                 stopBGM();
                 triggerHaptic(10);
                 setIsDailyActive(false);
-                selectCategory('generalWordPool', 'word_fever');
+                selectCategory('ھەموو', 'word_fever');
               }}
               onStartSecretWord={() => {
                 playTabSound();
                 stopBGM();
                 triggerHaptic(10);
                 setIsDailyActive(false);
-                selectCategory('generalWordPool', 'secret_word');
+                selectCategory('ھەموو', 'secret_word');
                 resetSecretWordProgress();
               }}
 
@@ -1517,7 +1536,7 @@ export default function App() {
             {currentView === 'dictionary' && (
               <DictionaryView
                 solvedWords={solvedWords}
-                wordList={wordList}
+                allWordsWithCategories={allWordsWithCategories}
                 onBack={() => navigateTo('lobby')}
               />
             )}
@@ -1581,7 +1600,7 @@ export default function App() {
           <>
             {/* Single Player Victory */}
             <VictoryOverlay
-              isVisible={isVictory && showResultOverlay && currentView === 'game' && gameMode !== 'word_fever'}
+              isVisible={(isVictory && showResultOverlay && currentView === 'game' && gameMode !== 'word_fever') || (isWordFeverResultVisible && wordFeverResultType === 'win' && gameMode === 'word_fever')}
               breakdown={victoryBreakdown}
               solvedWord={lastSolvedWord}
               guesses={guesses}
@@ -1590,7 +1609,6 @@ export default function App() {
               customDescription={victoryCustomText?.description}
               isDark={isSystemDark}
               onNext={() => {
-                setIsVictory(false);
                 handleNextGame();
               }}
               onHome={handleGoHome}
@@ -1598,36 +1616,19 @@ export default function App() {
               profileData={profileData}
               playerStats={playerStats}
               gameMode={gameMode}
+              solveTimeMs={currentSolveTime}
+              streak={feverStreak}
             />
 
             {/* Single Player Defeat */}
             <DefeatOverlay
-              isVisible={isDefeat && showResultOverlay && currentView === 'game' && gameMode !== 'word_fever'}
+              isVisible={(isDefeat && showResultOverlay && currentView === 'game' && gameMode !== 'word_fever') || (isWordFeverResultVisible && wordFeverResultType === 'fail' && gameMode === 'word_fever')}
               solvedWord={lastSolvedWord}
               guesses={guesses}
               breakdown={defeatBreakdown}
               gameMode={gameMode}
               playStartSound={playStartGameSound}
-              onRetry={async () => {
-                setIsDefeat(false);
-                const wordObj = await getFreshWord(gameMode, category);
-                if (wordObj) resetBoard(wordObj);
-              }}
-              onHome={handleGoHome}
-              isDark={isSystemDark}
-              profileData={profileData}
-              playerStats={playerStats}
-            />
-            {/* Word Fever Result */}
-            <WordFeverResultOverlay
-              isVisible={isWordFeverResultVisible && showResultOverlay && currentView === 'game'}
-              type={wordFeverResultType}
-              solvedWord={lastSolvedWord}
-              guesses={guesses}
-              breakdown={wordFeverResultType === 'win' ? victoryBreakdown : defeatBreakdown}
-              xp={rewardAmountXp}
-              onContinue={() => {
-                setIsWordFeverResultVisible(false);
+              onRetry={() => {
                 handleNextGame();
               }}
               onRepeat={() => {
@@ -1635,7 +1636,10 @@ export default function App() {
                 handleNextGame();
               }}
               onHome={handleGoHome}
-              playStartSound={playStartGameSound}
+              isDark={isSystemDark}
+              profileData={profileData}
+              playerStats={playerStats}
+              streak={feverStreak}
             />
           </>
         )}
@@ -1797,7 +1801,7 @@ export default function App() {
                   </span>
                 </div>
 
-                <h2 className="text-sm font-light tracking-widest text-mono-500 dark:text-mono-400 transition-colors duration-300">
+                <h2 className="text-sm font-light text-mono-500 dark:text-mono-400 transition-colors duration-300">
                   {multiplayerState === 'found' ? 'ئامادەبە!' : 'لێگەڕیان...'}
                 </h2>
               </div>
@@ -1818,7 +1822,7 @@ export default function App() {
                 </div>
                 
                 <div className="mt-12 flex flex-col items-center gap-1 relative z-20">
-                  <span className="text-mono-800 dark:text-mono-100 font-black text-lg uppercase tracking-widest drop-shadow-md">
+                  <span className="text-mono-800 dark:text-mono-100 font-black text-lg drop-shadow-md">
                     {userNickname || 'تۆ (YOU)'}
                   </span>
                   <div className="text-sm font-semibold text-mono-500 dark:text-mono-400 bg-white/60 dark:bg-mono-900/60 backdrop-blur-md px-3 py-0.5 rounded-md border border-mono-200 dark:border-mono-800 shadow-sm flex items-center justify-center mt-1">

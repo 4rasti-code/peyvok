@@ -48,10 +48,19 @@ const VictoryOverlay = ({
   isDark,
   profileData,
   playerStats,
-  gameMode
+  gameMode,
+  solveTimeMs = 0,
+  streak = 0
 }) => {
   const [shareStatus, setShareStatus] = useState(null); // null, 'success', 'copied'
   const hasTriggeredRef = useRef(false);
+
+  const formatTime = (ms) => {
+    if (!ms) return '0';
+    return (ms / 1000).toFixed(1);
+  };
+
+  const isNewRecord = solveTimeMs > 0 && solveTimeMs <= (profileData?.fastest_solve_ms || Infinity);
 
   useEffect(() => {
     if (isVisible && !hasTriggeredRef.current) {
@@ -93,7 +102,7 @@ const VictoryOverlay = ({
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="w-full max-w-[360px] bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-white/10 rounded-lg p-6 flex flex-col items-center gap-4 relative transition-colors duration-500 shadow-2xl my-8"
+            className="w-full max-w-[320px] bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-white/10 rounded-lg p-4 flex flex-col items-center gap-2 relative transition-colors duration-500 shadow-2xl my-2"
           >
 
             {/* Status Icon Hub */}
@@ -101,9 +110,9 @@ const VictoryOverlay = ({
               <Motion.div
                 initial={{ scale: 0.5, rotate: 15 }}
                 animate={{ scale: 1, rotate: 0 }}
-                className="w-16 h-16 rounded flex items-center justify-center relative z-10 bg-mono-100 dark:bg-white/5 text-mono-900 dark:text-white border border-mono-200 dark:border-white/10"
+                className="w-12 h-12 rounded flex items-center justify-center relative z-10 bg-mono-100 dark:bg-white/5 text-mono-900 dark:text-white border border-mono-200 dark:border-white/10"
               >
-                <span className="material-symbols-outlined text-[48px]">
+                <span className="material-symbols-outlined text-[40px]">
                   workspace_premium
                 </span>
               </Motion.div>
@@ -111,20 +120,20 @@ const VictoryOverlay = ({
 
             {/* Message Area */}
             <div className="text-center space-y-3 w-full">
-              <h2 className="text-2xl font-black font-heading text-mono-900 dark:text-white">
+              <h2 className="text-xl font-black font-heading text-mono-900 dark:text-white">
                 {customTitle || "تە سەرکەفتن ئینا!"}
               </h2>
 
               {solvedWord && (
-                <div className="bg-mono-100 dark:bg-[#141414] border border-mono-200 dark:border-white/5 px-4 py-2 rounded-sm inline-block">
-                  <span className="text-mono-400 dark:text-white/40 text-[9px] font-bold uppercase  block mb-0.5">پەیڤا ڕاست</span>
-                  <span className="text-lg font-black text-mono-900 dark:text-white font-heading tracking-normal">{solvedWord}</span>
+                <div className="bg-mono-100 dark:bg-[#141414] border border-mono-200 dark:border-white/5 px-3 py-1.5 rounded-sm inline-block">
+                  <span className="text-mono-400 dark:text-white/40 text-[8px] font-bold uppercase  block mb-0.5">پەیڤا ڕاست</span>
+                  <span className="text-base font-black text-mono-900 dark:text-white font-heading tracking-normal">{solvedWord}</span>
                 </div>
               )}
 
               {/* Stats & Rewards Table */}
-              <div className="w-full space-y-2 mt-1 bg-mono-100 dark:bg-[#141414] p-4 rounded border border-mono-200 dark:border-white/5">
-                <div className="flex justify-between items-center text-base font-black">
+              <div className="w-full space-y-2 mt-0.5 bg-mono-100 dark:bg-[#141414] p-2 rounded border border-mono-200 dark:border-white/5">
+                <div className="flex justify-between items-center text-sm font-black">
                   <span className="text-mono-600 dark:text-white/70">خەلاتێ تە</span>
                   <div className="flex items-center gap-2 text-mono-900 dark:text-white">
                     <div className="flex flex-col items-end leading-none">
@@ -159,6 +168,52 @@ const VictoryOverlay = ({
                 </div>
               </div>
 
+              {/* Fastest Record Banner (Lightning Speed) */}
+              {gameMode === 'word_fever' && (
+                <div className="w-full mt-1 bg-zinc-900 dark:bg-white/5 border border-white/10 rounded-md p-2 flex items-center justify-between overflow-hidden relative group">
+                  <div className="absolute top-0 right-0 w-32 h-full bg-blue-500/5 blur-3xl -mr-16 group-hover:bg-blue-500/10 transition-all duration-700" />
+                  <div className="flex items-center gap-3 relative z-10">
+                    <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                      <span className="material-symbols-outlined text-blue-400 text-lg">bolt</span>
+                    </div>
+                    <div className="flex flex-col items-start leading-none gap-0.5">
+                      <span className="text-white font-black text-xs tracking-tight">ڕیکۆردێ تایا پەیڤان</span>
+                      {isNewRecord && solveTimeMs > 0 && (
+                        <span className="text-blue-400 text-[7px] font-bold uppercase tracking-widest animate-pulse">ڕیکۆردێ نوی!</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="relative z-10 flex items-center gap-2">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-white font-black text-xl tabular-nums">
+                        {formatTime(profileData?.fastest_solve_ms || solveTimeMs)}
+                      </span>
+                      <span className="text-white/40 text-[9px] font-bold">چرکە</span>
+                    </div>
+                    {/* The small Diamond icon on the left from user image */}
+                    <div className="w-2 h-2 bg-white/90 rotate-45 rounded-[1px] shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
+                  </div>
+                </div>
+              )}
+
+              {/* Word Fever Streak Banner */}
+              {gameMode === 'word_fever' && streak > 0 && (
+                <div className="w-full mt-1 bg-amber-500/10 border border-amber-500/20 rounded-md p-2 flex items-center justify-between overflow-hidden relative group">
+                  <div className="flex items-center gap-3 relative z-10">
+                    <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
+                      <span className="material-symbols-outlined text-amber-600 dark:text-amber-500 text-lg">local_fire_department</span>
+                    </div>
+                    <div className="flex flex-col items-start leading-none">
+                      <span className="text-amber-700 dark:text-amber-400 font-black text-xs tracking-tight">زنجیرەیا پەیڤان</span>
+                    </div>
+                  </div>
+                  <div className="relative z-10 flex items-center gap-1">
+                    <span className="text-amber-600 dark:text-amber-400 font-black text-xl tabular-nums">{streak}</span>
+                    <span className="text-amber-600/50 dark:text-amber-400/50 text-[10px] font-bold">پەیڤ</span>
+                  </div>
+                </div>
+              )}
+
               {/* NYT Style Stats */}
               <ResultStats 
                 profileData={profileData}
@@ -170,18 +225,20 @@ const VictoryOverlay = ({
 
             {/* Action Buttons */}
             <div className="w-full flex flex-col gap-2 mt-2">
-              <button
-                onClick={() => { triggerHaptic(10); playStartSound?.(); onNext(); }}
-                className="w-full h-11 bg-primary text-white rounded font-black text-base active:scale-95 transition-all flex items-center justify-center gap-3"
-              >
-                <span className="material-symbols-outlined text-lg">arrow_left</span>
-                بەردەوام بە
-              </button>
+              {gameMode !== 'secret_word' && (
+                <button
+                  onClick={() => { triggerHaptic(10); playStartSound?.(); onNext(); }}
+                  className="w-full h-9 bg-primary text-white rounded font-black text-base active:scale-95 transition-all flex items-center justify-center gap-3"
+                >
+                  <span className="material-symbols-outlined text-lg">arrow_left</span>
+                  بەردەوام بە
+                </button>
+              )}
 
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={() => { triggerHaptic(10); playBackSfx(); onHome(); }}
-                  className="h-10 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-600 dark:text-white/50 rounded font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+                  className="h-9 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-600 dark:text-white/50 rounded font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined text-base">home</span>
                   ڤەگەڕیان
@@ -204,7 +261,7 @@ const VictoryOverlay = ({
                       setTimeout(() => setShareStatus(null), 2000);
                     }
                   }}
-                  className="h-10 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-600 dark:text-white/50 rounded font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+                  className="h-9 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-600 dark:text-white/50 rounded font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined text-base">
                     {shareStatus === 'copied' ? 'content_paste_go' : shareStatus === 'success' ? 'check_circle' : 'share'}

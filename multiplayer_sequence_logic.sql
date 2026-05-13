@@ -12,11 +12,12 @@ BEGIN
   RETURN QUERY
   WITH random_categories AS (
     -- 1. Identify 5 distinct random categories containing 5-letter words
-    SELECT DISTINCT category 
+    SELECT category 
     FROM public.words 
     WHERE char_length(word) = 5
       AND category IS NOT NULL 
       AND category != ''
+    GROUP BY category
     ORDER BY random()
     LIMIT 5
   )

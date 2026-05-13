@@ -114,7 +114,7 @@ export const MultiplayerProvider = ({ children }) => {
           // 2.2 DEEP FETCH FALLBACK: If stuck for 12s, force a manual record check
           if (next === 12 && stateRef.current !== 'playing') {
             const mId = matchIdRef.current;
-            if (mId && typeof mId === 'string' && mId !== 'undefined') {
+            if (mId && typeof mId === 'string' && mId !== 'undefined' && mId !== 'null') {
               supabase.from('online_matches').select('*').eq('id', mId).maybeSingle().then(({ data }) => {
                 if (data && (data.player2_id || data.status === 'playing')) {
                   console.log('[Multiplayer] Deep check found match state change! Force sync.');
@@ -153,7 +153,7 @@ export const MultiplayerProvider = ({ children }) => {
   }, [user?.id]);
 
   const submitGuess = useCallback(async (colors, isWin) => {
-    if (!matchId || !activeMatch) return;
+    if (!matchId || matchId === 'null' || matchId === 'undefined' || !activeMatch) return;
     broadcastGuess(colors, isWin);
 
     // Clear live feedback upon submission
@@ -211,7 +211,7 @@ export const MultiplayerProvider = ({ children }) => {
   }, [matchId, activeMatch, broadcastGuess, broadcastLiveAction, user?.id, userNickname]);
 
   const submitFailure = useCallback(async () => {
-    if (!matchId || !activeMatch) return;
+    if (!matchId || matchId === 'null' || matchId === 'undefined' || !activeMatch) return;
     broadcastLiveAction([], 0);
     const isP1 = activeMatch.player1_id === user?.id;
     const currentIdx = activeMatch.current_word_index || 0;
@@ -227,7 +227,7 @@ export const MultiplayerProvider = ({ children }) => {
     await supabase.from('online_matches').update(updates).eq('id', matchId);
 
     // 2. FUNDAMENTAL CHECK: Fetch latest opponent state
-    const { data: latest } = await supabase.from('online_matches').select('*').eq('id', activeMatch.id).single();
+    const { data: latest } = await supabase.from('online_matches').select('*').eq('id', activeMatch.id).maybeSingle();
     if (latest) {
       const otherWonRound = isP1 ? (latest.p2_score > p2Score) : (latest.p1_score > p1Score);
       const otherIsDone = isP1 ? (latest.p2_failed || otherWonRound) : (latest.p1_failed || otherWonRound);
@@ -254,7 +254,7 @@ export const MultiplayerProvider = ({ children }) => {
 
   const triggerForfeitVictory = useCallback(async () => {
     const mId = matchId || matchIdRef.current;
-    if (!mId) return;
+    if (!mId || mId === 'null' || mId === 'undefined') return;
 
     try {
       setForfeitStatus('confirmed');
@@ -372,29 +372,27 @@ export const MultiplayerProvider = ({ children }) => {
 
   const cancelMatch = useCallback(async () => {
     const idToCancel = matchId || matchIdRef.current;
+    const isValidId = idToCancel && idToCancel !== 'null' && idToCancel !== 'undefined';
+    
     try {
-      if (idToCancel) {
+      if (isValidId) {
           const isP1 = activeMatch?.player1_id === user?.id;
-          const updates = { status: 'finished' };
-          // Award the win to the OTHER player and reset the leaver's score
-          if (isP1) {
-            updates.p2_score = 3;
-            updates.p1_score = 0;
-          } else {
-            updates.p1_score = 3;
-            updates.p2_score = 0;
-          }
-
-          await supabase.from('online_matches').update(updates).eq('id', idToCancel);
-          console.log('[Multiplayer] Match marked as FINISHED in DB via Cancel.');
-
           if (multiplayerState === 'playing') {
+            const updates = { status: 'finished' };
+            // Award the win to the OTHER player and reset the leaver's score
+            if (isP1) {
+              updates.p2_score = 3;
+              updates.p1_score = 0;
+            } else {
+              updates.p1_score = 3;
+              updates.p2_score = 0;
+            }
+            await supabase.from('online_matches').update(updates).eq('id', idToCancel);
             applyPenalty(10, 25); // Very light penalty for leaving mid-game
+          } else {
+            // If just searching/waiting, delete the record
+            await supabase.from('online_matches').delete().eq('id', idToCancel);
           }
-        } else {
-          // If just searching/waiting, delete the record
-          await supabase.from('online_matches').delete().eq('id', idToCancel);
-          console.log('[Multiplayer] Match DELETED from DB via Cancel.');
         }
     } catch (err) {
       console.warn('[Multiplayer] Cancel/Cleanup failed:', err);
@@ -471,7 +469,7 @@ export const MultiplayerProvider = ({ children }) => {
 
   // 2. REALTIME SUBSCRIPTION
   useEffect(() => {
-    if (!matchId || matchId === 'undefined') return;
+    if (!matchId || matchId === 'undefined' || matchId === 'null') return;
     console.log('[Multiplayer] Constructing subscription filter for:', matchId);
 
     const channel = supabase
@@ -626,7 +624,7 @@ export const MultiplayerProvider = ({ children }) => {
               .from('profiles')
               .select('*')
               .eq('id', oppId)
-              .single();
+              .maybeSingle();
 
             if (error || !opponentProfile) {
               setMultiplayerState('syncing'); 

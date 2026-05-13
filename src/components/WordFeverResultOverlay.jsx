@@ -5,6 +5,7 @@ import { FilsIcon, DerhemIcon, DinarIcon } from './CurrencyIcon';
 import { triggerHaptic } from '../utils/haptics';
 import { playSuccessSfx, playBackSfx } from '../utils/audio';
 import { generateWordleGrid, shareGameResult } from '../utils/share';
+import ResultStats from './ResultStats';
 
 const AnimatedNumber = ({ value, prefix = "" }) => {
   const [displayValue, setDisplayValue] = useState(0);
@@ -151,6 +152,15 @@ const WordFeverResultOverlay = ({
                     </div>
                   </div>
                 )}
+              </div>
+
+              {/* Stats Section */}
+              <ResultStats 
+                profileData={breakdown?.profileData} // Use passed data if available
+                playerStats={breakdown?.playerStats}
+                gameMode="word_fever"
+                currentGuessCount={guesses.length}
+              />
 
                 {/* Detailed Stats Breakdown (Horizontal & Reordered below XP) */}
                 <div className="flex items-center justify-between gap-1 pt-3 mt-1 border-t border-mono-200 dark:border-white/5">
@@ -182,7 +192,6 @@ const WordFeverResultOverlay = ({
                   </div>
                 </div>
               </div>
-            </div>
 
             {/* Action Buttons */}
             <div className="w-full flex flex-col gap-3">

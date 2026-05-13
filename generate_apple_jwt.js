@@ -1,6 +1,6 @@
 /* eslint-env node */
-const fs = require('fs');
-const jwt = require('jsonwebtoken'); // You need to run: npm install jsonwebtoken
+import fs from 'fs';
+import jwt from 'jsonwebtoken'; // You need to run: npm install jsonwebtoken
 
 // ⚠️ تکایە ئەڤان زانیاریان ل خوارێ پڕ بکە ب دروستی:
 

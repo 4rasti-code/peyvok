@@ -43,12 +43,12 @@ export const GameProvider = ({ children }) => {
     return (saved !== null) ? Number(saved) : fallback;
   };
 
-  const [fils, setFils] = useState(() => getInitial('peyvchin_fils', 1000));
-  const [derhem, setDerhem] = useState(() => getInitial('peyvchin_derhem', 50));
+  const [fils, setFils] = useState(() => getInitial('peyvchin_fils', 500));
+  const [derhem, setDerhem] = useState(() => getInitial('peyvchin_derhem', 10));
   const [dinar, setDinar] = useState(() => getInitial('peyvchin_dinar', 5));
   const [magnetCount, setMagnetCount] = useState(() => getInitial('peyvchin_magnets', 3));
-  const [hintCount, setHintCount] = useState(() => getInitial('peyvchin_hints', 5));
-  const [skipCount, setSkipCount] = useState(() => getInitial('peyvchin_skips', 2));
+  const [hintCount, setHintCount] = useState(() => getInitial('peyvchin_hints', 3));
+  const [skipCount, setSkipCount] = useState(() => getInitial('peyvchin_skips', 3));
 
   const [solvedWords, setSolvedWords] = useState(() => {
     const saved = localStorage.getItem('peyvchin_solved_words');
@@ -177,20 +177,20 @@ export const GameProvider = ({ children }) => {
           return Math.max(prev, currentLevelFromXP);
         });
         setFils(prev => {
-          const next = Math.max(prev, profileData.fils ?? 1000);
+          const next = profileData.fils ?? 500;
           return prev !== next ? next : prev;
         });
         setDerhem(prev => {
-          const next = Math.max(prev, profileData.derhem ?? 50);
+          const next = profileData.derhem ?? 10;
           return prev !== next ? next : prev;
         });
         setDinar(prev => {
-          const next = Math.max(prev, profileData.dinar ?? 5);
+          const next = profileData.dinar ?? 5;
           return prev !== next ? next : prev;
         });
         setMagnetCount(prev => prev !== (profileData.magnets ?? 3) ? (profileData.magnets ?? 3) : prev);
-        setHintCount(prev => prev !== (profileData.hints ?? 5) ? (profileData.hints ?? 5) : prev);
-        setSkipCount(prev => prev !== (profileData.skips ?? 2) ? (profileData.skips ?? 2) : prev);
+        setHintCount(prev => prev !== (profileData.hints ?? 3) ? (profileData.hints ?? 3) : prev);
+        setSkipCount(prev => prev !== (profileData.skips ?? 3) ? (profileData.skips ?? 3) : prev);
         setDailyStreak(prev => prev !== (profileData.daily_streak || 0) ? (profileData.daily_streak || 0) : prev);
         setRewardStreak(prev => prev !== (profileData.reward_streak || 0) ? (profileData.reward_streak || 0) : prev);
         setLastRewardClaimedAt(prev => prev !== profileData.last_reward_claimed_at ? profileData.last_reward_claimed_at : prev);
@@ -437,11 +437,30 @@ export const GameProvider = ({ children }) => {
 
     // --- UPDATE STATISTICS (LOCAL) ---
     const score = additionalData.score || 0;
+    const isWin = additionalData.isWin !== undefined ? additionalData.isWin : true;
     const updatedStats = { ...currStats };
     if (!updatedStats[mode]) {
-      updatedStats[mode] = { score: 0, bestScore: 0, totalXP: 0, solvedCount: 0 };
+      updatedStats[mode] = { 
+        score: 0, 
+        bestScore: 0, 
+        totalXP: 0, 
+        solvedCount: 0, 
+        playedCount: 0,
+        current_streak: 0,
+        max_streak: 0
+      };
     }
-    updatedStats[mode].solvedCount = (updatedStats[mode].solvedCount || 0) + 1;
+    
+    updatedStats[mode].playedCount = (updatedStats[mode].playedCount || 0) + 1;
+    
+    if (isWin) {
+      updatedStats[mode].solvedCount = (updatedStats[mode].solvedCount || 0) + 1;
+      updatedStats[mode].current_streak = (updatedStats[mode].current_streak || 0) + 1;
+      updatedStats[mode].max_streak = Math.max(updatedStats[mode].max_streak || 0, updatedStats[mode].current_streak);
+    } else {
+      updatedStats[mode].current_streak = 0;
+    }
+
     updatedStats[mode].score = score;
     updatedStats[mode].totalXP = (updatedStats[mode].totalXP || 0) + xpToAdd;
     if (score > (updatedStats[mode].bestScore || 0)) {
@@ -515,16 +534,12 @@ export const GameProvider = ({ children }) => {
       if (error) throw error;
 
       // --- DIRECT DATABASE SYNC (BACKUP) ---
-      // The user explicitly requested that statistics be stored in the database.
-      // We perform a direct update to ensure guess_distribution and mode stats are persisted,
-      // even if the sync_profile_progression RPC has limitations.
       try {
         const dbGuessDist = {};
         Object.entries(updatedStats).forEach(([m, data]) => {
           if (data.guess_distribution) dbGuessDist[m] = data.guess_distribution;
         });
 
-        // --- CALCULATE ADVANCED STATS ---
         const isWin = additionalData.isWin !== undefined ? additionalData.isWin : true;
         const isPvPWin = mode === 'battle' && isWin;
         const isFlawless = isWin && additionalData.hintsUsed === 0 && additionalData.magnetsUsed === 0;
@@ -540,10 +555,12 @@ export const GameProvider = ({ children }) => {
         }
 
         const currentModePlayCounts = profileData?.mode_play_counts || {};
-        
         const todayStr = new Date().toISOString().split('T')[0];
         const lastActiveDate = profileData?.last_active_date;
         const activeDaysIncrement = (!lastActiveDate || lastActiveDate < todayStr) ? 1 : 0;
+
+        const newCurrentStreak = isWin ? (profileData?.current_streak || 0) + 1 : 0;
+        const newMaxStreak = Math.max(profileData?.max_streak || 0, newCurrentStreak);
 
         await supabase
           .from('profiles')
@@ -560,6 +577,8 @@ export const GameProvider = ({ children }) => {
             fever_highscore: newFeverHighscore,
             total_active_days: (profileData?.total_active_days || 0) + activeDaysIncrement,
             last_active_date: todayStr,
+            current_streak: newCurrentStreak,
+            max_streak: newMaxStreak,
             mode_play_counts: {
               ...currentModePlayCounts,
               [mode]: (currentModePlayCounts[mode] || 0) + 1
@@ -569,14 +588,13 @@ export const GameProvider = ({ children }) => {
       } catch (dbErr) {
         console.warn("Direct DB stats update failed:", dbErr.message);
       }
+
       if (data) {
         const { new_level, new_xp, award_xp, daily_streak } = data;
-        
         if (daily_streak !== undefined) {
           setDailyStreak(daily_streak);
           localStorage.setItem('peyvchin_daily_streak', daily_streak.toString());
         }
-        
         await syncProfile(currentUser.id); 
         refreshRank(new_xp, true);
 
@@ -590,9 +608,11 @@ export const GameProvider = ({ children }) => {
     } catch (err) { 
       console.error("Secured Sync Failed:", err.message); 
       return null; 
+    } finally {
+      isSyncingProgressionRef.current = false;
     }
     return null;
-  }, [refreshRank, syncProfile, profileData?.games_played, profileData?.games_won, profileData?.fastest_solve_ms, profileData?.fever_highscore, profileData?.flawless_wins, profileData?.last_active_date, profileData?.longest_word_length, profileData?.mode_play_counts, profileData?.pvp_wins, profileData?.total_active_days, profileData?.total_words_found]);
+  }, [refreshRank, syncProfile, profileData?.games_played, profileData?.games_won, profileData?.fastest_solve_ms, profileData?.fever_highscore, profileData?.flawless_wins, profileData?.last_active_date, profileData?.longest_word_length, profileData?.mode_play_counts, profileData?.pvp_wins, profileData?.total_active_days, profileData?.total_words_found, profileData?.current_streak, profileData?.max_streak]);
 
   const addXP = useCallback((amount) => { if (amount) setCurrentXP(prev => prev + amount); }, []);
 
@@ -714,7 +734,7 @@ export const GameProvider = ({ children }) => {
       if (currentUser?.id) {
         try {
           // If category is "All" (ھەموو), use the balanced randomization RPC
-          const isAll = !category || category === 'ھەموو';
+          const isAll = !category || category === 'ھەموو' || category === 'generalWordPool';
           const rpcName = isAll ? 'get_balanced_random_word' : 'get_random_fresh_word';
           
           const rpcParams = {

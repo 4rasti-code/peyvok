@@ -2,7 +2,7 @@ export const verbsWords = [
   {
     "word": "خوارن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -13,7 +13,7 @@ export const verbsWords = [
   {
     "word": "کوشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -24,7 +24,7 @@ export const verbsWords = [
   {
     "word": "ڤەخوارن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -33,7 +33,7 @@ export const verbsWords = [
   {
     "word": "چوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -42,7 +42,7 @@ export const verbsWords = [
   {
     "word": "ھاتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -51,7 +51,7 @@ export const verbsWords = [
   {
     "word": "دیتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -60,7 +60,7 @@ export const verbsWords = [
   {
     "word": "گۆتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -69,7 +69,7 @@ export const verbsWords = [
   {
     "word": "کرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -78,7 +78,7 @@ export const verbsWords = [
   {
     "word": "بوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -87,7 +87,7 @@ export const verbsWords = [
   {
     "word": "زانین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -98,7 +98,7 @@ export const verbsWords = [
   {
     "word": "خواندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -107,7 +107,7 @@ export const verbsWords = [
   {
     "word": "نڤیسین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -116,7 +116,7 @@ export const verbsWords = [
   {
     "word": "کڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -125,7 +125,7 @@ export const verbsWords = [
   {
     "word": "فرۆتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -136,7 +136,7 @@ export const verbsWords = [
   {
     "word": "گرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -145,7 +145,7 @@ export const verbsWords = [
   {
     "word": "برن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -154,7 +154,7 @@ export const verbsWords = [
   {
     "word": "ئینان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -165,7 +165,7 @@ export const verbsWords = [
   {
     "word": "مرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -174,7 +174,7 @@ export const verbsWords = [
   {
     "word": "ژیان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -183,7 +183,7 @@ export const verbsWords = [
   {
     "word": "مان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -192,7 +192,7 @@ export const verbsWords = [
   {
     "word": "دان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -201,7 +201,7 @@ export const verbsWords = [
   {
     "word": "کەفتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -212,7 +212,7 @@ export const verbsWords = [
   {
     "word": "ڕابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -221,7 +221,7 @@ export const verbsWords = [
   {
     "word": "دابەزین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -230,7 +230,7 @@ export const verbsWords = [
   {
     "word": "نڤستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -241,7 +241,7 @@ export const verbsWords = [
   {
     "word": "گریان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -252,7 +252,7 @@ export const verbsWords = [
   {
     "word": "کەنین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -263,7 +263,7 @@ export const verbsWords = [
   {
     "word": "ترساندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -272,7 +272,7 @@ export const verbsWords = [
   {
     "word": "بازدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -281,7 +281,7 @@ export const verbsWords = [
   {
     "word": "ڕەڤین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -292,7 +292,7 @@ export const verbsWords = [
   {
     "word": "گەڕیان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -301,7 +301,7 @@ export const verbsWords = [
   {
     "word": "پرسیارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -310,7 +310,7 @@ export const verbsWords = [
   {
     "word": "گۆھداریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -319,7 +319,7 @@ export const verbsWords = [
   {
     "word": "سەحکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -328,7 +328,7 @@ export const verbsWords = [
   {
     "word": "دەرکەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -337,7 +337,7 @@ export const verbsWords = [
   {
     "word": "گەھشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -346,7 +346,7 @@ export const verbsWords = [
   {
     "word": "ھزرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -355,7 +355,7 @@ export const verbsWords = [
   {
     "word": "کارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -364,7 +364,7 @@ export const verbsWords = [
   {
     "word": "چێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -375,7 +375,7 @@ export const verbsWords = [
   {
     "word": "تێکدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -384,7 +384,7 @@ export const verbsWords = [
   {
     "word": "دروستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -393,7 +393,7 @@ export const verbsWords = [
   {
     "word": "ئێخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -402,7 +402,7 @@ export const verbsWords = [
   {
     "word": "ھاڤێتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -411,7 +411,7 @@ export const verbsWords = [
   {
     "word": "شویشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -420,7 +420,7 @@ export const verbsWords = [
   {
     "word": "تاڕاشین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -429,7 +429,7 @@ export const verbsWords = [
   {
     "word": "سۆتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -438,7 +438,7 @@ export const verbsWords = [
   {
     "word": "کوژاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -447,7 +447,7 @@ export const verbsWords = [
   {
     "word": "ھەلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -456,7 +456,7 @@ export const verbsWords = [
   {
     "word": "ڤەمراندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -465,7 +465,7 @@ export const verbsWords = [
   {
     "word": "بەستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -476,7 +476,7 @@ export const verbsWords = [
   {
     "word": "گرێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -485,7 +485,7 @@ export const verbsWords = [
   {
     "word": "ڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -496,7 +496,7 @@ export const verbsWords = [
   {
     "word": "یاریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -505,7 +505,7 @@ export const verbsWords = [
   {
     "word": "باوەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -514,7 +514,7 @@ export const verbsWords = [
   {
     "word": "قەبوولکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -523,7 +523,7 @@ export const verbsWords = [
   {
     "word": "پەژراندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -532,7 +532,7 @@ export const verbsWords = [
   {
     "word": "ڕەتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -541,7 +541,7 @@ export const verbsWords = [
   {
     "word": "ھاریکاریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -550,7 +550,7 @@ export const verbsWords = [
   {
     "word": "پشکداریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -559,7 +559,7 @@ export const verbsWords = [
   {
     "word": "بەشداریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -568,7 +568,7 @@ export const verbsWords = [
   {
     "word": "چاڤەڕێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -577,7 +577,7 @@ export const verbsWords = [
   {
     "word": "چاڤەڕێبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -586,7 +586,7 @@ export const verbsWords = [
   {
     "word": "پشتڕاستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -595,7 +595,7 @@ export const verbsWords = [
   {
     "word": "تاقیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -604,7 +604,7 @@ export const verbsWords = [
   {
     "word": "دیارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -613,7 +613,7 @@ export const verbsWords = [
   {
     "word": "ڤەشارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -622,7 +622,7 @@ export const verbsWords = [
   {
     "word": "ئاشکراکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -631,7 +631,7 @@ export const verbsWords = [
   {
     "word": "مەزنکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -640,7 +640,7 @@ export const verbsWords = [
   {
     "word": "بچووککرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -649,7 +649,7 @@ export const verbsWords = [
   {
     "word": "زێدەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -658,7 +658,7 @@ export const verbsWords = [
   {
     "word": "کێمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -667,7 +667,7 @@ export const verbsWords = [
   {
     "word": "درێژکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -676,7 +676,7 @@ export const verbsWords = [
   {
     "word": "کورتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -685,7 +685,7 @@ export const verbsWords = [
   {
     "word": "تەندروستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -694,7 +694,7 @@ export const verbsWords = [
   {
     "word": "چاڤدێریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -703,7 +703,7 @@ export const verbsWords = [
   {
     "word": "بڕیاردان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -712,7 +712,7 @@ export const verbsWords = [
   {
     "word": "پەسەندکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -721,7 +721,7 @@ export const verbsWords = [
   {
     "word": "ڤەگوھاستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -730,7 +730,7 @@ export const verbsWords = [
   {
     "word": "گھۆڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -739,7 +739,7 @@ export const verbsWords = [
   {
     "word": "ئامادەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -748,7 +748,7 @@ export const verbsWords = [
   {
     "word": "بەرھەڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -757,7 +757,7 @@ export const verbsWords = [
   {
     "word": "پشتبەستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -766,7 +766,7 @@ export const verbsWords = [
   {
     "word": "باوەرپێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -775,7 +775,7 @@ export const verbsWords = [
   {
     "word": "بکارهینان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -784,7 +784,7 @@ export const verbsWords = [
   {
     "word": "دروستبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -793,7 +793,7 @@ export const verbsWords = [
   {
     "word": "ژێبرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -804,7 +804,7 @@ export const verbsWords = [
   {
     "word": "پاککرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -813,7 +813,7 @@ export const verbsWords = [
   {
     "word": "پیسکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -822,7 +822,7 @@ export const verbsWords = [
   {
     "word": "ڕێکخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -831,7 +831,7 @@ export const verbsWords = [
   {
     "word": "ھەلگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -840,7 +840,7 @@ export const verbsWords = [
   {
     "word": "دانان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -851,7 +851,7 @@ export const verbsWords = [
   {
     "word": "ڕاوەستان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -860,7 +860,7 @@ export const verbsWords = [
   {
     "word": "دانیشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -869,7 +869,7 @@ export const verbsWords = [
   {
     "word": "ڕینشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -878,7 +878,7 @@ export const verbsWords = [
   {
     "word": "پێکئینان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -887,7 +887,7 @@ export const verbsWords = [
   {
     "word": "تێگەھشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -896,7 +896,7 @@ export const verbsWords = [
   {
     "word": "سەلماندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -905,7 +905,7 @@ export const verbsWords = [
   {
     "word": "پاراستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -914,7 +914,7 @@ export const verbsWords = [
   {
     "word": "ژبیرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -923,7 +923,7 @@ export const verbsWords = [
   {
     "word": "بیرئینان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -932,7 +932,7 @@ export const verbsWords = [
   {
     "word": "ئاگەھدارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -941,7 +941,7 @@ export const verbsWords = [
   {
     "word": "گەشەپێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -950,7 +950,7 @@ export const verbsWords = [
   {
     "word": "پێشخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -959,7 +959,7 @@ export const verbsWords = [
   {
     "word": "پاشخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -968,7 +968,7 @@ export const verbsWords = [
   {
     "word": "بەلاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -977,7 +977,7 @@ export const verbsWords = [
   {
     "word": "لێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -988,7 +988,7 @@ export const verbsWords = [
   {
     "word": "قەپاتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -997,7 +997,7 @@ export const verbsWords = [
   {
     "word": "ئالاستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1006,7 +1006,7 @@ export const verbsWords = [
   {
     "word": "مێژتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -1017,7 +1017,7 @@ export const verbsWords = [
   {
     "word": "چاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -1028,7 +1028,7 @@ export const verbsWords = [
   {
     "word": "دروین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -1039,7 +1039,7 @@ export const verbsWords = [
   {
     "word": "ڕنین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -1048,7 +1048,7 @@ export const verbsWords = [
   {
     "word": "شکاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1057,7 +1057,7 @@ export const verbsWords = [
   {
     "word": "بڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -1066,7 +1066,7 @@ export const verbsWords = [
   {
     "word": "قەلاشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1075,7 +1075,7 @@ export const verbsWords = [
   {
     "word": "دڕاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1084,7 +1084,7 @@ export const verbsWords = [
   {
     "word": "چنین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -1093,7 +1093,7 @@ export const verbsWords = [
   {
     "word": "ڕێستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -1104,7 +1104,7 @@ export const verbsWords = [
   {
     "word": "کێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -1115,7 +1115,7 @@ export const verbsWords = [
   {
     "word": "پاڵدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1124,7 +1124,7 @@ export const verbsWords = [
   {
     "word": "ڕاکێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1133,7 +1133,7 @@ export const verbsWords = [
   {
     "word": "ئاڤدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1142,7 +1142,7 @@ export const verbsWords = [
   {
     "word": "ھەژاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1151,7 +1151,7 @@ export const verbsWords = [
   {
     "word": "قەلاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1160,7 +1160,7 @@ export const verbsWords = [
   {
     "word": "کەلاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1169,7 +1169,7 @@ export const verbsWords = [
   {
     "word": "سۆرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1178,7 +1178,7 @@ export const verbsWords = [
   {
     "word": "براژتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1187,7 +1187,7 @@ export const verbsWords = [
   {
     "word": "ڤەحەویان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1196,7 +1196,7 @@ export const verbsWords = [
   {
     "word": "ڕێڤەچوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1205,7 +1205,7 @@ export const verbsWords = [
   {
     "word": "زڤڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -1216,7 +1216,7 @@ export const verbsWords = [
   {
     "word": "لێزڤڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1225,7 +1225,7 @@ export const verbsWords = [
   {
     "word": "گەڤزین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1234,7 +1234,7 @@ export const verbsWords = [
   {
     "word": "حلسین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -1245,7 +1245,7 @@ export const verbsWords = [
   {
     "word": "پەقین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -1256,7 +1256,7 @@ export const verbsWords = [
   {
     "word": "پەقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1265,7 +1265,7 @@ export const verbsWords = [
   {
     "word": "فڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -1274,7 +1274,7 @@ export const verbsWords = [
   {
     "word": "فڕاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1283,7 +1283,7 @@ export const verbsWords = [
   {
     "word": "ھەمبێزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1292,7 +1292,7 @@ export const verbsWords = [
   {
     "word": "ماچکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1301,7 +1301,7 @@ export const verbsWords = [
   {
     "word": "حەزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1310,7 +1310,7 @@ export const verbsWords = [
   {
     "word": "ڤیان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -1319,7 +1319,7 @@ export const verbsWords = [
   {
     "word": "نەڤیان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1328,7 +1328,7 @@ export const verbsWords = [
   {
     "word": "کینگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1337,7 +1337,7 @@ export const verbsWords = [
   {
     "word": "زیزبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1346,7 +1346,7 @@ export const verbsWords = [
   {
     "word": "تۆڕەبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1355,7 +1355,7 @@ export const verbsWords = [
   {
     "word": "ئاشتبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1364,7 +1364,7 @@ export const verbsWords = [
   {
     "word": "سزادان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1373,7 +1373,7 @@ export const verbsWords = [
   {
     "word": "خەلاتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1382,7 +1382,7 @@ export const verbsWords = [
   {
     "word": "ھاندان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1391,7 +1391,7 @@ export const verbsWords = [
   {
     "word": "پشتەڤانیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1400,7 +1400,7 @@ export const verbsWords = [
   {
     "word": "ئاریشەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1409,7 +1409,7 @@ export const verbsWords = [
   {
     "word": "شەڕکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1418,7 +1418,7 @@ export const verbsWords = [
   {
     "word": "جودابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1427,7 +1427,7 @@ export const verbsWords = [
   {
     "word": "ژێکڤەبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1436,7 +1436,7 @@ export const verbsWords = [
   {
     "word": "ھلنگڤین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1445,7 +1445,7 @@ export const verbsWords = [
   {
     "word": "قەرسین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1454,7 +1454,7 @@ export const verbsWords = [
   {
     "word": "تەزیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1463,7 +1463,7 @@ export const verbsWords = [
   {
     "word": "تەزاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1472,7 +1472,7 @@ export const verbsWords = [
   {
     "word": "تەزیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1481,7 +1481,7 @@ export const verbsWords = [
   {
     "word": "گەرمبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1490,7 +1490,7 @@ export const verbsWords = [
   {
     "word": "ساربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1499,7 +1499,7 @@ export const verbsWords = [
   {
     "word": "پیسبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1508,7 +1508,7 @@ export const verbsWords = [
   {
     "word": "پاقژبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1517,7 +1517,7 @@ export const verbsWords = [
   {
     "word": "شکەستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1526,7 +1526,7 @@ export const verbsWords = [
   {
     "word": "کەلشین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1535,7 +1535,7 @@ export const verbsWords = [
   {
     "word": "درین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -1544,7 +1544,7 @@ export const verbsWords = [
   {
     "word": "ھەڕفین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1553,7 +1553,7 @@ export const verbsWords = [
   {
     "word": "ئاڤابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1562,7 +1562,7 @@ export const verbsWords = [
   {
     "word": "وێرانبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1571,7 +1571,7 @@ export const verbsWords = [
   {
     "word": "تێکچوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1580,7 +1580,7 @@ export const verbsWords = [
   {
     "word": "ساخبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1589,7 +1589,7 @@ export const verbsWords = [
   {
     "word": "نەخۆشکەفتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1598,7 +1598,7 @@ export const verbsWords = [
   {
     "word": "باشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1607,7 +1607,7 @@ export const verbsWords = [
   {
     "word": "بلندبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1616,7 +1616,7 @@ export const verbsWords = [
   {
     "word": "نزمبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1625,7 +1625,7 @@ export const verbsWords = [
   {
     "word": "قەلەوبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1634,7 +1634,7 @@ export const verbsWords = [
   {
     "word": "زراڤبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1643,7 +1643,7 @@ export const verbsWords = [
   {
     "word": "پیربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1652,7 +1652,7 @@ export const verbsWords = [
   {
     "word": "گەنجبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1661,7 +1661,7 @@ export const verbsWords = [
   {
     "word": "ڕەقبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1670,7 +1670,7 @@ export const verbsWords = [
   {
     "word": "ڕەقکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1679,7 +1679,7 @@ export const verbsWords = [
   {
     "word": "نەرمبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1688,7 +1688,7 @@ export const verbsWords = [
   {
     "word": "شلبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1697,7 +1697,7 @@ export const verbsWords = [
   {
     "word": "کۆرەبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1706,7 +1706,7 @@ export const verbsWords = [
   {
     "word": "کەڕبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1715,7 +1715,7 @@ export const verbsWords = [
   {
     "word": "لالبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1724,7 +1724,7 @@ export const verbsWords = [
   {
     "word": "بێدەنگبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1733,7 +1733,7 @@ export const verbsWords = [
   {
     "word": "ھەوارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1742,7 +1742,7 @@ export const verbsWords = [
   {
     "word": "قێژین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -1753,7 +1753,7 @@ export const verbsWords = [
   {
     "word": "قیژاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1762,7 +1762,7 @@ export const verbsWords = [
   {
     "word": "قێڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -1773,7 +1773,7 @@ export const verbsWords = [
   {
     "word": "گازیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1782,7 +1782,7 @@ export const verbsWords = [
   {
     "word": "بناڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1791,7 +1791,7 @@ export const verbsWords = [
   {
     "word": "دەستنیشانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1800,7 +1800,7 @@ export const verbsWords = [
   {
     "word": "ڕاگەھاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1809,7 +1809,7 @@ export const verbsWords = [
   {
     "word": "نیقاشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1818,7 +1818,7 @@ export const verbsWords = [
   {
     "word": "دانوستاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1827,7 +1827,7 @@ export const verbsWords = [
   {
     "word": "گفتوگۆکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1836,7 +1836,7 @@ export const verbsWords = [
   {
     "word": "ڕاوێژکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1845,7 +1845,7 @@ export const verbsWords = [
   {
     "word": "پشکنین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1854,7 +1854,7 @@ export const verbsWords = [
   {
     "word": "چارەسەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1863,7 +1863,7 @@ export const verbsWords = [
   {
     "word": "چەماندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1872,7 +1872,7 @@ export const verbsWords = [
   {
     "word": "خوارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1881,7 +1881,7 @@ export const verbsWords = [
   {
     "word": "ڕاستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1890,7 +1890,7 @@ export const verbsWords = [
   {
     "word": "شاشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1899,7 +1899,7 @@ export const verbsWords = [
   {
     "word": "ھنداکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1908,7 +1908,7 @@ export const verbsWords = [
   {
     "word": "ڤەگەڕاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1917,7 +1917,7 @@ export const verbsWords = [
   {
     "word": "ئازران",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1926,7 +1926,7 @@ export const verbsWords = [
   {
     "word": "ئازراندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1935,7 +1935,7 @@ export const verbsWords = [
   {
     "word": "ئاسێبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1944,7 +1944,7 @@ export const verbsWords = [
   {
     "word": "بۆشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1953,7 +1953,7 @@ export const verbsWords = [
   {
     "word": "تەڕبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1962,7 +1962,7 @@ export const verbsWords = [
   {
     "word": "ھشکبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1971,7 +1971,7 @@ export const verbsWords = [
   {
     "word": "زوهابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1980,7 +1980,7 @@ export const verbsWords = [
   {
     "word": "ئالۆزبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1989,7 +1989,7 @@ export const verbsWords = [
   {
     "word": "سادەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -1998,7 +1998,7 @@ export const verbsWords = [
   {
     "word": "ڕوونکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2007,7 +2007,7 @@ export const verbsWords = [
   {
     "word": "تاریبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2016,7 +2016,7 @@ export const verbsWords = [
   {
     "word": "ڕۆهنبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2025,7 +2025,7 @@ export const verbsWords = [
   {
     "word": "برسقین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2034,7 +2034,7 @@ export const verbsWords = [
   {
     "word": "بریسقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2043,7 +2043,7 @@ export const verbsWords = [
   {
     "word": "چرویسین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2052,7 +2052,7 @@ export const verbsWords = [
   {
     "word": "شەوقدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2061,7 +2061,7 @@ export const verbsWords = [
   {
     "word": "ڕۆژئاڤابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2070,7 +2070,7 @@ export const verbsWords = [
   {
     "word": "ڕۆژھەلاتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2079,7 +2079,7 @@ export const verbsWords = [
   {
     "word": "بارین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -2090,7 +2090,7 @@ export const verbsWords = [
   {
     "word": "قەرساندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2099,7 +2099,7 @@ export const verbsWords = [
   {
     "word": "ھەلاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2108,7 +2108,7 @@ export const verbsWords = [
   {
     "word": "گەلەکبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2117,7 +2117,7 @@ export const verbsWords = [
   {
     "word": "کێمبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2126,7 +2126,7 @@ export const verbsWords = [
   {
     "word": "تێرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2135,7 +2135,7 @@ export const verbsWords = [
   {
     "word": "برسیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2144,7 +2144,7 @@ export const verbsWords = [
   {
     "word": "تێھنیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2153,7 +2153,7 @@ export const verbsWords = [
   {
     "word": "خەندقین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2162,7 +2162,7 @@ export const verbsWords = [
   {
     "word": "نقوومبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2171,7 +2171,7 @@ export const verbsWords = [
   {
     "word": "سەرکەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2180,7 +2180,7 @@ export const verbsWords = [
   {
     "word": "بنکەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2189,7 +2189,7 @@ export const verbsWords = [
   {
     "word": "پێشبڕکێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2198,7 +2198,7 @@ export const verbsWords = [
   {
     "word": "بزاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2207,7 +2207,7 @@ export const verbsWords = [
   {
     "word": "پێکۆڵکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2216,7 +2216,7 @@ export const verbsWords = [
   {
     "word": "سەرەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2225,7 +2225,7 @@ export const verbsWords = [
   {
     "word": "مێڤانداریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2234,7 +2234,7 @@ export const verbsWords = [
   {
     "word": "پێشوازیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2243,7 +2243,7 @@ export const verbsWords = [
   {
     "word": "بڕێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2252,7 +2252,7 @@ export const verbsWords = [
   {
     "word": "ماڵئاڤاھیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2261,7 +2261,7 @@ export const verbsWords = [
   {
     "word": "سلاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2270,7 +2270,7 @@ export const verbsWords = [
   {
     "word": "ڕێزگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2279,7 +2279,7 @@ export const verbsWords = [
   {
     "word": "سووکایەتیپێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2288,7 +2288,7 @@ export const verbsWords = [
   {
     "word": "مەردایەتیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2297,7 +2297,7 @@ export const verbsWords = [
   {
     "word": "چەپەڵیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2306,7 +2306,7 @@ export const verbsWords = [
   {
     "word": "دزیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2315,7 +2315,7 @@ export const verbsWords = [
   {
     "word": "خاپاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2324,7 +2324,7 @@ export const verbsWords = [
   {
     "word": "ڕاستگۆیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2333,7 +2333,7 @@ export const verbsWords = [
   {
     "word": "فێلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2342,7 +2342,7 @@ export const verbsWords = [
   {
     "word": "درەوکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2351,7 +2351,7 @@ export const verbsWords = [
   {
     "word": "تاوانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2360,7 +2360,7 @@ export const verbsWords = [
   {
     "word": "گونەھکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2369,7 +2369,7 @@ export const verbsWords = [
   {
     "word": "پەشێمانبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2378,7 +2378,7 @@ export const verbsWords = [
   {
     "word": "لێبۆڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2387,7 +2387,7 @@ export const verbsWords = [
   {
     "word": "داخوازکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2396,7 +2396,7 @@ export const verbsWords = [
   {
     "word": "فەرمانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2405,7 +2405,7 @@ export const verbsWords = [
   {
     "word": "ڕێگریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2414,7 +2414,7 @@ export const verbsWords = [
   {
     "word": "قەدەغەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2423,7 +2423,7 @@ export const verbsWords = [
   {
     "word": "ڕێپێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2432,7 +2432,7 @@ export const verbsWords = [
   {
     "word": "ڕێککەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2441,7 +2441,7 @@ export const verbsWords = [
   {
     "word": "پەیماندان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2450,7 +2450,7 @@ export const verbsWords = [
   {
     "word": "سۆزدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2459,7 +2459,7 @@ export const verbsWords = [
   {
     "word": "گرێبەستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2468,7 +2468,7 @@ export const verbsWords = [
   {
     "word": "ھەلوەشاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2477,7 +2477,7 @@ export const verbsWords = [
   {
     "word": "دامەزراندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2486,7 +2486,7 @@ export const verbsWords = [
   {
     "word": "لادان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -2497,7 +2497,7 @@ export const verbsWords = [
   {
     "word": "ھەلبژارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2506,7 +2506,7 @@ export const verbsWords = [
   {
     "word": "دەنگدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2515,7 +2515,7 @@ export const verbsWords = [
   {
     "word": "بەربژێرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2524,7 +2524,7 @@ export const verbsWords = [
   {
     "word": "کاندیدکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2533,7 +2533,7 @@ export const verbsWords = [
   {
     "word": "سەرژمێریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2542,7 +2542,7 @@ export const verbsWords = [
   {
     "word": "تێکەلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2551,7 +2551,7 @@ export const verbsWords = [
   {
     "word": "جوداکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2560,7 +2560,7 @@ export const verbsWords = [
   {
     "word": "پارچەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2569,7 +2569,7 @@ export const verbsWords = [
   {
     "word": "کوتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2578,7 +2578,7 @@ export const verbsWords = [
   {
     "word": "دابەشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2587,7 +2587,7 @@ export const verbsWords = [
   {
     "word": "ژێدەرخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2596,7 +2596,7 @@ export const verbsWords = [
   {
     "word": "چارگۆشەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2605,7 +2605,7 @@ export const verbsWords = [
   {
     "word": "بازنەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2614,7 +2614,7 @@ export const verbsWords = [
   {
     "word": "نێزیکبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2623,7 +2623,7 @@ export const verbsWords = [
   {
     "word": "دوورکەفتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2632,7 +2632,7 @@ export const verbsWords = [
   {
     "word": "لێگەڕیان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2641,7 +2641,7 @@ export const verbsWords = [
   {
     "word": "خەمخوارن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2650,7 +2650,7 @@ export const verbsWords = [
   {
     "word": "دلگرانبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2659,7 +2659,7 @@ export const verbsWords = [
   {
     "word": "دلخۆشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2668,7 +2668,7 @@ export const verbsWords = [
   {
     "word": "سەرسامبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2677,7 +2677,7 @@ export const verbsWords = [
   {
     "word": "ئارەزووکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2686,7 +2686,7 @@ export const verbsWords = [
   {
     "word": "تەمەناکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2695,7 +2695,7 @@ export const verbsWords = [
   {
     "word": "شکبرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -2706,7 +2706,7 @@ export const verbsWords = [
   {
     "word": "گومانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2715,7 +2715,7 @@ export const verbsWords = [
   {
     "word": "دوودلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2724,7 +2724,7 @@ export const verbsWords = [
   {
     "word": "مسۆگەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2733,7 +2733,7 @@ export const verbsWords = [
   {
     "word": "ئامۆژگاریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2742,7 +2742,7 @@ export const verbsWords = [
   {
     "word": "ڕێنمایکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2751,7 +2751,7 @@ export const verbsWords = [
   {
     "word": "شرۆڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2760,7 +2760,7 @@ export const verbsWords = [
   {
     "word": "شیتەلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2769,7 +2769,7 @@ export const verbsWords = [
   {
     "word": "پۆلێنکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2778,7 +2778,7 @@ export const verbsWords = [
   {
     "word": "ھەلسەنگاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2787,7 +2787,7 @@ export const verbsWords = [
   {
     "word": "ڤەکۆلینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2796,7 +2796,7 @@ export const verbsWords = [
   {
     "word": "پشکنینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2805,7 +2805,7 @@ export const verbsWords = [
   {
     "word": "ڤەکۆلین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2814,7 +2814,7 @@ export const verbsWords = [
   {
     "word": "سەرپەرشتیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2823,7 +2823,7 @@ export const verbsWords = [
   {
     "word": "بڕێڤەبرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2832,7 +2832,7 @@ export const verbsWords = [
   {
     "word": "کۆنترۆلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2841,7 +2841,7 @@ export const verbsWords = [
   {
     "word": "ئازادبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2850,7 +2850,7 @@ export const verbsWords = [
   {
     "word": "زیندانیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2859,7 +2859,7 @@ export const verbsWords = [
   {
     "word": "ئەشکەنجەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2868,7 +2868,7 @@ export const verbsWords = [
   {
     "word": "ڕزگاربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2877,7 +2877,7 @@ export const verbsWords = [
   {
     "word": "فیدابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2886,7 +2886,7 @@ export const verbsWords = [
   {
     "word": "قوربانیدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2895,7 +2895,7 @@ export const verbsWords = [
   {
     "word": "بەرگریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2904,7 +2904,7 @@ export const verbsWords = [
   {
     "word": "ھێرشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2913,7 +2913,7 @@ export const verbsWords = [
   {
     "word": "داگیرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2922,7 +2922,7 @@ export const verbsWords = [
   {
     "word": "پاشڤەکێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2931,7 +2931,7 @@ export const verbsWords = [
   {
     "word": "پێشڕەویکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2940,7 +2940,7 @@ export const verbsWords = [
   {
     "word": "ئاڤەدانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2949,7 +2949,7 @@ export const verbsWords = [
   {
     "word": "کۆچکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2958,7 +2958,7 @@ export const verbsWords = [
   {
     "word": "ئاوارەبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2967,7 +2967,7 @@ export const verbsWords = [
   {
     "word": "دەربەدەربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2976,7 +2976,7 @@ export const verbsWords = [
   {
     "word": "کفنکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2985,7 +2985,7 @@ export const verbsWords = [
   {
     "word": "تازیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -2994,7 +2994,7 @@ export const verbsWords = [
   {
     "word": "شینیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3003,7 +3003,7 @@ export const verbsWords = [
   {
     "word": "داوەتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3012,7 +3012,7 @@ export const verbsWords = [
   {
     "word": "شاھیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3021,7 +3021,7 @@ export const verbsWords = [
   {
     "word": "سترانگۆتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3030,7 +3030,7 @@ export const verbsWords = [
   {
     "word": "دەفژەنین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3039,7 +3039,7 @@ export const verbsWords = [
   {
     "word": "زوڕناژەنین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3048,7 +3048,7 @@ export const verbsWords = [
   {
     "word": "سەماکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3057,7 +3057,7 @@ export const verbsWords = [
   {
     "word": "پێشاندان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3066,7 +3066,7 @@ export const verbsWords = [
   {
     "word": "نواندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3075,7 +3075,7 @@ export const verbsWords = [
   {
     "word": "فلمدروستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3084,7 +3084,7 @@ export const verbsWords = [
   {
     "word": "وێنەگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3093,7 +3093,7 @@ export const verbsWords = [
   {
     "word": "تۆمارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3102,7 +3102,7 @@ export const verbsWords = [
   {
     "word": "دەنگگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3111,7 +3111,7 @@ export const verbsWords = [
   {
     "word": "بەلگەنامەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3120,7 +3120,7 @@ export const verbsWords = [
   {
     "word": "ئەرشیفکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3129,7 +3129,7 @@ export const verbsWords = [
   {
     "word": "ژێدەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3138,7 +3138,7 @@ export const verbsWords = [
   {
     "word": "کلیلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3147,7 +3147,7 @@ export const verbsWords = [
   {
     "word": "قوفلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3156,7 +3156,7 @@ export const verbsWords = [
   {
     "word": "تێوەردان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3165,7 +3165,7 @@ export const verbsWords = [
   {
     "word": "تێکۆشان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3174,7 +3174,7 @@ export const verbsWords = [
   {
     "word": "ھەڤڕکیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3183,7 +3183,7 @@ export const verbsWords = [
   {
     "word": "ململانێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3192,7 +3192,7 @@ export const verbsWords = [
   {
     "word": "ئێکگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3201,7 +3201,7 @@ export const verbsWords = [
   {
     "word": "قەلشین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3210,7 +3210,7 @@ export const verbsWords = [
   {
     "word": "کونکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3219,7 +3219,7 @@ export const verbsWords = [
   {
     "word": "خندقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3228,7 +3228,7 @@ export const verbsWords = [
   {
     "word": "پەنجەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3237,7 +3237,7 @@ export const verbsWords = [
   {
     "word": "گازندەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3246,7 +3246,7 @@ export const verbsWords = [
   {
     "word": "گلەیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3255,7 +3255,7 @@ export const verbsWords = [
   {
     "word": "دادگەھیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3264,7 +3264,7 @@ export const verbsWords = [
   {
     "word": "تاوانبارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3273,7 +3273,7 @@ export const verbsWords = [
   {
     "word": "بێگونەھکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3282,7 +3282,7 @@ export const verbsWords = [
   {
     "word": "ڕەخنەگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3291,7 +3291,7 @@ export const verbsWords = [
   {
     "word": "پێشنیازکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3300,7 +3300,7 @@ export const verbsWords = [
   {
     "word": "شیرەتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3309,7 +3309,7 @@ export const verbsWords = [
   {
     "word": "پەیامدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3318,7 +3318,7 @@ export const verbsWords = [
   {
     "word": "نامەهنارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3327,7 +3327,7 @@ export const verbsWords = [
   {
     "word": "پەیوەندیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3336,7 +3336,7 @@ export const verbsWords = [
   {
     "word": "ھەڤدیتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3345,7 +3345,7 @@ export const verbsWords = [
   {
     "word": "چاڤپێکەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3354,7 +3354,7 @@ export const verbsWords = [
   {
     "word": "ھەماھەنگیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3363,7 +3363,7 @@ export const verbsWords = [
   {
     "word": "خوەگونجاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3372,7 +3372,7 @@ export const verbsWords = [
   {
     "word": "بەرھەمئینان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3381,7 +3381,7 @@ export const verbsWords = [
   {
     "word": "ھاوردەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3390,7 +3390,7 @@ export const verbsWords = [
   {
     "word": "ھەناردەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3399,7 +3399,7 @@ export const verbsWords = [
   {
     "word": "هنارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3408,7 +3408,7 @@ export const verbsWords = [
   {
     "word": "باجوەرگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3417,7 +3417,7 @@ export const verbsWords = [
   {
     "word": "قازانجکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3426,7 +3426,7 @@ export const verbsWords = [
   {
     "word": "زیانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3435,7 +3435,7 @@ export const verbsWords = [
   {
     "word": "دەولەمەندبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3444,7 +3444,7 @@ export const verbsWords = [
   {
     "word": "ھەژاربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3453,7 +3453,7 @@ export const verbsWords = [
   {
     "word": "بێکەسبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3462,7 +3462,7 @@ export const verbsWords = [
   {
     "word": "پشتڕاستبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3471,7 +3471,7 @@ export const verbsWords = [
   {
     "word": "بێھیڤیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3480,7 +3480,7 @@ export const verbsWords = [
   {
     "word": "گەشبینبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3489,7 +3489,7 @@ export const verbsWords = [
   {
     "word": "ڕەشبینبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3498,7 +3498,7 @@ export const verbsWords = [
   {
     "word": "باوەڕئێنان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3507,7 +3507,7 @@ export const verbsWords = [
   {
     "word": "ئاخینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3516,7 +3516,7 @@ export const verbsWords = [
   {
     "word": "دزین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -3525,7 +3525,7 @@ export const verbsWords = [
   {
     "word": "زڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -3534,7 +3534,7 @@ export const verbsWords = [
   {
     "word": "نەڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -3545,7 +3545,7 @@ export const verbsWords = [
   {
     "word": "قەپین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -3556,7 +3556,7 @@ export const verbsWords = [
   {
     "word": "حەپین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -3567,7 +3567,7 @@ export const verbsWords = [
   {
     "word": "لورین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -3578,7 +3578,7 @@ export const verbsWords = [
   {
     "word": "مڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -3587,7 +3587,7 @@ export const verbsWords = [
   {
     "word": "تەقین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -3598,7 +3598,7 @@ export const verbsWords = [
   {
     "word": "تەقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3607,7 +3607,7 @@ export const verbsWords = [
   {
     "word": "بێهنژین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3616,7 +3616,7 @@ export const verbsWords = [
   {
     "word": "کۆخین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -3627,7 +3627,7 @@ export const verbsWords = [
   {
     "word": "ئاڤێتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3636,7 +3636,7 @@ export const verbsWords = [
   {
     "word": "وەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3645,7 +3645,7 @@ export const verbsWords = [
   {
     "word": "داخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3654,7 +3654,7 @@ export const verbsWords = [
   {
     "word": "ھەلکێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3663,7 +3663,7 @@ export const verbsWords = [
   {
     "word": "داکێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3672,7 +3672,7 @@ export const verbsWords = [
   {
     "word": "ڤەبڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3681,7 +3681,7 @@ export const verbsWords = [
   {
     "word": "ڤەقەتیان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3690,7 +3690,7 @@ export const verbsWords = [
   {
     "word": "ڤەقەتاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3699,7 +3699,7 @@ export const verbsWords = [
   {
     "word": "پێکڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3708,7 +3708,7 @@ export const verbsWords = [
   {
     "word": "ڤاڤارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3717,7 +3717,7 @@ export const verbsWords = [
   {
     "word": "دووبارەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3726,7 +3726,7 @@ export const verbsWords = [
   {
     "word": "وەرگێڕان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3735,7 +3735,7 @@ export const verbsWords = [
   {
     "word": "پێداچوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3744,7 +3744,7 @@ export const verbsWords = [
   {
     "word": "ژمارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3753,7 +3753,7 @@ export const verbsWords = [
   {
     "word": "ھەژمارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3762,7 +3762,7 @@ export const verbsWords = [
   {
     "word": "پارڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3771,7 +3771,7 @@ export const verbsWords = [
   {
     "word": "ڤەحەواندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3780,7 +3780,7 @@ export const verbsWords = [
   {
     "word": "تەپەسەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3789,7 +3789,7 @@ export const verbsWords = [
   {
     "word": "ڕامالین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3798,7 +3798,7 @@ export const verbsWords = [
   {
     "word": "مەندەھۆشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3807,7 +3807,7 @@ export const verbsWords = [
   {
     "word": "حێبەتیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3816,7 +3816,7 @@ export const verbsWords = [
   {
     "word": "سەرسورمان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3825,7 +3825,7 @@ export const verbsWords = [
   {
     "word": "کەیفکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3834,7 +3834,7 @@ export const verbsWords = [
   {
     "word": "شادبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3843,7 +3843,7 @@ export const verbsWords = [
   {
     "word": "خەمگینبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3852,7 +3852,7 @@ export const verbsWords = [
   {
     "word": "دلتەنگبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3861,7 +3861,7 @@ export const verbsWords = [
   {
     "word": "ڕەنجدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3870,7 +3870,7 @@ export const verbsWords = [
   {
     "word": "ماندیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3879,7 +3879,7 @@ export const verbsWords = [
   {
     "word": "حەساندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3888,7 +3888,7 @@ export const verbsWords = [
   {
     "word": "وەستان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3897,7 +3897,7 @@ export const verbsWords = [
   {
     "word": "خاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3906,7 +3906,7 @@ export const verbsWords = [
   {
     "word": "گڤاشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3915,7 +3915,7 @@ export const verbsWords = [
   {
     "word": "پڕکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -3926,7 +3926,7 @@ export const verbsWords = [
   {
     "word": "ڕژاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3935,7 +3935,7 @@ export const verbsWords = [
   {
     "word": "مژتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -3944,7 +3944,7 @@ export const verbsWords = [
   {
     "word": "ھشککرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3953,7 +3953,7 @@ export const verbsWords = [
   {
     "word": "سارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3962,7 +3962,7 @@ export const verbsWords = [
   {
     "word": "گەرمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3971,7 +3971,7 @@ export const verbsWords = [
   {
     "word": "شێرینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3980,7 +3980,7 @@ export const verbsWords = [
   {
     "word": "تەحلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3989,7 +3989,7 @@ export const verbsWords = [
   {
     "word": "سویرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -3998,7 +3998,7 @@ export const verbsWords = [
   {
     "word": "ترشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4007,7 +4007,7 @@ export const verbsWords = [
   {
     "word": "تیژکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4016,7 +4016,7 @@ export const verbsWords = [
   {
     "word": "نەرمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4025,7 +4025,7 @@ export const verbsWords = [
   {
     "word": "زڤرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4034,7 +4034,7 @@ export const verbsWords = [
   {
     "word": "حلیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4043,7 +4043,7 @@ export const verbsWords = [
   {
     "word": "تێکڤەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4052,7 +4052,7 @@ export const verbsWords = [
   {
     "word": "شڵقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4061,7 +4061,7 @@ export const verbsWords = [
   {
     "word": "لەرزاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4070,7 +4070,7 @@ export const verbsWords = [
   {
     "word": "ڕاستڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4079,7 +4079,7 @@ export const verbsWords = [
   {
     "word": "وەرچەرخان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4088,7 +4088,7 @@ export const verbsWords = [
   {
     "word": "باوەشینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4097,7 +4097,7 @@ export const verbsWords = [
   {
     "word": "تیشکدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4106,7 +4106,7 @@ export const verbsWords = [
   {
     "word": "شاشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4115,7 +4115,7 @@ export const verbsWords = [
   {
     "word": "دەستقوتان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4124,7 +4124,7 @@ export const verbsWords = [
   {
     "word": "پێشئێخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4133,7 +4133,7 @@ export const verbsWords = [
   {
     "word": "دووماھیئانین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4142,7 +4142,7 @@ export const verbsWords = [
   {
     "word": "گەفکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4151,7 +4151,7 @@ export const verbsWords = [
   {
     "word": "قەنجیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4160,7 +4160,7 @@ export const verbsWords = [
   {
     "word": "خزمەتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4169,7 +4169,7 @@ export const verbsWords = [
   {
     "word": "نێچیرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4178,7 +4178,7 @@ export const verbsWords = [
   {
     "word": "ڕاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4187,7 +4187,7 @@ export const verbsWords = [
   {
     "word": "ئاڤاکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4196,7 +4196,7 @@ export const verbsWords = [
   {
     "word": "ھەڕفاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4205,7 +4205,7 @@ export const verbsWords = [
   {
     "word": "تۆلەڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4214,7 +4214,7 @@ export const verbsWords = [
   {
     "word": "سەفەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4223,7 +4223,7 @@ export const verbsWords = [
   {
     "word": "پەیڤین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4232,7 +4232,7 @@ export const verbsWords = [
   {
     "word": "ئاخڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4241,7 +4241,7 @@ export const verbsWords = [
   {
     "word": "بەرخودان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4250,7 +4250,7 @@ export const verbsWords = [
   {
     "word": "دەربازبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4259,7 +4259,7 @@ export const verbsWords = [
   {
     "word": "قورتالکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4268,7 +4268,7 @@ export const verbsWords = [
   {
     "word": "نڤێژکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4277,7 +4277,7 @@ export const verbsWords = [
   {
     "word": "ڕۆژیگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4286,7 +4286,7 @@ export const verbsWords = [
   {
     "word": "زەوجین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4295,7 +4295,7 @@ export const verbsWords = [
   {
     "word": "مەھرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4304,7 +4304,7 @@ export const verbsWords = [
   {
     "word": "بەردان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4313,7 +4313,7 @@ export const verbsWords = [
   {
     "word": "تەلاقدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4322,7 +4322,7 @@ export const verbsWords = [
   {
     "word": "سۆندخوارن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4331,7 +4331,7 @@ export const verbsWords = [
   {
     "word": "دەستپێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4340,7 +4340,7 @@ export const verbsWords = [
   {
     "word": "دوماھیپێئینان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4349,7 +4349,7 @@ export const verbsWords = [
   {
     "word": "تەسلیمبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4358,7 +4358,7 @@ export const verbsWords = [
   {
     "word": "خوەبدەستڤەبەردان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4367,7 +4367,7 @@ export const verbsWords = [
   {
     "word": "تێکۆشین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4376,7 +4376,7 @@ export const verbsWords = [
   {
     "word": "شەھیدبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4385,7 +4385,7 @@ export const verbsWords = [
   {
     "word": "برینداربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4394,7 +4394,7 @@ export const verbsWords = [
   {
     "word": "پیچکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4403,7 +4403,7 @@ export const verbsWords = [
   {
     "word": "حەلاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4412,7 +4412,7 @@ export const verbsWords = [
   {
     "word": "لێقەومین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4421,7 +4421,7 @@ export const verbsWords = [
   {
     "word": "ڤالاکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4430,7 +4430,7 @@ export const verbsWords = [
   {
     "word": "دەرئێخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4439,7 +4439,7 @@ export const verbsWords = [
   {
     "word": "ژێڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4448,7 +4448,7 @@ export const verbsWords = [
   {
     "word": "لێکدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4457,7 +4457,7 @@ export const verbsWords = [
   {
     "word": "لەزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4466,7 +4466,7 @@ export const verbsWords = [
   {
     "word": "ھێدیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4475,7 +4475,7 @@ export const verbsWords = [
   {
     "word": "قایمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4484,7 +4484,7 @@ export const verbsWords = [
   {
     "word": "سەپاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4493,7 +4493,7 @@ export const verbsWords = [
   {
     "word": "شینبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4502,7 +4502,7 @@ export const verbsWords = [
   {
     "word": "ڕووبەڕووبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4511,7 +4511,7 @@ export const verbsWords = [
   {
     "word": "تێپەڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4520,7 +4520,7 @@ export const verbsWords = [
   {
     "word": "دەربازکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4529,7 +4529,7 @@ export const verbsWords = [
   {
     "word": "پاشئێخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4538,7 +4538,7 @@ export const verbsWords = [
   {
     "word": "گیرۆکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4547,7 +4547,7 @@ export const verbsWords = [
   {
     "word": "حەلالکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4556,7 +4556,7 @@ export const verbsWords = [
   {
     "word": "حەرامکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4565,7 +4565,7 @@ export const verbsWords = [
   {
     "word": "پیرۆزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4574,7 +4574,7 @@ export const verbsWords = [
   {
     "word": "غەدرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4583,7 +4583,7 @@ export const verbsWords = [
   {
     "word": "لۆمەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4592,7 +4592,7 @@ export const verbsWords = [
   {
     "word": "سەرکۆنەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4601,7 +4601,7 @@ export const verbsWords = [
   {
     "word": "مەترسیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4610,7 +4610,7 @@ export const verbsWords = [
   {
     "word": "چاڤترساندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4619,7 +4619,7 @@ export const verbsWords = [
   {
     "word": "دلخوەشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4628,7 +4628,7 @@ export const verbsWords = [
   {
     "word": "ساخکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4637,7 +4637,7 @@ export const verbsWords = [
   {
     "word": "ڤەژاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4646,7 +4646,7 @@ export const verbsWords = [
   {
     "word": "شینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4655,7 +4655,7 @@ export const verbsWords = [
   {
     "word": "پۆشین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -4666,7 +4666,7 @@ export const verbsWords = [
   {
     "word": "داپۆشین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4675,7 +4675,7 @@ export const verbsWords = [
   {
     "word": "نخاڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4684,7 +4684,7 @@ export const verbsWords = [
   {
     "word": "رووتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4693,7 +4693,7 @@ export const verbsWords = [
   {
     "word": "گرنژین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4702,7 +4702,7 @@ export const verbsWords = [
   {
     "word": "خەمڕەڤاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4711,7 +4711,7 @@ export const verbsWords = [
   {
     "word": "ئارامبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4720,7 +4720,7 @@ export const verbsWords = [
   {
     "word": "وێرانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4729,7 +4729,7 @@ export const verbsWords = [
   {
     "word": "نیشاندان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4738,7 +4738,7 @@ export const verbsWords = [
   {
     "word": "کۆمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4747,7 +4747,7 @@ export const verbsWords = [
   {
     "word": "ئیمزاکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4756,7 +4756,7 @@ export const verbsWords = [
   {
     "word": "واژۆکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4765,7 +4765,7 @@ export const verbsWords = [
   {
     "word": "مۆرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4774,7 +4774,7 @@ export const verbsWords = [
   {
     "word": "پوختەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4783,7 +4783,7 @@ export const verbsWords = [
   {
     "word": "پڕوپاگەندەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4792,7 +4792,7 @@ export const verbsWords = [
   {
     "word": "کۆپیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4801,7 +4801,7 @@ export const verbsWords = [
   {
     "word": "پەخشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4810,7 +4810,7 @@ export const verbsWords = [
   {
     "word": "تێھەلچوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4819,7 +4819,7 @@ export const verbsWords = [
   {
     "word": "خوێھدانگرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4828,7 +4828,7 @@ export const verbsWords = [
   {
     "word": "قەرزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4837,7 +4837,7 @@ export const verbsWords = [
   {
     "word": "دەینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4846,7 +4846,7 @@ export const verbsWords = [
   {
     "word": "پەلکێشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4855,7 +4855,7 @@ export const verbsWords = [
   {
     "word": "قۆپیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4864,7 +4864,7 @@ export const verbsWords = [
   {
     "word": "ھەلاویستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4873,7 +4873,7 @@ export const verbsWords = [
   {
     "word": "پێڤەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4882,7 +4882,7 @@ export const verbsWords = [
   {
     "word": "وەرماندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4891,7 +4891,7 @@ export const verbsWords = [
   {
     "word": "خاڤبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4900,7 +4900,7 @@ export const verbsWords = [
   {
     "word": "ڕێزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4909,7 +4909,7 @@ export const verbsWords = [
   {
     "word": "لئێکئالاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4918,7 +4918,7 @@ export const verbsWords = [
   {
     "word": "داڕشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4927,7 +4927,7 @@ export const verbsWords = [
   {
     "word": "داعورتاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4936,7 +4936,7 @@ export const verbsWords = [
   {
     "word": "نەخشاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4945,7 +4945,7 @@ export const verbsWords = [
   {
     "word": "ئاوازدانان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4954,7 +4954,7 @@ export const verbsWords = [
   {
     "word": "گوڤەندگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4963,7 +4963,7 @@ export const verbsWords = [
   {
     "word": "پینەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4972,7 +4972,7 @@ export const verbsWords = [
   {
     "word": "عاجزبین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4981,7 +4981,7 @@ export const verbsWords = [
   {
     "word": "قەلەوکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4990,7 +4990,7 @@ export const verbsWords = [
   {
     "word": "زراڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -4999,7 +4999,7 @@ export const verbsWords = [
   {
     "word": "کێلان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -5010,7 +5010,7 @@ export const verbsWords = [
   {
     "word": "تۆڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5019,7 +5019,7 @@ export const verbsWords = [
   {
     "word": "ھێران",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -5030,7 +5030,7 @@ export const verbsWords = [
   {
     "word": "مەندەھۆشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5039,7 +5039,7 @@ export const verbsWords = [
   {
     "word": "شۆکبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5048,7 +5048,7 @@ export const verbsWords = [
   {
     "word": "پڕمەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5057,7 +5057,7 @@ export const verbsWords = [
   {
     "word": "چەپکەلێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5066,7 +5066,7 @@ export const verbsWords = [
   {
     "word": "فیتیلێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5075,7 +5075,7 @@ export const verbsWords = [
   {
     "word": "قرچاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5084,7 +5084,7 @@ export const verbsWords = [
   {
     "word": "قورمچاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5093,7 +5093,7 @@ export const verbsWords = [
   {
     "word": "خەمساریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5102,7 +5102,7 @@ export const verbsWords = [
   {
     "word": "پشتگۆھھاڤێتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5111,7 +5111,7 @@ export const verbsWords = [
   {
     "word": "سەربڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5120,7 +5120,7 @@ export const verbsWords = [
   {
     "word": "کەڤلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5129,7 +5129,7 @@ export const verbsWords = [
   {
     "word": "قوربانیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5138,7 +5138,7 @@ export const verbsWords = [
   {
     "word": "نەفرەتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5147,7 +5147,7 @@ export const verbsWords = [
   {
     "word": "خەبەرگۆتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5156,7 +5156,7 @@ export const verbsWords = [
   {
     "word": "مەدحکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5165,7 +5165,7 @@ export const verbsWords = [
   {
     "word": "پەسندان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5174,7 +5174,7 @@ export const verbsWords = [
   {
     "word": "پەێگیریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5183,7 +5183,7 @@ export const verbsWords = [
   {
     "word": "دووڤچوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5192,7 +5192,7 @@ export const verbsWords = [
   {
     "word": "گۆشەگیربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5201,7 +5201,7 @@ export const verbsWords = [
   {
     "word": "کۆچبەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5210,7 +5210,7 @@ export const verbsWords = [
   {
     "word": "ئاکنجیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5219,7 +5219,7 @@ export const verbsWords = [
   {
     "word": "سەرەدەریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5228,7 +5228,7 @@ export const verbsWords = [
   {
     "word": "مامەلەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5237,7 +5237,7 @@ export const verbsWords = [
   {
     "word": "بازرگانیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5246,7 +5246,7 @@ export const verbsWords = [
   {
     "word": "سوودوەرگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5255,7 +5255,7 @@ export const verbsWords = [
   {
     "word": "قەرەبووکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5264,7 +5264,7 @@ export const verbsWords = [
   {
     "word": "دەستبسەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5273,7 +5273,7 @@ export const verbsWords = [
   {
     "word": "بەڕەلاکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5282,7 +5282,7 @@ export const verbsWords = [
   {
     "word": "ھاربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5291,7 +5291,7 @@ export const verbsWords = [
   {
     "word": "مەستبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5300,7 +5300,7 @@ export const verbsWords = [
   {
     "word": "سەرخوەشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5309,7 +5309,7 @@ export const verbsWords = [
   {
     "word": "ھۆشیاربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5318,7 +5318,7 @@ export const verbsWords = [
   {
     "word": "ئاگەھداربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5327,7 +5327,7 @@ export const verbsWords = [
   {
     "word": "بێھۆشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5336,7 +5336,7 @@ export const verbsWords = [
   {
     "word": "شەرمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5345,7 +5345,7 @@ export const verbsWords = [
   {
     "word": "فەخرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5354,7 +5354,7 @@ export const verbsWords = [
   {
     "word": "خوەمەزنکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5363,7 +5363,7 @@ export const verbsWords = [
   {
     "word": "بەغیلیبرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5372,7 +5372,7 @@ export const verbsWords = [
   {
     "word": "حەسودیبرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5381,7 +5381,7 @@ export const verbsWords = [
   {
     "word": "ژەنگگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5390,7 +5390,7 @@ export const verbsWords = [
   {
     "word": "کفککرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5399,7 +5399,7 @@ export const verbsWords = [
   {
     "word": "کەڤزگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5408,7 +5408,7 @@ export const verbsWords = [
   {
     "word": "چەکەرەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5417,7 +5417,7 @@ export const verbsWords = [
   {
     "word": "چرۆکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5426,7 +5426,7 @@ export const verbsWords = [
   {
     "word": "وەرین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -5437,7 +5437,7 @@ export const verbsWords = [
   {
     "word": "حیلین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -5448,7 +5448,7 @@ export const verbsWords = [
   {
     "word": "سپاردن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5457,7 +5457,7 @@ export const verbsWords = [
   {
     "word": "خاترخواستن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5466,7 +5466,7 @@ export const verbsWords = [
   {
     "word": "لێخۆشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5475,7 +5475,7 @@ export const verbsWords = [
   {
     "word": "گەردنئازاکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5484,7 +5484,7 @@ export const verbsWords = [
   {
     "word": "تێکەلبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5493,7 +5493,7 @@ export const verbsWords = [
   {
     "word": "پاشڤەمان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5502,7 +5502,7 @@ export const verbsWords = [
   {
     "word": "جگارەکێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5511,7 +5511,7 @@ export const verbsWords = [
   {
     "word": "خولقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5520,7 +5520,7 @@ export const verbsWords = [
   {
     "word": "سەرنشیڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5529,7 +5529,7 @@ export const verbsWords = [
   {
     "word": "ژووردابرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5538,7 +5538,7 @@ export const verbsWords = [
   {
     "word": "بەڵاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5547,7 +5547,7 @@ export const verbsWords = [
   {
     "word": "ڤیدیۆکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5556,7 +5556,7 @@ export const verbsWords = [
   {
     "word": "ژخەوڕابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5565,7 +5565,7 @@ export const verbsWords = [
   {
     "word": "خەوندیتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5574,7 +5574,7 @@ export const verbsWords = [
   {
     "word": "قولپاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5583,7 +5583,7 @@ export const verbsWords = [
   {
     "word": "ڕشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "secret_word"
@@ -5592,7 +5592,7 @@ export const verbsWords = [
   {
     "word": "پێڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5601,7 +5601,7 @@ export const verbsWords = [
   {
     "word": "لبەرخوەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5610,7 +5610,7 @@ export const verbsWords = [
   {
     "word": "ژبەرخوەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5619,7 +5619,7 @@ export const verbsWords = [
   {
     "word": "دەیناتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5628,7 +5628,7 @@ export const verbsWords = [
   {
     "word": "پەیاسەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5637,7 +5637,7 @@ export const verbsWords = [
   {
     "word": "ڕەڤاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5646,7 +5646,7 @@ export const verbsWords = [
   {
     "word": "کەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -5657,7 +5657,7 @@ export const verbsWords = [
   {
     "word": "قوتان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "classic",
       "word_fever",
@@ -5668,7 +5668,7 @@ export const verbsWords = [
   {
     "word": "تەماشەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5677,7 +5677,7 @@ export const verbsWords = [
   {
     "word": "بەرێخوەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5686,7 +5686,7 @@ export const verbsWords = [
   {
     "word": "لێنێڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5695,7 +5695,7 @@ export const verbsWords = [
   {
     "word": "تەمراندن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"
@@ -5704,7 +5704,7 @@ export const verbsWords = [
   {
     "word": "بۆیاخکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار(چاوگ)",
+    "category": "کار (چاوگ)",
     "tags": [
       "hard_words",
       "secret_word"

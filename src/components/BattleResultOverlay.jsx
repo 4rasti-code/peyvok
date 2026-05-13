@@ -7,6 +7,7 @@ import { triggerHaptic } from '../utils/haptics';
 import { playSuccessSfx, playRewardSfx } from '../utils/audio';
 import { toKuDigits } from '../utils/formatters';
 import { shareGameResult } from '../utils/share';
+import ResultStats from './ResultStats';
 
 const AnimatedNumber = ({ value, prefix = "" }) => {
   const [displayValue, setDisplayValue] = useState(0);
@@ -200,37 +201,13 @@ const BattleResultOverlay = ({
               </div>
             </div>
 
-            {/* GUESS DISTRIBUTION CHART (Like Classic) */}
-            {playerStats?.battle?.guess_distribution && (
-              <div className="w-full py-2 space-y-4">
-                <div className="flex items-center gap-2 mb-2 px-1">
-                  <span className="material-symbols-outlined text-orange-500 text-lg">bar_chart</span>
-                  <h4 className="text-[10px] font-black text-mono-400 dark:text-white/40 uppercase tracking-widest">ئامارا هەڤڕکییێ</h4>
-                </div>
-
-                <div className="space-y-2">
-                  {Object.entries(playerStats.battle.guess_distribution)
-                    .filter(([key]) => parseInt(key) <= 3) // Only 1, 2, 3 for battle
-                    .map(([key, val]) => {
-                      const maxVal = Math.max(...Object.values(playerStats.battle.guess_distribution), 1);
-                      return (
-                        <div key={key} className="flex items-center gap-3">
-                          <span className="text-[10px] font-bold text-mono-400 w-2">{toKuDigits(key)}</span>
-                          <div className="flex-1 h-4 bg-mono-200/30 dark:bg-white/5 rounded-sm overflow-hidden border border-white/5">
-                            <Motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: `${(val / maxVal) * 100}%` }}
-                              className={`h-full min-w-[20px] flex items-center justify-end px-2 ${val > 0 ? 'bg-orange-500' : 'bg-mono-300/30 dark:bg-white/10'}`}
-                            >
-                              <span className="text-[9px] font-black text-white">{toKuDigits(val)}</span>
-                            </Motion.div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-              </div>
-            )}
+            {/* Unified Stats Section */}
+            <ResultStats 
+              profileData={user}
+              playerStats={playerStats}
+              gameMode="battle"
+              currentGuessCount={-1}
+            />
 
 
             {/* Buttons */}

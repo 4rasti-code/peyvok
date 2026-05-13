@@ -44,18 +44,25 @@ const DefeatOverlay = ({
   guesses = [],
   solvedWord = "",
   profileData,
-  playerStats
+  playerStats,
+  streak = 0
 }) => {
   const [shareStatus, setShareStatus] = useState(null); // null, 'success', 'copied'
+  const hasTriggeredRef = React.useRef(false);
   
   useEffect(() => {
-    if (isVisible) {
+    if (isVisible && !hasTriggeredRef.current) {
+      hasTriggeredRef.current = true;
       triggerHaptic(200);
       
       const timer = setTimeout(() => {
         onHome();
       }, 10000);
       return () => clearTimeout(timer);
+    }
+
+    if (!isVisible) {
+      hasTriggeredRef.current = false;
     }
   }, [isVisible, onHome]);
 
@@ -72,16 +79,16 @@ const DefeatOverlay = ({
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="w-full max-w-[360px] bg-mono-white dark:bg-mono-950 border border-red-500/20 rounded-lg p-6 flex flex-col items-center gap-4 relative transition-colors duration-500 shadow-2xl my-8"
+            className="w-full max-w-[320px] bg-mono-white dark:bg-mono-950 border border-red-500/20 rounded-lg p-4 flex flex-col items-center gap-2 relative transition-colors duration-500 shadow-2xl my-2"
           >
             {/* Status Icon Hub */}
             <div className="relative flex flex-col items-center">
               <Motion.div 
                 initial={{ scale: 0.5, rotate: -15 }}
                 animate={{ scale: 1, rotate: 0 }}
-                className="w-16 h-16 rounded flex items-center justify-center relative z-10 bg-red-500/10 text-red-500 border border-red-500/20"
+                className="w-12 h-12 rounded flex items-center justify-center relative z-10 bg-red-500/10 text-red-500 border border-red-500/20"
               >
-                <span className="material-symbols-outlined text-[48px]">
+                <span className="material-symbols-outlined text-[40px]">
                    heart_broken
                 </span>
               </Motion.div>
@@ -89,19 +96,19 @@ const DefeatOverlay = ({
 
             {/* Message Area */}
             <div className="text-center space-y-3 w-full">
-              <h2 className="text-2xl font-black font-heading text-red-500">
+              <h2 className="text-xl font-black font-heading text-red-500">
                  تو سەرنەکەڤتی!
               </h2>
 
               {solvedWord && (
-                <div className="bg-mono-100 dark:bg-[#141414] border border-mono-200 dark:border-white/5 px-4 py-2 rounded-sm inline-block">
+                <div className="bg-mono-100 dark:bg-[#141414] border border-mono-200 dark:border-white/5 px-3 py-1.5 rounded-sm inline-block">
                   <span className="text-mono-400 dark:text-white/40 text-[9px] font-bold uppercase  block mb-0.5">پەیڤا ڕاست</span>
-                  <span className="text-lg font-black text-mono-900 dark:text-white font-heading tracking-normal">{solvedWord}</span>
+                  <span className="text-base font-black text-mono-900 dark:text-white font-heading tracking-normal">{solvedWord}</span>
                 </div>
               )}
 
               {/* Stats & Penalties Table */}
-              <div className="w-full space-y-1.5 mt-1 bg-mono-100 dark:bg-mono-900/60 p-4 rounded border border-red-500/10 text-left">
+              <div className="w-full space-y-1.5 mt-0.5 bg-mono-100 dark:bg-mono-900/60 p-2 rounded border border-red-500/10 text-right">
                 <div className="flex justify-between items-center text-xs font-black">
                   <span className="text-mono-600 dark:text-white/80">سزایێ دۆڕاندنێ</span>
                   <div className="flex items-center gap-1.5 text-red-400">
@@ -123,7 +130,7 @@ const DefeatOverlay = ({
                   </div>
                 </div>
                 <div className="h-px bg-mono-200 dark:bg-white/5 my-1" />
-                <div className="flex justify-between items-center text-base font-black">
+                <div className="flex justify-between items-center text-sm font-black">
                   <span className="text-mono-900 dark:text-white">سەرجەم</span>
                   <div className="flex items-center gap-1.5 text-red-500">
                     <div className="flex flex-col items-end leading-none">
@@ -135,7 +142,25 @@ const DefeatOverlay = ({
                 </div>
               </div>
 
-              {/* NYT Style Stats */}
+              {/* Word Fever Streak Banner */}
+              {gameMode === 'word_fever' && streak > 0 && (
+                <div className="w-full mt-2 bg-amber-500/10 border border-amber-500/20 rounded-md p-2.5 flex items-center justify-between overflow-hidden relative group">
+                  <div className="flex items-center gap-3 relative z-10">
+                    <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">
+                      <span className="material-symbols-outlined text-amber-600 dark:text-amber-500 text-lg">local_fire_department</span>
+                    </div>
+                    <div className="flex flex-col items-start leading-none">
+                      <span className="text-amber-700 dark:text-amber-400 font-black text-xs tracking-tight">زنجیرەیا پەیڤان</span>
+                    </div>
+                  </div>
+                  <div className="relative z-10 flex items-center gap-1">
+                    <span className="text-amber-600 dark:text-amber-400 font-black text-xl tabular-nums">{streak}</span>
+                    <span className="text-amber-600/50 dark:text-amber-400/50 text-[10px] font-bold">پەیڤ</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Stats Section */}
               <ResultStats 
                 profileData={profileData}
                 playerStats={playerStats}
@@ -146,18 +171,20 @@ const DefeatOverlay = ({
 
             {/* Action Buttons */}
             <div className="w-full flex flex-col gap-2 mt-2">
-              <button 
-                onClick={() => { triggerHaptic(10); playStartSound?.(); onRetry(); }}
-                className="w-full h-11 bg-red-500 text-white py-3 rounded font-black text-base active:scale-95 transition-all flex items-center justify-center gap-3"
-              >
-                <span className="material-symbols-outlined text-lg">restart_alt</span>
-                بەردەوام بە
-              </button>
+              {gameMode !== 'secret_word' && (
+                <button 
+                  onClick={() => { triggerHaptic(10); playStartSound?.(); onRetry(); }}
+                  className="w-full h-9 bg-red-500 text-white rounded font-black text-base active:scale-95 transition-all flex items-center justify-center gap-3"
+                >
+                  <span className="material-symbols-outlined text-lg">restart_alt</span>
+                  بەردەوام بە
+                </button>
+              )}
 
               <div className="grid grid-cols-2 gap-2">
                 <button 
                   onClick={() => { triggerHaptic(10); playBackSfx(); onHome(); }}
-                  className="h-10 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-600 dark:text-white/50 rounded font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+                  className="h-9 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-600 dark:text-white/50 rounded font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined text-base">home</span>
                   ڤەگەڕیان
@@ -180,7 +207,7 @@ const DefeatOverlay = ({
                       setTimeout(() => setShareStatus(null), 2000);
                     }
                   }}
-                  className="h-10 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-600 dark:text-white/50 rounded font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+                  className="h-9 bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/5 text-mono-600 dark:text-white/50 rounded font-bold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined text-base">
                     {shareStatus === 'copied' ? 'content_paste_go' : shareStatus === 'success' ? 'check_circle' : 'share'}

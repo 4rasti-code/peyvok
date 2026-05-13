@@ -23,22 +23,26 @@ export default function CategoryModal({ onSelect, isOpen, onClose }) {
   const getIcon = (catName) => {
     switch(catName) {
         case 'ھەموو': return 'apps';
-        case 'ئاژەل': return 'pets';
+        case 'گیانەوەر': return 'pets';
         case 'خوارن': return 'restaurant';
         case 'باژێڕ': return 'location_city';
-        case 'سروشت': return 'forest';
+        case 'سرۆشت': return 'forest';
         case 'کەلوپەل': return 'inventory_2';
-        case 'جھ_و_دەڤەر': return 'terrain';
-        case 'کەلتوور': return 'fort';
         case 'جلوبەرگ': return 'styler';
         case 'ڕەنگ': return 'palette';
-        case 'لەش': return 'accessibility_new';
+        case 'ئەندامێ لەشی': return 'accessibility_new';
         case 'وەلات': return 'public';
-        case 'وەرزش': return 'sports_soccer';
         case 'میوە': return 'nutrition';
         case 'خێزان': return 'family_restroom';
         case 'هەست': return 'mood';
-        case 'کار(چاوگ)': return 'bolt';
+        case 'کار (چاوگ)': return 'bolt';
+        case 'پیشە': return 'engineering';
+        case 'ناڤێ مرۆڤان': return 'person';
+        case 'وەسف': return 'description';
+        case 'هونەر': return 'draw';
+        case 'مۆزیک': return 'music_note';
+        case 'کات': return 'schedule';
+        case 'وەسف(هەڤالناڤ)': return 'description';
         default: return 'stars';
     }
   };

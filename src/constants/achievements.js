@@ -13,7 +13,7 @@ export const TIER_COLORS = {
 export const ACHIEVEMENTS_CONFIG = [
   {
     id: 'flawless_words',
-    name: 'پەیڤێن بێ خەلەتی',
+    name: 'پەیڤێن بێ شاشی',
     description: 'سەرکەفتن بێ چ هاریکارییەکێ (Hints)',
     icon: 'verified',
     statKey: 'flawless_wins',
@@ -21,7 +21,7 @@ export const ACHIEVEMENTS_CONFIG = [
   },
   {
     id: 'word_collector',
-    name: 'کۆکەرەوەیێ پەیڤان',
+    name: 'کۆمکەرێ پەیڤان',
     description: 'کۆما هەمی پەیڤێن تە دیتین',
     icon: 'inventory_2',
     statKey: 'total_words_found',
@@ -29,7 +29,7 @@ export const ACHIEVEMENTS_CONFIG = [
   },
   {
     id: 'night_phantom',
-    name: 'سێبەرا شەڤێ',
+    name: 'سیبەرا شەڤێ',
     description: 'سەرکەفتن د مۆدێ پەیڤا نهێنی دا',
     icon: 'visibility_off',
     statKey: 'secret_wins',
