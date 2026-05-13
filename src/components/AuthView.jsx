@@ -1049,9 +1049,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
                     </div>
                 </Motion.div>
-
                 </div>
-            </div>
 
             <PolicyModal
                 isOpen={!!activePolicyModal}
