@@ -92,7 +92,7 @@ const FloatingLetterBackground = forwardRef(({ baseOpacity = 0.7 }, ref) => {
   }));
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-5 bg-transparent transition-colors duration-500">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-[-1] bg-transparent transition-colors duration-500">
       <style>
         {`
           @keyframes drift {
