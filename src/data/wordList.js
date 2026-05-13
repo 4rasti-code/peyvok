@@ -952,6 +952,30 @@ const wordFeverWords = [
   { word: "سیئۆل", hint: "باژێڕێ دلێ تەکنەلۆژیا و 'کەی پۆپ'ێ", category: "باژێڕ" }
 ];
 
+// Whitelist of authorized categories to prevent ghost categories from appearing
+const OFFICIAL_CATEGORIES = [
+  "ناڤێ مرۆڤان",
+  "وەسف(هەڤالناڤ)",
+  "هەست",
+  "باژێڕ",
+  "پیشە",
+  "ئەندامێ لەشی",
+  "سرۆشت",
+  "کار (چاوگ)",
+  "کەلوپەل",
+  "گیانەوەر",
+  "هونەر",
+  "میوە",
+  "ڕەنگ",
+  "وەلات",
+  "خێزان",
+  "خوارن",
+  "کات",
+  "جلوبەرگ",
+  "جهـ",
+  "هەمەجۆر"
+];
+
 // Unified General Words (excluding riddles) for Secret and Multiplayer
 const generalPool = [...classicWords, ...hardWords];
 
@@ -967,10 +991,14 @@ export const gameWordLists = {
 // Also keep the original category-based object for filtering in UI
 const rawWordList = {};
 [...generalPool, ...verbsWords, ...humanNamesRaw, ...adjectivesWordsRaw, ...wordFeverWords, ...mamakWords].forEach(w => {
-  if (w.category) {
-    if (!rawWordList[w.category]) rawWordList[w.category] = [];
-    rawWordList[w.category].push(w);
+  // Taxonomy Protection: Only allow official categories, default to 'هەمەجۆر'
+  let cat = w.category || 'هەمەجۆر';
+  if (!OFFICIAL_CATEGORIES.includes(cat)) {
+    cat = 'هەمەجۆر';
   }
+  
+  if (!rawWordList[cat]) rawWordList[cat] = [];
+  rawWordList[cat].push({ ...w, category: cat });
 });
 
 // Filter out empty categories

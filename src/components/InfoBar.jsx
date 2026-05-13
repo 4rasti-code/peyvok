@@ -23,7 +23,7 @@ export default function InfoBar({
   const isHardWords = gameMode === 'hard_words';
   const isSecretWord = gameMode === 'secret_word';
   const displayCategory = category === 'generalWordPool' ? 'گشتی' : (category || 'گشتی');
-  const displayText = (isClassic || isHardWords) ? displayCategory : (targetHint || displayCategory || '...');
+  const displayText = isMamak ? (targetHint || '...') : (displayCategory || '...');
   
   // Theme-aware styles
   const textMain = isDark ? 'text-white' : 'text-slate-800';
