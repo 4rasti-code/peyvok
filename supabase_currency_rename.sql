@@ -26,6 +26,7 @@ DECLARE
     v_nickname TEXT;
 BEGIN
     v_nickname := COALESCE(
+        new.raw_user_meta_data->>'username', 
         new.raw_user_meta_data->>'nickname', 
         new.raw_user_meta_data->>'full_name', 
         new.raw_user_meta_data->>'name', 

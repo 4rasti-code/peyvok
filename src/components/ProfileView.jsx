@@ -13,7 +13,7 @@ import Avatar from './Avatar';
 import { useUser } from '../context/AuthContext';
 import { useGame } from '../context/GameContext';
 import { useAudio } from '../context/AudioContext';
-import FloatingLetterBackground from './FloatingLetterBackground';
+
 import { getLevelFromXP, getLevelTier } from '../utils/progression';
 import { getCroppedImg } from '../utils/imageUtils';
 import Cropper from 'react-easy-crop';
@@ -289,7 +289,7 @@ export default function ProfileView({ onProfileSave }) {
          className="w-screen max-w-full mx-auto h-full flex flex-col pt-0 pb-0 overflow-x-hidden relative z-10 bg-mono-white dark:bg-mono-950 bg-trigger-zone transition-colors duration-500"
       >
          <div className="absolute inset-0 pointer-events-none z-0">
-            <FloatingLetterBackground ref={bgRef} />
+
          </div>
 
          <div className="px-5 mb-4 text-center flex flex-col items-center relative z-10 bg-trigger-zone">

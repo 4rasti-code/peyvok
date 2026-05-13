@@ -62,7 +62,7 @@ BEGIN
   INSERT INTO public.profiles (id, nickname, country_code)
   VALUES (
     new.id, 
-    COALESCE(new.raw_user_meta_data->>'nickname', 'یاریکەر'),
+    COALESCE(new.raw_user_meta_data->>'username', new.raw_user_meta_data->>'nickname', 'یاریکەر'),
     COALESCE(new.raw_user_meta_data->>'country_code', 'KD')
   );
   RETURN NEW;

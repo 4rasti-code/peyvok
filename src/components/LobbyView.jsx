@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion as Motion } from 'framer-motion';
 import { DerhemIcon } from './CurrencyIcon';
 import { triggerHaptic } from '../utils/haptics';
-import FloatingLetterBackground from './FloatingLetterBackground';
+
 
 const LobbyView = React.memo(({
   onStartClassic,
@@ -69,7 +69,7 @@ const LobbyView = React.memo(({
       onClick={handleBackgroundClick}
       className="flex-1 w-full max-w-full px-4 pt-4 pb-4 overflow-x-hidden bg-mono-white dark:bg-mono-950 relative h-full bg-trigger-zone transition-colors duration-500"
     >
-      <FloatingLetterBackground ref={bgRef} />
+
 
       <div className="relative z-10">
         {/* Header (Simplified) */}

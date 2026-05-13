@@ -972,12 +972,12 @@ export default function App() {
 
   const handleNextGame = useCallback(async () => {
     const { gameMode: gMode, category: currCat } = gameRefs.current;
-    
+
     // Immediate state cleanup to prevent UI flickering and timer race conditions
     setIsVictory(false);
     setIsDefeat(false);
     setIsWordFeverResultVisible(false);
-    
+
     // Safety for Word Fever: reset time immediately to prevent "fail" re-trigger
     if (gMode === 'word_fever') setTimeLeft(30);
 
@@ -1235,7 +1235,11 @@ export default function App() {
   // Shows loader if auth is initializing, game assets are loading,
   // or if we have no user but haven't yet redirected to the auth screen.
   if (loadingAuth || isGameLoading || (!user && !['auth', 'lobby', 'game'].includes(currentView))) return (
-    <div className="h-dvh flex items-center justify-center bg-mono-white dark:bg-mono-950 transition-colors duration-500">
+    <div className="h-dvh flex flex-col items-center justify-center bg-mono-white dark:bg-mono-950 transition-colors duration-500 gap-6">
+      <div className="flex flex-col items-center gap-4">
+        <img src="/Peyvok-logo-01.png" className="h-20 w-auto block dark:hidden animate-pulse" alt="Peyvok" />
+        <img src="/Peyvok-logo-02.png" className="h-20 w-auto hidden dark:block animate-pulse" alt="Peyvok" />
+      </div>
       <KurdishSunLoader progress={authProgress} />
     </div>
   );
@@ -1243,7 +1247,7 @@ export default function App() {
   return (
     <div className="flex flex-col h-dvh max-h-dvh w-full items-center justify-center bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 md:bg-mono-white dark:md:bg-mono-black transition-colors duration-500 font-noto-sans-arabic" dir="rtl">
       <Analytics />
-      <div className={`flex-1 flex flex-col w-full max-w-screen-sm md:max-w-[960px] md:max-h-[1080px] mx-auto relative overflow-hidden bg-mono-white dark:bg-mono-950 md:shadow-[0_0_80px_rgba(0,0,0,0.4)] transition-colors duration-500`}>
+      <div className={`flex-1 flex flex-col w-full max-w-screen-sm md:max-w-[960px] md:max-h-[1080px] mx-auto relative overflow-hidden bg-mono-white dark:bg-mono-950 transition-colors duration-500`}>
         {/* Panic Overlay for Word Fever Mode Critical Time */}
         {gameMode === 'word_fever' && currentView === 'game' && timeLeft <= 10 && !isVictory && (
           <div className="panic-overlay" />
@@ -1278,7 +1282,7 @@ export default function App() {
               (() => {
                 if (!lastRewardClaimedAt) return true;
                 try {
-                  const formatter = new Intl.DateTimeFormat('en-CA', { 
+                  const formatter = new Intl.DateTimeFormat('en-CA', {
                     timeZone: 'Asia/Baghdad',
                     year: 'numeric',
                     month: '2-digit',
@@ -1344,14 +1348,14 @@ export default function App() {
                 stopBGM();
                 triggerHaptic(10);
                 setIsDailyActive(false);
-                selectCategory('ھەموو', 'classic'); 
+                selectCategory('ھەموو', 'classic');
               }}
               onStartHardWords={() => {
                 playTabSound();
                 stopBGM();
                 triggerHaptic(10);
                 setIsDailyActive(true);
-                selectCategory('ھەموو', 'hard_words'); 
+                selectCategory('ھەموو', 'hard_words');
               }}
               onStartWordFever={() => {
                 playTabSound();
@@ -1757,7 +1761,7 @@ export default function App() {
               <div className="relative z-10 flex flex-col items-center mt-24 min-h-[220px] w-full">
                 {/* Premium Avatar Rings */}
                 <div className="relative flex flex-col items-center justify-center">
-                  
+
                   {/* Minimalist Stage Base */}
                   <div className="absolute -bottom-4 flex flex-col items-center z-0 pointer-events-none">
                     <div className="w-32 h-6 bg-linear-to-b from-mono-200/50 to-mono-300/30 dark:from-mono-800/50 dark:to-mono-900/30 border border-white/40 dark:border-mono-700/40 rounded-[100%] backdrop-blur-sm" />
@@ -1769,7 +1773,7 @@ export default function App() {
                     <ScrollingMatchFinder opponent={opponent} />
                   </div>
                 </div>
-                
+
                 {/* Fixed height placeholder for the name to prevent layout shift */}
                 <div className="absolute top-[160px] left-0 right-0 flex flex-col items-center pointer-events-none">
                   <AnimatePresence>
@@ -1783,7 +1787,7 @@ export default function App() {
                           {opponent.nickname || 'ھەڤڕک'}
                         </div>
                         <div className="text-sm font-semibold text-mono-500 dark:text-mono-400 bg-white/60 dark:bg-mono-900/60 backdrop-blur-md px-3 py-0.5 rounded-md border border-mono-200 dark:border-mono-800 shadow-sm flex items-center justify-center -mt-1">
-                           <span>ئاستێ {opponent.level || 1}</span>
+                          <span>ئاستێ {opponent.level || 1}</span>
                         </div>
                       </Motion.div>
                     )}
@@ -1809,7 +1813,7 @@ export default function App() {
               {/* BOTTOM: USER PODIUM */}
               <div className="relative z-10 flex flex-col items-center mb-24">
                 <div className="relative flex flex-col items-center justify-center">
-                  
+
                   {/* Minimalist Stage Base */}
                   <div className="absolute -bottom-4 flex flex-col items-center z-0 pointer-events-none">
                     <div className="w-32 h-6 bg-linear-to-b from-mono-200/50 to-mono-300/30 dark:from-mono-800/50 dark:to-mono-900/30 border border-white/40 dark:border-mono-700/40 rounded-[100%] backdrop-blur-sm" />
@@ -1820,13 +1824,13 @@ export default function App() {
                     <Avatar src={userAvatar} size="full" border={false} />
                   </div>
                 </div>
-                
+
                 <div className="mt-12 flex flex-col items-center gap-1 relative z-20">
                   <span className="text-mono-800 dark:text-mono-100 font-black text-lg drop-shadow-md">
                     {userNickname || 'تۆ (YOU)'}
                   </span>
                   <div className="text-sm font-semibold text-mono-500 dark:text-mono-400 bg-white/60 dark:bg-mono-900/60 backdrop-blur-md px-3 py-0.5 rounded-md border border-mono-200 dark:border-mono-800 shadow-sm flex items-center justify-center mt-1">
-                     <span>ئاستێ {level}</span>
+                    <span>ئاستێ {level}</span>
                   </div>
                 </div>
               </div>

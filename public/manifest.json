@@ -9,12 +9,13 @@
   "theme_color": "#020617",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/Peyvok-logo-01.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/Peyvok-logo-02.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any"

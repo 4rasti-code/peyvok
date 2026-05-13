@@ -8,7 +8,7 @@ import { toKuDigits } from '../utils/formatters';
 import InventoryBar from './InventoryBar';
 import { useUser } from '../context/AuthContext';
 import { useAudio } from '../context/AudioContext';
-import FloatingLetterBackground from './FloatingLetterBackground';
+
 
 const SHOP_ITEMS = {
   POWERUPS: [
@@ -169,7 +169,7 @@ export default function ShopView({ fils, derhem, dinar: _dinar, magnetCount, hin
       onClick={handleBackgroundClick}
       className="flex-1 w-full bg-mono-white dark:bg-mono-950 px-4 pt-6 pb-[120px] max-w-full flex flex-col gap-6 animate-in fade-in duration-700 overflow-x-hidden relative bg-trigger-zone transition-colors"
     >
-      <FloatingLetterBackground ref={bgRef} />
+
       
       <div className="relative z-20 bg-mono-50 dark:bg-mono-900 border border-mono-200 dark:border-mono-800 rounded-md p-6 shadow-sm overflow-hidden group transition-colors duration-300">
         <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-50" />

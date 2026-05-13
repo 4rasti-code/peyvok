@@ -1,32 +1,48 @@
 <!doctype html>
 <html class="dark" dir="rtl" lang="ku">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-    
-    <!-- Mobile App Experience (iOS & Android) -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#020617" />
-    <meta name="apple-mobile-web-app-title" content="Peyvok" />
-    
-    <style>
-      html, body {
-        background-color: #020617 !important;
-        background: #020617 !important;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-    
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
-    <title>پەیڤۆک</title>
-  </head>
-  <body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" media="(prefers-color-scheme: light)" href="/Peyvok-logo-01.png" />
+  <link rel="icon" type="image/png" media="(prefers-color-scheme: dark)" href="/Peyvok-logo-02.png" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+
+  <!-- Mobile App Experience (iOS & Android) -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#020617" />
+  <meta name="apple-mobile-web-app-title" content="Peyvok" />
+
+  <style>
+    html,
+    body {
+      background-color: #f8fafc !important;
+      /* light: bg-slate-50 */
+      background: #f8fafc !important;
+      margin: 0;
+      padding: 0;
+    }
+
+    html.dark,
+    html.dark body {
+      background-color: #020617 !important;
+      /* dark: bg-mono-950 */
+      background: #020617 !important;
+    }
+  </style>
+
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" media="(prefers-color-scheme: light)" href="/Peyvok-logo-01.png" />
+  <link rel="apple-touch-icon" media="(prefers-color-scheme: dark)" href="/Peyvok-logo-02.png" />
+  <title>پەیڤۆک</title>
+</head>
+
+<body
+  class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container overflow-hidden">
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

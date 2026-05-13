@@ -100,7 +100,7 @@ BEGIN
   )
   VALUES (
     new.id, 
-    COALESCE(new.raw_user_meta_data->>'nickname', 'یاریکەر'),
+    COALESCE(new.raw_user_meta_data->>'username', new.raw_user_meta_data->>'nickname', 'یاریکەر'),
     1000, -- 1000 Fils
     3,    -- 3 Magnets
     5,    -- 5 Hints

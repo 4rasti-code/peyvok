@@ -33,8 +33,10 @@ RETURNS TRIGGER AS $$
 DECLARE
     v_nickname TEXT;
 BEGIN
-    -- Safely extract nickname
+    -- MANDATORY: Always prioritize 'username' as requested by the user. 
+    -- This rule must not be changed as it causes registration desync.
     v_nickname := COALESCE(
+        new.raw_user_meta_data->>'username', 
         new.raw_user_meta_data->>'nickname', 
         new.raw_user_meta_data->>'full_name', 
         new.raw_user_meta_data->>'name', 

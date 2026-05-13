@@ -13,6 +13,7 @@ BEGIN
   VALUES (
     new.id,
     COALESCE(
+      (new.raw_user_meta_data->>'username'), -- MANDATORY: Priority 1
       (new.raw_user_meta_data->>'nickname'),
       (new.raw_user_meta_data->>'full_name'),
       (new.raw_user_meta_data->>'name'),

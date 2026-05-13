@@ -11,7 +11,7 @@ import { useUser } from '../context/AuthContext';
 import { useGame } from '../context/GameContext';
 import { useAudio } from '../context/AudioContext';
 import { getLevelFromXP, getLevelTier } from '../utils/progression';
-import FloatingLetterBackground from './FloatingLetterBackground';
+
 
 export default function LeaderboardView({ onOpenChat }) {
   const {
@@ -150,7 +150,7 @@ export default function LeaderboardView({ onOpenChat }) {
       onClick={handleBackgroundClick}
       className="w-full max-w-full px-4 md:px-6 pb-56 h-full relative animate-in fade-in duration-700 bg-mono-50 dark:bg-mono-900 overflow-x-hidden pt-[calc(env(safe-area-inset-top,24px)+32px)] md:pt-20 text-right bg-trigger-zone transition-colors"
     >
-      <FloatingLetterBackground ref={bgRef} />
+
 
       <div className="relative z-10">
         <div className="flex flex-col items-center mb-10 max-w-md mx-auto text-center">

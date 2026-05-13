@@ -1,13 +1,13 @@
 import React, { forwardRef, useImperativeHandle, memo, useState } from 'react';
 import { motion as Motion, useSpring, useMotionValue, useMotionValueEvent } from 'framer-motion';
 
-const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
+const FloatingLetter = memo(({ char, initialX, initialY, pulseMV, baseOpacity = 0.7 }) => {
   // Movement springs - Low stiffness, High damping for "liquid" feel
   const springConfig = { damping: 40, stiffness: 15 };
   const x = useSpring(0, springConfig);
   const y = useSpring(0, springConfig);
   const rotate = useSpring(0, springConfig);
-  const opacity = useSpring(0.15, springConfig);
+  const opacity = useSpring(baseOpacity, springConfig);
 
   // Pulse (Fish Reaction) Logic via MotionValue Subscription
   useMotionValueEvent(pulseMV, "change", (latest) => {
@@ -43,7 +43,7 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
         x.set(0);
         y.set(0);
         rotate.set(0);
-        opacity.set(0.15);
+        opacity.set(baseOpacity);
       }, 1200 + Math.random() * 800);
     }
   });
@@ -54,7 +54,7 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
 
   return (
     <Motion.div
-      className="absolute text-mono-900/20 dark:text-mono-100/20 font-bold text-[16px] select-none font-rabar pointer-events-none transition-opacity duration-1000"
+      className="absolute text-mono-900 dark:text-mono-100 font-bold text-[20px] select-none font-rabar pointer-events-none transition-opacity duration-1000"
       style={{
         left: `${initialX}%`,
         top: `${initialY}%`,
@@ -72,7 +72,7 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV }) => {
 
 const chars = ['ئا', 'ب', 'پ', 'ت', 'ج', 'چ', 'د', 'ڕ', 'ز', 'ژ', 'ڤ', 'ڵ', 'ۆ', 'ێ', 'گ', 'هـ'];
 
-const FloatingLetterBackground = forwardRef((props, ref) => {
+const FloatingLetterBackground = forwardRef(({ baseOpacity = 0.7 }, ref) => {
   const pulseMV = useMotionValue(null);
 
   // Use useState lazy initialization for purity
@@ -92,7 +92,7 @@ const FloatingLetterBackground = forwardRef((props, ref) => {
   }));
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-5 bg-white dark:bg-black transition-colors duration-500">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-5 bg-transparent transition-colors duration-500">
       <style>
         {`
           @keyframes drift {
@@ -112,6 +112,7 @@ const FloatingLetterBackground = forwardRef((props, ref) => {
           initialX={letter.x}
           initialY={letter.y}
           pulseMV={pulseMV}
+          baseOpacity={baseOpacity}
         />
       ))}
     </div>

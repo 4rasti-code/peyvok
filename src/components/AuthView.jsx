@@ -89,11 +89,11 @@ const FloatingInput = ({ label, value, onChange, id, type = 'text', required = f
                 {label}
             </label>
             <div className={`
- relative w-full rounded-md transition-all duration-300 border flex items-center
- ${isFocused ? 'bg-mono-100 dark:bg-white/10 border-emerald-500/50 ring-4 ring-emerald-500/10' : 'bg-mono-50 dark:bg-white/5 border-mono-200 dark:border-white/10 hover:border-mono-400 dark:hover:border-white/20'}
- ${isError ? 'border-red-500/50' : ''}
- puzzle-tile overflow-hidden
- `}>
+                relative w-full rounded-md transition-all duration-300 border flex items-center
+                ${isFocused ? 'bg-mono-100 dark:bg-white/10 border-emerald-500/50' : 'bg-mono-50 dark:bg-white/5 border-mono-200 dark:border-white/10 hover:border-mono-400 dark:hover:border-white/20'}
+                ${isError ? 'border-red-500/50' : ''}
+                puzzle-tile overflow-hidden
+            `}>
                 <input
                     id={id}
                     type={type}
@@ -143,7 +143,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [nickname, setNickname] = useState('');
+    const [usernameInput, setUsernameInput] = useState('');
     const [selectedCountry] = useState(COUNTRIES[0]);
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -168,14 +168,14 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
     // Real-time Availability Check
     React.useEffect(() => {
-        if (isLogin || !nickname) {
+        if (isLogin || !usernameInput) {
             setNameAvailability(null);
             setNameError('');
             return;
         }
 
         const checkName = async () => {
-            const raw = nickname.trim();
+            const raw = usernameInput.trim();
 
             // 1. Basic Format Validation
             if (raw.includes(' ')) {
@@ -224,7 +224,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
         const debounce = setTimeout(checkName, 500);
         return () => clearTimeout(debounce);
-    }, [nickname, isLogin]);
+    }, [usernameInput, isLogin]);
 
     // Real-time Password Validation
     React.useEffect(() => {
@@ -298,9 +298,9 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                     password,
                     options: {
                         data: {
-                            nickname: nickname,
-                            name: nickname,
-                            username: nickname,
+                            username: usernameInput, // ئەو ناسناڤێ یاریزانی د فۆڕمێ دا نڤیسی
+                            nickname: usernameInput,
+                            name: usernameInput,
                             country: selectedCountry.name,
                             country_code: selectedCountry.code,
                         }
@@ -571,13 +571,21 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
     return (
         <div
             onClick={handleBackgroundClick}
-            className="flex-1 w-full h-full flex flex-col items-center sm:justify-center overflow-y-auto sm:overflow-hidden no-scrollbar p-4 sm:p-4 animate-in fade-in duration-500 relative auth-view-container bg-mono-white dark:bg-mono-950 transition-colors"
+            className="flex-1 w-full h-full flex flex-col items-center justify-center overflow-y-auto sm:overflow-hidden no-scrollbar p-4 animate-in fade-in duration-500 relative auth-view-container bg-mono-white dark:bg-mono-950 transition-colors"
         >
-            <FloatingLetterBackground ref={bgRef} />
+            <FloatingLetterBackground ref={bgRef} baseOpacity={0.7} />
 
-            <div className="w-full max-w-[360px] sm:max-w-[380px] flex flex-col items-center relative z-20 shrink-0 mb-4 mt-[10vh] sm:mt-0">
-                <div className="flex flex-col items-center mb-3 text-center">
-                    <h1 className="text-4xl sm:text-4xl font-black font-heading text-mono-900 dark:text-white text-pop transform hover:scale-110 transition-transform duration-500">پەیڤۆک</h1>
+            <div className="w-full max-w-[360px] sm:max-w-[380px] flex flex-col items-center relative z-20 shrink-0 mb-4">
+                <div className="flex flex-col items-center mb-6 text-center">
+                    <Motion.img 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, type: "spring" }}
+                        src="/Peyvok-icon.png" 
+                        className="w-5 h-5 object-contain mb-1 transform hover:scale-110 transition-transform duration-500 cursor-pointer" 
+                        alt="Peyvok Icon" 
+                    />
+                    <h1 className="text-3xl font-black font-heading text-mono-900 dark:text-white text-pop tracking-tight">پەیڤۆک</h1>
                 </div>
 
                 <Motion.div
@@ -636,19 +644,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                                     )}
                                 </AnimatePresence>
 
-                                <AnimatePresence mode="wait">
-                                    <Motion.div
-                                        key={isLogin ? 'login' : 'signup'}
-                                        initial={{ opacity: 0, x: isLogin ? -10 : 10 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: isLogin ? 10 : -10 }}
-                                        className="mb-4"
-                                    >
-                                        <h2 className="text-2xl font-black font-heading text-mono-900 dark:text-white text-pop uppercase text-right">
-                                            {isLogin ? 'چوونا ژوورێ' : 'تۆمارکرن'}
-                                        </h2>
-                                    </Motion.div>
-                                </AnimatePresence>
+
 
                                 <form onSubmit={handleAuth} className="space-y-3" autoComplete="off">
                                     {!isLogin && (
@@ -656,9 +652,9 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                                             <div className="space-y-2">
                                                 <FloatingInput
                                                     label="ناسناڤ"
-                                                    id="reg-nickname"
-                                                    value={nickname}
-                                                    onChange={(e) => setNickname(e.target.value)}
+                                                    id="reg-username"
+                                                    value={usernameInput}
+                                                    onChange={(e) => setUsernameInput(e.target.value)}
                                                     required
                                                     name="peyvok_reg_user"
                                                     autoComplete="off"
@@ -806,38 +802,38 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                                         <div className="flex-1 h-px bg-current opacity-20"></div>
                                     </div>
 
-                                    <div className="flex flex-col gap-2">
-                                        <button
-                                            onClick={() => handleSocialLogin('google')}
-                                            className="h-9 sm:h-8 rounded-md bg-white text-black border border-outline/10 flex items-center justify-center gap-2 hover:bg-gray-50 active:scale-95 transition-all font-bold text-[11px] sm:text-xs shadow-sm "
-                                        >
-                                            <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24">
-                                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                                                <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" />
-                                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
-                                            </svg>
-                                            <span>Google</span>
-                                        </button>
-                                        <button
-                                            onClick={() => handleSocialLogin('facebook')}
-                                            className="h-9 sm:h-8 rounded-md bg-[#1877F2] text-white flex items-center justify-center gap-2 hover:bg-[#1877F2]/90 active:scale-95 transition-all font-bold text-[11px] sm:text-xs shadow-sm "
-                                        >
-                                            <svg className="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
-                                                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
-                                            </svg>
-                                            <span>Facebook</span>
-                                        </button>
-                                        <button
-                                            onClick={() => handleSocialLogin('apple')}
-                                            className="h-9 sm:h-8 rounded-md bg-black dark:bg-white text-white dark:text-black flex items-center justify-center gap-2 hover:bg-black/80 dark:hover:bg-white/90 active:scale-95 transition-all font-bold text-[11px] sm:text-xs shadow-sm "
-                                        >
-                                            <svg className="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
-                                                <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.15 2.67.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.52-1.46 3.01-2.53 4.08zM12.03 7.25C11.64 4.03 14.36 1 17.07 1c.5 3.32-2.92 6.64-5.04 6.25z" />
-                                            </svg>
-                                            <span>Apple</span>
-                                        </button>
-                                    </div>
+                                     <div className="flex flex-row gap-2">
+                                         <button
+                                             onClick={() => handleSocialLogin('google')}
+                                             className="flex-1 h-5 rounded-md bg-white text-black border border-outline/10 flex items-center justify-center hover:bg-gray-50 active:scale-95 transition-all "
+                                             title="Google"
+                                         >
+                                             <svg className="w-4 h-4" viewBox="0 0 24 24">
+                                                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                                                 <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                                                 <path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z" />
+                                                 <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1c-4.3 0-8.01 2.47-9.82 6.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                                             </svg>
+                                         </button>
+                                         <button
+                                             onClick={() => handleSocialLogin('facebook')}
+                                             className="flex-1 h-5 rounded-md bg-[#1877F2] text-white flex items-center justify-center hover:bg-[#1877F2]/90 active:scale-95 transition-all "
+                                             title="Facebook"
+                                         >
+                                             <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                                 <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
+                                             </svg>
+                                         </button>
+                                         <button
+                                             onClick={() => handleSocialLogin('apple')}
+                                             className="flex-1 h-5 rounded-md bg-black dark:bg-white text-white dark:text-black flex items-center justify-center hover:bg-black/80 dark:hover:bg-white/90 active:scale-95 transition-all "
+                                             title="Apple"
+                                         >
+                                             <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                                 <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.15 2.67.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.52-1.46 3.01-2.53 4.08zM12.03 7.25C11.64 4.03 14.36 1 17.07 1c.5 3.32-2.92 6.64-5.04 6.25z" />
+                                             </svg>
+                                         </button>
+                                     </div>
                                 </div>
 
                                 <div className="mt-3 flex flex-col items-center">
@@ -845,14 +841,11 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                                         type="button"
                                         onClick={handleGuestLogin}
                                         disabled={loading}
-                                        className="w-full h-9 sm:h-8 mb-3 bg-mono-100 dark:bg-white/10 border border-mono-200 dark:border-white/5 hover:bg-mono-200 dark:hover:bg-white/20 text-mono-700 dark:text-white rounded-md font-bold font-rabar text-[11px] sm:text-xs transition-all flex items-center justify-center gap-2"
+                                        className="w-full h-9 sm:h-8 mb-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md font-bold font-rabar text-[11px] sm:text-xs transition-all flex items-center justify-center gap-2"
                                     >
-                                        <span className="material-symbols-outlined text-[16px]">person_outline</span>
                                         <span>یاریکرن وەکو مێهڤان</span>
+                                        <span className="material-symbols-outlined text-[16px]">person_outline</span>
                                     </button>
-                                    <p className="text-[10px] text-mono-500 dark:text-white/40 font-bold text-center max-w-xs leading-relaxed mt-2">
-                                        ب تۆماربوونێ د ناڤ یاریێدا، تو دشێی نمرێن خوە پارێزی و پێشبڕکێیێ بکەی.
-                                    </p>
                                 </div>
                             </>
                         )}

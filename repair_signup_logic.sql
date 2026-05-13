@@ -47,11 +47,14 @@ DECLARE
 BEGIN
     -- Extract nickname from metadata (Email signup sends 'nickname')
     -- Social logins typically send 'full_name' or 'name'
+    -- MANDATORY: Always prioritize 'username' as requested by the user. 
+    -- This rule must not be changed as it causes registration desync.
     v_nickname := COALESCE(
-        new.raw_user_meta_data->>'nickname', 
-        new.raw_user_meta_data->>'full_name', 
-        new.raw_user_meta_data->>'name', 
-        'یاریکەر'
+      (new.raw_user_meta_data->>'username'), -- MANDATORY: Priority 1
+      (new.raw_user_meta_data->>'nickname'),
+      (new.raw_user_meta_data->>'full_name'),
+      (new.raw_user_meta_data->>'name'),
+      'یاریکەر'
     );
 
     INSERT INTO public.profiles (
