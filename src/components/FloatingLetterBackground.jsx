@@ -54,7 +54,7 @@ const FloatingLetter = memo(({ char, initialX, initialY, pulseMV, baseOpacity = 
 
   return (
     <Motion.div
-      className="absolute text-mono-900 dark:text-mono-100 font-bold text-[20px] select-none font-rabar pointer-events-none transition-opacity duration-1000"
+      className="absolute text-mono-900 dark:text-mono-100 font-bold text-[20px] select-none font-rabar pointer-events-none transition-opacity duration-1000 blur-[1px]"
       style={{
         left: `${initialX}%`,
         top: `${initialY}%`,
