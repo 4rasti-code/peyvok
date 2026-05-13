@@ -577,6 +577,14 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
 
             <div className="w-full max-w-[360px] sm:max-w-[380px] flex flex-col items-center relative z-20 shrink-0 mb-4">
                 <div className="flex flex-col items-center mb-6 text-center">
+                    <Motion.img 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, type: "spring" }}
+                        src="/Peyvok-icon.png" 
+                        className="w-5 h-5 object-contain mb-1 transform hover:scale-110 transition-transform duration-500 cursor-pointer" 
+                        alt="Peyvok Icon" 
+                    />
                     <h1 className="text-3xl font-black font-heading text-mono-900 dark:text-white text-pop tracking-tight">پەیڤۆک</h1>
                 </div>
 
