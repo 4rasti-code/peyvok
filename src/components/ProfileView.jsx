@@ -218,7 +218,7 @@ export default function ProfileView({ onProfileSave }) {
    };
 
    const handleInvite = () => {
-      const shareLink = `https://www.peyvokgame.com/play?invite=${user?.id || 'guest'}`;
+      const shareLink = `https://www.peyvokgame.com/?invite=${user?.id || 'guest'}`;
       navigator.clipboard.writeText(shareLink);
       alert('لینک ھاتە کۆپیکرن! بۆ ھەڤالێن خوە بهنێرە.');
    };
