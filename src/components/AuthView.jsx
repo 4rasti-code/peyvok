@@ -1050,32 +1050,6 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                     </div>
                 </Motion.div>
 
-                <div className="mt-1 flex flex-col items-center gap-1 relative z-20 mb-8 sm:mb-0">
-                    <div className="flex items-center gap-3 text-[9px] font-bold uppercase tracking-widest text-mono-400 dark:text-mono-600">
-                        <button
-                            type="button"
-                            onClick={() => setActivePolicyModal('terms')}
-                            className="hover:text-primary transition-colors uppercase"
-                        >
-                            Terms
-                        </button>
-                        <span className="w-1.5 h-1.5 rounded-md bg-mono-200 dark:bg-white/5"></span>
-                        <button
-                            type="button"
-                            onClick={() => setActivePolicyModal('privacy')}
-                            className="hover:text-primary transition-colors uppercase"
-                        >
-                            Privacy
-                        </button>
-                        <span className="w-1.5 h-1.5 rounded-md bg-mono-200 dark:bg-white/5"></span>
-                        <button
-                            type="button"
-                            onClick={() => setActivePolicyModal('deletion')}
-                            className="hover:text-primary transition-colors uppercase"
-                        >
-                            Deletion
-                        </button>
-                    </div>
                 </div>
             </div>
 
