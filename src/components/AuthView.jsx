@@ -573,26 +573,25 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
             onClick={handleBackgroundClick}
             className="flex-1 w-full h-full flex flex-col items-center justify-center overflow-y-auto sm:overflow-hidden no-scrollbar p-4 animate-in fade-in duration-500 relative isolate auth-view-container bg-mono-white dark:bg-mono-950 transition-colors"
         >
-            <FloatingLetterBackground ref={bgRef} baseOpacity={0.7} />
+            <FloatingLetterBackground ref={bgRef} baseOpacity={0.25} />
 
             <div className="w-full max-w-[360px] sm:max-w-[380px] flex flex-col items-center relative z-20 shrink-0 mb-4">
-                <div className="flex flex-col items-center mb-6 text-center">
-                    <Motion.img 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5, type: "spring" }}
-                        src="/Peyvok-icon.png" 
-                        className="w-5 h-5 object-contain mb-1 transform hover:scale-110 transition-transform duration-500 cursor-pointer" 
-                        alt="Peyvok Icon" 
-                    />
-                    <h1 className="text-3xl font-black font-heading text-mono-900 dark:text-white text-pop tracking-tight">پەیڤۆک</h1>
-                </div>
-
                 <Motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="w-full px-4 py-3 sm:px-8 sm:py-5 bg-mono-50 dark:bg-mono-900 rounded-md border border-mono-200 dark:border-white/5 transition-colors duration-500"
                 >
+                    <div className="flex flex-col items-center mb-6 text-center">
+                        <Motion.img 
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5, type: "spring" }}
+                            src="/Peyvok-icon.png" 
+                            className="w-5 h-5 object-contain mb-1 transform hover:scale-110 transition-transform duration-500 cursor-pointer" 
+                            alt="Peyvok Icon" 
+                        />
+                        <h1 className="text-3xl font-black font-heading text-mono-900 dark:text-white text-pop tracking-tight">پەیڤۆک</h1>
+                    </div>
                     <div className="relative z-10 w-full">
                         {/* 1. LOGIN / SIGNUP FLOW */}
                         {!showOtpScreen && recoveryStep === 0 && (
@@ -841,11 +840,19 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                                         type="button"
                                         onClick={handleGuestLogin}
                                         disabled={loading}
-                                        className="w-full h-9 sm:h-8 mb-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md font-bold font-rabar text-[11px] sm:text-xs transition-all flex items-center justify-center gap-2"
+                                        className="w-full h-9 sm:h-8 mb-5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-md font-bold font-rabar text-[11px] sm:text-xs transition-all flex items-center justify-center gap-2"
                                     >
                                         <span>یاریکرن وەکو مێهڤان</span>
                                         <span className="material-symbols-outlined text-[16px]">person_outline</span>
                                     </button>
+
+                                    <div className="flex items-center justify-center gap-4 text-[9px] font-black font-rabar text-mono-400 dark:text-white/30 uppercase tracking-tighter mt-1">
+                                        <button type="button" onClick={() => setActivePolicyModal('privacy')} className="hover:text-emerald-400 transition-colors">Privacy Policy</button>
+                                        <span className="opacity-20">•</span>
+                                        <button type="button" onClick={() => setActivePolicyModal('terms')} className="hover:text-emerald-400 transition-colors">Terms of Service</button>
+                                        <span className="opacity-20">•</span>
+                                        <button type="button" onClick={() => setActivePolicyModal('deletion')} className="hover:text-emerald-400 transition-colors">Data Deletion</button>
+                                    </div>
                                 </div>
                             </>
                         )}

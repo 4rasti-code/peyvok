@@ -207,6 +207,12 @@ export default function App() {
 
   // --- ONESIGNAL NOTIFICATION ENGINE ---
   useEffect(() => {
+    // 1. DEVELOPMENT GUARD: Skip OneSignal on localhost to avoid "Domain Mismatch" errors
+    if (window.location.hostname === 'localhost') {
+      console.log("🔔 [OneSignal] Localhost detected, skipping initialization.");
+      return;
+    }
+
     let isMounted = true;
     const initOneSignal = async () => {
       try {
