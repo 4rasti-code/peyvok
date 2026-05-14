@@ -158,7 +158,7 @@ export default function ShopView({ fils, derhem, dinar: _dinar, magnetCount, hin
 
   if (loadingAuth) {
     return (
-      <div className="flex-1 w-full flex items-center justify-center bg-mono-white dark:bg-mono-950 transition-colors duration-500">
+      <div className="flex-1 w-full flex items-center justify-center bg-mono-white dark:bg-black transition-colors duration-500">
         <div className="w-12 h-12 border-4 border-mono-200 dark:border-white/10 border-t-primary rounded-full animate-spin" />
       </div>
     );
@@ -167,7 +167,7 @@ export default function ShopView({ fils, derhem, dinar: _dinar, magnetCount, hin
   return (
     <div 
       onClick={handleBackgroundClick}
-      className="flex-1 w-full bg-mono-white dark:bg-mono-950 px-4 pt-6 pb-[120px] max-w-full flex flex-col gap-6 animate-in fade-in duration-700 overflow-x-hidden relative bg-trigger-zone transition-colors"
+      className="flex-1 w-full bg-mono-white dark:bg-black px-4 pt-6 pb-[120px] max-w-full flex flex-col gap-6 animate-in fade-in duration-700 overflow-x-hidden relative bg-trigger-zone transition-colors"
     >
 
       
@@ -185,7 +185,7 @@ export default function ShopView({ fils, derhem, dinar: _dinar, magnetCount, hin
       </div>
 
       <div className="relative z-20 bg-mono-white/5 dark:bg-mono-900/40 border border-mono-200/50 dark:border-mono-800/50 rounded-md p-3 shadow-sm flex flex-col gap-4 transition-colors duration-300">
-        <div className="flex p-1 bg-mono-100 dark:bg-mono-950 backdrop-blur-2xl rounded-md border border-mono-200 dark:border-mono-800 shadow-sm relative transition-colors duration-300">
+        <div className="flex p-1 bg-mono-100 dark:bg-black backdrop-blur-2xl rounded-md border border-mono-200 dark:border-mono-800 shadow-sm relative transition-colors duration-300">
         {['powerups', 'avatars'].map((tab) => (
           <button 
             key={tab}

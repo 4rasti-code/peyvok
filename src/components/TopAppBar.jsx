@@ -73,7 +73,7 @@ export default function TopAppBar({
 
   return (
     <header
-      className={`relative top-0 w-full z-100 bg-mono-white dark:bg-mono-950 border-b border-mono-200 dark:border-white/5 pt-[env(safe-area-inset-top,0px)] transition-all duration-500 overflow-visible`}
+      className={`relative top-0 w-full z-100 bg-mono-white dark:bg-black border-b border-mono-200 dark:border-white/5 pt-[env(safe-area-inset-top,0px)] transition-all duration-500 overflow-visible`}
       dir="ltr"
     >
       <div className="flex h-16 items-center justify-between px-6 sm:px-12 w-full mx-auto relative gap-4">

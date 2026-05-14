@@ -92,14 +92,14 @@ const BattleResultOverlay = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-2000 flex items-center justify-center bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md p-6"
+          className="fixed inset-0 z-2000 flex items-center justify-center bg-mono-white/90 dark:bg-black/95 backdrop-blur-md p-6"
         >
 
           <Motion.div
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className={`w-full max-w-md bg-mono-white dark:bg-mono-950 border-2 ${isVictory
+            className={`w-full max-w-md bg-mono-white dark:bg-black border-2 ${isVictory
               ? 'border-black/20 dark:border-white/20'
               : isDefeat
                 ? 'border-red-500/20 dark:border-red-500/30'

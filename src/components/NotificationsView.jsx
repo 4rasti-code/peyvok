@@ -68,12 +68,12 @@ export default function NotificationsView({
         initial={{ opacity: 0, y: -10, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="absolute top-full mt-2 right-0 w-80 max-h-[480px] z-50 bg-mono-white/95 dark:bg-mono-950/95 backdrop-blur-2xl rounded-2xl border border-mono-200 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden"
+        className="absolute top-full mt-2 right-0 w-80 max-h-[480px] z-50 bg-mono-white/95 dark:bg-black/95 backdrop-blur-2xl rounded-2xl border border-mono-200 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden"
         dir="rtl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Decorative Arrow */}
-        <div className="absolute -top-1.5 right-6 w-3 h-3 bg-mono-white dark:bg-mono-950 border-l border-t border-mono-200 dark:border-white/10 rotate-45" />
+        <div className="absolute -top-1.5 right-6 w-3 h-3 bg-mono-white dark:bg-black border-l border-t border-mono-200 dark:border-white/10 rotate-45" />
 
         <div className="p-4 border-b border-mono-100 dark:border-white/5 flex items-center justify-between">
           <h3 className="text-sm font-black text-mono-900 dark:text-white">ئاگەھدارى</h3>

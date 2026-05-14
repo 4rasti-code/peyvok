@@ -67,7 +67,7 @@ const LobbyView = React.memo(({
       initial="hidden"
       animate="show"
       onClick={handleBackgroundClick}
-      className="flex-1 w-full max-w-full px-4 pt-4 pb-4 overflow-x-hidden bg-mono-white dark:bg-mono-950 relative h-full bg-trigger-zone transition-colors duration-500"
+      className="flex-1 w-full max-w-full px-4 pt-4 pb-4 overflow-x-hidden bg-mono-white dark:bg-black relative h-full bg-trigger-zone transition-colors duration-500"
     >
 
 

@@ -98,7 +98,7 @@ class GameErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col items-center justify-center h-screen bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 p-8 text-center" style={{ fontFamily: 'Rabar, sans-serif' }}>
+        <div className="flex flex-col items-center justify-center h-screen bg-mono-white text-mono-900 dark:bg-black dark:text-mono-50 p-8 text-center" style={{ fontFamily: 'Rabar, sans-serif' }}>
           <div className="bg-red-500/10 border-2 border-red-500/30 p-10 rounded-3xl shadow-2xl max-w-lg backdrop-blur-xl animate-in zoom-in-95">
             <h2 className="text-4xl font-black mb-6 text-red-500">ئاریشەیەک چێ بوو!</h2>
             <p className="text-white/70 mb-10 text-lg leading-relaxed">ببورە، ھندەک ئاریشەیێن تەکنیکی د دەستپێکرنا یاریێ دا ھەبوون. هێڤییە دووبارە پەیجێ نوو بکە یان ڤەگەڕە لابیێ.</p>
@@ -1241,7 +1241,7 @@ export default function App() {
   // Shows loader if auth is initializing, game assets are loading,
   // or if we have no user but haven't yet redirected to the auth screen.
   if (loadingAuth || isGameLoading || (!user && !['auth', 'lobby', 'game'].includes(currentView))) return (
-    <div className="h-dvh flex flex-col items-center justify-center bg-mono-white dark:bg-mono-950 transition-colors duration-500 gap-6">
+    <div className="h-dvh flex flex-col items-center justify-center bg-mono-white dark:bg-black transition-colors duration-500 gap-6">
       <div className="flex flex-col items-center gap-4">
         <img src="/Peyvok-logo-01.png" className="h-20 w-auto block dark:hidden animate-pulse" alt="Peyvok" />
         <img src="/Peyvok-logo-02.png" className="h-20 w-auto hidden dark:block animate-pulse" alt="Peyvok" />
@@ -1745,7 +1745,7 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-200 flex flex-col items-center justify-between bg-mono-50/90 dark:bg-mono-950/90 backdrop-blur-2xl px-6 py-12 text-center overflow-hidden"
+              className="fixed inset-0 z-200 flex flex-col items-center justify-between bg-mono-50/90 dark:bg-black/90 backdrop-blur-2xl px-6 py-12 text-center overflow-hidden"
             >
               {/* Background gradient elements removed as requested by user */}
 

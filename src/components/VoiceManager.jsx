@@ -169,7 +169,7 @@ function VoiceControls({ matchId, onHelp, onExit }) {
               initial={{ y: -10, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -10, opacity: 0 }}
-              className="absolute right-0 mt-2 w-[180px] bg-white dark:bg-mono-950 border border-mono-200 dark:border-white/10 rounded-sm shadow-2xl z-50 overflow-hidden p-1 flex flex-col gap-0.5"
+              className="absolute right-0 mt-2 w-[180px] bg-white dark:bg-black border border-mono-200 dark:border-white/10 rounded-sm shadow-2xl z-50 overflow-hidden p-1 flex flex-col gap-0.5"
               dir="rtl"
             >
               {joinError && (

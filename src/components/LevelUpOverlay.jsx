@@ -69,7 +69,7 @@ export default function LevelUpOverlay({ isVisible, newLevel, onClose, isDark })
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.8, y: -50, opacity: 0 }}
             transition={{ type: "spring", damping: 15, stiffness: 300 }}
-            className="relative flex flex-col items-center z-10 w-full max-w-[340px] bg-mono-white dark:bg-mono-950 p-8 rounded-[40px] border border-mono-200 dark:border-mono-800 shadow-[0_20px_60px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden"
+            className="relative flex flex-col items-center z-10 w-full max-w-[340px] bg-mono-white dark:bg-black p-8 rounded-[40px] border border-mono-200 dark:border-mono-800 shadow-[0_20px_60px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden"
           >
             {/* Background Texture/Glow */}
             <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/hexellence.png')] pointer-events-none" />

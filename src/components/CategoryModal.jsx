@@ -41,7 +41,7 @@ export default function CategoryModal({ onSelect, isOpen, onClose }) {
         case 'وەسف': return 'description';
         case 'هونەر': return 'draw';
         case 'مۆزیک': return 'music_note';
-        case 'کات': return 'schedule';
+        case 'دەم': return 'schedule';
         case 'وەسف(هەڤالناڤ)': return 'description';
         default: return 'stars';
     }

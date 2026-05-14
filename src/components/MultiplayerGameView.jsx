@@ -151,7 +151,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
   }
 
   return (
-    <div className={`flex flex-col flex-1 h-full w-full ${isDark ? 'bg-mono-950' : 'bg-mono-white'} overflow-hidden transition-colors duration-500`}>
+    <div className={`flex flex-col flex-1 h-full w-full ${isDark ? 'bg-black' : 'bg-mono-white'} overflow-hidden transition-colors duration-500`}>
       <style>
         {`
           .battlefield-container {
@@ -230,7 +230,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
           <div className={`absolute inset-x-0 top-1/2 -translate-y-1/2 bg-linear-to-r from-transparent via-${isDark ? 'white/10' : 'slate-300/60'} to-transparent h-px w-full`} />
 
           {/* Score & Round Pill */}
-          <div className={`flex items-center gap-4 ${isDark ? 'bg-mono-950/80 border-mono-800' : 'bg-white/90 border-slate-200 shadow-sm'} backdrop-blur-md px-4 py-1.5 rounded-full border relative z-10`}>
+          <div className={`flex items-center gap-4 ${isDark ? 'bg-black/80 border-mono-800' : 'bg-white/90 border-slate-200 shadow-sm'} backdrop-blur-md px-4 py-1.5 rounded-full border relative z-10`}>
             <div className="flex items-center justify-center min-w-[24px]">
               <span className={`text-sm font-black ${isDark ? 'text-blue-400' : 'text-blue-600'} leading-none tabular-nums`}>
                 {toKuDigits(isPlayer1 ? scores.p1 : scores.p2)}
@@ -283,7 +283,7 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
       </div>
 
       {/* 3. KEYBOARD (Pinned to bottom via Flex) */}
-      <div className={`shrink-0 w-full z-50 p-2 ${isDark ? 'bg-mono-950/40' : 'bg-mono-50'} pb-[max(env(safe-area-inset-bottom),16px)] m-0 border-t ${isDark ? 'border-white/5' : 'border-mono-200 shadow-lg'}`}>
+      <div className={`shrink-0 w-full z-50 p-2 ${isDark ? 'bg-black/40' : 'bg-mono-50'} pb-[max(env(safe-area-inset-bottom),16px)] m-0 border-t ${isDark ? 'border-white/5' : 'border-mono-200 shadow-lg'}`}>
         <Keyboard
           onKey={onKey}
           onDelete={onDelete}

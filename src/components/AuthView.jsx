@@ -596,7 +596,7 @@ export default function AuthView({ onAuthSuccess, onRecoveringChange, onVerifyin
                         {/* 1. LOGIN / SIGNUP FLOW */}
                         {!showOtpScreen && recoveryStep === 0 && (
                             <>
-                                <div className="flex p-0.5 bg-mono-100 dark:bg-mono-950 rounded-md border border-mono-200 dark:border-white/10 mb-4 relative z-10">
+                                <div className="flex p-0.5 bg-mono-100 dark:bg-black rounded-md border border-mono-200 dark:border-white/10 mb-4 relative z-10">
                                     <Motion.div
                                         className="absolute top-1 bottom-1 bg-[#0095f6] rounded-md"
                                         initial={false}
@@ -1095,10 +1095,10 @@ const PolicyModal = ({ isOpen, onClose, type, onViewChange }) => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-1000 flex flex-col bg-mono-white dark:bg-mono-950 overflow-y-auto"
+                    className="fixed inset-0 z-1000 flex flex-col bg-mono-white dark:bg-black overflow-y-auto"
                 >
                     {/* Custom Header for Policy Modals */}
-                    <div className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-mono-white/80 dark:bg-mono-950/80 backdrop-blur-xl border-b border-white/5">
+                    <div className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-mono-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-white/5">
                         <h3 className="text-xl font-black font-heading text-white uppercase tracking-wider">
                             {type === 'terms' ? 'Terms of Service' : type === 'privacy' ? 'Privacy Policy' : 'Data Deletion'}
                         </h3>

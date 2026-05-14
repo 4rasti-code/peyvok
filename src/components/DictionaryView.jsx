@@ -33,22 +33,21 @@ export default function DictionaryView({ onBack, solvedWords = [], allWordsWithC
     // 1. Get metadata for all solved words
     const myWords = (solvedWords || [])
       .map(sw => {
-        const wordData = allWordsWithCategories.find(
-          w => normalizeKurdishInput(w.word).toLowerCase().trim() === normalizeKurdishInput(sw).toLowerCase().trim()
-        );
+        const swNorm = normalizeKurdishInput(sw).toLowerCase().trim();
+        const wordData = allWordsWithCategories.find(w => {
+          const wNorm = normalizeKurdishInput(w.word).toLowerCase().trim();
+          return wNorm === swNorm;
+        });
         
-        // Final taxonomy protection: Ensure category is official
-        const officialCats = new Set(allWordsWithCategories.map(w => w.category));
-        let finalCategory = wordData?.category || 'هەمەجۆر';
-        if (!officialCats.has(finalCategory)) {
-          finalCategory = 'هەمەجۆر';
-        }
-
-        // Fallback for words not in master list (from old sessions or multiplayer)
+        // Use empty string or skip if no category (should not happen now)
+        let finalCategory = wordData?.category || '';
+        
         return wordData 
           ? { ...wordData, category: finalCategory }
-          : { word: sw, hint: 'پەیڤەکا نوی یا هاتییە دیتن', category: 'هەمەجۆر' };
-      });
+          : { word: sw, hint: 'پەیڤەکا نوی یا هاتییە دیتن', category: '' };
+      })
+      .filter(w => w.category !== ''); // Only show categorized words
+
 
     // 2. Remove duplicates
     const uniqueSolved = Array.from(
@@ -71,13 +70,24 @@ export default function DictionaryView({ onBack, solvedWords = [], allWordsWithC
   }, [allWordsWithCategories, solvedWords, activeCategory, searchTerm]);
 
   const categories = useMemo(() => {
-    // Only build tabs from the master word list's categories
-    const cats = new Set();
+    const catCounts = {};
     allWordsWithCategories.forEach(w => {
-      if (w.category) cats.add(w.category);
+      if (w.category) {
+        catCounts[w.category] = (catCounts[w.category] || 0) + 1;
+      }
     });
-    // Ensure "بها" or any other ghost category is NOT included
-    return ['All', ...Array.from(cats).sort()];
+    
+    // Sort categories: Most words first
+    const sortedCats = Object.keys(catCounts).sort((a, b) => catCounts[b] - catCounts[a]);
+    
+    return [
+      { id: 'All', label: 'ھەمی', count: allWordsWithCategories.length },
+      ...sortedCats.map(cat => ({
+        id: cat,
+        label: cat.replace('_', ' '),
+        count: catCounts[cat]
+      }))
+    ];
   }, [allWordsWithCategories]);
 
   // Highlight logic
@@ -98,9 +108,9 @@ export default function DictionaryView({ onBack, solvedWords = [], allWordsWithC
   }, [highlightWord]);
 
   return (
-    <div className="min-h-screen bg-mono-white dark:bg-mono-950 flex flex-col items-center safe-top safe-bottom overflow-x-hidden transition-colors duration-500" dir="rtl">
+    <div className="min-h-screen bg-mono-white dark:bg-black flex flex-col items-center safe-top safe-bottom overflow-x-hidden transition-colors duration-500" dir="rtl">
       {/* Premium Minimal Header */}
-      <div className="w-full max-w-lg flex items-center justify-between px-6 py-4 sticky top-0 z-50 bg-mono-white/80 dark:bg-mono-950/80 backdrop-blur-xl border-b border-mono-100 dark:border-mono-800/30">
+      <div className="w-full max-w-lg flex items-center justify-between px-6 py-4 sticky top-0 z-50 bg-mono-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-mono-100 dark:border-mono-800/30">
         <button 
           onClick={() => { triggerHaptic(10); onBack(); }}
           className="w-10 h-10 rounded-[4px] bg-mono-50 dark:bg-white/5 border border-mono-200 dark:border-white/10 flex items-center justify-center text-mono-600 dark:text-white/60 hover:bg-mono-100 dark:hover:bg-white/10 transition-all active:scale-90"
@@ -130,21 +140,46 @@ export default function DictionaryView({ onBack, solvedWords = [], allWordsWithC
           </span>
         </div>
 
-        {/* Categories */}
-        <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 mb-8">
+        {/* Categories with Drag-to-Scroll Support */}
+        <div 
+          className="flex gap-2 overflow-x-auto no-scrollbar py-1 mb-8 cursor-grab active:cursor-grabbing select-none"
+          onMouseDown={(e) => {
+            const el = e.currentTarget;
+            el.dataset.isDown = 'true';
+            el.dataset.startX = e.pageX - el.offsetLeft;
+            el.dataset.scrollLeft = el.scrollLeft;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.dataset.isDown = 'false';
+          }}
+          onMouseUp={(e) => {
+            e.currentTarget.dataset.isDown = 'false';
+          }}
+          onMouseMove={(e) => {
+            const el = e.currentTarget;
+            if (el.dataset.isDown !== 'true') return;
+            e.preventDefault();
+            const x = e.pageX - el.offsetLeft;
+            const walk = (x - Number(el.dataset.startX)) * 2; // Scroll speed
+            el.scrollLeft = Number(el.dataset.scrollLeft) - walk;
+          }}
+        >
           {categories.map(cat => {
-            const isActive = activeCategory === cat;
+            const isActive = activeCategory === cat.id;
             return (
               <button
-                key={cat}
-                onClick={() => { triggerHaptic(5); playTabSound(); setActiveCategory(cat); }}
-                className={`whitespace-nowrap px-5 py-2 rounded-[4px] font-black text-[10px] transition-all border uppercase tracking-wider ${
+                key={cat.id}
+                onClick={() => { triggerHaptic(5); playTabSound(); setActiveCategory(cat.id); }}
+                className={`whitespace-nowrap px-4 py-2 rounded-[4px] font-black transition-all border uppercase flex items-center gap-2 ${
                   isActive
                     ? 'bg-mono-900 dark:bg-mono-100 text-mono-50 dark:text-mono-900 border-mono-900 dark:border-mono-100'
                     : 'bg-mono-white dark:bg-mono-900/20 text-mono-400 dark:text-mono-500 border-mono-200 dark:border-mono-800/60 hover:border-mono-400 dark:hover:border-mono-600'
                 }`}
               >
-                {cat === 'All' ? 'ھەمی' : cat.replace('_', ' ')}
+                <span className="text-[10px] tracking-wider">{cat.label}</span>
+                <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${isActive ? 'bg-mono-50/20 dark:bg-black/20' : 'bg-mono-100 dark:bg-white/5'} tabular-nums`}>
+                  {toKuDigits(cat.count)}
+                </span>
               </button>
             );
           })}

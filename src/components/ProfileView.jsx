@@ -286,14 +286,14 @@ export default function ProfileView({ onProfileSave }) {
    return (
       <div
          onClick={handleBackgroundClick}
-         className="w-screen max-w-full mx-auto h-full flex flex-col pt-0 pb-0 overflow-x-hidden relative z-10 bg-mono-white dark:bg-mono-950 bg-trigger-zone transition-colors duration-500"
+         className="w-screen max-w-full mx-auto h-full flex flex-col pt-0 pb-0 overflow-x-hidden relative z-10 bg-mono-white dark:bg-black bg-trigger-zone transition-colors duration-500"
       >
          <div className="absolute inset-0 pointer-events-none z-0">
 
          </div>
 
          <div className="px-5 mb-4 text-center flex flex-col items-center relative z-10 bg-trigger-zone">
-            <div className="relative w-full aspect-[1.4/1] max-w-[340px] rounded-md overflow-hidden border border-mono-200 dark:border-mono-800 bg-mono-white dark:bg-mono-950 group transition-colors duration-300 shadow-xl">
+            <div className="relative w-full aspect-[1.4/1] max-w-[340px] rounded-md overflow-hidden border border-mono-200 dark:border-mono-800 bg-mono-white dark:bg-black group transition-colors duration-300 shadow-xl">
 
                {/* 1. Texture Layer */}
                <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.08] bg-[url('https://www.transparenttextures.com/patterns/hexellence.png')] pointer-events-none"></div>
@@ -470,7 +470,7 @@ export default function ProfileView({ onProfileSave }) {
                         </svg>
                      </div>
 
-                     <div className="relative p-0.5 bg-mono-white dark:bg-mono-950 rounded-full shadow-2xl border-[0.5px] border-mono-200 dark:border-mono-800 z-10">
+                     <div className="relative p-0.5 bg-mono-white dark:bg-black rounded-full shadow-2xl border-[0.5px] border-mono-200 dark:border-mono-800 z-10">
                         <Avatar src={draftAvatar} size="xl" className="w-26 h-26 rounded-full border border-mono-100 dark:border-mono-800 object-cover" updatedAt={user?.updated_at} />
                         <div
                            className="absolute bottom-0 right-0 w-9 h-9 text-slate-950 rounded-full border-2 border-white flex items-center justify-center shadow-xl z-50 transition-transform active:scale-90"
@@ -720,7 +720,7 @@ export default function ProfileView({ onProfileSave }) {
                <Motion.div
                   initial={{ opacity: 0, scale: 0.9, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  className="bg-mono-white dark:bg-mono-950 rounded-md w-full max-w-2xl overflow-hidden relative border border-mono-200 dark:border-mono-800 transition-colors duration-300 shadow-2xl"
+                  className="bg-mono-white dark:bg-black rounded-md w-full max-w-2xl overflow-hidden relative border border-mono-200 dark:border-mono-800 transition-colors duration-300 shadow-2xl"
                >
                   {/* Header */}
                   <div className="p-5 border-b border-mono-200 dark:border-mono-800 flex items-center justify-between bg-mono-50 dark:bg-mono-900/50">

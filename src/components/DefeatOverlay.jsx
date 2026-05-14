@@ -73,13 +73,13 @@ const DefeatOverlay = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-1000 flex items-center justify-center bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-md p-6 overflow-y-auto"
+          className="fixed inset-0 z-1000 flex items-center justify-center bg-mono-white/90 dark:bg-black/95 backdrop-blur-md p-6 overflow-y-auto"
         >
           <Motion.div 
             initial={{ scale: 0.9, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="w-full max-w-[320px] bg-mono-white dark:bg-mono-950 border border-red-500/20 rounded-lg p-4 flex flex-col items-center gap-2 relative transition-colors duration-500 shadow-2xl my-2"
+            className="w-full max-w-[320px] bg-mono-white dark:bg-black border border-red-500/20 rounded-lg p-4 flex flex-col items-center gap-2 relative transition-colors duration-500 shadow-2xl my-2"
           >
             {/* Status Icon Hub */}
             <div className="relative flex flex-col items-center">

@@ -22,6 +22,7 @@ import {
   playStartGameSfx,
   startSearchingSfx,
   stopSearchingSfx,
+  playRightLetterSfx,
   setBackgroundMusicVolume,
   startBackgroundMusic, 
   stopBackgroundMusic
@@ -71,6 +72,7 @@ export const AudioProvider = ({ children }) => {
   const playBackSound = useCallback(() => playBackSfx(appSoundsEnabled), [appSoundsEnabled]);
   const playSaveSound = useCallback(() => playSaveSfx(appSoundsEnabled), [appSoundsEnabled]);
   const playStartGameSound = useCallback(() => { try { playStartGameSfx(appSoundsEnabled); } catch { console.warn("Audio fail"); } }, [appSoundsEnabled]);
+  const playRightLetterSound = useCallback((vol = 1.0) => playRightLetterSfx(appSoundsEnabled, vol), [appSoundsEnabled]);
   const startSearchingSound = useCallback(() => { try { startSearchingSfx(); } catch { console.warn("Audio fail"); } }, []);
   const stopSearchingSound = useCallback((fade = true) => stopSearchingSfx(fade), []);
   const startBGM = useCallback(() => startBackgroundMusic(), []);
@@ -96,6 +98,7 @@ export const AudioProvider = ({ children }) => {
     playVictorySound, playRewardSound, playPurchaseSound, playBoosterSound,
     playBubblePopSound, playSettingsOpenSound, playSettingsCloseSound,
     playTabSound, playAlertSound, playBackSound, playSaveSound, playStartGameSound,
+    playRightLetterSound,
     startSearchingSound, stopSearchingSound, startBGM, stopBGM,
     updateMusicVolume, updateSfxVolume,
     playDailyOpenSfx, playDailyClaimSfx
@@ -104,7 +107,7 @@ export const AudioProvider = ({ children }) => {
     playMessageSound, playMessageSentSound, playVictorySound, playRewardSound, 
     playPurchaseSound, playBoosterSound, playBubblePopSound, playSettingsOpenSound, 
     playSettingsCloseSound, playTabSound, playAlertSound, playBackSound, playSaveSound, 
-    playStartGameSound, startSearchingSound, stopSearchingSound, startBGM, stopBGM, 
+    playStartGameSound, playRightLetterSound, startSearchingSound, stopSearchingSound, startBGM, stopBGM, 
     updateMusicVolume, updateSfxVolume
   ]);
 

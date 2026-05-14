@@ -25,6 +25,7 @@ const SFX_PATHS = {
   SWORD_SLASH: '/gargamel10-sword-slashing-game-sound-effect-2-379229.mp3',
   WHOOSH: '/lordsonny-whoosh-cinematic-161021.mp3',
   MESSAGE_SENT: '/sending_message.mp3',
+  RIGHT_LETTER: '/rightletter.mp3',
 };
 
 const MUSIC_PATH = '/geoffharvey-solve-the-riddle-140001.mp3';
@@ -218,6 +219,7 @@ class SoundEngine {
     if (key === 'SWORD_COMBO') baseVolume *= 0.6;
     if (key === 'SWORD_SLASH') baseVolume *= 0.5;
     if (key === 'WHOOSH') baseVolume *= 1.0;
+    if (key === 'RIGHT_LETTER') baseVolume *= 0.8; // Increased from 0.5 for better audibility
     
     gainNode.gain.value = baseVolume * this.masterVolume;
 
@@ -455,3 +457,11 @@ export const playWhooshSfx = () => engine.play('WHOOSH');
 export const startSearchingSfx = () => engine.startSearchingSfx();
 export const stopSearchingSfx = (fade = true) => engine.stopSearchingSfx(fade);
 export const forceResumeAudio = () => engine.forceResume();
+
+/**
+ * Play sound for correct letter in right position (Green)
+ */
+export const playRightLetterSfx = (enabled = true, volume = 1.0) => {
+  if (!enabled) return;
+  engine.play('RIGHT_LETTER', { volume, pitchRandomization: 10 });
+};

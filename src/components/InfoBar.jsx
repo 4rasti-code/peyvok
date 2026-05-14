@@ -22,7 +22,7 @@ export default function InfoBar({
   const isMamak = gameMode === 'mamak';
   const isHardWords = gameMode === 'hard_words';
   const isSecretWord = gameMode === 'secret_word';
-  const displayCategory = category === 'generalWordPool' ? 'گشتی' : (category || 'گشتی');
+  const displayCategory = category === 'generalWordPool' ? '...' : (category || '...');
   const displayText = isMamak ? (targetHint || '...') : (displayCategory || '...');
   
   // Theme-aware styles
@@ -176,7 +176,7 @@ export default function InfoBar({
         <div className="flex flex-col items-center justify-center overflow-">
           <span className={`text-[8px] font-black ${textMuted} uppercase  mb-0.5`}>بابەت</span>
           <span className="text-[12px] font-black font-heading text-primary truncate max-w-full">
-            {category || 'گشتی'}
+            {category || '...'}
           </span>
         </div>
         <CurrencyDecrementEffect value={fils} currency="fils">

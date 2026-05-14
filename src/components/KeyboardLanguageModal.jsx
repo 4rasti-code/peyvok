@@ -22,7 +22,7 @@ const KeyboardLanguageModal = ({ isOpen, onClose }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-mono-950/10"
+            className="absolute inset-0 bg-black/10"
           />
 
           {/* Precision Minimal Modal Content */}

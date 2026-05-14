@@ -159,7 +159,7 @@ export default function LeaderboardView({ onOpenChat }) {
         </div>
 
         {/* Top Tab Swapper - Synced Card Style */}
-        <div className="flex p-1 rounded-md border mb-10 w-full max-w-xs mx-auto relative z-30 shadow-sm transition-all overflow-hidden bg-mono-100 dark:bg-mono-950 border-mono-200 dark:border-mono-800 duration-300">
+        <div className="flex p-1 rounded-md border mb-10 w-full max-w-xs mx-auto relative z-30 shadow-sm transition-all overflow-hidden bg-mono-100 dark:bg-black border-mono-200 dark:border-mono-800 duration-300">
           {['global', 'friends'].map((tab) => {
             const isActive = view === tab;
             return (

@@ -1,13 +1,26 @@
 import React, { memo, useState, useEffect, useMemo, useRef } from 'react';
 import { STATUS } from '../data/constants';
 import { motion as Motion, useTransform } from 'framer-motion';
+import { useAudio } from '../context/AudioContext';
 
 const Tile = memo(({ char, isCurrent, status, wordLength, isRevealed, isHinted, isFocused, isSecretMode, hideLetters = false, flipDelay = 0, isFocusedMV = null, index = 0, isDark = true, rowIndex = 0, gridId = 'main' }) => {
-  
+  const { playRightLetterSound } = useAudio();
+
   // 🎨 COLORS BASED ON THEME (isDark)
   const showStatus = (!isCurrent && status !== STATUS.NONE) || isRevealed || isHinted;
   const isMaskedLive = isCurrent && hideLetters && status !== STATUS.NONE;
   const isFlipped = showStatus && !isMaskedLive;
+
+  // Sound Effect on Correct (Green) state reveal
+  useEffect(() => {
+    if (isFlipped && (status === STATUS.CORRECT || isRevealed || isHinted)) {
+      // Small timeout to sync with the middle of the flip animation
+      const timer = setTimeout(() => {
+        playRightLetterSound(0.7); // Customizable volume
+      }, (flipDelay + 250)); // 250ms is roughly half of the 500ms flip duration
+      return () => clearTimeout(timer);
+    }
+  }, [isFlipped, status, isRevealed, isHinted, flipDelay, playRightLetterSound]);
 
   // Neutral background before flip (Empty/Active Row)
   const neutralBg = isDark ? 'bg-transparent border-2 border-[#373737]' : 'bg-white border-2 border-[#E5E5E5]';

@@ -115,7 +115,7 @@ const DataDeletion = ({ onViewChange, onClose }) => {
     const t = isKurdish ? content.ku : content.en;
 
     return (
-        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-50 font-body selection:bg-mono-900/30 dark:selection:bg-mono-50/30 p-4 sm:p-8 md:p-12 relative">
+        <div className="h-full bg-mono-white dark:bg-black text-mono-900 dark:text-mono-50 font-body selection:bg-mono-900/30 dark:selection:bg-mono-50/30 p-4 sm:p-8 md:p-12 relative">
             <div className="max-w-4xl mx-auto relative z-10">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6 bg-surface-container/20 backdrop-blur-3xl p-6 rounded-md border border-outline/10 ">

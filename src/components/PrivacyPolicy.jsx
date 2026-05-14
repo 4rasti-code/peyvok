@@ -155,7 +155,7 @@ const PrivacyPolicy = ({ onViewChange, onClose }) => {
     const isRTL = lang === 'ku';
 
     return (
-        <div className="h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-100 selection:bg-mono-900/30 dark:selection:bg-mono-50/30 selection:text-white font-body p-6 sm:p-12" dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className="h-full bg-mono-white dark:bg-black text-mono-900 dark:text-mono-100 selection:bg-mono-900/30 dark:selection:bg-mono-50/30 selection:text-white font-body p-6 sm:p-12" dir={isRTL ? 'rtl' : 'ltr'}>
             <div className="max-w-4xl mx-auto relative">
                 {/* Header Section */}
                 <div className="flex flex-col sm:flex-row items-center justify-between mb-16 gap-8">

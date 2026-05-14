@@ -290,14 +290,14 @@ export default function PublicProfileModal({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={() => { playBubblePopSound(); onClose(); }}
-        className="absolute inset-0 bg-mono-white/90 dark:bg-mono-950/95 backdrop-blur-sm"
+        className="absolute inset-0 bg-mono-white/90 dark:bg-black/95 backdrop-blur-sm"
       />
 
       <Motion.div
         initial={{ scale: 0.9, opacity: 0, y: 30 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
         exit={{ scale: 0.9, opacity: 0, y: 30 }}
-        className="relative w-full max-w-sm bg-mono-white/95 dark:bg-mono-950/95 backdrop-blur-md border border-mono-200 dark:border-white/10 rounded-md overflow-hidden flex-col items-center p-6 text-center max-h-[90vh] overflow-y-auto transition-colors duration-500 shadow-2xl"
+        className="relative w-full max-w-sm bg-mono-white/95 dark:bg-black/95 backdrop-blur-md border border-mono-200 dark:border-white/10 rounded-md overflow-hidden flex-col items-center p-6 text-center max-h-[90vh] overflow-y-auto transition-colors duration-500 shadow-2xl"
         dir="rtl"
       >
         {/* Close Button */}

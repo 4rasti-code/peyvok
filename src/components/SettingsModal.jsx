@@ -28,14 +28,14 @@ function SettingsModal({
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
                exit={{ opacity: 0 }}
-               className="fixed inset-0 z-100 flex items-center justify-center px-4 bg-mono-white/80 dark:bg-mono-950/80 backdrop-blur-md p-4 transition-colors duration-500"
+               className="fixed inset-0 z-100 flex items-center justify-center px-4 bg-mono-white/80 dark:bg-black/80 backdrop-blur-md p-4 transition-colors duration-500"
                onClick={onClose}
             >
                <Motion.div
                   initial={{ scale: 0.98, opacity: 0, y: 10 }}
                   animate={{ scale: 1, opacity: 1, y: 0 }}
                   exit={{ scale: 0.98, opacity: 0, y: 10 }}
-                  className="w-full max-w-[340px] rounded-lg overflow-hidden relative font-rabar bg-mono-white dark:bg-mono-950 border border-mono-200 dark:border-white/10 transition-colors duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_40px_rgba(0,0,0,0.3)]"
+                  className="w-full max-w-[340px] rounded-lg overflow-hidden relative font-rabar bg-mono-white dark:bg-black border border-mono-200 dark:border-white/10 transition-colors duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_15px_40px_rgba(0,0,0,0.3)]"
                   onClick={e => e.stopPropagation()}
                   dir="rtl"
                >

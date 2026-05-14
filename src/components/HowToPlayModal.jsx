@@ -515,7 +515,7 @@ export default function HowToPlayModal({ isOpen, onClose, initialMode = 'classic
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          className={`relative w-full max-w-[340px] ${isDark ? 'bg-mono-950' : 'bg-white'} overflow-hidden flex flex-col max-h-[90vh] border ${isDark ? 'border-white/10' : 'border-slate-200'} rounded-[2rem]`}
+          className={`relative w-full max-w-[340px] ${isDark ? 'bg-black' : 'bg-white'} overflow-hidden flex flex-col max-h-[90vh] border ${isDark ? 'border-white/10' : 'border-slate-200'} rounded-[2rem]`}
         >
           {/* Header */}
           <div className="px-4 pt-4 pb-2 flex flex-col items-center">

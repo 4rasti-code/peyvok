@@ -1,10 +1,10 @@
--- Peyvok Supabase Category Sanitization Script (Simplified Version)
--- Run this in your Supabase SQL Editor to clean up ghost categories.
+-- Peyvok Supabase Category Audit & Cleanup Script
+-- Run this in your Supabase SQL Editor to manage your word taxonomy.
 
--- 1. Update words with unauthorized categories to 'هەمەجۆر' (Miscellaneous)
--- This list defines the ONLY authorized categories.
-UPDATE words 
-SET category = 'هەمەجۆر'
+-- 1. AUDIT: Identify words with potentially unauthorized or legacy categories
+-- This helps you find words that need to be re-categorized manually to their specific "own category".
+SELECT id, word, category, hint 
+FROM words 
 WHERE category NOT IN (
   'ناڤێ مرۆڤان',
   'وەسف(هەڤالناڤ)',
@@ -22,15 +22,21 @@ WHERE category NOT IN (
   'وەلات',
   'خێزان',
   'خوارن',
-  'کات',
+  'دەم',
   'جلوبەرگ',
   'جهـ',
-  'هەمەجۆر',
   'مامک'
-);
+) OR category IS NULL OR category = '';
 
--- 2. Explicitly remove the corrupted "بها" category if it exists
-DELETE FROM words WHERE category = 'بها' OR category IS NULL OR category = '';
+-- 2. CLEANUP: Remove words with no category or empty strings (Data Integrity)
+-- Only run this if you want to remove corrupted records.
+-- DELETE FROM words WHERE category IS NULL OR category = '';
 
--- 3. Verify results
-SELECT DISTINCT category FROM words ORDER BY category;
+-- 3. VERIFICATION: List all active categories in your database
+SELECT category, COUNT(*) as word_count 
+FROM words 
+GROUP BY category 
+ORDER BY word_count DESC;
+
+-- IMPORTANT: The application no longer uses a 'Miscellaneous' or 'General' fallback.
+-- Every word will be displayed under its stored category. Ensure all words have meaningful categories.

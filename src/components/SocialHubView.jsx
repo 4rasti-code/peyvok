@@ -67,7 +67,7 @@ function MessageContextMenu({ m, x, y, isMe, onReact, onReply, onCopy, onClose }
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={onClose}
-        className="absolute inset-0 bg-mono-950/80"
+        className="absolute inset-0 bg-black/80"
       />
       
       <Motion.div 
@@ -727,7 +727,7 @@ export default function SocialHubView({
   };
 
   return (
-    <div className="flex flex-col h-full bg-mono-white dark:bg-mono-950 text-mono-900 dark:text-mono-50 overflow-hidden transition-colors duration-500" dir="rtl">
+    <div className="flex flex-col h-full bg-mono-white dark:bg-black text-mono-900 dark:text-mono-50 overflow-hidden transition-colors duration-500" dir="rtl">
       {/* Header - Social Center Branding */}
       <div
         className="px-4 pb-4 flex items-center justify-center border-b border-mono-200 dark:border-mono-800 bg-mono-white dark:bg-mono-900 transition-colors duration-500"
@@ -767,7 +767,7 @@ export default function SocialHubView({
           ))}
           {/* Sliding Active Background - Sharp Edges */}
           <div
-            className="absolute top-1 bottom-1 transition-all duration-300 ease-out bg-mono-950 dark:bg-mono-800 rounded-sm z-0 shadow-md"
+            className="absolute top-1 bottom-1 transition-all duration-300 ease-out bg-black dark:bg-mono-800 rounded-sm z-0 shadow-md"
             style={{
               width: 'calc(33.33% - 4px)',
               right: activeTab === 'global' ? '4px' : activeTab === 'private' ? '33.33%' : '66.66%'
@@ -779,14 +779,14 @@ export default function SocialHubView({
       {/* Main Content Area - Layout Engine */}
       <div className="flex-1 overflow-hidden relative flex flex-col">
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-mono-white dark:bg-mono-950 z-10 transition-colors duration-500">
+          <div className="absolute inset-0 flex items-center justify-center bg-mono-white dark:bg-black z-10 transition-colors duration-500">
             <div className="w-10 h-10 border-4 border-mono-200 dark:border-mono-800 border-t-primary rounded-full animate-spin" />
           </div>
         )}
 
         {/* Global Chat View */}
         {activeTab === 'global' && (
-          <div className="flex-1 relative overflow-hidden bg-mono-50 dark:bg-mono-950/50 transition-colors duration-500">
+          <div className="flex-1 relative overflow-hidden bg-mono-50 dark:bg-black/50 transition-colors duration-500">
             {/* Delicate Texture Overlay */}
             <div 
               className="absolute inset-0 opacity-[0.06] dark:opacity-[0.1] pointer-events-none grayscale"
@@ -924,7 +924,7 @@ export default function SocialHubView({
         {activeTab === 'private' && (
           <div className="flex-1 flex flex-col overflow-hidden">
             {selectedChat ? (
-              <div className="flex-1 flex flex-col overflow-hidden bg-mono-50 dark:bg-mono-950">
+              <div className="flex-1 flex flex-col overflow-hidden bg-mono-50 dark:bg-black">
                 <div className="shrink-0 p-3 bg-mono-white dark:bg-mono-900 border-b border-mono-200 dark:border-mono-800 flex items-center gap-3 z-10 shadow-sm transition-colors duration-300">
                   <button onClick={() => { playBubblePopSound(); setSelectedChat(null); }} className="material-symbols-outlined text-mono-400 hover:text-mono-900 dark:text-mono-500 dark:hover:text-mono-100">arrow_back</button>
                   <div className="flex items-center gap-3 cursor-pointer" onClick={() => { triggerHaptic(10); playBubblePopSound(); setSelectedPlayer(selectedChat); }}>
@@ -1114,7 +1114,7 @@ export default function SocialHubView({
 
       {/* Input Area - WhatsApp Pill Style Swapped */}
       {(activeTab === 'global' || selectedChat) && (
-        <div className="bg-mono-white dark:bg-mono-950 border-t border-mono-200 dark:border-mono-800 relative z-45 transition-colors duration-300">
+        <div className="bg-mono-white dark:bg-black border-t border-mono-200 dark:border-mono-800 relative z-45 transition-colors duration-300">
           {/* Reply Preview Box */}
           <AnimatePresence>
             {replyingTo && (
