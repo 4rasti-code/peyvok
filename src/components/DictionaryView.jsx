@@ -71,24 +71,31 @@ export default function DictionaryView({ onBack, solvedWords = [], allWordsWithC
 
   const categories = useMemo(() => {
     const catCounts = {};
-    allWordsWithCategories.forEach(w => {
-      if (w.category) {
-        catCounts[w.category] = (catCounts[w.category] || 0) + 1;
-      }
+    
+    // 1. Map solved words to their categories using a normalized comparison
+    const solvedWithMeta = (solvedWords || []).map(sw => {
+      const swNorm = normalizeKurdishInput(sw).toLowerCase().trim();
+      return allWordsWithCategories.find(w => normalizeKurdishInput(w.word).toLowerCase().trim() === swNorm);
+    }).filter(w => w && w.category);
+
+    // 2. Count occurrences per category
+    solvedWithMeta.forEach(w => {
+      catCounts[w.category] = (catCounts[w.category] || 0) + 1;
     });
     
-    // Sort categories: Most words first
+    // 3. Sort categories: Most discovered first
     const sortedCats = Object.keys(catCounts).sort((a, b) => catCounts[b] - catCounts[a]);
     
     return [
-      { id: 'All', label: 'ھەمی', count: allWordsWithCategories.length },
+      { id: 'All', label: 'ھەمی', count: solvedWithMeta.length },
       ...sortedCats.map(cat => ({
         id: cat,
         label: cat.replace('_', ' '),
         count: catCounts[cat]
       }))
     ];
-  }, [allWordsWithCategories]);
+  }, [allWordsWithCategories, solvedWords]);
+
 
   // Highlight logic
   useEffect(() => {
