@@ -1,5713 +1,3092 @@
 export const verbsWords = [
   {
+    "word": "بڕین",
+    "hint": "ب کێرێ یان ب بڤری یان ب ئاموورەک دەڤ تووژ تشتەک بھێتە قەتکرن",
+    "category": "کار (چاوگ)"
+  },
+  {
+    "word": "زانین",
+    "hint": "تشتەکێ مرۆڤ ب خواندن و ماندیبوونێ بدەست دئێخیت",
+    "category": "کار (چاوگ)"
+  },
+  {
+    "word": "خواندن",
+    "hint": "کارەکە مرۆڤ ل قوتابخانێ دکەت بۆ فێربوونێ",
+    "category": "کار (چاوگ)"
+  },
+  {
     "word": "خوارن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کوشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەخوارن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھاتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دیتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گۆتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "زانین",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "خواندن",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نڤیسین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "فرۆتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "برن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئینان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژیان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کەفتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دابەزین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نڤستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گریان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کەنین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ترساندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بازدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕەڤین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەڕیان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پرسیارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گۆھداریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەحکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەرکەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەھشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھزرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێکدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دروستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئێخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھاڤێتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شویشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تاڕاشین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سۆتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کوژاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەمراندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گرێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "یاریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "باوەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەبوولکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەژراندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕەتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھاریکاریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پشکداریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەشداریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چاڤەڕێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چاڤەڕێبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پشتڕاستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تاقیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دیارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەشارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاشکراکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مەزنکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بچووککرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زێدەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کێمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "درێژکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کورتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەندروستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چاڤدێریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بڕیاردان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەسەندکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەگوھاستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گھۆڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئامادەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەرھەڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پشتبەستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "باوەرپێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بکارهینان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دروستبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژێبرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پاککرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پیسکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕێکخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەلگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دانان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕاوەستان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دانیشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕینشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێکئینان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێگەھشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەلماندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پاراستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژبیرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بیرئینان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاگەھدارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەشەپێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێشخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پاشخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەلاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەپاتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئالاستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مێژتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دروین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕنین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شکاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "بڕین",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەلاشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دڕاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چنین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕێستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پاڵدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "ڕاکێشان",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاڤدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەژاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەلاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کەلاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سۆرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "براژتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەحەویان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕێڤەچوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زڤڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لێزڤڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەڤزین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "حلسین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەقین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "فڕین",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "فڕاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەمبێزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ماچکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "حەزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "ڤیان",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نەڤیان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کینگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زیزبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تۆڕەبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاشتبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سزادان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خەلاتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھاندان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پشتەڤانیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاریشەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شەڕکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "جودابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژێکڤەبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھلنگڤین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەرسین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەزیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەزاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەزیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەرمبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ساربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پیسبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پاقژبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شکەستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کەلشین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "درین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەڕفین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاڤابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "وێرانبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێکچوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ساخبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نەخۆشکەفتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "باشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بلندبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نزمبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەلەوبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زراڤبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پیربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەنجبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕەقبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕەقکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نەرمبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شلبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کۆرەبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کەڕبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لالبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بێدەنگبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەوارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قێژین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قیژاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قێڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گازیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بناڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەستنیشانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕاگەھاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نیقاشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دانوستاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گفتوگۆکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕاوێژکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پشکنین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چارەسەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چەماندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خوارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕاستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شاشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھنداکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەگەڕاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئازران",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئازراندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاسێبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بۆشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەڕبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھشکبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زوهابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئالۆزبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سادەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕوونکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تاریبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕۆهنبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "برسقین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بریسقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چرویسین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شەوقدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕۆژئاڤابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕۆژھەلاتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "بارین",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەرساندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەلاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەلەکبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کێمبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "برسیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێھنیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خەندقین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نقوومبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەرکەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بنکەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێشبڕکێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بزاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێکۆڵکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەرەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مێڤانداریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێشوازیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بڕێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ماڵئاڤاھیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سلاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕێزگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سووکایەتیپێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مەردایەتیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چەپەڵیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دزیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خاپاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕاستگۆیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "فێلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "درەوکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تاوانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گونەھکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەشێمانبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لێبۆڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "داخوازکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "فەرمانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕێگریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەدەغەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕێپێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕێککەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەیماندان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سۆزدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گرێبەستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەلوەشاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دامەزراندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لادان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەلبژارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەنگدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەربژێرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کاندیدکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەرژمێریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێکەلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "جوداکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پارچەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کوتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دابەشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژێدەرخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چارگۆشەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بازنەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نێزیکبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دوورکەفتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لێگەڕیان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خەمخوارن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دلگرانبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دلخۆشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەرسامبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئارەزووکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەمەناکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شکبرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گومانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دوودلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مسۆگەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئامۆژگاریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕێنمایکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شرۆڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شیتەلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پۆلێنکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەلسەنگاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەکۆلینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پشکنینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەکۆلین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەرپەرشتیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بڕێڤەبرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کۆنترۆلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئازادبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زیندانیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئەشکەنجەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕزگاربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "فیدابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قوربانیدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەرگریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھێرشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "داگیرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پاشڤەکێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێشڕەویکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاڤەدانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کۆچکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاوارەبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەربەدەربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کفنکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تازیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شینیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "داوەتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شاھیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سترانگۆتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەفژەنین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زوڕناژەنین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەماکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێشاندان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نواندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "فلمدروستکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "وێنەگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تۆمارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەنگگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەلگەنامەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئەرشیفکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژێدەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کلیلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قوفلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێوەردان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێکۆشان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەڤڕکیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ململانێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئێکگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەلشین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کونکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خندقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەنجەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گازندەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گلەیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دادگەھیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تاوانبارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بێگونەھکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕەخنەگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێشنیازکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شیرەتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەیامدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نامەهنارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەیوەندیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەڤدیتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چاڤپێکەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەماھەنگیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خوەگونجاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەرھەمئینان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھاوردەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەناردەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "هنارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "باجوەرگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قازانجکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زیانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەولەمەندبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەژاربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بێکەسبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پشتڕاستبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "بێھیڤیبوون",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەشبینبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕەشبینبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "باوەڕئێنان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاخینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دزین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نەڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەپین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "حەپین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لورین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەقین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بێهنژین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کۆخین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاڤێتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "وەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "داخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەلکێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "داکێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەبڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەقەتیان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەقەتاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێکڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤاڤارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دووبارەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "وەرگێڕان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێداچوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژمارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەژمارتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پارڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەحەواندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەپەسەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕامالین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مەندەھۆشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "حێبەتیبوون",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەرسورمان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کەیفکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شادبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خەمگینبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دلتەنگبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕەنجدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ماندیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "حەساندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "وەستان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گڤاشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پڕکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕژاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مژتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھشککرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سارکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەرمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شێرینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەحلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سویرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ترشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تیژکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نەرمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زڤرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "حلیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێکڤەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شڵقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لەرزاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕاستڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "وەرچەرخان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "باوەشینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تیشکدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "شاشبوون",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەستقوتان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێشئێخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دووماھیئانین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەفکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەنجیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خزمەتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نێچیرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاڤاکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەڕفاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تۆلەڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەفەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
-  },
-  {
-    "word": "پەیڤین",
-    "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاخڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەرخودان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەربازبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قورتالکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نڤێژکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕۆژیگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زەوجین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مەھرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەردان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەلاقدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سۆندخوارن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەستپێکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دوماھیپێئینان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەسلیمبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خوەبدەستڤەبەردان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێکۆشین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شەھیدبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "برینداربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پیچکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "حەلاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لێقەومین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤالاکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەرئێخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژێڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لێکدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لەزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھێدیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قایمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەپاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شینبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕووبەڕووبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێپەڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەربازکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پاشئێخستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گیرۆکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "حەلالکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "حەرامکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پیرۆزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "غەدرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لۆمەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەرکۆنەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مەترسیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چاڤترساندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دلخوەشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ساخکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤەژاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پۆشین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "داپۆشین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نخاڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "رووتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گرنژین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خەمڕەڤاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئارامبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "وێرانکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نیشاندان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کۆمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئیمزاکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "واژۆکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مۆرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پوختەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پڕوپاگەندەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کۆپیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەخشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێھەلچوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خوێھدانگرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەرزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەینکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەلکێشکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قۆپیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھەلاویستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێڤەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "وەرماندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خاڤبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕێزکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لئێکئالاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "داڕشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "داعورتاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نەخشاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاوازدانان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گوڤەندگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پینەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "عاجزبین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەلەوکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "زراڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کێلان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تۆڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھێران",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مەندەھۆشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شۆکبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پڕمەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چەپکەلێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "فیتیلێدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قرچاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قورمچاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خەمساریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پشتگۆھھاڤێتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەربڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کەڤلکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قوربانیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "نەفرەتکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خەبەرگۆتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مەدحکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەسندان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەێگیریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دووڤچوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گۆشەگیربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کۆچبەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاکنجیبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەرەدەریکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مامەلەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بازرگانیکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سوودوەرگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قەرەبووکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەستبسەرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەڕەلاکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھاربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "مەستبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەرخوەشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ھۆشیاربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ئاگەھداربوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بێھۆشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "شەرمکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "فەخرکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خوەمەزنکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەغیلیبرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "حەسودیبرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژەنگگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کفککرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کەڤزگرتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چەکەرەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "چرۆکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "وەرین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "حیلین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سپاردن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خاترخواستن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لێخۆشبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "گەردنئازاکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تێکەلبوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پاشڤەمان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "جگارەکێشان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خولقاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "سەرنشیڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژووردابرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەڵاڤکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڤیدیۆکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژخەوڕابوون",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "خەوندیتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قولپاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕشتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پێڤەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لبەرخوەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ژبەرخوەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "دەیناتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "پەیاسەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "ڕەڤاندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "کەڤتن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "قوتان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "classic",
-      "word_fever",
-      "multiplayer",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەماشەکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بەرێخوەدان",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "لێنێڕین",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "تەمراندن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
   },
   {
     "word": "بۆیاخکرن",
     "hint": "کار(چاوگ)",
-    "category": "کار (چاوگ)",
-    "tags": [
-      "hard_words",
-      "secret_word"
-    ]
+    "category": "کار (چاوگ)"
+  },
+  {
+    "word": "فڕین",
+    "hint": "کار(چاوگ)",
+    "category": "کار (چاوگ)"
   }
 ];

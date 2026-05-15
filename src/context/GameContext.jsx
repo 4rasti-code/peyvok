@@ -731,9 +731,12 @@ export const GameProvider = ({ children }) => {
     syncProgressToDatabase, applyPenalty, processPurchase, refreshRank, getLevelData, progressPercent,
     getFreshWord: async (mode, category) => {
       const { user: currentUser } = gameStateRef.current;
+      
+      // Get the last used category from state or local storage
+      const lastCategory = localStorage.getItem('peyvchin_last_category');
+
       if (currentUser?.id) {
         try {
-          // If category is "All" (ھەموو), use the balanced randomization RPC
           const isAll = !category || category === 'ھەموو' || category === 'generalWordPool';
           const rpcName = isAll ? 'get_balanced_random_word' : 'get_random_fresh_word';
           
@@ -742,18 +745,33 @@ export const GameProvider = ({ children }) => {
             p_mode_tag: mode === 'classic' ? 'classic' : (mode === 'hard_words' ? 'hard_words' : (mode === 'mamak' ? 'mamak' : mode))
           };
 
-          if (!isAll) {
+          if (isAll) {
+            // Apply category exclusion rule
+            rpcParams.p_exclude_category = lastCategory;
+          } else {
             rpcParams.p_category = category;
           }
 
           const { data, error } = await supabase.rpc(rpcName, rpcParams);
           if (error) throw error;
-          if (data && data.length > 0) return { word: data[0].word, hint: data[0].hint, category: data[0].category, id: data[0].id };
+          
+          if (data && data.length > 0) {
+            const nextWord = data[0];
+            // Save the new category for the next round
+            localStorage.setItem('peyvchin_last_category', nextWord.category);
+            return { word: nextWord.word, hint: nextWord.hint, category: nextWord.category, id: nextWord.id };
+          }
         } catch (err) { console.warn("[GameContext] Failed to fetch fresh word from DB, falling back to local:", err); }
       }
+      
       const { level: currLevel, solvedWords: sWords } = gameStateRef.current;
       const { getRandomWordFromCategory } = await import('../data/wordList');
-      return getRandomWordFromCategory(category, currLevel, sWords, mode);
+      const result = await getRandomWordFromCategory(category, currLevel, sWords, mode);
+      
+      if (result) {
+        localStorage.setItem('peyvchin_last_category', result.category);
+      }
+      return result;
     },
     initializeStatsInDB: async () => {
       const { user: currentUser } = gameStateRef.current;
