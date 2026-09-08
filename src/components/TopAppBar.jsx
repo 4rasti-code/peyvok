@@ -8,6 +8,7 @@ import NotificationsView from './NotificationsView';
 import { toKuDigits, formatCompactNumber } from '../utils/formatters';
 import ClipboardIcon from './ClipboardIcon';
 import NotificationBellIcon from './NotificationBellIcon';
+import { useGameStore } from '../store/gameStore';
 
 const AnimatedCounter = ({ value }) => {
   const [internalValue, setInternalValue] = useState(value);
@@ -81,14 +82,7 @@ const InventoryStat = ({ value, icon, Icon, color, bg, isDark = true, type }) =>
 };
 
 export default function TopAppBar({
-  fils = 0,
-  derhem = 0,
-  dinar = 0,
-  magnetCount = 0,
-  hintCount = 0,
-  skipCount = 0,
-  _level,
-  onOpenSettings,
+ onOpenSettings,
   currentView,
   onForfeit,
   _category = 'گشتی',
@@ -110,6 +104,13 @@ export default function TopAppBar({
   _isDailyAvailable = false,
   isDark = true
 }) {
+  const fils = useGameStore(s => s.fils);
+  const derhem = useGameStore(s => s.derhem);
+  const dinar = useGameStore(s => s.dinar);
+  const magnetCount = useGameStore(s => s.magnetCount);
+  const hintCount = useGameStore(s => s.hintCount);
+  const skipCount = useGameStore(s => s.skipCount);
+
   const [isNotifsOpen, setIsNotifsOpen] = useState(false);
 
   const isPlaying = currentView === 'game';

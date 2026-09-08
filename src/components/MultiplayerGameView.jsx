@@ -2,10 +2,11 @@ import React, { useEffect, useCallback, useMemo } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import Grid from './Grid';
 import Keyboard from './Keyboard';
-import { useMultiplayer } from '../context/MultiplayerContext';
+import { useMultiplayerStore } from '../store/multiplayerStore';
 import { useUser } from '../context/AuthContext';
 import { useAudio } from '../context/AudioContext';
-import { useGame } from '../context/GameContext';
+import { useGameStore } from '../store/gameStore';
+import { getLevelFromXP } from '../utils/progression';
 import { useVoice } from '../context/VoiceContext';
 import useGameLogic from '../hooks/useGameLogic';
 import useBotSimulator from '../hooks/useBotSimulator';
@@ -20,38 +21,36 @@ import PremiumName from './PremiumName';
 import { BUNDLES } from '../constants/bundles';
 
 export default function MultiplayerGameView({ opponent: propOpponent, isDark = true, onOpenHowToPlay: _onOpenHowToPlay }) {
-  const {
-    activeMatch,
-    opponent: contextOpponent,
-    submitGuess,
-    broadcastGuess,
-    opponentGuesses,
-    scores,
-    currentRound,
-    isRoundWinner,
-    winnerNickname: _winnerNickname,
-    roundMessage,
-    multiplayerState,
-    setMultiplayerState: _setMultiplayerState,
-    fetchOpponentProfile,
-    resetMatchResultTrigger: _resetMatchResultTrigger,
-    forfeitStatus,
-    forfeitCountdown,
-    triggerForfeitVictory: _triggerForfeitVictory,
-    submitFailure,
-    cancelMatch: _cancelMatch,
-    broadcastLiveAction,
-    opponentLiveStatuses,
-    opponentLiveCursor,
-    setIsGameBoardMounted,
-    myReaction,
-    opponentReaction,
-    submitTimeout,
-    setOpponentGuesses,
-    setOpponentLiveStatuses,
-    setActiveMatchGuarded,
-    setWinnerNickname
-  } = useMultiplayer();
+  const activeMatch = useMultiplayerStore(s => s.activeMatch);
+  const contextOpponent = useMultiplayerStore(s => s.opponent);
+  const submitGuess = useMultiplayerStore(s => s.submitGuess);
+  const broadcastGuess = useMultiplayerStore(s => s.broadcastGuess);
+  const opponentGuesses = useMultiplayerStore(s => s.opponentGuesses);
+  const scores = useMultiplayerStore(s => s.scores);
+  const currentRound = useMultiplayerStore(s => s.currentRound);
+  const isRoundWinner = useMultiplayerStore(s => s.isRoundWinner);
+  const _winnerNickname = useMultiplayerStore(s => s.winnerNickname);
+  const roundMessage = useMultiplayerStore(s => s.roundMessage);
+  const multiplayerState = useMultiplayerStore(s => s.multiplayerState);
+  const _setMultiplayerState = useMultiplayerStore(s => s.setMultiplayerState);
+  const fetchOpponentProfile = useMultiplayerStore(s => s.fetchOpponentProfile);
+  const _resetMatchResultTrigger = useMultiplayerStore(s => s.resetMatchResultTrigger);
+  const forfeitStatus = useMultiplayerStore(s => s.forfeitStatus);
+  const forfeitCountdown = useMultiplayerStore(s => s.forfeitCountdown);
+  const _triggerForfeitVictory = useMultiplayerStore(s => s.triggerForfeitVictory);
+  const submitFailure = useMultiplayerStore(s => s.submitFailure);
+  const _cancelMatch = useMultiplayerStore(s => s.cancelMatch);
+  const broadcastLiveAction = useMultiplayerStore(s => s.broadcastLiveAction);
+  const opponentLiveStatuses = useMultiplayerStore(s => s.opponentLiveStatuses);
+  const opponentLiveCursor = useMultiplayerStore(s => s.opponentLiveCursor);
+  const setIsGameBoardMounted = useMultiplayerStore(s => s.setIsGameBoardMounted);
+  const myReaction = useMultiplayerStore(s => s.myReaction);
+  const opponentReaction = useMultiplayerStore(s => s.opponentReaction);
+  const submitTimeout = useMultiplayerStore(s => s.submitTimeout);
+  const setOpponentGuesses = useMultiplayerStore(s => s.setOpponentGuesses);
+  const setOpponentLiveStatuses = useMultiplayerStore(s => s.setOpponentLiveStatuses);
+  const setActiveMatchGuarded = useMultiplayerStore(s => s.setActiveMatchGuarded);
+  const setWinnerNickname = useMultiplayerStore(s => s.setWinnerNickname);
 
   const {
     joinVoiceChannel,
@@ -92,7 +91,8 @@ export default function MultiplayerGameView({ opponent: propOpponent, isDark = t
 
   const { user, userNickname, userAvatar, equippedFont, equippedNameStyle, equippedBundle } = useUser();
   const { playPopSound, playVictorySound: _playVictorySound, playStartGameSound: playStartSound } = useAudio();
-  const { level: userLevel } = useGame();
+  const currentXP = useGameStore(s => s.currentXP);
+  const userLevel = getLevelFromXP(currentXP);
 
   const tickAudioRef = React.useRef(null);
   const leaveTimeoutRef = React.useRef(null);

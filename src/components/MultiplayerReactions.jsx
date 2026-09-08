@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
-import { useMultiplayer } from '../context/MultiplayerContext';
+import { useMultiplayerStore } from '../store/multiplayerStore';
 import { useVoice } from '../context/VoiceContext';
 import { useAudio } from '../context/AudioContext';
 import { triggerHaptic } from '../utils/haptics';
@@ -25,7 +25,7 @@ const QUICK_CHATS = [
 ];
 
 export default function MultiplayerReactions() {
-  const { broadcastReaction } = useMultiplayer();
+  const broadcastReaction = useMultiplayerStore(s => s.broadcastReaction);
   const { activeSpeakers, isDeafened, remoteUsers } = useVoice();
   const { playPopSound } = useAudio();
   const [isQuickChatOpen, setIsQuickChatOpen] = useState(false);

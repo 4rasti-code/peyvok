@@ -242,7 +242,7 @@ export default function useGameLogic({
     isSubmittingRef.current = true; // Lock immediately while waiting for worker
     const { isValid, isWin } = await wordWorkerClient.validateWord(guessString, target);
 
-    if (!isValid) {
+    if (!isValid && gameMode !== 'multiplayer') {
       isSubmittingRef.current = false;
       triggerHaptic([50, 30, 50]);
       setShakeTrigger(prev => prev + 1);

@@ -5,230 +5,230 @@ import { useAudio } from '../context/AudioContext';
 import { normalizeKurdishInput } from '../utils/textUtils';
 
 const toKuDigits = (n) => {
-  const ku = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-  return n.toString().replace(/\d/g, d => ku[d]);
+ const ku = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+ return n.toString().replace(/\d/g, d => ku[d]);
 };
 
 export default function DictionaryView({ onBack, solvedWords = [], allWordsWithCategories = [], highlightWord }) {
-  const { playTabSound, playSettingsCloseSound } = useAudio();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
+ const { playTabSound, playSettingsCloseSound } = useAudio();
+ const [searchTerm, setSearchTerm] = useState('');
+ const [activeCategory, setActiveCategory] = useState('All');
 
-  const normalizeKurdish = (str) => {
-    if (!str) return '';
-    return str
-      .replace(/ێ/g, 'ی')
-      .replace(/ۆ/g, 'و')
-      .replace(/ڕ/g, 'ر')
-      .replace(/ڵ/g, 'ل')
-      .replace(/ە/g, 'ه')
-      .replace(/\s+/g, '')
-      .toLowerCase();
-  };
+ const normalizeKurdish = (str) => {
+ if (!str) return '';
+ return str
+ .replace(/ێ/g, 'ی')
+ .replace(/ۆ/g, 'و')
+ .replace(/ڕ/g, 'ر')
+ .replace(/ڵ/g, 'ل')
+ .replace(/ە/g, 'ه')
+ .replace(/\s+/g, '')
+ .toLowerCase();
+ };
 
-  // Filter discovered (solved) words based on search and category
-  const discoveredWords = useMemo(() => {
-    const cleanedSearch = normalizeKurdishInput(searchTerm);
+ // Filter discovered (solved) words based on search and category
+ const discoveredWords = useMemo(() => {
+ const cleanedSearch = normalizeKurdishInput(searchTerm);
 
-    // 1. Get metadata for all solved words
-    const myWords = (solvedWords || [])
-      .map(sw => {
-        const swNorm = normalizeKurdishInput(sw).toLowerCase().trim();
-        const wordData = allWordsWithCategories.find(w => {
-          const wNorm = normalizeKurdishInput(w.word).toLowerCase().trim();
-          return wNorm === swNorm;
-        });
+ // 1. Get metadata for all solved words
+ const myWords = (solvedWords || [])
+ .map(sw => {
+ const swNorm = normalizeKurdishInput(sw).toLowerCase().trim();
+ const wordData = allWordsWithCategories.find(w => {
+ const wNorm = normalizeKurdishInput(w.word).toLowerCase().trim();
+ return wNorm === swNorm;
+ });
 
-        // If word is not found in the main dictionary, assign it to 'گشتی' (General)
-        let finalCategory = wordData?.category || 'گشتی';
+ // If word is not found in the main dictionary, assign it to 'گشتی' (General)
+ let finalCategory = wordData?.category || 'گشتی';
 
-        return wordData
-          ? { ...wordData, category: finalCategory }
-          : { word: sw, hint: 'پەیڤەکا نوی یا هاتییە دیتن', category: 'گشتی' };
-      });
-      // Removed the filter(w => w.category !== '') so all words appear
-
-
-
-    // 2. Remove duplicates
-    const uniqueSolved = Array.from(
-      new Map(myWords.map(item => [normalizeKurdishInput(item.word).toLowerCase(), item])).values()
-    );
-
-    // 3. Apply Category and Search Filter
-    const filteredList = uniqueSolved
-      .filter(item => {
-        if (activeCategory === 'All') return true;
-        return item.category === activeCategory;
-      })
-      .filter(item => {
-        if (!cleanedSearch) return true;
-        const searchNorm = normalizeKurdish(cleanedSearch);
-        const cleanedWord = normalizeKurdish(item.word);
-        const cleanedHint = normalizeKurdish(item.hint);
-        return cleanedWord.includes(searchNorm) || cleanedHint.includes(searchNorm);
-      });
-      
-    // Reverse so the most recently found words appear at the top
-    return filteredList.reverse();
-  }, [allWordsWithCategories, solvedWords, activeCategory, searchTerm]);
-
-  const categories = useMemo(() => {
-    const catCounts = {};
-
-    // 1. Map solved words to their categories using a normalized comparison
-    const solvedWithMeta = (solvedWords || []).map(sw => {
-      const swNorm = normalizeKurdishInput(sw).toLowerCase().trim();
-      const found = allWordsWithCategories.find(w => normalizeKurdishInput(w.word).toLowerCase().trim() === swNorm);
-      return found ? found : { word: sw, category: 'گشتی' };
-    });
-
-    // 2. Count occurrences per category
-    solvedWithMeta.forEach(w => {
-      catCounts[w.category] = (catCounts[w.category] || 0) + 1;
-    });
-
-    // 3. Sort categories: Most discovered first
-    const sortedCats = Object.keys(catCounts).sort((a, b) => catCounts[b] - catCounts[a]);
-
-    return [
-      { id: 'All', label: 'ھەمی', count: solvedWithMeta.length },
-      ...sortedCats.map(cat => ({
-        id: cat,
-        label: cat.replace('_', ' '),
-        count: catCounts[cat]
-      }))
-    ];
-  }, [allWordsWithCategories, solvedWords]);
+ return wordData
+ ? { ...wordData, category: finalCategory }
+ : { word: sw, hint: 'پەیڤەکا نوی یا هاتییە دیتن', category: 'گشتی' };
+ });
+ // Removed the filter(w => w.category !== '') so all words appear
 
 
-  // Highlight logic
-  useEffect(() => {
-    if (!highlightWord) return;
-    const timer = setTimeout(() => {
-      const selector = `.highlight-target[data-word="${highlightWord.replace(/"/g, '\\"')}"]`;
-      const element = document.querySelector(selector);
-      if (element) {
-        element.classList.add('bg-primary/20', 'animate-pulse');
-        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        setTimeout(() => {
-          element.classList.remove('bg-primary/20', 'animate-pulse');
-        }, 2000);
-      }
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [highlightWord]);
 
-  return (
-    <div className="min-h-screen bg-mono-white dark:bg-black flex flex-col items-center safe-top safe-bottom overflow-x-hidden transition-colors duration-500" dir="rtl">
-      {/* Premium Minimal Header */}
-      <div className="w-full max-w-lg flex items-center justify-between px-6 pt-[calc(env(safe-area-inset-top)+8px)] pb-2 sticky top-0 z-50 bg-mono-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-mono-100 dark:border-mono-800/30">
-        <button
-          onClick={() => { triggerHaptic(10); playSettingsCloseSound(); onBack(); }}
-          className="w-10 h-10 rounded-sm bg-mono-50 dark:bg-white/5 border border-mono-200 dark:border-white/10 flex items-center justify-center text-mono-600 dark:text-white/60 hover:bg-mono-100 dark:hover:bg-white/10 transition-all active:scale-90"
-        >
-          <span className="material-symbols-outlined">arrow_forward</span>
-        </button>
-        <h2 className="text-xl font-black font-rabar text-mono-900 dark:text-white uppercase">فەرهەنگ</h2>
-        <div className="w-10 flex justify-end">
-          <div className="px-2 py-1 rounded bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/10">
-            <span className="text-[10px] font-black text-mono-600 dark:text-white/70 tabular-nums">{toKuDigits(solvedWords.length)}</span>
-          </div>
-        </div>
-      </div>
+ // 2. Remove duplicates
+ const uniqueSolved = Array.from(
+ new Map(myWords.map(item => [normalizeKurdishInput(item.word).toLowerCase(), item])).values()
+ );
 
-      <div className="w-full max-w-lg flex-1 flex flex-col px-6 pt-6 pb-20">
-        {/* Search Bar */}
-        <div className="relative group mb-6">
-          <input
-            type="text"
-            placeholder="ل پەیڤەکێ بگەڕێ..."
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className="w-full bg-mono-50 dark:bg-mono-900/40 border border-mono-200 dark:border-mono-800/60 rounded-sm py-3.5 pl-4 pr-12 font-bold font-rabar text-[15px] text-mono-900 dark:text-white placeholder:text-mono-400 dark:placeholder:text-mono-600 focus:border-mono-400 dark:focus:border-mono-500 transition-all outline-none"
-          />
-          <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-mono-400 dark:text-mono-600 text-2xl">
-            search
-          </span>
-        </div>
+ // 3. Apply Category and Search Filter
+ const filteredList = uniqueSolved
+ .filter(item => {
+ if (activeCategory === 'All') return true;
+ return item.category === activeCategory;
+ })
+ .filter(item => {
+ if (!cleanedSearch) return true;
+ const searchNorm = normalizeKurdish(cleanedSearch);
+ const cleanedWord = normalizeKurdish(item.word);
+ const cleanedHint = normalizeKurdish(item.hint);
+ return cleanedWord.includes(searchNorm) || cleanedHint.includes(searchNorm);
+ });
+ 
+ // Reverse so the most recently found words appear at the top
+ return filteredList.reverse();
+ }, [allWordsWithCategories, solvedWords, activeCategory, searchTerm]);
 
-        {/* Categories with Drag-to-Scroll Support */}
-        <div
-          className="flex gap-2 overflow-x-auto no-scrollbar py-1 mb-8 cursor-grab active:cursor-grabbing select-none"
-          onMouseDown={(e) => {
-            const el = e.currentTarget;
-            el.dataset.isDown = 'true';
-            el.dataset.startX = e.pageX - el.offsetLeft;
-            el.dataset.scrollLeft = el.scrollLeft;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.dataset.isDown = 'false';
-          }}
-          onMouseUp={(e) => {
-            e.currentTarget.dataset.isDown = 'false';
-          }}
-          onMouseMove={(e) => {
-            const el = e.currentTarget;
-            if (el.dataset.isDown !== 'true') return;
-            e.preventDefault();
-            const x = e.pageX - el.offsetLeft;
-            const walk = (x - Number(el.dataset.startX)) * 2; // Scroll speed
-            el.scrollLeft = Number(el.dataset.scrollLeft) - walk;
-          }}
-        >
-          {categories.map(cat => {
-            const isActive = activeCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => { triggerHaptic(5); playTabSound(); setActiveCategory(cat.id); }}
-                className={`whitespace-nowrap px-4 py-2 rounded-sm font-black transition-all border uppercase flex items-center gap-2 ${isActive
-                  ? 'bg-mono-900 dark:bg-mono-100 text-mono-50 dark:text-mono-900 border-mono-900 dark:border-mono-100'
-                  : 'bg-mono-white dark:bg-mono-900/20 text-mono-400 dark:text-mono-500 border-mono-200 dark:border-mono-800/60 hover:border-mono-400 dark:hover:border-mono-600'
-                  }`}
-              >
-                <span className="text-[10px]">{cat.label}</span>
-                <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${isActive ? 'bg-mono-50/20 dark:bg-black/20' : 'bg-mono-100 dark:bg-white/5'} tabular-nums`}>
-                  {toKuDigits(cat.count)}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+ const categories = useMemo(() => {
+ const catCounts = {};
 
-        {/* Word Cards */}
-        <div className="flex flex-col gap-4">
-          {discoveredWords.length > 0 ? (
-            discoveredWords.map((item, idx) => (
-              <Motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.03 }}
-                key={idx}
-                className="bg-mono-white dark:bg-mono-900/20 p-5 rounded-sm border border-mono-200 dark:border-mono-800/60 flex flex-col gap-2.5 hover:bg-mono-50 dark:hover:bg-mono-800/40 transition-all highlight-target group"
-                data-word={item.word.replace('_', ' ')}
-              >
-                <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-black font-heading text-mono-900 dark:text-white group-hover:text-primary transition-colors">
-                    {item.word.replace('_', ' ')}
-                  </h3>
-                  <span className="text-[7px] font-black uppercase text-mono-400 dark:text-mono-500 border border-mono-200 dark:border-mono-800 px-2 py-1 rounded-xs">
-                    {item.category.replace('_', ' ')}
-                  </span>
-                </div>
-                <p className="text-[12px] text-mono-500 dark:text-mono-400 font-bold font-rabar leading-relaxed">
-                  {item.hint}
-                </p>
-              </Motion.div>
-            ))
-          ) : (
-            <div className="flex flex-col items-center justify-center py-24 text-center opacity-30 grayscale">
-              <span className="material-symbols-outlined text-5xl mb-4 font-light">menu_book</span>
-              <p className="text-sm font-black font-rabar">فەرھەنگا تە یا ڤالایە</p>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+ // 1. Map solved words to their categories using a normalized comparison
+ const solvedWithMeta = (solvedWords || []).map(sw => {
+ const swNorm = normalizeKurdishInput(sw).toLowerCase().trim();
+ const found = allWordsWithCategories.find(w => normalizeKurdishInput(w.word).toLowerCase().trim() === swNorm);
+ return found ? found : { word: sw, category: 'گشتی' };
+ });
+
+ // 2. Count occurrences per category
+ solvedWithMeta.forEach(w => {
+ catCounts[w.category] = (catCounts[w.category] || 0) + 1;
+ });
+
+ // 3. Sort categories: Most discovered first
+ const sortedCats = Object.keys(catCounts).sort((a, b) => catCounts[b] - catCounts[a]);
+
+ return [
+ { id: 'All', label: 'ھەمی', count: solvedWithMeta.length },
+ ...sortedCats.map(cat => ({
+ id: cat,
+ label: cat.replace('_', ' '),
+ count: catCounts[cat]
+ }))
+ ];
+ }, [allWordsWithCategories, solvedWords]);
+
+
+ // Highlight logic
+ useEffect(() => {
+ if (!highlightWord) return;
+ const timer = setTimeout(() => {
+ const selector = `.highlight-target[data-word="${highlightWord.replace(/"/g, '\\"')}"]`;
+ const element = document.querySelector(selector);
+ if (element) {
+ element.classList.add('bg-primary/20', 'animate-pulse');
+ element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+ setTimeout(() => {
+ element.classList.remove('bg-primary/20', 'animate-pulse');
+ }, 2000);
+ }
+ }, 300);
+ return () => clearTimeout(timer);
+ }, [highlightWord]);
+
+ return (
+ <div className="min-h-screen bg-mono-white dark:bg-black flex flex-col items-center safe-top safe-bottom overflow-x-hidden transition-colors duration-500" dir="rtl">
+ {/* Premium Minimal Header */}
+ <div className="w-full max-w-lg flex items-center justify-between px-6 pt-[calc(env(safe-area-inset-top)+8px)] pb-2 sticky top-0 z-50 bg-mono-white/80 dark:bg-black/95 border-b border-mono-100 dark:border-mono-800/30">
+ <button
+ onClick={() => { triggerHaptic(10); playSettingsCloseSound(); onBack(); }}
+ className="w-10 h-10 rounded-sm bg-mono-50 dark:bg-white/5 border border-mono-200 dark:border-white/10 flex items-center justify-center text-mono-600 dark:text-white/60 hover:bg-mono-100 dark:hover:bg-white/10 transition-all active:scale-90"
+ >
+ <span className="material-symbols-outlined">arrow_forward</span>
+ </button>
+ <h2 className="text-xl font-black font-rabar text-mono-900 dark:text-white uppercase">فەرهەنگ</h2>
+ <div className="w-10 flex justify-end">
+ <div className="px-2 py-1 rounded bg-mono-100 dark:bg-white/5 border border-mono-200 dark:border-white/10">
+ <span className="text-[10px] font-black text-mono-600 dark:text-white/70 tabular-nums">{toKuDigits(solvedWords.length)}</span>
+ </div>
+ </div>
+ </div>
+
+ <div className="w-full max-w-lg flex-1 flex flex-col px-6 pt-6 pb-20">
+ {/* Search Bar */}
+ <div className="relative group mb-6">
+ <input
+ type="text"
+ placeholder="ل پەیڤەکێ بگەڕێ..."
+ value={searchTerm}
+ onChange={e => setSearchTerm(e.target.value)}
+ className="w-full bg-mono-50 dark:bg-mono-900/40 border border-mono-200 dark:border-mono-800/60 rounded-sm py-3.5 pl-4 pr-12 font-bold font-rabar text-[15px] text-mono-900 dark:text-white placeholder:text-mono-400 dark:placeholder:text-mono-600 focus:border-mono-400 dark:focus:border-mono-500 transition-all outline-none"
+ />
+ <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-mono-400 dark:text-mono-600 text-2xl">
+ search
+ </span>
+ </div>
+
+ {/* Categories with Drag-to-Scroll Support */}
+ <div
+ className="flex gap-2 overflow-x-auto no-scrollbar py-1 mb-8 cursor-grab active:cursor-grabbing select-none"
+ onMouseDown={(e) => {
+ const el = e.currentTarget;
+ el.dataset.isDown = 'true';
+ el.dataset.startX = e.pageX - el.offsetLeft;
+ el.dataset.scrollLeft = el.scrollLeft;
+ }}
+ onMouseLeave={(e) => {
+ e.currentTarget.dataset.isDown = 'false';
+ }}
+ onMouseUp={(e) => {
+ e.currentTarget.dataset.isDown = 'false';
+ }}
+ onMouseMove={(e) => {
+ const el = e.currentTarget;
+ if (el.dataset.isDown !== 'true') return;
+ e.preventDefault();
+ const x = e.pageX - el.offsetLeft;
+ const walk = (x - Number(el.dataset.startX)) * 2; // Scroll speed
+ el.scrollLeft = Number(el.dataset.scrollLeft) - walk;
+ }}
+ >
+ {categories.map(cat => {
+ const isActive = activeCategory === cat.id;
+ return (
+ <button
+ key={cat.id}
+ onClick={() => { triggerHaptic(5); playTabSound(); setActiveCategory(cat.id); }}
+ className={`whitespace-nowrap px-4 py-2 rounded-sm font-black transition-all border uppercase flex items-center gap-2 ${isActive
+ ? 'bg-mono-900 dark:bg-mono-100 text-mono-50 dark:text-mono-900 border-mono-900 dark:border-mono-100'
+ : 'bg-mono-white dark:bg-mono-900/20 text-mono-400 dark:text-mono-500 border-mono-200 dark:border-mono-800/60 hover:border-mono-400 dark:hover:border-mono-600'
+ }`}
+ >
+ <span className="text-[10px]">{cat.label}</span>
+ <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${isActive ? 'bg-mono-50/20 dark:bg-black/20' : 'bg-mono-100 dark:bg-white/5'} tabular-nums`}>
+ {toKuDigits(cat.count)}
+ </span>
+ </button>
+ );
+ })}
+ </div>
+
+ {/* Word Cards */}
+ <div className="flex flex-col gap-4">
+ {discoveredWords.length > 0 ? (
+ discoveredWords.map((item, idx) => (
+ <Motion.div
+ initial={{ opacity: 0, y: 10 }}
+ animate={{ opacity: 1, y: 0 }}
+ transition={{ delay: idx * 0.03 }}
+ key={idx}
+ className="bg-mono-white dark:bg-mono-900/20 p-5 rounded-sm border border-mono-200 dark:border-mono-800/60 flex flex-col gap-2.5 hover:bg-mono-50 dark:hover:bg-mono-800/40 transition-all highlight-target group"
+ data-word={item.word.replace('_', ' ')}
+ >
+ <div className="flex justify-between items-center">
+ <h3 className="text-lg font-black font-heading text-mono-900 dark:text-white group-hover:text-primary transition-colors">
+ {item.word.replace('_', ' ')}
+ </h3>
+ <span className="text-[7px] font-black uppercase text-mono-400 dark:text-mono-500 border border-mono-200 dark:border-mono-800 px-2 py-1 rounded-xs">
+ {item.category.replace('_', ' ')}
+ </span>
+ </div>
+ <p className="text-[12px] text-mono-500 dark:text-mono-400 font-bold font-rabar leading-relaxed">
+ {item.hint}
+ </p>
+ </Motion.div>
+ ))
+ ) : (
+ <div className="flex flex-col items-center justify-center py-24 text-center opacity-30 grayscale">
+ <span className="material-symbols-outlined text-5xl mb-4 font-light">menu_book</span>
+ <p className="text-sm font-black font-rabar">فەرھەنگا تە یا ڤالایە</p>
+ </div>
+ )}
+ </div>
+ </div>
+ </div>
+ );
 }

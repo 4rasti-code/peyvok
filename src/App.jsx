@@ -35,7 +35,7 @@ import ClassicIcon from './components/ClassicIcon';
 import { NavChatIcon } from './components/NavIcons';
 import InstallGuideModal from './components/InstallGuideModal';
 
-import useMultiplayer from './hooks/useMultiplayer';
+import { useMultiplayerStore } from './store/multiplayerStore';
 import { calculateLevelRewards, calculateDefeatPenalty } from './utils/gameStatus';
 import { getRewardForMode, getTotalXPForLevel } from './utils/progression';
 import useGameLogic from './hooks/useGameLogic';
@@ -86,7 +86,8 @@ const AchievementsView = lazyWithRetry(() => import('./components/AchievementsVi
 const MedalsView = lazyWithRetry(() => import('./components/MedalsView'));
 
 
-import { useGame } from './context/GameContext';
+import { useGameStore } from './store/gameStore';
+import { getLevelFromXP } from './utils/progression';
 import { useUser } from './context/AuthContext';
 import { usePresence } from './context/PresenceContext';
 import { useAudio } from './context/AudioContext';
@@ -206,7 +207,7 @@ export default function App() {
         // Catch either the peyvokgame.com domain OR the custom peyvok:// scheme
         if (urlObj.hostname.includes('peyvokgame.com') || urlObj.protocol === 'peyvok:') {
           // 1. Immediately close the In-App Browser if it's open
-          Browser.close().catch(() => {});
+          Browser.close().catch(() => { });
 
           // 2. Handle PKCE Code Flow
           const code = urlObj.searchParams.get('code');
@@ -233,15 +234,15 @@ export default function App() {
                 access_token,
                 refresh_token
               });
-              
+
               if (!error) {
-                 navigate('/'); // Force navigation to lobby
+                navigate('/'); // Force navigation to lobby
               } else {
-                 console.error("[Auth] Set session error:", error);
+                console.error("[Auth] Set session error:", error);
               }
             } else if (urlObj.pathname && urlObj.pathname !== '/') {
-               // Handle regular deep linking to internal pages
-               navigate(urlObj.pathname);
+              // Handle regular deep linking to internal pages
+              navigate(urlObj.pathname);
             }
           } else if (urlObj.pathname && urlObj.pathname !== '/') {
             // Handle regular deep linking to internal pages
@@ -284,26 +285,37 @@ export default function App() {
     playTabSound, startBGM, stopBGM
   } = useAudio();
 
-  const {
-    currentXP, level, maxXP, minXPForLevel, lastNotifiedLevel,
-    fils, derhem, dinar,
-    dailyStreak, lastRewardClaimedAt,
-    magnetCount, hintCount, skipCount,
-    solvedWords, playerStats,
-    syncProgressToDatabase,
-    processPurchase,
-    getFreshWord,
-    userRank, refreshRank,
-    setNotifiedLevelDB,
-    claimDailyReward: _claimDailyReward,
-    updateInventory,
-    applyPenalty,
-    initializeStatsInDB,
-    loading: isGameLoading,
-    resetBoard: _resetContextBoard,
-    hasUnclaimedMedals,
-    syncStatus
-  } = useGame();
+  const currentXP = useGameStore(s => s.currentXP);
+  const fils = useGameStore(s => s.fils);
+  const derhem = useGameStore(s => s.derhem);
+  const dinar = useGameStore(s => s.dinar);
+  const dailyStreak = useGameStore(s => s.dailyStreak);
+  const lastRewardClaimedAt = useGameStore(s => s.lastRewardClaimedAt);
+  const magnetCount = useGameStore(s => s.magnetCount);
+  const hintCount = useGameStore(s => s.hintCount);
+  const skipCount = useGameStore(s => s.skipCount);
+  const solvedWords = useGameStore(s => s.solvedWords);
+  const playerStats = useGameStore(s => s.playerStats);
+  const syncProgressToDatabase = useGameStore(s => s.syncProgressToDatabase);
+  const processPurchase = useGameStore(s => s.processPurchase);
+  const getFreshWord = useGameStore(s => s.getFreshWord);
+  const userRank = useGameStore(s => s.userRank);
+  const refreshRank = useGameStore(s => s.refreshRank);
+  const setNotifiedLevelDB = useGameStore(s => s.setNotifiedLevelDB);
+
+  const updateInventory = useGameStore(s => s.updateInventory);
+  const applyPenalty = useGameStore(s => s.applyPenalty);
+  const initializeStatsInDB = useGameStore(s => s.initializeStatsInDB);
+  const isGameLoading = useGameStore(s => s.loading);
+  const _resetContextBoard = useGameStore(s => s.resetBoard);
+  const hasUnclaimedMedals = useGameStore(s => s.hasUnclaimedMedals);
+  const syncStatus = useGameStore(s => s.syncStatus);
+  const lastNotifiedLevel = useGameStore(s => s.lastNotifiedLevel);
+
+  const level = getLevelFromXP(currentXP);
+  const minXPForLevel = getTotalXPForLevel(level - 1);
+  const maxXP = getTotalXPForLevel(level);
+
 
   // --- ONESIGNAL NOTIFICATION ENGINE ---
   useEffect(() => {
@@ -612,20 +624,18 @@ export default function App() {
     };
   }, [initializeStatsInDB]);
 
-  const {
-    activeMatch,
-    multiplayerState,
-    MatchmakingTime,
-    opponent,
-    cancelMatch,
-    startMatchmaking,
-    LastMatchResult,
-    MatchReward,
-    scores,
-    MatchResultTrigger,
-    ResetMatchResultTrigger,
-    submitFailure
-  } = useMultiplayer();
+  const activeMatch = useMultiplayerStore(s => s.activeMatch);
+  const multiplayerState = useMultiplayerStore(s => s.multiplayerState);
+  const MatchmakingTime = useMultiplayerStore(s => s.MatchmakingTime);
+  const opponent = useMultiplayerStore(s => s.opponent);
+  const cancelMatch = useMultiplayerStore(s => s.cancelMatch);
+  const startMatchmaking = useMultiplayerStore(s => s.startMatchmaking);
+  const LastMatchResult = useMultiplayerStore(s => s.LastMatchResult);
+  const MatchReward = useMultiplayerStore(s => s.MatchReward);
+  const scores = useMultiplayerStore(s => s.scores);
+  const MatchResultTrigger = useMultiplayerStore(s => s.MatchResultTrigger);
+  const ResetMatchResultTrigger = useMultiplayerStore(s => s.ResetMatchResultTrigger);
+  const submitFailure = useMultiplayerStore(s => s.submitFailure);
 
   // Force view to 'game' when multiplayer starts to prevent cleanup hook from destroying the match
   const hasForcedGameViewRef = useRef(false);
@@ -1765,7 +1775,7 @@ export default function App() {
       setTimeout(() => {
         SplashScreen.hide({
           fadeOutDuration: 300
-        }).catch(() => {});
+        }).catch(() => { });
       }, 500);
     }
   }, []);
@@ -1923,14 +1933,14 @@ export default function App() {
               onVerifyingSignupChange={setVerifyingSignup}
             />
           )}
-          
+
           {currentView === 'privacy' && (
             <div className="contents">
-              <PrivacyPolicy 
+              <PrivacyPolicy
                 onClose={() => {
                   window.history.pushState(null, '', '/');
                   setCurrentView('lobby');
-                }} 
+                }}
                 onViewChange={(key) => {
                   const map = { 'deletion': 'data_deletion', 'terms': 'terms_of_service', 'privacy': 'privacy' };
                   const paths = { 'deletion': '/data-deletion', 'terms': '/terms-of-service', 'privacy': '/privacy' };
@@ -1942,7 +1952,7 @@ export default function App() {
           )}
           {currentView === 'data_deletion' && (
             <div className="contents">
-              <DataDeletion 
+              <DataDeletion
                 onClose={() => {
                   window.history.pushState(null, '', '/');
                   setCurrentView('lobby');
@@ -1958,7 +1968,7 @@ export default function App() {
           )}
           {currentView === 'terms_of_service' && (
             <div className="contents">
-              <TermsOfService 
+              <TermsOfService
                 onClose={() => {
                   window.history.pushState(null, '', '/');
                   setCurrentView('lobby');
@@ -2271,8 +2281,8 @@ export default function App() {
                   }
                 }}
                 className={`fixed top-[max(1.5rem,env(safe-area-inset-top))] left-1/2 -translate-x-1/2 w-max min-w-50 max-w-[92vw] z-9999 ${isSystemDark ? 'bg-black/95' : 'bg-white/95'} p-1.5 pl-3 rounded-full border ${pushNotification.type === 'message'
-                    ? 'border-blue-500/30 shadow-[0_4px_24px_rgba(59,130,246,0.3)]'
-                    : 'border-red-500/30 shadow-[0_4px_24px_rgba(239,68,68,0.3)]'
+                  ? 'border-blue-500/30 shadow-[0_4px_24px_rgba(59,130,246,0.3)]'
+                  : 'border-red-500/30 shadow-[0_4px_24px_rgba(239,68,68,0.3)]'
                   } flex items-center gap-3 cursor-pointer overflow-hidden`}
               >
                 {/* Shrinking Timeout Bar - Only for competitive/friend requests */}
@@ -2639,12 +2649,12 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="flex-1 flex flex-col overflow-hidden relative h-full w-full z-110"
             >
-              <TutorialGameView 
+              <TutorialGameView
                 topAppBarProps={topAppBarProps}
                 onBackToLobby={() => {
                   setGameMode('idle');
                   setCurrentView('lobby');
-                }} 
+                }}
                 onStartClassic={() => {
                   forceResumeAudio();
                   playTabSound();

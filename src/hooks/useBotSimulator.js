@@ -44,8 +44,8 @@ export default function useBotSimulator({
   userLevel,
   setOpponentGuesses,
   setOpponentLiveStatuses,
-  opponentLiveCursor,
-  setActiveMatchGuarded,
+  setOpponentLiveCursor,
+  setActiveMatch,
   activeMatch,
   setWinnerNickname,
   opponentGuessesLength
@@ -77,11 +77,11 @@ export default function useBotSimulator({
       guessCountRef.current = 0;
       isTypingRef.current = false;
       setOpponentLiveStatuses([]);
-      opponentLiveCursor?.set(0);
+      setOpponentLiveCursor?.(0);
       if (currentTimeoutRef.current) clearTimeout(currentTimeoutRef.current);
       if (typeTimeoutRef.current) clearTimeout(typeTimeoutRef.current);
     }
-  }, [activeMatch, opponentLiveCursor, setOpponentLiveStatuses]);
+  }, [activeMatch, setOpponentLiveCursor, setOpponentLiveStatuses]);
 
   useEffect(() => {
     if (!isBot || !isGameActive || !targetWord || isTypingRef.current) return;
@@ -184,7 +184,7 @@ export default function useBotSimulator({
             
             liveArr[charIndex] = statusCode; 
             setOpponentLiveStatuses([...liveArr]);
-            opponentLiveCursor?.set(Math.min(charIndex + 1, targetWord.length - 1));
+            setOpponentLiveCursor?.(Math.min(charIndex + 1, targetWord.length - 1));
             charIndex++;
             typeNextChar();
           }, (Math.random() * 250 + 150) + hesitation); // 150-400ms per keystroke
@@ -192,7 +192,7 @@ export default function useBotSimulator({
           // Finished typing, wait slightly before submitting
           typeTimeoutRef.current = setTimeout(() => {
             setOpponentLiveStatuses([]);
-            opponentLiveCursor?.set(0);
+            setOpponentLiveCursor?.(0);
             setOpponentGuesses(prev => [...prev, colors]);
             
             const isWin = pickedWord === targetWord;
@@ -200,7 +200,7 @@ export default function useBotSimulator({
               setWinnerNickname('Opponent');
               setTimeout(() => setWinnerNickname(''), 3000);
 
-              setActiveMatchGuarded(prev => {
+              setActiveMatch(prev => {
                 if (!prev) return prev;
                 const newP1Score = prev.p1_score || 0;
                 const newP2Score = (prev.p2_score || 0) + 1;
@@ -222,7 +222,7 @@ export default function useBotSimulator({
                guessCountRef.current += 1;
                if (guessCountRef.current >= 3) {
                   // Bot failed 3 times
-                  setActiveMatchGuarded(prev => {
+                  setActiveMatch(prev => {
                     if (!prev) return prev;
                     if (prev.p1_failed) {
                        const newIndex = (prev.current_word_index || 0) + 1;
@@ -258,7 +258,7 @@ export default function useBotSimulator({
   }, [
     isBot, multiplayerState,
   isGameActive, targetWord, userLevel, 
-    opponentLiveCursor, setActiveMatchGuarded, setOpponentGuesses, setOpponentLiveStatuses,
+    setOpponentLiveCursor, setActiveMatch, setOpponentGuesses, setOpponentLiveStatuses,
     setWinnerNickname, opponentGuessesLength
   ]);
 }

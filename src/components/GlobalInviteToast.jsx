@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '../context/AuthContext';
-import useMultiplayer from '../hooks/useMultiplayer';
+import { useMultiplayerStore } from '../store/multiplayerStore';
 import { supabase } from '../lib/supabase';
 import { triggerHaptic } from '../utils/haptics';
 import { useAudio } from '../context/AudioContext';
@@ -10,7 +10,8 @@ import Avatar from './Avatar';
 const GlobalInviteToast = ({ setGameMode, currentView, setCurrentView, gameMode }) => {
   const { user } = useUser();
   const { playInviteSound } = useAudio();
-  const { joinPrivateMatch, multiplayerState } = useMultiplayer();
+  const joinPrivateMatch = useMultiplayerStore(s => s.joinPrivateMatch);
+  const multiplayerState = useMultiplayerStore(s => s.multiplayerState);
 
   const currentViewRef = useRef(currentView);
   const multiplayerStateRef = useRef(multiplayerState);

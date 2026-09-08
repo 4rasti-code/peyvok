@@ -13,13 +13,25 @@ const CanvasParticleOverlay = () => {
   // 1. Convert SVG DOM nodes into cached Canvas Images
   useEffect(() => {
     if (!hiddenSpritesRef.current) return;
-    
+
     // We get all the child nodes of the hidden div
     const children = Array.from(hiddenSpritesRef.current.children);
-    
+
     children.forEach(child => {
       const type = child.getAttribute('data-type');
       if (!type) return;
+
+      // Coins now use external images inside their SVG, which fails Canvas serialization.
+      // Load them directly instead.
+      if (['fils', 'derhem', 'dinar'].includes(type)) {
+        const img = new Image();
+        img.onload = () => {
+          spriteCache.current[type] = img;
+        };
+        const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
+        img.src = `/icons/${capitalizedType}Icon.svg`;
+        return;
+      }
 
       // Extract the SVG element. If it's wrapped in a div, find the svg.
       const svgElement = child.tagName === 'SVG' ? child : child.querySelector('svg');
@@ -30,12 +42,12 @@ const CanvasParticleOverlay = () => {
       clone.removeAttribute('data-type');
       clone.setAttribute('width', '44');
       clone.setAttribute('height', '44');
-      
+
       // Convert to Blob URL
       const svgString = new XMLSerializer().serializeToString(clone);
       const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
       const url = URL.createObjectURL(svgBlob);
-      
+
       const img = new Image();
       img.onload = () => {
         spriteCache.current[type] = img;
@@ -49,7 +61,7 @@ const CanvasParticleOverlay = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -69,7 +81,7 @@ const CanvasParticleOverlay = () => {
 
       for (let i = 0; i < particlesRef.current.length; i++) {
         const p = particlesRef.current[i];
-        
+
         // --- COIN PHYSICS (Target-Seeking) ---
         if (p.category === 'coin') {
           if (p.delay > 0) {
@@ -89,7 +101,7 @@ const CanvasParticleOverlay = () => {
 
           // Simple ease-in interpolation to target
           p.progress += dt * 1.2; // Speed multiplier
-          
+
           if (p.progress >= 1) {
             p.progress = 1;
             // Bump logic executed once on impact
@@ -103,7 +115,7 @@ const CanvasParticleOverlay = () => {
               const targetEl = document.getElementById(elementId);
               if (targetEl) {
                 targetEl.classList.remove('animate-wheel-bump');
-                void targetEl.offsetWidth; 
+                void targetEl.offsetWidth;
                 targetEl.classList.add('animate-wheel-bump');
                 setTimeout(() => targetEl.classList.remove('animate-wheel-bump'), 500);
               }
@@ -114,7 +126,7 @@ const CanvasParticleOverlay = () => {
             const ease = p.progress * p.progress * p.progress;
             p.x = p.startX + (p.targetX - p.startX) * ease;
             p.y = p.startY + (p.targetY - p.startY) * ease;
-            
+
             // Draw Sprite
             const img = spriteCache.current[p.type];
             if (img) {
@@ -123,29 +135,29 @@ const CanvasParticleOverlay = () => {
             activeParticles.push(p);
           }
         }
-        
+
         // --- CONFETTI PHYSICS (Gravity/Explosion) ---
         else if (p.category === 'confetti') {
           p.velocity *= 0.98; // Air resistance
           p.x += Math.cos(p.angle) * p.velocity * dt;
           p.y += Math.sin(p.angle) * p.velocity * dt + (300 * dt); // Gravity (300px/s^2)
           p.rot += 360 * p.dir * dt;
-          
+
           p.life -= dt;
-          
+
           if (p.life > 0) {
             ctx.save();
             ctx.translate(p.x, p.y);
             ctx.rotate((p.rot * Math.PI) / 180);
-            
+
             // Fade out in last 0.5s
             ctx.globalAlpha = Math.max(0, Math.min(1, p.life * 2));
             ctx.fillStyle = p.color;
-            
+
             // Shadow for depth matching the old dropshadow
             ctx.shadowColor = 'rgba(0,0,0,0.2)';
             ctx.shadowBlur = 4;
-            
+
             if (p.shape === 'circle') {
               ctx.beginPath();
               ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
@@ -153,7 +165,7 @@ const CanvasParticleOverlay = () => {
             } else {
               ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
             }
-            
+
             ctx.restore();
             activeParticles.push(p);
           }
@@ -176,7 +188,7 @@ const CanvasParticleOverlay = () => {
   useEffect(() => {
     const handleFireCoins = (e) => {
       const { type = 'fils', amount = 0, startOffsetX = 0, startOffsetY = 0 } = e.detail;
-      
+
       let length = 10;
       if (['hint', 'magnet', 'skip', 'spinTicket', 'mystery_box'].includes(type)) {
         length = amount > 0 ? amount : 1;
@@ -193,12 +205,12 @@ const CanvasParticleOverlay = () => {
       const targetEl = document.getElementById(elementId);
       let targetX = window.innerWidth * 0.42;
       let targetY = -window.innerHeight * 0.46;
-      
+
       if (targetEl) {
         const rect = targetEl.getBoundingClientRect();
         targetX = rect.left + rect.width / 2;
         targetY = rect.top + rect.height / 2;
-        
+
         if (type === 'spinTicket') {
           targetY -= 25;
           targetX -= 15;
@@ -230,7 +242,7 @@ const CanvasParticleOverlay = () => {
       const options = e.detail || {};
       const colors = options.colors || ['#FFD700', '#ffffff', '#3b82f6', '#facc15'];
       const count = options.particleCount || 40;
-      
+
       const originX = options.origin?.x ? options.origin.x * window.innerWidth : window.innerWidth / 2;
       const originY = options.origin?.y ? options.origin.y * window.innerHeight : window.innerHeight / 2;
 
@@ -261,20 +273,20 @@ const CanvasParticleOverlay = () => {
 
   return (
     <>
-      <canvas 
+      <canvas
         ref={canvasRef}
         className="fixed inset-0 pointer-events-none z-9999"
       />
       {/* Hidden Sprite Definitions - Used to render SVGs into Canvas Images exactly as they appear in React */}
       <div ref={hiddenSpritesRef} className="absolute opacity-0 pointer-events-none overflow-hidden w-0 h-0">
-        <FilsIcon data-type="fils" size={44} />
-        <DerhemIcon data-type="derhem" size={44} />
-        <DinarIcon data-type="dinar" size={44} />
-        <HintIcon data-type="hint" size={44} />
-        <MagnetIcon data-type="magnet" size={44} />
-        <SkipIcon data-type="skip" size={44} />
-        <XPIcon data-type="xp" size={44} />
-        <SpinTicketIcon data-type="spinTicket" size={44} />
+        <div data-type="fils"><FilsIcon size={44} /></div>
+        <div data-type="derhem"><DerhemIcon size={44} /></div>
+        <div data-type="dinar"><DinarIcon size={44} /></div>
+        <div data-type="hint"><HintIcon size={44} /></div>
+        <div data-type="magnet"><MagnetIcon size={44} /></div>
+        <div data-type="skip"><SkipIcon size={44} /></div>
+        <div data-type="xp"><XPIcon size={44} /></div>
+        <div data-type="spinTicket"><SpinTicketIcon size={44} /></div>
         <div data-type="mystery_box"><MysteryBoxIcon asSvg={true} size={44} /></div>
       </div>
     </>

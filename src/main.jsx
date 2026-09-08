@@ -5,9 +5,11 @@ import './index.css'
 import { AuthProvider } from './context/AuthContext';
 import { PresenceProvider } from './context/PresenceContext';
 import { AudioProvider } from './context/AudioContext';
-import { GameProvider } from './context/GameContext';
-import { MultiplayerProvider } from './context/MultiplayerContext';
+
+
 import { VoiceProvider } from './context/VoiceContext';
+import { GameEngineSync } from './store/gameStore';
+import { MultiplayerEngineSync } from './store/multiplayerStore';
 import GlobalErrorBoundary from './components/GlobalErrorBoundary';
 import App from './App.jsx'
 import { Capacitor } from '@capacitor/core';
@@ -21,13 +23,11 @@ const renderApp = () => {
           <AuthProvider>
             <PresenceProvider>
               <AudioProvider>
-                <GameProvider>
                   <VoiceProvider>
-                    <MultiplayerProvider>
                       <App />
-                    </MultiplayerProvider>
+                      <GameEngineSync />
+                      <MultiplayerEngineSync />
                   </VoiceProvider>
-                </GameProvider>
               </AudioProvider>
             </PresenceProvider>
           </AuthProvider>

@@ -6,7 +6,7 @@ import { triggerHaptic } from '../utils/haptics';
 import { useAudio } from '../context/AudioContext';
 import { useUser } from '../context/AuthContext';
 import { usePresence } from '../context/PresenceContext';
-import { useGame } from '../context/GameContext';
+import { useGameStore } from '../store/gameStore';
 import Avatar from './Avatar';
 import ClashingSwords from './ClashingSwords';
 import ClassicIcon from './ClassicIcon';
@@ -25,7 +25,7 @@ import { MEDALS } from '../constants/medals';
 import DownloadIcon from './DownloadIcon';
 import TutorialIcon from './TutorialIcon';
 import { getLevelFromXP } from '../utils/progression';
-import useMultiplayer from '../hooks/useMultiplayer';
+import { useMultiplayerStore } from '../store/multiplayerStore';
 import PublicProfileModal from './PublicProfileModal';
 import ReportModal from './ReportModal';
 import GiftPopup from './GiftPopup';
@@ -133,8 +133,14 @@ const LobbyView = memo(({
   const { playDailyOpenSfx } = useAudio();
   const { user, userNickname, userAvatar, profileData, equippedFont, equippedNameStyle, equippedBundle, syncProfile } = useUser();
   const { onlineUsers, onlineUserStatuses, reconnectPresence } = usePresence();
-  const { lastRewardClaimedAt, spinTicketCount } = useGame();
-  const { createPrivateMatch, multiplayerState, activeMatch, cancelMatch, hostAcceptJoiner, opponent } = useMultiplayer();
+  const lastRewardClaimedAt = useGameStore(s => s.lastRewardClaimedAt);
+    const spinTicketCount = useGameStore(s => s.spinTicketCount);
+  const createPrivateMatch = useMultiplayerStore(s => s.createPrivateMatch);
+  const multiplayerState = useMultiplayerStore(s => s.multiplayerState);
+  const activeMatch = useMultiplayerStore(s => s.activeMatch);
+  const cancelMatch = useMultiplayerStore(s => s.cancelMatch);
+  const hostAcceptJoiner = useMultiplayerStore(s => s.hostAcceptJoiner);
+  const opponent = useMultiplayerStore(s => s.opponent);
   const [showGiftPopup, setShowGiftPopup] = useState(false);
 
   useEffect(() => {
