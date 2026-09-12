@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { useAudio } from '../context/AudioContext';
 
-const UPDATE_VERSION = 'v3.1.1'; // Change this string to force the modal to show again for all users
+const UPDATE_VERSION = 'v3.1.2'; // Change this string to force the modal to show again for all users
 
 const UPDATE_RELEASE_DATE = new Date('2026-08-19T00:00:00Z');
 

@@ -141,7 +141,7 @@ class SoundEngine {
         if (!isActive) handleBackground();
         else handleForeground();
       });
-    } catch (e) {
+    } catch (_e) {
       console.warn("Capacitor App plugin not available for state listener");
     }
 
@@ -154,10 +154,10 @@ class SoundEngine {
          await Promise.all(CRITICAL_SFX.map(async (key) => {
            const path = SFX_PATHS[key];
            if (path) {
-             try {
-               await NativeAudio.preload({ assetId: key, assetPath: 'public' + path, audioChannelNum: 1, isUrl: false });
-             } catch(e) {}
-           }
+              try {
+                await NativeAudio.preload({ assetId: key, assetPath: 'public' + path, audioChannelNum: 1, isUrl: false });
+              } catch(_e) { /* ignore */ }
+            }
          }));
          console.log("🔊 [AudioEngine] Native Critical SFX Loaded");
        } catch (err) {
@@ -342,7 +342,7 @@ class SoundEngine {
           try {
              await NativeAudio.preload({ assetId: key, assetPath: 'public' + path, audioChannelNum: 1, isUrl: false });
              this.buffers[key] = true;
-          } catch(e) {}
+          } catch(_e) { /* ignore */ }
         }
       }
       const baseVolume = this.getBaseVolume(key, options.volume || 1.0);
@@ -424,7 +424,7 @@ class SoundEngine {
        try {
          NativeAudio.setVolume({ assetId: 'SEARCHING', volume: targetVolume }).catch(()=>{});
          NativeAudio.loop({ assetId: 'SEARCHING' }).catch(()=>{});
-       } catch(e) {}
+       } catch(_e) { /* ignore */ }
        return;
     }
 
