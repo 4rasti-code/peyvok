@@ -95,7 +95,7 @@ export const LuckyWheelInner = ({ className, hideContent = false }) => {
  );
 };
 
-export const LuckyWheelFrame = ({ className, flickTrigger = 0, rotation }) => {
+export const LuckyWheelFrame = ({ className, flickTrigger = 0, rotation, idSuffix = "" }) => {
  const pointerRotation = useMotionValue(0);
  const defaultRotation = useMotionValue(0);
  const activeRotation = rotation || defaultRotation;
@@ -138,7 +138,7 @@ export const LuckyWheelFrame = ({ className, flickTrigger = 0, rotation }) => {
  return (
  <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ overflow: 'visible' }}>
  <defs>
- <linearGradient id="goldRimOuter" x1="0%" y1="0%" x2="100%" y2="100%">
+ <linearGradient id={"goldRimOuter" + idSuffix} x1="0%" y1="0%" x2="100%" y2="100%">
  <stop offset="0%" stopColor="#FFF9C4" />
  <stop offset="20%" stopColor="#FBC02D" />
  <stop offset="50%" stopColor="#F57F17" />
@@ -146,63 +146,47 @@ export const LuckyWheelFrame = ({ className, flickTrigger = 0, rotation }) => {
  <stop offset="100%" stopColor="#FFF9C4" />
  </linearGradient>
  
- <linearGradient id="goldRimInner" x1="100%" y1="100%" x2="0%" y2="0%">
+ <linearGradient id={"goldRimInner" + idSuffix} x1="100%" y1="100%" x2="0%" y2="0%">
  <stop offset="0%" stopColor="#FFF9C4" />
  <stop offset="50%" stopColor="#FBC02D" />
  <stop offset="100%" stopColor="#F57F17" />
  </linearGradient>
 
- <radialGradient id="centerJewel" cx="35%" cy="35%" r="65%">
+ <radialGradient id={"centerJewel" + idSuffix} cx="35%" cy="35%" r="65%">
  <stop offset="0%" stopColor="#82B1FF" />
  <stop offset="30%" stopColor="#2979FF" />
  <stop offset="80%" stopColor="#0D47A1" />
  <stop offset="100%" stopColor="#000000" />
  </radialGradient>
 
- <linearGradient id="pointerJewel" x1="0%" y1="0%" x2="100%" y2="100%">
+ <linearGradient id={"pointerJewel" + idSuffix} x1="0%" y1="0%" x2="100%" y2="100%">
  <stop offset="0%" stopColor="#FF8A80" />
  <stop offset="100%" stopColor="#E91E63" />
  </linearGradient>
 
- <filter id="lightGlow">
- <feGaussianBlur stdDeviation="1.5" result="blur" />
- <feMerge>
- <feMergeNode in="blur" />
- <feMergeNode in="SourceGraphic" />
- </feMerge>
- </filter>
+ 
 
- <filter id="frameShadow" x="-20%" y="-20%" width="140%" height="140%">
- <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
- <feOffset dx="0" dy="3" result="offsetblur" />
- <feComponentTransfer>
- <feFuncA type="linear" slope="0.3" />
- </feComponentTransfer>
- <feMerge> 
- <feMergeNode />
- <feMergeNode in="SourceGraphic" />
- </feMerge>
- </filter>
+ 
  </defs>
 
- <g filter="url(#frameShadow)">
+ <g>
  <Motion.g style={{ rotate: activeRotation, transformOrigin: '50px 50px' }}>
- <circle cx="50" cy="50" r="47.5" fill="none" stroke="url(#goldRimOuter)" strokeWidth="3" />
+ <circle cx="50" cy="50" r="47.5" fill="none" stroke={`url(#${"goldRimOuter" + idSuffix})`} strokeWidth="3" />
  <circle cx="50" cy="50" r="49" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" />
  <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(0,0,0,0.5)" strokeWidth="1" />
- <circle cx="50" cy="50" r="45.5" fill="none" stroke="url(#goldRimInner)" strokeWidth="1.5" />
+ <circle cx="50" cy="50" r="45.5" fill="none" stroke={`url(#${"goldRimInner" + idSuffix})`} strokeWidth="1.5" />
 
  {Array.from({ length: 72 }).map((_, i) => (
- <circle key={i} cx="50" cy="2.5" r="1.0" fill="#FFF59D" stroke="rgba(0,0,0,0.5)" strokeWidth="0.3" filter="url(#lightGlow)" transform={`rotate(${i * 5} 50 50)`} />
+ <circle key={i} cx="50" cy="2.5" r="1.0" fill="#FFF59D" stroke="rgba(0,0,0,0.5)" strokeWidth="0.3" filter={`url(#${"lightGlow" + idSuffix})`} transform={`rotate(${i * 5} 50 50)`} />
  ))}
  </Motion.g>
 
- <circle cx="50" cy="50" r="12" fill="url(#goldRimOuter)" stroke="rgba(0,0,0,0.5)" strokeWidth="1" />
- <circle cx="50" cy="50" r="10" fill="none" stroke="url(#goldRimInner)" strokeWidth="1.5" />
+ <circle cx="50" cy="50" r="12" fill={`url(#${"goldRimOuter" + idSuffix})`} stroke="rgba(0,0,0,0.5)" strokeWidth="1" />
+ <circle cx="50" cy="50" r="10" fill="none" stroke={`url(#${"goldRimInner" + idSuffix})`} strokeWidth="1.5" />
  
  <Motion.g transform={pointerTransform}>
  <path d="M 50 6 L 45 -6 A 5 5 0 1 1 55 -6 Z" fill="#FFFFFF" stroke="rgba(0,0,0,0.2)" strokeWidth="0.5" strokeLinejoin="round" />
- <path d="M 50 4.5 L 46.5 -6 A 3.5 3.5 0 1 1 53.5 -6 Z" fill="url(#pointerJewel)" strokeLinejoin="round" />
+ <path d="M 50 4.5 L 46.5 -6 A 3.5 3.5 0 1 1 53.5 -6 Z" fill={`url(#${"pointerJewel" + idSuffix})`} strokeLinejoin="round" />
  <circle cx="50" cy="-6" r="1.5" fill="#FFFFFF" stroke="rgba(0,0,0,0.3)" strokeWidth="0.5" />
  </Motion.g>
  </g>

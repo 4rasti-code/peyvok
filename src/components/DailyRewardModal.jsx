@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { fireConfetti as confetti } from '../utils/confettiHelper';
 import { useGameStore } from '../store/gameStore';
@@ -166,7 +167,7 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
 
  if (!isOpen && !showSuccess) return null;
 
- return (
+ return ReactDOM.createPortal(
  <>
  <AnimatePresence>
  {isOpen && (
@@ -175,7 +176,7 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
  animate={{ opacity: animatingReward ? 0 : 1 }}
  exit={{ opacity: 0 }}
  transition={{ duration: 0.3 }}
- className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-mono-100/70 dark:bg-black/95 pointer-events-auto"
+ className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-mono-100 dark:bg-[#0a0b10] pointer-events-auto font-noto-sans-arabic text-mono-900 dark:text-mono-50" dir="rtl"
  >
  {/* Screen-level Close Button */}
  <CloseButton onClick={() => { playBackSfx(); handleClose(); }} className="fixed top-[calc(env(safe-area-inset-top)+24px)] right-6 z-110" />
@@ -445,7 +446,8 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
  </Motion.div>
  )}
  </AnimatePresence>
- </>
+ </>,
+ document.body
  );
 }
 

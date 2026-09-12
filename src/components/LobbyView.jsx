@@ -1353,7 +1353,7 @@ const LobbyView = memo(({
             {multiplayerState === 'private_lobby' && (
               <button
                 onClick={handleHostCancelInvite}
-                className="absolute top-6 right-6 z-50 w-8 h-8 rounded-full bg-white dark:bg-mono-800 text-mono-400 hover:text-mono-900 dark:hover:text-white flex items-center justify-center transition-colors shadow-lg border border-mono-200 dark:border-transparent"
+                className="absolute top-[calc(env(safe-area-inset-top)+24px)] right-6 z-50 w-8 h-8 rounded-full bg-white dark:bg-mono-800 text-mono-400 hover:text-mono-900 dark:hover:text-white flex items-center justify-center transition-colors shadow-lg border border-mono-200 dark:border-transparent"
               >
                 <span className="material-symbols-outlined font-black text-2xl">close</span>
               </button>

@@ -2945,7 +2945,7 @@ export default function SocialHubView({
  <span className="material-symbols-outlined text-6xl text-white/50">forum</span>
  <div className="text-center">
  <div className="font-black text-lg text-mono-50">ھیچ نامەیەک نینە</div>
- <div className="text-xs font-bold font-rabar text-white/60">دەستپێبکە ب نڤێسینا نامەیەکێ بۆ ھەڤالێن خوە</div>
+ <div className="text-xs font-light font-rabar text-white/60">دەستپێبکە ب نڤێسینا نامەیەکێ بۆ ھەڤالێن خوە</div>
  </div>
  <button
  onClick={() => { triggerHaptic(10); if (_onViewFriends) _onViewFriends(); }}
@@ -3209,13 +3209,22 @@ export default function SocialHubView({
  </div>
  )}
 
- <div className="p-3 pb-3 flex gap-2 items-center">
- {(newMessage.trim() || pendingImage || isUploadingImage || !selectedChat) ? (
- <button
+ <div className="p-3 pb-3 flex items-center">
+  <div className="relative w-10.5 h-10.5 shrink-0 me-2">
+  {/* <AnimatePresence> */}
+  {/* Conditional removed, both rendered */}
+ <Motion.button
+ key="btn-send"
+  initial={false}
+  animate={{ 
+    opacity: (newMessage.trim() || pendingImage || isUploadingImage || !selectedChat) ? 1 : 0, 
+    pointerEvents: (newMessage.trim() || pendingImage || isUploadingImage || !selectedChat) ? 'auto' : 'none' 
+  }}
+ transition={{ type: "spring", stiffness: 400, damping: 30 }}
  onClick={handleSendMessage}
  onPointerDown={(e) => e.preventDefault()}
  disabled={(!newMessage.trim() && !pendingImage && !isUploadingImage) || isUploadingImage}
- className={`relative w-10.5 h-10.5 flex items-center justify-center rounded-[10px] border border-[#0a203e] transition-all shrink-0 after:absolute after:top-0.5 after:right-0.75 after:w-2.5 after:h-2 after:bg-white/40 after:rounded-full after:blur-[1px] ${(newMessage.trim() || pendingImage || isUploadingImage)
+ className={`absolute inset-0 flex items-center justify-center rounded-[10px] border border-[#0a203e] transition-all shrink-0 after:absolute after:top-0.5 after:right-0.75 after:w-2.5 after:h-2 after:bg-white/40 after:rounded-full after:blur-[1px] ${(newMessage.trim() || pendingImage || isUploadingImage)
  ? 'bg-linear-to-b from-[#8de635] to-[#4ab400] shadow-[0_4px_0_#388500,inset_0_2px_0_rgba(255,255,255,0.4),inset_0_-2px_0_rgba(0,0,0,0.1)] active:scale-95 active:translate-y-0.5 active:shadow-[0_1px_0_#388500,inset_0_2px_0_rgba(255,255,255,0.4),inset_0_-1px_0_rgba(0,0,0,0.1)] hover:brightness-110'
  : 'bg-linear-to-b from-[#56c6ff] to-[#259cf3] shadow-[0_4px_0_#146bb1,inset_0_2px_0_rgba(255,255,255,0.4),inset_0_-2px_0_rgba(0,0,0,0.1)] opacity-70 grayscale-20 cursor-not-allowed'}`}
  title="ھنارتن"
@@ -3234,12 +3243,19 @@ export default function SocialHubView({
  </defs>
  </svg>
  )}
- </button>
- ) : (
- <button
+ </Motion.button>
+  {/* separator */}
+ <Motion.button
+ key="btn-mic"
+  initial={false}
+  animate={{ 
+    opacity: !(newMessage.trim() || pendingImage || isUploadingImage || !selectedChat) ? 1 : 0, 
+    pointerEvents: !(newMessage.trim() || pendingImage || isUploadingImage || !selectedChat) ? 'auto' : 'none' 
+  }}
+ transition={{ type: "spring", stiffness: 400, damping: 30 }}
  onClick={isRecording ? stopRecording : startRecording}
  disabled={isUploadingImage}
- className={`relative w-10.5 h-10.5 flex items-center justify-center rounded-[10px] border border-[#0a203e] transition-all shrink-0 after:absolute after:top-0.5 after:right-0.75 after:w-2.5 after:h-2 after:bg-white/40 after:rounded-full after:blur-[1px] ${isRecording
+ className={`absolute inset-0 flex items-center justify-center rounded-[10px] border border-[#0a203e] transition-all shrink-0 after:absolute after:top-0.5 after:right-0.75 after:w-2.5 after:h-2 after:bg-white/40 after:rounded-full after:blur-[1px] ${isRecording
  ? 'bg-linear-to-b from-[#ff5e5e] to-[#e60000] shadow-[0_4px_0_#b30000,inset_0_2px_0_rgba(255,255,255,0.4),inset_0_-2px_0_rgba(0,0,0,0.1)] active:scale-95 active:translate-y-0.5 active:shadow-[0_1px_0_#b30000,inset_0_2px_0_rgba(255,255,255,0.4),inset_0_-1px_0_rgba(0,0,0,0.1)] animate-pulse'
  : 'bg-linear-to-b from-[#56c6ff] to-[#259cf3] shadow-[0_4px_0_#146bb1,inset_0_2px_0_rgba(255,255,255,0.4),inset_0_-2px_0_rgba(0,0,0,0.1)] active:scale-95 active:translate-y-0.5 active:shadow-[0_1px_0_#146bb1,inset_0_2px_0_rgba(255,255,255,0.4),inset_0_-1px_0_rgba(0,0,0,0.1)] hover:brightness-110'}`}
  title={isRecording ? "هنارتنا دەنگی" : "تۆمارکرنا دەنگی"}
@@ -3269,9 +3285,11 @@ export default function SocialHubView({
  </linearGradient>
  </defs>
  </svg>
- )}
- </button>
- )}
+  )}
+ </Motion.button>
+  {/* condition end */}
+  {/* </AnimatePresence> */}
+  </div>
 
  {isRecording ? (
  <div className="flex-1 bg-linear-to-b from-[#2573bd] to-[#155694] border border-[#0a203e] rounded-[10px] px-4 py-2.5 h-10.5 flex items-center justify-between shadow-[inset_0_2px_4px_rgba(0,0,0,0.4),0_1px_0_rgba(255,255,255,0.15)]" dir="ltr">
@@ -3294,8 +3312,11 @@ export default function SocialHubView({
  onPaste={handlePaste}
  onChange={(e) => {
  handleInputChange(e.target.value);
- e.target.style.height = 'auto';
- e.target.style.height = `${Math.min(e.target.scrollHeight, 120)}px`;
+  const target = e.target;
+  requestAnimationFrame(() => {
+    target.style.height = 'auto';
+    target.style.height = `${Math.min(target.scrollHeight, 120)}px`;
+  });
  }}
  onKeyDown={(e) => {
  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768;
@@ -3304,7 +3325,7 @@ export default function SocialHubView({
  handleSendMessage();
  }
  }}
- placeholder={selectedChat ? `نامەکێ بۆ ${selectedChat.nickname} بنڤێسە...` : "نامەکێ بنڤێسە..."}
+ placeholder={selectedChat ? `بۆ ${selectedChat.nickname} بنڤێسە...` : "بنڤێسە..."}
  onFocus={() => {
  setIsKeyboardVisible(true);
  onKeyboardToggle?.(true);
@@ -3315,7 +3336,7 @@ export default function SocialHubView({
  setIsKeyboardVisible(false);
  onKeyboardToggle?.(false);
  }}
- className="flex-1 min-w-0 bg-linear-to-b from-[#2573bd] to-[#155694] text-white placeholder-white/70 border border-[#0a203e] rounded-[10px] px-3.5 py-2.5 text-[13px] font-bold font-rabar focus:ring-2 focus:ring-white/30 transition-all duration-300 outline-none resize-none overflow-y-auto no-scrollbar shadow-[inset_0_2px_4px_rgba(0,0,0,0.4),0_1px_0_rgba(255,255,255,0.15)] min-h-10.5"
+ className="flex-1 min-w-0 bg-linear-to-b from-[#2573bd] to-[#155694] text-white placeholder-white/70 border border-[#0a203e] rounded-[10px] px-3.5 py-2.5 text-[13px] font-light font-rabar focus:ring-2 focus:ring-white/30 transition-colors duration-300 outline-none resize-none overflow-y-auto no-scrollbar shadow-[inset_0_2px_4px_rgba(0,0,0,0.4),0_1px_0_rgba(255,255,255,0.15)] min-h-10.5"
  />
  )}
 
@@ -3327,8 +3348,19 @@ export default function SocialHubView({
  onChange={handleImageUpload}
  />
 
- {!isRecording && (
- <div className="flex items-center gap-1 shrink-0">
+ <AnimatePresence>
+ {!isRecording && !(newMessage.trim().length > 0 || pendingImage || isUploadingImage) && (
+  <Motion.div
+  initial={false}
+  animate={{ 
+    opacity: !(newMessage.trim().length > 0 || pendingImage || isUploadingImage) ? 1 : 0, 
+    width: !(newMessage.trim().length > 0 || pendingImage || isUploadingImage) ? "auto" : 0, 
+    scale: !(newMessage.trim().length > 0 || pendingImage || isUploadingImage) ? 1 : 0.5, 
+    marginInlineStart: !(newMessage.trim().length > 0 || pendingImage || isUploadingImage) ? 8 : 0 
+  }}
+  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+ className="flex items-center gap-1 shrink-0"
+ >
  <button
  onClick={() => { setShowGifPicker(!showGifPicker); setShowEmojiPicker(false); }}
  className={`relative w-10.5 h-10.5 flex items-center justify-center rounded-[10px] bg-linear-to-b from-[#56c6ff] to-[#259cf3] border border-[#0a203e] transition-all shrink-0 hover:brightness-110 after:absolute after:top-0.5 after:right-0.75 after:w-2.5 after:h-2 after:bg-white/40 after:rounded-full after:blur-[1px] ${showGifPicker ? 'scale-95 translate-y-0.5 shadow-[0_1px_0_#146bb1,inset_0_2px_0_rgba(255,255,255,0.4),inset_0_-1px_0_rgba(0,0,0,0.1)] brightness-95' : 'shadow-[0_4px_0_#146bb1,inset_0_2px_0_rgba(255,255,255,0.4),inset_0_-2px_0_rgba(0,0,0,0.1)] active:scale-95 active:translate-y-0.5 active:shadow-[0_1px_0_#146bb1,inset_0_2px_0_rgba(255,255,255,0.4),inset_0_-1px_0_rgba(0,0,0,0.1)]'}`}
@@ -3384,8 +3416,9 @@ export default function SocialHubView({
  </svg>
  </button>
  )}
- </div>
+ </Motion.div>
  )}
+ </AnimatePresence>
 
  {!isRecording && (
  <>
@@ -3500,8 +3533,8 @@ export default function SocialHubView({
  <SingleAnimatedEmoji emoji={emoji} className="inline-block object-contain w-[1em] h-[1em]" />
  </button>
  ))}
- </div>
- </Motion.div>
+  </div>
+  </Motion.div>
  </>
  )}
  </AnimatePresence>
@@ -3510,7 +3543,7 @@ export default function SocialHubView({
  </div>
  </div>
  </div>
- {keyboardHeight > 0 && <div style={{ height: keyboardHeight }} className="w-full shrink-0 transition-all duration-300 pointer-events-none" />}
+ {keyboardHeight > 0 && <div style={{ height: keyboardHeight }} className="w-full shrink-0 transition-colors duration-300 pointer-events-none" />}
  </>
  )}
 
@@ -3666,7 +3699,7 @@ export default function SocialHubView({
  className="relative w-full max-w-75 bg-mono-50 dark:bg-mono-900 border border-mono-200 dark:border-white/10 rounded-md p-5 flex flex-col items-center shadow-2xl overflow-hidden"
  dir="rtl"
  >
- <h3 className="text-sm font-bold font-rabar text-mono-900 dark:text-white mb-3 drop-shadow-sm">تو پشتڕاستی ژ ژێبرنا نامەیان؟</h3>
+ <h3 className="text-sm font-light font-rabar text-mono-900 dark:text-white mb-3 drop-shadow-sm">تو پشتڕاستی ژ ژێبرنا نامەیان؟</h3>
  <p className="text-[11px] font-bold text-center text-mono-500 dark:text-white/50 mb-5 leading-relaxed">
  ئەڤە دێ هەمی نامەیێن تە و ڤی کەسی ب ئێکجاری ژێبەت و دێ ل دەڤ کەسێ بەرامبەر ژی ڕەش بن. ئەڤ کارە ناهێتە زڤڕاندن.
  </p>

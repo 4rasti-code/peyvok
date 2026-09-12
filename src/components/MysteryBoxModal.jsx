@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { fireConfetti as confetti } from '../utils/confettiHelper';
 import { supabase } from '../lib/supabase';
@@ -232,9 +233,23 @@ export default function MysteryBoxModal({ isOpen, onClose }) {
  }, 3000);
  };
 
+  // Clash Royale Background Optimization
+  useEffect(() => {
+    const el = document.getElementById('main-app-content');
+    if (isOpen) {
+      if (el) el.style.display = 'none';
+    } else {
+      if (el) el.style.display = 'flex';
+    }
+    return () => {
+      if (el) el.style.display = 'flex';
+    };
+  }, [isOpen]);
+
+
  if (!isOpen) return null;
 
- return (
+ return ReactDOM.createPortal(
  <AnimatePresence>
  {isOpen && (
  <React.Fragment key="mystery-box-modal">
@@ -243,7 +258,7 @@ export default function MysteryBoxModal({ isOpen, onClose }) {
  animate={{ opacity: isClaiming ? 0 : 1 }}
  exit={{ opacity: 0 }}
  transition={{ duration: 0.3 }}
- className={`fixed inset-0 z-100 flex items-center justify-center p-4 overflow-hidden transition-colors duration-700 ${!showReward ? 'bg-mono-900/95 ' : ''}`}
+ className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-hidden transition-colors duration-700 font-noto-sans-arabic text-mono-900 dark:text-mono-50 ${!showReward ? 'bg-[#0a0b10] ' : ''}`} dir="rtl"
  style={{ 
  pointerEvents: isClaiming ? 'none' : 'auto',
  ...(showReward ? {
@@ -305,7 +320,7 @@ export default function MysteryBoxModal({ isOpen, onClose }) {
  initial={{ opacity: 0 }}
  animate={{ opacity: 1 }}
  exit={{ opacity: 0 }}
- className="fixed inset-0 bg-white/40 dark:bg-black/90 pointer-events-none z-0 ]"
+ className="fixed inset-0 bg-white/40 dark:bg-black/90 pointer-events-none z-0"
  />
  )}
  </AnimatePresence>
@@ -410,6 +425,7 @@ export default function MysteryBoxModal({ isOpen, onClose }) {
  </Motion.div>
  </React.Fragment>
  )}
- </AnimatePresence>
+ </AnimatePresence>,
+ document.body
  );
 }

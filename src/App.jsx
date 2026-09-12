@@ -1836,7 +1836,7 @@ export default function App() {
   const isLoadingScreenVisible = isActivelyLoading || (!!user && Math.round(displayProgress) < 100);
 
   return (
-    <div className="flex-1 flex flex-col w-full h-dvh items-center justify-start bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 md:bg-mono-white dark:md:bg-mono-950 transition-colors duration-500 font-noto-sans-arabic overflow-hidden" dir="rtl">
+    <div id="main-app-content" className="flex-1 flex flex-col w-full h-dvh items-center justify-start bg-mono-white text-mono-900 dark:bg-mono-950 dark:text-mono-50 md:bg-mono-white dark:md:bg-mono-950 transition-colors duration-500 font-noto-sans-arabic overflow-hidden" dir="rtl">
 
       {/* GLOBAL LOADING OVERLAY */}
       <AnimatePresence>

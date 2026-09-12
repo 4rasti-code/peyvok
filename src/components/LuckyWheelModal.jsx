@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { motion as Motion, AnimatePresence, useMotionValue, animate } from 'framer-motion';
 import { fireConfetti as confetti } from '../utils/confettiHelper';
 import { supabase } from '../lib/supabase';
@@ -267,9 +268,23 @@ export default function LuckyWheelModal({ isOpen, onClose }) {
  }, 3000);
  };
 
+  // Clash Royale Background Optimization
+  useEffect(() => {
+    const el = document.getElementById('main-app-content');
+    if (isOpen) {
+      if (el) el.style.display = 'none';
+    } else {
+      if (el) el.style.display = 'flex';
+    }
+    return () => {
+      if (el) el.style.display = 'flex';
+    };
+  }, [isOpen]);
+
+
  if (!isOpen) return null;
 
- return (
+ return ReactDOM.createPortal(
  <AnimatePresence>
  {isOpen && (
  <React.Fragment key="lucky-wheel-modal">
@@ -278,16 +293,16 @@ export default function LuckyWheelModal({ isOpen, onClose }) {
  animate={{ opacity: isClaiming ? 0 : 1 }}
  exit={{ opacity: 0 }}
  transition={{ duration: 0.3 }}
- className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-mono-100/95 dark:bg-black/90 "
+ className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-mono-100 dark:bg-[#0a0b10] font-noto-sans-arabic text-mono-900 dark:text-mono-50" dir="rtl"
  style={{ pointerEvents: isClaiming ? 'none' : 'auto' }}
  >
  {/* Close Button Top Right */}
  {!isSpinning && (
- <CloseButton onClick={() => { playBackSfx(); onClose(); }} className="fixed top-[calc(env(safe-area-inset-top)+24px)] right-6 z-50" />
+ <CloseButton onClick={() => { playBackSfx(); onClose(); }} className="fixed top-[calc(env(safe-area-inset-top)+24px)] right-6 z-[999999]" />
  )}
 
  {/* Spin Ticket Pill Counter */}
- <div className="fixed top-[calc(env(safe-area-inset-top)+24px)] left-6 flex items-center gap-2 h-11 bg-mono-100 dark:bg-white/10 rounded-md px-4 shadow-xl border border-mono-200 dark:border-white/10 z-50">
+ <div className="fixed top-[calc(env(safe-area-inset-top)+24px)] left-6 flex items-center gap-2 h-11 bg-mono-100 dark:bg-white/10 rounded-md px-4 shadow-xl border border-mono-200 dark:border-white/10 z-[999999]">
  <span className="text-[19px] font-black text-mono-900 dark:text-white font-sans mt-px">
  {toKuDigits(spinTicketCount || 0)}
  </span>
@@ -306,7 +321,7 @@ export default function LuckyWheelModal({ isOpen, onClose }) {
  {/* Ambient Glow */}
  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 rounded-full pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, transparent 70%)' }} />
 
- <h2 className={`text-3xl font-black text-mono-900 dark:text-white ${!canSpin && !loadingCheck && timeLeftStr ? 'mb-1' : 'mb-6'} relative z-10 uppercase`}>چەرخێ بەختی</h2>
+ <h2 className={`text-3xl font-black text-mono-900 dark:text-white relative z-[999999] ${!canSpin && !loadingCheck && timeLeftStr ? 'mb-1' : 'mb-6'} relative z-10 uppercase`}>چەرخێ بەختی</h2>
  {!canSpin && !loadingCheck && timeLeftStr && (
  <span className="font-black text-xl text-amber-500 font-sans tracking-normal mb-6 relative z-10 tabular-nums" dir="ltr">{timeLeftStr}</span>
  )}
@@ -322,7 +337,7 @@ export default function LuckyWheelModal({ isOpen, onClose }) {
  >
 
  {/* Static Outer Frame with Pointer */}
- <LuckyWheelFrame rotation={spinRotationMotion} className="absolute inset-0 w-full h-full z-20 pointer-events-none" />
+ <LuckyWheelFrame rotation={spinRotationMotion} className="absolute inset-0 w-full h-full z-20 pointer-events-none" idSuffix="-modal" />
 
  {/* The Spinning Inner Wheel */}
  <Motion.div
@@ -341,7 +356,7 @@ export default function LuckyWheelModal({ isOpen, onClose }) {
  <button
  onClick={handleSpin}
  disabled={isSpinning || (!canActuallySpin && !loadingCheck)}
- className={`absolute z-30 w-12.5 h-12.5 rounded-full bg-linear-to-b from-yellow-200 via-amber-400 to-orange-500 text-amber-950 text-[13px] font-black shadow-[inset_0_-2px_4px_rgba(0,0,0,0.3),0_2px_5px_rgba(0,0,0,0.5)] flex flex-col items-center justify-center transition-all border border-yellow-200 ${(!isSpinning && canActuallySpin) ? 'hover:scale-105 hover:brightness-110 cursor-pointer' : 'opacity-80 grayscale-50 cursor-not-allowed'}`}
+ className={`absolute z-30 w-12.5 h-12.5 rounded-full bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 text-amber-950 text-[13px] font-black shadow-[inset_0_-2px_4px_rgba(0,0,0,0.3),0_2px_5px_rgba(0,0,0,0.5)] flex flex-col items-center justify-center transition-all border border-yellow-200 ${(!isSpinning && canActuallySpin) ? 'hover:scale-105 hover:brightness-110 cursor-pointer' : 'opacity-80 grayscale-50 cursor-not-allowed'}`}
  >
  {isSpinning ? '...' : (!canActuallySpin && !loadingCheck ? <span className="material-symbols-outlined text-[20px] opacity-70">lock</span> : 'بزڤڕینە')}
  </button>
@@ -437,6 +452,7 @@ export default function LuckyWheelModal({ isOpen, onClose }) {
  </Motion.div>
  </React.Fragment>
  )}
- </AnimatePresence>
+ </AnimatePresence>,
+ document.body
  );
 }
