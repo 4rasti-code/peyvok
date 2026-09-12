@@ -1,5 +1,6 @@
 import { Capacitor } from '@capacitor/core';
 import { NativeAudio } from '@capacitor-community/native-audio';
+import { App } from '@capacitor/app';
 /**
  * Premium Game Audio Engine (Web Audio API)
  * Optimized for low-latency, polyphony, and high-performance streaming.
@@ -110,6 +111,39 @@ class SoundEngine {
   async init() {
     if (this.initialized) return;
     this.initialized = true;
+
+    // Handle background/foreground music pausing
+    const handleBackground = () => {
+      if (this.isNative) {
+        NativeAudio.stop({ assetId: 'BGM' }).catch(() => {});
+      } else if (this.musicAudioElement) {
+        this.musicAudioElement.pause();
+      }
+    };
+
+    const handleForeground = () => {
+      if (!this.isStoppedByPolicy) {
+        if (this.isNative) {
+          NativeAudio.loop({ assetId: 'BGM' }).catch(() => {});
+        } else if (this.musicAudioElement) {
+          this.musicAudioElement.play().catch(() => {});
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === 'hidden') handleBackground();
+      else handleForeground();
+    });
+
+    try {
+      App.addListener('appStateChange', ({ isActive }) => {
+        if (!isActive) handleBackground();
+        else handleForeground();
+      });
+    } catch (e) {
+      console.warn("Capacitor App plugin not available for state listener");
+    }
 
     if (this.isNative) {
        console.log("🔊 [AudioEngine] Native Mode Detected");
