@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { FilsIcon, DerhemIcon, DinarIcon, HintIcon, MagnetIcon, SkipIcon, XPIcon, SpinTicketIcon } from './CurrencyIcon';
+import { FilsIcon, DerhemIcon, DinarIcon, HintIcon, MagnetIcon, SkipIcon, XPIcon, SpinTicketIcon, PowerUpBadge } from './CurrencyIcon';
 import MysteryBoxIcon from './MysteryBoxIcon';
 import { playCoinSfx, playMagnetSfx, playPopSfx, playSuccessSfx } from '../utils/audio';
 
@@ -282,9 +282,9 @@ const CanvasParticleOverlay = () => {
         <div data-type="fils"><FilsIcon size={44} /></div>
         <div data-type="derhem"><DerhemIcon size={44} /></div>
         <div data-type="dinar"><DinarIcon size={44} /></div>
-        <div data-type="hint"><HintIcon size={44} /></div>
-        <div data-type="magnet"><MagnetIcon size={44} /></div>
-        <div data-type="skip"><SkipIcon size={44} /></div>
+        <div data-type="hint"><PowerUpBadge type="hint" size={44} /></div>
+        <div data-type="magnet"><PowerUpBadge type="magnet" size={44} /></div>
+        <div data-type="skip"><PowerUpBadge type="skip" size={44} /></div>
         <div data-type="xp"><XPIcon size={44} /></div>
         <div data-type="spinTicket"><SpinTicketIcon size={44} /></div>
         <div data-type="mystery_box"><MysteryBoxIcon asSvg={true} size={44} /></div>

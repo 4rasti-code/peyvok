@@ -26,15 +26,25 @@ const areKeyEqual = (prev, next) => {
  return prev.k === next.k &&
  prev.status === next.status &&
  prev.isDisabled === next.isDisabled &&
+ prev.isMagnetDisabled === next.isMagnetDisabled &&
  prev.isDark === next.isDark &&
  prev.isPointerTarget === next.isPointerTarget;
 };
 
-const Key = memo(({ k, status, onKeyPress, isDisabled, isDark = true, isPointerTarget = false }) => {
+const Key = memo(({ k, status, onKeyPress, isDisabled, isMagnetDisabled = false, isDark = true, isPointerTarget = false }) => {
  const [isActive, setIsActive] = useState(false);
 
- const getKeyStyle = () => {
- if (isDisabled) {
+  const randomRotations = React.useMemo(() => {
+    // Use deterministic pseudo-random values based on the character code to satisfy React purity rules
+    const charCode = k.charCodeAt(0) || 0;
+    return [
+      charCode % 2 === 0 ? 15 : -15,
+      charCode % 3 === 0 ? 20 : -20
+    ];
+  }, [k]);
+
+ const getKeyStyle = (forceActive = false) => {
+ if (isDisabled && !forceActive) {
  return isDark
  ? 'bg-[#334155]/20 text-white/10 border-transparent cursor-not-allowed shadow-[0_4px_0_rgba(51,65,85,0.4)]'
  : 'bg-slate-300/30 text-slate-400/20 border-transparent cursor-not-allowed shadow-[0_4px_0_rgba(203,213,225,0.5)]';
@@ -101,8 +111,25 @@ const Key = memo(({ k, status, onKeyPress, isDisabled, isDark = true, isPointerT
  onPointerLeave={handlePointerUp}
  onPointerCancel={handlePointerUp}
  className={`flex-1 h-[clamp(34px,5.2vh,48px)] rounded-md flex items-center justify-center font-heading font-light transition-[transform,background-color,border-color] border relative ${getKeyStyle()}`}
+ data-key={k}
  >
  <span className={`text-[clamp(1.3rem,4.5vw,1.9rem)] ${getTextTranslateY()}`}>{k}</span>
+ 
+ {isMagnetDisabled && (
+ <Motion.div
+ initial={{ y: 0, scale: 1, rotate: 0, opacity: 1 }}
+ animate={{ 
+ y: [0, -25, 60], 
+ scale: [1, 1.15, 0.8], 
+ rotate: [0, randomRotations[0], randomRotations[1]], 
+ opacity: [1, 1, 0] 
+ }}
+ transition={{ duration: 0.6, times: [0, 0.3, 1], ease: ["easeOut", "easeIn"] }}
+ className={`absolute inset-0 rounded-md flex items-center justify-center font-heading font-light border ${getKeyStyle(true)} pointer-events-none z-50`}
+ >
+ <span className={`text-[clamp(1.3rem,4.5vw,1.9rem)] ${getTextTranslateY()}`}>{k}</span>
+ </Motion.div>
+ )}
  
  {/* iOS-Style Key Popup */}
  <AnimatePresence>
@@ -258,6 +285,7 @@ const Keyboard = ({
  k={key}
  status={usedKeys[key]}
  isDisabled={(magnetDisabledKeys || []).includes(key) || (allowedKeys && !allowedKeys.includes(key))}
+ isMagnetDisabled={(magnetDisabledKeys || []).includes(key)}
  isPointerTarget={pointerKey === key}
  onKeyPress={handleKeyPress}
  isDark={isDark}

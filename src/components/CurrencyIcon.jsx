@@ -54,36 +54,51 @@ export const HintIcon = ({ className = "", size = 24, animate = false, disabled 
  `}
  </style>
  )}
- <circle cx="10" cy="10" r="6.5" className={animate && !disabled ? "search-glow" : ""} />
- <line x1="21" y1="21" x2="15" y2="15" className={animate && !disabled ? "search-glow" : ""} />
+ <circle cx="10" cy="10" r="7.5" className={animate && !disabled ? "search-glow" : ""} />
+ <path d="M 11 6.5 A 3.6 3.6 0 0 1 13.5 9" strokeWidth="2" strokeLinecap="round" className={animate && !disabled ? "search-glow" : ""} />
+ <line x1="22" y1="22" x2="16" y2="16" className={animate && !disabled ? "search-glow" : ""} />
  </svg>
 );
 
-export const MagnetIcon = ({ className = "", size = 24, animate = false, disabled = false }) => (
- <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={disabled ? "#9CA3AF" : "white"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
- {animate && !disabled && (
- <style>
- {`
- .target-pulse { animation: targetAnim 1s infinite alternate ease-in-out; }
- @keyframes targetAnim {
- 0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3)); }
- 100% { transform: scale(1.1); filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6)); }
- }
- `}
- </style>
- )}
- <circle cx="12" cy="12" r="9" strokeWidth="2.5" className={animate && !disabled ? "target-pulse" : ""} style={{ transformOrigin: "center" }} />
- <circle cx="12" cy="12" r="4.5" strokeWidth="2.5" className={animate && !disabled ? "target-pulse" : ""} style={{ transformOrigin: "center" }} />
- <circle cx="12" cy="12" r="1.5" fill={disabled ? "#9CA3AF" : "white"} stroke="none" className={animate && !disabled ? "target-pulse" : ""} style={{ transformOrigin: "center" }} />
- 
- {/* Arrow piercing the target */}
- <g className={animate && !disabled ? "target-pulse" : ""} style={{ transformOrigin: "center" }}>
- <line x1="3" y1="3" x2="11" y2="11" />
- <polyline points="7 11 11 11 11 7" />
- <line x1="1" y1="5" x2="5" y2="1" />
- </g>
- </svg>
-);
+export const MagnetIcon = ({ className = "", size = 24, animate = false, disabled = false }) => {
+  const uniqueId = React.useId().replace(/:/g, '');
+  const maskId = `magnet-mask-${uniqueId}`;
+
+  return (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={disabled ? "#9CA3AF" : "white"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+  <defs>
+  <mask id={maskId}>
+  <rect x="-5" y="-5" width="34" height="34" fill="white" stroke="none" />
+  <line x1="2" y1="2" x2="11" y2="11" className={animate && !disabled ? "target-pulse" : ""} style={{ transformOrigin: "center" }} stroke="black" strokeWidth="5.5" />
+  </mask>
+  </defs>
+
+  {animate && !disabled && (
+  <style>
+  {`
+  .target-pulse { animation: targetAnim 1s infinite alternate ease-in-out; }
+  @keyframes targetAnim {
+  0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3)); }
+  100% { transform: scale(1.1); filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6)); }
+  }
+  `}
+  </style>
+  )}
+
+  <g mask={`url(#${maskId})`}>
+  <circle cx="12" cy="12" r="9" strokeWidth="1.8" className={animate && !disabled ? "target-pulse" : ""} style={{ transformOrigin: "center" }} />
+  <circle cx="12" cy="12" r="5" strokeWidth="1.8" className={animate && !disabled ? "target-pulse" : ""} style={{ transformOrigin: "center" }} />
+  </g>
+  
+  {/* Arrow piercing the target */}
+  <g className={animate && !disabled ? "target-pulse" : ""} style={{ transformOrigin: "center" }}>
+  <polygon points="6,2 4,0 3,3 0,4 2,6 5,5" fill={disabled ? "#9CA3AF" : "white"} strokeWidth="0" />
+  <line x1="5" y1="5" x2="12" y2="12" />
+  <circle cx="12" cy="12" r="2" fill={disabled ? "#9CA3AF" : "white"} strokeWidth="0" />
+  </g>
+  </svg>
+  );
+};
 
 export const SkipIcon = ({ className = "", size = 24, animate = false, disabled = false }) => (
  <svg width={size} height={size} viewBox="0 0 24 24" fill={disabled ? "#9CA3AF" : "white"} className={className}>
@@ -106,6 +121,7 @@ export const SkipIcon = ({ className = "", size = 24, animate = false, disabled 
 );
 
 export const PowerUpBadge = ({ type, className = "", size = 40, animate = false }) => {
+ const uniqueId = React.useId().replace(/:/g, '');
  const colors = {
  magnet: { from: '#D489FF', to: '#B352FF', shadow: '#9A32DF' },
  hint: { from: '#FFA756', to: '#F27D26', shadow: '#D96614' },
@@ -117,17 +133,18 @@ export const PowerUpBadge = ({ type, className = "", size = 40, animate = false 
  
  const w = 40;
  const h = 40;
+ const gradId = `grad-${type}-${uniqueId}`;
  
  return (
  <svg width={numSize} height={numSize} viewBox={`0 0 ${w} ${h}`} className={className} style={{ overflow: 'visible' }}>
  <defs>
- <linearGradient id={`grad-${type}`} x1="0" y1="0" x2="0" y2="1">
+ <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
  <stop offset="0%" stopColor={c.from} />
  <stop offset="100%" stopColor={c.to} />
  </linearGradient>
  </defs>
  
- <rect x="0" y="0" width={w} height={h} rx={h/2} fill={`url(#grad-${type})`} style={{ filter: `drop-shadow(0px 3px 0px ${c.shadow}) drop-shadow(0px 4px 4px rgba(0,0,0,0.15))` }} />
+ <rect x="0" y="0" width={w} height={h} rx={h/2} fill={`url(#${gradId})`} style={{ filter: `drop-shadow(0px 3px 0px ${c.shadow}) drop-shadow(0px 4px 4px rgba(0,0,0,0.15))` }} />
  
  {/* Inner Icon */}
  <svg x={w/2 - 12} y={h/2 - 12} width="24" height="24" viewBox="0 0 24 24" style={{ overflow: 'visible' }}>

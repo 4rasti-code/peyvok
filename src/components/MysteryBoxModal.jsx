@@ -236,7 +236,7 @@ export default function MysteryBoxModal({ isOpen, onClose }) {
   // Clash Royale Background Optimization
   useEffect(() => {
     const el = document.getElementById('main-app-content');
-    if (isOpen) {
+    if (isOpen && !isClaiming) {
       if (el) el.style.display = 'none';
     } else {
       if (el) el.style.display = 'flex';
@@ -244,7 +244,7 @@ export default function MysteryBoxModal({ isOpen, onClose }) {
     return () => {
       if (el) el.style.display = 'flex';
     };
-  }, [isOpen]);
+  }, [isOpen, isClaiming]);
 
 
  if (!isOpen) return null;
@@ -258,7 +258,7 @@ export default function MysteryBoxModal({ isOpen, onClose }) {
  animate={{ opacity: isClaiming ? 0 : 1 }}
  exit={{ opacity: 0 }}
  transition={{ duration: 0.3 }}
- className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-hidden transition-colors duration-700 font-noto-sans-arabic text-mono-900 dark:text-mono-50 ${!showReward ? 'bg-[#0a0b10] ' : ''}`} dir="rtl"
+ className={`fixed inset-0 z-9999 flex items-center justify-center p-4 overflow-hidden transition-colors duration-700 font-noto-sans-arabic text-mono-900 dark:text-mono-50 ${!showReward ? 'bg-[#0a0b10] ' : ''}`} dir="rtl"
  style={{ 
  pointerEvents: isClaiming ? 'none' : 'auto',
  ...(showReward ? {

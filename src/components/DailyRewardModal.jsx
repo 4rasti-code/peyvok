@@ -56,6 +56,19 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
  }
  }, [isOpen, playDailyOpenSfx, hapticEnabled]);
 
+ // Clash Royale Background Optimization
+ useEffect(() => {
+   const el = document.getElementById('main-app-content');
+   if (isOpen && !showSuccess && !claiming) {
+     if (el) el.style.display = 'none';
+   } else {
+     if (el) el.style.display = 'flex';
+   }
+   return () => {
+     if (el) el.style.display = 'flex';
+   };
+ }, [isOpen, showSuccess, claiming]);
+
  // Reset state when closing
  const handleClose = () => {
  window.isAnimatingReward = false;
@@ -176,7 +189,7 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
  animate={{ opacity: animatingReward ? 0 : 1 }}
  exit={{ opacity: 0 }}
  transition={{ duration: 0.3 }}
- className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-mono-100 dark:bg-[#0a0b10] pointer-events-auto font-noto-sans-arabic text-mono-900 dark:text-mono-50" dir="rtl"
+ className="fixed inset-0 z-9999 flex items-center justify-center p-4 bg-mono-100 dark:bg-[#0a0b10] pointer-events-auto font-noto-sans-arabic text-mono-900 dark:text-mono-50" dir="rtl"
  >
  {/* Screen-level Close Button */}
  <CloseButton onClick={() => { playBackSfx(); handleClose(); }} className="fixed top-[calc(env(safe-area-inset-top)+24px)] right-6 z-110" />
@@ -323,7 +336,7 @@ export default function DailyRewardModal({ isOpen, onClose, isDark }) {
  initial={{ opacity: 0 }}
  animate={{ opacity: 1 }}
  exit={{ opacity: 0 }}
- className="fixed inset-0 z-110 flex items-center justify-center p-6"
+ className="fixed inset-0 z-10000 flex items-center justify-center p-6"
  >
  <Motion.div
  animate={{ opacity: animatingReward ? 0 : 1 }}

@@ -98,6 +98,7 @@ import DefeatOverlay from './components/DefeatOverlay';
 import { supabase } from './lib/supabase';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import NotificationBellIcon from './components/NotificationBellIcon';
+import MagnetProjectileOverlay from './components/MagnetProjectileOverlay';
 import TutorialGameView from './components/TutorialGameView';
 
 import './App.css';
@@ -562,6 +563,7 @@ export default function App() {
   const [, setRewardAmount] = useState(0);
   const [rewardAmountXp, setRewardAmountXp] = useState(0);
   const [magnetDisabledKeys, setMagnetDisabledKeys] = useState([]);
+  const [magnetAnimationData, setMagnetAnimationData] = useState(null);
   const [revealedIndices, setRevealedIndices] = useState([]);
   const [hintTaps, setHintTaps] = useState(0);
   const [magnetsUsedInRound, setMagnetsUsedInRound] = useState(0);
@@ -1010,7 +1012,24 @@ export default function App() {
 
     const toDisable = incorrect.sort(() => 0.5 - Math.random()).slice(0, 3);
 
-    setMagnetDisabledKeys(prev => [...(prev || []), ...toDisable]);
+    const btn = document.getElementById('btn-magnet');
+    const startCoords = btn ? btn.getBoundingClientRect() : { top: 0, left: 0, width: 0, height: 0 };
+    
+    const targets = toDisable.map(char => {
+      const el = document.querySelector(`[data-key="${char}"]`);
+      return {
+        key: char,
+        coords: el ? el.getBoundingClientRect() : { top: 0, left: 0, width: 0, height: 0 }
+      };
+    });
+
+    if (btn) {
+      setMagnetAnimationData({ startCoords, targets });
+    } else {
+      // Fallback if button isn't found
+      setMagnetDisabledKeys(prev => [...(prev || []), ...toDisable]);
+    }
+    
     setMagnetsUsedInRound(prev => prev + 1);
     updateInventory({
       magnetCount: -1
@@ -2745,6 +2764,14 @@ export default function App() {
           </AnimatePresence>
         </Suspense>
         <CanvasParticleOverlay />
+        <MagnetProjectileOverlay 
+          {...magnetAnimationData} 
+          onHit={(key) => {
+            setMagnetDisabledKeys(prev => [...(prev || []), key]);
+            triggerHaptic(10); // Slight click feeling when a letter is hit
+          }}
+          onComplete={() => setMagnetAnimationData(null)}
+        />
       </div>
     </div>
   );
